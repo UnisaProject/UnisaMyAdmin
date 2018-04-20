@@ -11,6 +11,26 @@ As of writing this README the versions are as follows:
 
 *Optionally:* Typescript Version 2.5.3 [^1]
 
+#### (optional) Install Node Version Manager (nvm)
+This is an optional step, but does help when required to change node versions between project, and for 
+experimenting the affect of a newer nodejs runtime for this project.
+
+1. Download and install the manager from [nvm-windows Github](https://github.com/coreybutler/nvm-windows/releases)
+2. Make sure it is available from the system path `nvm`.
+   It should print out useful commands
+3. Install the required nodejs version `nvm install 8.10.0`
+4. Configure to use the required version `nvm use 8.10.0`
+5. Confirm the active nodejs version `ndoe --version`
+
+If for some reason node does not appear on the path, make sure the directory C:\Program Files\nodejs exists
+(create if missing), and switch version again `nvm use 8.10.0`
+
+Keep in mind that when you change nodejs versions you have to reinstall any node modules you installed with
+a previous version of nodejs as the modules are installed with the nodejs version.
+
+Yarn on the other hand installs its packages outside of nodejs, so there is no need to reinstall modules
+that was installed with yarn, you do however need to install yarn again if it was installed using npm.
+
 ##### Upgrading your environment (if necessary)
 1. Upgrading [Node.js](https://nodejs.org/en/) by installing the latest package for your OS. [^2]
 2. Installing Yarn: `npm install -g yarn`
@@ -20,7 +40,7 @@ As of writing this README the versions are as follows:
 6. *Optionally:* installing Typescript: `npm install -g typescript@2.5.3 --save-exact`
 
 ##### Project versions *(as of this writing)*
-In any of angular project foldesr, execute the command: `ng -v` and (hopefully) see this results:
+In any of angular project folder, execute the command: `ng -v` and (hopefully) see this results:
 
 ```
    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
