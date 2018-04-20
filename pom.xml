@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>za.ac.unisa.myadmin</groupId>
+	<artifactId>unisa-myadmin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Unisa myAdmin Tools</name>
+	<description>Parent project for the Unisa myAdmin applications</description>
+
+	<!-- Parent POM for Spring dependency management. -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<!-- Unisa myAdmin service projects version -->
+		<common-services-version>1.0.0-SNAPSHOT</common-services-version>
+		<exam-admission-services-version>1.0.0-SNAPSHOT</exam-admission-services-version>
+		<exam-paper-details-services-version>1.0.0-SNAPSHOT</exam-paper-details-services-version>
+		<exam-period-date-services-version>1.0.0-SNAPSHOT</exam-period-date-services-version>
+		<exam-period-services-version>1.0.0-SNAPSHOT</exam-period-services-version>
+		<service-api-version>1.0.0-SNAPSHOT</service-api-version>
+
+		<!-- Unisa myAdmin UI projects version -->
+		<exam-timetable-app-version>1.0.0-SNAPSHOT</exam-timetable-app-version>
+		<study-quotation-app-version>1.0.0-SNAPSHOT</study-quotation-app-version>
+
+		<!--  3rd party libraries -->
+		<java.version>1.8</java.version> <!-- Default java version is 1.6 configured in the spring starter parent project -->
+		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
+		<jboss.as.maven.plugin.version>7.9.Final</jboss.as.maven.plugin.version>
+		<jboss.spec.javaee.version>1.0.3.Final</jboss.spec.javaee.version>
+		<junit.version>4.12</junit.version>
+		<mavenBuildTimestamp>${maven.build.timestamp}</mavenBuildTimestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<wildfly.maven.plugin.version>1.2.1.Final</wildfly.maven.plugin.version>
+	</properties>
+
+	<modules>
+		<module>myadmin-service-api</module>
+		<module>myadmin-service-impls</module>
+		<module>myadmin-angular</module>
+		<module>myadmin-webapps</module>
+	</modules>
+	
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+		        <activatedProperties>local</activatedProperties>
+		    </properties>
+		    <activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.wildfly.plugins</groupId>
+							<artifactId>wildfly-maven-plugin</artifactId>
+							<version>${wildfly.maven.plugin.version}</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		
+		<profile>
+			<id>dev</id>
+			<properties>
+		        <activatedProperties>dev</activatedProperties>
+		    </properties>
+
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.jboss.as.plugins</groupId>
+							<artifactId>jboss-as-maven-plugin</artifactId>
+							<version>${jboss.as.maven.plugin.version}</version>
+							<configuration>
+								<hostname>${jboss.hostname}</hostname>
+								<port>${jboss.port}</port>
+								<username>${jboss.username}</username>
+								<password>${jboss.password}</password>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- Define the version of the JBoss Java EE APIs we want to use -->
+			<!-- JBoss distributes a complete set of Java EE APIs including a Bill 
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+				of artifacts. We use this here so that we always get the correct versions 
+				of artifacts. Here we use the jboss-javaee-7.0 stack (you can read this as 
+				the JBoss stack of the Java EE APIs). You can actually use this stack with 
+				any version of WildFly that implements Java EE. -->
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-7.0</artifactId>
+				<version>${jboss.spec.javaee.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<!-- Import the Servlet API, we use provided scope as the API is included in WildFly -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Embedded database for local development environment -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>za.ac.unisa.myadmin.webapps</groupId>
+	<artifactId>study-quotation-webapp</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>za.ac.unisa.myadmin.webapps</groupId>
+		<artifactId>myadmin-webapps</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<!-- Import the Angular UI artifact for this webapp -->
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
+			<artifactId>study-quotation-app</artifactId>
+			<version>${study-quotation-app-version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- It is used to create executable JAR of the application. -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

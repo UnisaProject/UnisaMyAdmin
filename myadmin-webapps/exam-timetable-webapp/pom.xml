@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>za.ac.unisa.myadmin.webapps</groupId>
+	<artifactId>exam-timetable-webapp</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>za.ac.unisa.myadmin.webapps</groupId>
+		<artifactId>myadmin-webapps</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<!-- Import the Angular UI artifact for this webapp -->
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
+			<artifactId>exam-timetable-app</artifactId>
+			<version>${exam-timetable-app-version}</version>
+		</dependency>
+
+		<!-- Unisa myAdmin services -->
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>exam-period-service</artifactId>
+			<version>${exam-period-services-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>exam-admission-service</artifactId>
+			<version>${exam-admission-services-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>exam-period-date-service</artifactId>
+			<version>${exam-period-date-services-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>exam-paper-details-service</artifactId>
+			<version>${exam-paper-details-services-version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
+			 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
+		<finalName>examtimetable</finalName>
+		
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>true</filtering>
+	        </resource>
+	    </resources>
+    
+		<plugins>
+			<!-- It is used to create executable JAR of the application. -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

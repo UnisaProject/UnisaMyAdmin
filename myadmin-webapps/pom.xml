@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>za.ac.unisa.myadmin.webapps</groupId>
+	<artifactId>myadmin-webapps</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Unisa myAdmin Web Applications</name>
+	<description>Unisa myAdmin Web Applications</description>
+
+	<parent>
+		<groupId>za.ac.unisa.myadmin</groupId>
+		<artifactId>unisa-myadmin</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>exam-timetable-webapp</module>
+		<module>study-quotation-webapp</module>
+	</modules>
+
+	<dependencies>
+		<!-- Spring Boot & Framework dependencies -->
+		<!-- Build Web applications & RESTful applications. It uses tomcat server as default embedded server. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- exclude the embedded tomcat server -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+	      	</exclusions>
+		</dependency>
+		
+		<!-- Provides solutions to automatically pick up changes without a complete server restart. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>
