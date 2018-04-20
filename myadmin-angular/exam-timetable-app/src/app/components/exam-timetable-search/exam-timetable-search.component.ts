@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ExamAdmissionService, ExamPeriodService } from '../../services';
 import { ExamPeriodInfo } from '../../info-objects';
 import { SearchCriteriaService } from '../../services';
-import { FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {atleastOneCourseCode} from "./atleast-one.validator";
 import {selectedExamPeriod} from "./exam-period.validator";
 
@@ -83,6 +83,9 @@ export class ExamTimetableSearchComponent implements OnInit {
     this.router.navigate(["result"]);
   }
 
+  get courseCodes(): FormArray{
+    return <FormArray>this.searchForm.controls['courseCodes'];
+  }
 
   compareExamPeriod(periodA:ExamPeriodInfo , periodB:ExamPeriodInfo ) : boolean {
     if(periodB == null || !periodB.hasOwnProperty('examYear') ||!periodB.hasOwnProperty('code') ){

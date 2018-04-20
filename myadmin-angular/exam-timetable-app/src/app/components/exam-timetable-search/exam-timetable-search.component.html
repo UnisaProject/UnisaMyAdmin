@@ -42,7 +42,7 @@
     <div class="form-group">
       <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
       <div class="form-row" formArrayName="courseCodes">
-        <div class="col-sm mt-3 mt-sm-0" *ngFor="let cs of searchForm.controls['courseCodes'].controls; index as i">
+        <div class="col-sm mt-3 mt-sm-0" *ngFor="let cs of courseCodes.controls; index as i">
           <input type="text" class="form-control" name="courseCode" [formControlName]="i">
         </div>
       </div>
