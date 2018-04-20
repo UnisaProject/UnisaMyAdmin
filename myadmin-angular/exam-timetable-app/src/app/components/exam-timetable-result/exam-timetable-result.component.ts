@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchCriteriaService } from '../../services/search-criteria.service';
 import { ExamPeriodInfo, ExamPeriodDateInfo } from '../../info-objects';
-import { ExamPeriodDateService } from '../../services';
+import { ExamPeriodDateService, SearchCriteriaService } from '../../services';
 import { SearchCriteriaInfo } from '../../info-objects/shared/search-criteria-info';
 
 @Component({
@@ -16,7 +15,8 @@ export class ExamTimetableResultComponent implements OnInit {
   public examPeriod: ExamPeriodInfo;
   public examPeriodDates: ExamPeriodDateInfo[];
 
-  constructor(private examPeriodDateService: ExamPeriodDateService, private searchCriteriaService: SearchCriteriaService) { }
+  constructor(private examPeriodDateService: ExamPeriodDateService,
+              private searchCriteriaService: SearchCriteriaService) { }
 
   ngOnInit() {
     this.today = new Date();
@@ -34,7 +34,7 @@ export class ExamTimetableResultComponent implements OnInit {
           console.log(error)
         },
         () => {
-          //Done 
+          //Done
         }
       );
   }
