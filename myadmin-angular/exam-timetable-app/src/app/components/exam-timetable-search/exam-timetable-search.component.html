@@ -6,7 +6,8 @@
     <p>The minimum length to enter is the&nbsp;<strong>first 6 characters</strong>&nbsp;of the study unit code. Invalid codes will be ignored.</p>
   </div>
 </div>
-  <form (ngSubmit)="onSubmit()" #form="ngForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+    {{searchForm.value | json}}
     <div class="form-group row">
       <label for="listdate" class="col-sm-2 col-form-label font-weight-bold">List Date</label>
       <div class="col-sm-4">
@@ -26,7 +27,7 @@
     <div class="form-group row">
       <label for="examinationperiod" class="col-sm-2 col-form-label font-weight-bold">Examination Period</label>
       <div class="col-sm-3">
-          <select class="form-control" id="examinationperiod" name="examinationperiod" [(ngModel)]="searchCriteria.examPeriod">
+          <select class="form-control" id="examinationperiod" name="examinationperiod" formControlName="examPeriod" [compareWith]="compareExamPeriod">
               <option *ngFor="let examPeriod of examPeriods | orderBy: 'code'" [ngValue]="examPeriod">
                 {{ examPeriod.description.english }} {{ examPeriod.examYear }}
               </option>
@@ -35,15 +36,15 @@
     </div>
     <div class="form-group">
       <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
-      <div class="form-row">
-        <div class="col-sm mt-3 mt-sm-0" *ngFor='let in of [0,1,2,3,4]; let i = index'>
-          <input type="text" class="form-control" name="courseCode" [(ngModel)]="searchCriteria.courseCodes[i]">
+      <div class="form-row" formArrayName="courseCodes">
+        <div class="col-sm mt-3 mt-sm-0" *ngFor="let cs of searchForm.controls['courseCodes'].controls; index as i">
+          <input type="text" class="form-control" name="courseCode" [formControlName]="i">
         </div>
       </div>
     </div>
     <div class="form-group">
-    <button type="submit" class="btn btn-primary">Display</button>
-    <button type="reset" class="btn btn-secondary">Clear</button>
+    <button type="submit" class="btn btn-primary" [disabled]="searchForm.pristine || searchForm.invalid">Display</button>
+    <button type="reset" class="btn btn-secondary" [disabled]="searchForm.pristine">Clear</button>
     </div>
   </form>
 </div>
