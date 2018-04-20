@@ -5,6 +5,8 @@ import { ExamAdmissionService, ExamPeriodService } from '../../services';
 import { ExamPeriodInfo } from '../../info-objects';
 import { SearchCriteriaService } from '../../services';
 import { FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {atleastOneCourseCode} from "./atleast-one.validator";
+import {selectedExamPeriod} from "./exam-period.validator";
 
 /**
  * Component to allow a user to enter criteria to search for an exam timetable.
@@ -55,7 +57,7 @@ export class ExamTimetableSearchComponent implements OnInit {
    */
   private initForm(): void {
     this.searchForm = this.formBuilder.group({
-      examPeriod : [null, Validators.required],
+      examPeriod : [null, selectedExamPeriod()],
       courseCodes : this.formBuilder.array([
         new FormControl(),
         new FormControl(),
@@ -63,7 +65,7 @@ export class ExamTimetableSearchComponent implements OnInit {
         new FormControl(),
         new FormControl(),
       ])
-    })
+    }, { validator : Validators.compose([atleastOneCourseCode()])});
   }
 
   ngOnInit() {
@@ -81,7 +83,11 @@ export class ExamTimetableSearchComponent implements OnInit {
     this.router.navigate(["result"]);
   }
 
+
   compareExamPeriod(periodA:ExamPeriodInfo , periodB:ExamPeriodInfo ) : boolean {
+    if(periodB == null || !periodB.hasOwnProperty('examYear') ||!periodB.hasOwnProperty('code') ){
+      return false;
+    }
     return periodA.examYear === periodB.examYear && periodA.code === periodB.code;
   }
 
