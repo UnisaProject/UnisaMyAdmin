@@ -46,6 +46,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<wildfly.maven.plugin.version>1.2.1.Final</wildfly.maven.plugin.version>
+
+		<!-- Plugin version -->
+		<plugin.enforcer.version>1.4.1</plugin.enforcer.version>
 	</properties>
 
 	<modules>
@@ -103,7 +106,36 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${plugin.enforcer.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<phase>validate</phase>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.3</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>1.8</version>
+								</requireJavaVersion>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- Define the version of the JBoss Java EE APIs we want to use -->
