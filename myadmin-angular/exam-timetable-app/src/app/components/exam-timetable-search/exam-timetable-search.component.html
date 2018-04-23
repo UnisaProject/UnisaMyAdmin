@@ -7,7 +7,7 @@
   </div>
 </div>
   <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
-    <div class="form-group row">
+    <div class="form-group row  ml-2">
       <label for="listdate" class="col-sm-2 col-form-label font-weight-bold">List Date</label>
       <div class="col-sm-4">
         <p class="form-control-plaintext" id="listdate">{{ today | date: 'yyyy-MM-dd HH:mm' }}</p>
@@ -23,7 +23,7 @@
             </select>
       </div>
     </div> -->
-    <div class="form-group row">
+    <div class="form-group row  ml-2">
       <label for="examinationperiod" class="col-sm-2 col-form-label font-weight-bold">Examination Period</label>
       <div class="col-sm-3">
           <select
@@ -39,10 +39,10 @@
             </select>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group  ml-4">
       <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
       <div class="form-row" formArrayName="courseCodes">
-        <div class="col-sm mt-3 mt-sm-0" *ngFor="let cs of courseCodes.controls; index as i">
+        <div class="col-sm mt-3" *ngFor="let cs of courseCodes.controls; index as i">
           <input type="text" class="form-control" name="courseCode" [formControlName]="i">
         </div>
       </div>
