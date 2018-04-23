@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExamPeriodInfo, ExamPeriodDateInfo } from '../../info-objects';
 import { ExamPeriodDateService, SearchCriteriaService } from '../../services';
 import { SearchCriteriaInfo } from '../../info-objects/shared/search-criteria-info';
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'app-exam-timetable-result',
@@ -14,6 +15,13 @@ export class ExamTimetableResultComponent implements OnInit {
   public examYear: number;
   public examPeriod: ExamPeriodInfo;
   public examPeriodDates: ExamPeriodDateInfo[];
+
+
+  /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
 
   constructor(private examPeriodDateService: ExamPeriodDateService,
               private searchCriteriaService: SearchCriteriaService) { }
@@ -34,7 +42,7 @@ export class ExamTimetableResultComponent implements OnInit {
           console.log(error)
         },
         () => {
-          //Done
+          this.blockUI.stop()
         }
       );
   }

@@ -10,6 +10,7 @@ import { ExamTimetableSearchComponent } from './components/exam-timetable-search
 import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService } from './services';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { ExamTimetableResultComponent } from './components/exam-timetable-result/exam-timetable-result.component';
+import {BlockUIModule} from "ng-block-ui";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ExamTimetableResultComponent } from './components/exam-timetable-result
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BlockUIModule.forRoot()
   ],
   providers: [
     ExamAdmissionService,

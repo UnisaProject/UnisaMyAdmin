@@ -7,6 +7,7 @@ import { SearchCriteriaService } from '../../services';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {atleastOneCourseCode} from "./atleast-one.validator";
 import {selectedExamPeriod} from "./exam-period.validator";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 /**
  * Component to allow a user to enter criteria to search for an exam timetable.
@@ -37,6 +38,13 @@ export class ExamTimetableSearchComponent implements OnInit {
   public searchForm: FormGroup;
 
   /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
+
+
+  /**
    * Creates a new instance of this ExamTimetableSearchComponent
    * @param {Router} router
    * @param {ExamAdmissionService} examAdmissionService
@@ -56,6 +64,7 @@ export class ExamTimetableSearchComponent implements OnInit {
    * Create the form
    */
   private initForm(): void {
+    this.blockUI.start();
     this.searchForm = this.formBuilder.group({
       examPeriod : [null, selectedExamPeriod()],
       courseCodes : this.formBuilder.array([
@@ -72,6 +81,9 @@ export class ExamTimetableSearchComponent implements OnInit {
     this.today = new Date();
     this.getExamPeriods().then(()=>{
       this.searchForm.patchValue(this.searchCriteriaService.searchCriteria);
+      this.blockUI.stop();
+    }, ()=>{
+      this.blockUI.stop();
     });
   }
 
@@ -79,6 +91,7 @@ export class ExamTimetableSearchComponent implements OnInit {
    * Callback for when the form is submitted
    */
   onSubmit() {
+    this.blockUI.start("Loading timetable...");
     this.searchCriteriaService.searchCriteria = {...this.searchForm.value};
     this.router.navigate(["result"]);
   }
