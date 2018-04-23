@@ -1,6 +1,7 @@
 package za.ac.unisa.myadmin.server.configurations;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class ResponseCorsFilterConfiguration {
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList(CorsConfiguration.ALL));
+		configuration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
 		configuration.setAllowedMethods(Arrays.asList("ACL", "CANCELUPLOAD", "CHECKIN", "CHECKOUT", "COPY", "DELETE",
 				"GET", "HEAD", "LOCK", "MKCALENDAR", "MKCOL", "MOVE", "OPTIONS", "POST", "PROPFIND", "PROPPATCH", "PUT",
 				"REPORT", "SEARCH", "UNCHECKOUT", "UNLOCK", "UPDATE", "VERSION-CONTROL"));

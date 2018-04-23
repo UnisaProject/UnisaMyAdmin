@@ -1,6 +1,7 @@
 package za.ac.unisa.myadmin.service.exam.period.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,10 +27,11 @@ public class ExamPeriodServiceImpl implements ExamPeriodService {
 	@Override
 	public ExamPeriodInfo getExamPeriod(Integer code) throws DoesNotExistException, MissingParameterException,
 			InvalidParameterException, OperationFailedException {
-		try {
-			ExamPeriodEntity entity = examPeriodRepository.findOne(code);
-			return entity.toDto();
-		} catch (EntityNotFoundException e) {
+		Optional<ExamPeriodEntity> entity = examPeriodRepository.findById(code);
+		if(entity.isPresent()) {
+			return entity.get().toDto();
+		}
+		else {
 			throw new DoesNotExistException(Integer.toString(code));
 		}
 	}
@@ -37,7 +39,10 @@ public class ExamPeriodServiceImpl implements ExamPeriodService {
 	@Override
 	public List<ExamPeriodInfo> getExamPeriods() throws OperationFailedException {
 		try {
-			return examPeriodRepository.findAll().stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+			return examPeriodRepository.findAll()
+					.stream()
+					.map(ExamPeriodEntity::toDto)
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
 		}
@@ -47,7 +52,9 @@ public class ExamPeriodServiceImpl implements ExamPeriodService {
 	public List<ExamPeriodInfo> getExamPeriodByCodes(List<Integer> codes)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		try {
-			return examPeriodRepository.findAll(codes).stream().map(entity -> entity.toDto())
+			return examPeriodRepository.findAllById(codes)
+					.stream()
+					.map(ExamPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
