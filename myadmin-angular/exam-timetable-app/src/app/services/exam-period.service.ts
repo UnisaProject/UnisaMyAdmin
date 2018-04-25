@@ -8,20 +8,24 @@ import { ExamPeriodInfo } from './../info-objects';
 @Injectable()
 export class ExamPeriodService {
 
-  constructor(private http: HttpClient) { }
+  private _endPoint: string;
+
+  constructor(private http: HttpClient) {
+    this._endPoint = environment.exam_admission_service_host_url;
+  }
 
   getExamPeriod(code: number): Observable<ExamPeriodInfo> {
-    return this.http.get<ExamPeriodInfo>(`${environment.exam_period_service_host_url}/rest/examperiods/${code}`);
+    return this.http.get<ExamPeriodInfo>(`${this._endPoint}/rest/examperiods/${code}`);
   }
 
   getExamPeriods(): Observable<ExamPeriodInfo[]> {
-    return this.http.get<ExamPeriodInfo[]>(`${environment.exam_period_service_host_url}/rest/examperiods`);
+    return this.http.get<ExamPeriodInfo[]>(`${this._endPoint}/rest/examperiods` );
   }
 
   getExamPeriodByCodes(codes: number[]): Observable<ExamPeriodInfo[]> {
     const params = new HttpParams().set('codes', codes.join(','));
 
-    return this.http.get<ExamPeriodInfo[]>(`${environment.exam_period_service_host_url}/rest/examperiods`, { params });
+    return this.http.get<ExamPeriodInfo[]>(`${this._endPoint}/rest/examperiods`, { params });
   }
 
 }

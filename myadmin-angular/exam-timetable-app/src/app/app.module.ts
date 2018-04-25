@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -10,7 +11,11 @@ import { ExamTimetableSearchComponent } from './components/exam-timetable-search
 import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService } from './services';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { ExamTimetableResultComponent } from './components/exam-timetable-result/exam-timetable-result.component';
-import {BlockUIModule} from "ng-block-ui";
+import { BlockUIModule} from "ng-block-ui";
+import { HttpInterceptorProviders } from './http-interceptors';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { ToasterNotificationService } from './services/toaster-notification.service';
+
 
 @NgModule({
   declarations: [
@@ -21,17 +26,22 @@ import {BlockUIModule} from "ng-block-ui";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    ToasterModule,
     BlockUIModule.forRoot()
   ],
   providers: [
     ExamAdmissionService,
     ExamPeriodService,
     ExamPeriodDateService,
-    SearchCriteriaService
+    SearchCriteriaService,
+    ToasterService,
+    ToasterNotificationService,
+    HttpInterceptorProviders,
   ],
   bootstrap: [AppComponent]
 })
