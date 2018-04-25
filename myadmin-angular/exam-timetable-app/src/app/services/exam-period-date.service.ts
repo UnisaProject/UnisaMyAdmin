@@ -11,7 +11,7 @@ export class ExamPeriodDateService {
   private _endPoint: string;
 
   constructor(private http: HttpClient) {
-    this._endPoint = environment.exam_admission_service_host_url;
+    this._endPoint = environment.exam_period_date_service_host_url;
   }
 
   getExamPeriodDates(): Observable<ExamPeriodDateInfo[]> {
