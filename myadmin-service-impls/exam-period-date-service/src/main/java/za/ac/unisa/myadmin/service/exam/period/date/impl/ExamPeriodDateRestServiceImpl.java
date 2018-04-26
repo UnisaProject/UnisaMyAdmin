@@ -3,6 +3,7 @@ package za.ac.unisa.myadmin.service.exam.period.date.impl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -40,6 +41,9 @@ public class ExamPeriodDateRestServiceImpl {
 		allowedParameters.add("year");
 		allowedParameters.add("examPeriodCode");
 		allowedParameters.add("courseCodes");
+		courseCodes = courseCodes.stream()
+				.map(String::toUpperCase)
+				.collect(Collectors.toList());
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest)) {
 			return examPeriodDateService.getExamPeriodDatesByYearAndExamPeriodCodeAndCourseCodes(year, examPeriodCode,
 					courseCodes);
