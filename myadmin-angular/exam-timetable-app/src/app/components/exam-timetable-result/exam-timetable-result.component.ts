@@ -7,7 +7,7 @@ import {BlockUI, NgBlockUI} from "ng-block-ui";
 @Component({
   selector: 'app-exam-timetable-result',
   templateUrl: './exam-timetable-result.component.html',
-  styleUrls: ['./exam-timetable-result.component.css']
+  styleUrls: ['./exam-timetable-result.component.scss']
 })
 export class ExamTimetableResultComponent implements OnInit {
 
