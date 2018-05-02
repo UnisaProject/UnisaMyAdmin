@@ -34,7 +34,7 @@
             required
             [compareWith]="compareExamPeriod">
               <option *ngFor="let examPeriod of examPeriods | orderBy: 'code'" [ngValue]="examPeriod">
-                {{ examPeriod.description.english }} {{ examPeriod.examYear }}
+                {{ examPeriod.descriptionInfo | description:'en_ZA' }} {{ examPeriod.examYear }}
               </option>
             </select>
       </div>

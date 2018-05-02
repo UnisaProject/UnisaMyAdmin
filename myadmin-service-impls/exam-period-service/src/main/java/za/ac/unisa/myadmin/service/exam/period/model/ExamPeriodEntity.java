@@ -1,12 +1,15 @@
 package za.ac.unisa.myadmin.service.exam.period.model;
 
+import za.ac.unisa.myadmin.common.dto.DescriptionInfo;
+import za.ac.unisa.myadmin.exam.period.ExamPeriodInfo;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import za.ac.unisa.myadmin.common.dto.DescriptionInfo;
-import za.ac.unisa.myadmin.exam.period.ExamPeriodInfo;
+import static za.ac.unisa.myadmin.common.dto.DescriptionInfo.LOCALE_AFRIKAANS;
+import static za.ac.unisa.myadmin.common.dto.DescriptionInfo.LOCALE_ENGLISH;
 
 @Entity
 @Table(name = "XAMPRD")
@@ -37,23 +40,25 @@ public class ExamPeriodEntity {
 
 	public void fromDto(ExamPeriodInfo dto) {
 		this.setCode(dto.getCode());
-		if (dto.getDescription() != null) {
-			this.setEngDescription(dto.getDescription().getEnglish());
-			this.setAfrDescription(dto.getDescription().getAfrikaans());
-		}
-
-		if (dto.getShortDescription() != null) {
-			this.setEngShortDescription(dto.getShortDescription().getEnglish());
-			this.setAfrShortDescription(dto.getShortDescription().getAfrikaans());
+		if (dto.getDescriptionInfo() != null) {
+			dto.getDescriptionInfo().forEach(descriptionInfo -> {
+				if(LOCALE_ENGLISH.equals(descriptionInfo.getLocale())){
+					this.setEngDescription(descriptionInfo.getDescription());
+					this.setEngShortDescription(descriptionInfo.getShortDescription());
+				}
+				else if(LOCALE_AFRIKAANS.equals(descriptionInfo.getLocale())){
+					this.setAfrDescription(descriptionInfo.getDescription());
+					this.setAfrShortDescription(descriptionInfo.getShortDescription());
+				}
+			});
 		}
 	}
 
 	public ExamPeriodInfo toDto() {
 		ExamPeriodInfo info = new ExamPeriodInfo();
 		info.setCode(this.getCode());
-		info.setDescription(new DescriptionInfo(this.getEngDescription(), this.getAfrDescription()));
-		info.setShortDescription(
-				new DescriptionInfo(this.getEngShortDescription(), this.getAfrShortDescription()));
+		info.addDescriptionInfo(new DescriptionInfo(LOCALE_AFRIKAANS, this.getAfrShortDescription(), this.getAfrDescription()));
+		info.addDescriptionInfo(new DescriptionInfo(LOCALE_ENGLISH, this.getEngShortDescription(), this.getEngDescription()));
 		return info;
 	}
 

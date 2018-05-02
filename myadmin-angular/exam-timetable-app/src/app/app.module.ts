@@ -14,13 +14,17 @@ import { ExamTimetableResultComponent } from './components/exam-timetable-result
 import { BlockUIModule} from "ng-block-ui";
 import { HttpInterceptorProviders } from './http-interceptors';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { DescriptionPipe } from './pipes/description.pipe';
+import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExamTimetableSearchComponent,
     OrderByPipe,
-    ExamTimetableResultComponent
+    ExamTimetableResultComponent,
+    DescriptionPipe,
+    ShortDescriptionPipe
   ],
   imports: [
     BrowserModule,

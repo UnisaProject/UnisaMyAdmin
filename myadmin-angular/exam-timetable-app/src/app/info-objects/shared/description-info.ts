@@ -1,9 +1,11 @@
 export class DescriptionInfo {
-    afrikaans: string;
-    english: string;
+  locale: string;
+  shortDescription: string;
+  description: string;
 
-    constructor(afrikaans: string, english: string) {
-        this.afrikaans = afrikaans;
-        this.english = english;
+    constructor(locale: string, shortDescription: string, description: string) {
+        this.locale = locale;
+        this.shortDescription = shortDescription;
+        this.description = description;
     }
 }
