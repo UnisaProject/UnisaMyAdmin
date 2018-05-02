@@ -115,10 +115,7 @@ export class ExamTimetableSearchComponent implements OnInit {
     return this.examPeriodService.getExamPeriods().toPromise()
       .then((examPeriods: ExamPeriodInfo[]) => {
         this.examPeriods = examPeriods;
-      },error => {
-          console.log(error)
-        }
-      );
+      });
 
     /*this.examAdmissionService.getExamAdmissions()
       .mergeMap((examAdmissions: ExamAdmissionInfo[]) => {
