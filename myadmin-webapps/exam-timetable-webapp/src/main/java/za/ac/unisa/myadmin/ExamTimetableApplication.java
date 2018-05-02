@@ -12,11 +12,6 @@ import javax.servlet.Filter;
 @SpringBootApplication
 public class ExamTimetableApplication extends SpringBootServletInitializer {
 
-	@Bean
-	public Filter shallowETagHeaderFilter() {
-		return new ShallowEtagHeaderFilter();
-	}
-
 	// By extending SpringBootServletInitializer and override the configure method
 	// so that the Spring application sources can be configured by
 	// SpringApplicationBuilder. This enables Spring component detection inside a
