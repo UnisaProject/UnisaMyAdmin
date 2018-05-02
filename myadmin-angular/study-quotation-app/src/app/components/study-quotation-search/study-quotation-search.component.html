@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <h5>Student Fees Quotation</h5>
+  </div>
+  <div class="row">
+    Complete the quotation request form below and select "Display".
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="studyFeeForm">
+    <div class="form-group row">
+      <label for="year" class="col-sm-6 col-form-label font-weight-bold">Academic Year</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" id="year" value="{{ today | date: 'yyyy' }}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-6 col-form-label font-weight-bold">If your country of residence or the country in which you
+        intend to write your exam(s) is not in South Africa, please indicate</label>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="countryCode" value="1015">
+              South Africa
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="countryCode" value="1120">
+              Other countries in Africa
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="countryCode" value="4111">
+              All Other Countries
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-6 col-form-label font-weight-bold">Qualification Level</label>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="qualification" value="99999">
+              Undergraduate
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="qualification" value="02011" checked>
+              Postgraduate
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-6 col-form-label font-weight-bold">Qualification Code</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" name="qualificationCode" id="qualificationCode" value="">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-6 col-form-label font-weight-bold">Library access card required? (indicate 'Yes' if you are
+        not in possession of a library card and need access to the library)</label>
+      <div class="col-sm-4">
+        <input type="radio" name="libraryCard" value="No"> No
+        <input type="radio" name="libraryCard" value="Yes"> Yes
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-6 col-form-label font-weight-bold">Do you need to apply for matriculation exemption?</label>
+      <div class="col-sm-4">
+        <input type="radio" name="matricExemption" value="No"> No
+        <input type="radio" name="matricExemption" value="Yes"> Yes
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
+      <div class="form-row" formArrayName="courseCodes">
+        <div class="col-sm mt-3" *ngFor="let cs of courseCodes.controls; index as i">
+          <input type="text" class="form-control" name="courseCode" [formControlName]="i" maxlength="7">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-center">
+      <button type="submit" class="btn btn-primary ">Display</button>
+    </div>
+  </form>
+
+</div>
