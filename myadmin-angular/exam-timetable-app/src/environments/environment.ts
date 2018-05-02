@@ -4,8 +4,5 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  exam_period_service_host_url: 'http://localhost:8080/examtimetable',
-  exam_admission_service_host_url: 'http://localhost:8080/examtimetable',
-  exam_period_date_service_host_url: 'http://localhost:8080/examtimetable'
+  production: false
 };

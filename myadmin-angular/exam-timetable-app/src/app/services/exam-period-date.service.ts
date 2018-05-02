@@ -1,39 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environments/environment';
 
 import { ExamPeriodDateInfo } from './../info-objects';
 
 @Injectable()
 export class ExamPeriodDateService {
 
-  private _endPoint: string;
-
   constructor(private http: HttpClient) {
-    this._endPoint = environment.exam_period_date_service_host_url;
   }
 
   getExamPeriodDates(): Observable<ExamPeriodDateInfo[]> {
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`);
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates');
   }
 
   getExamPeriodDatesByYear(year: number): Observable<ExamPeriodDateInfo[]> {
     const params = new HttpParams().set('year', <string><any>year);
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByExamPeriodCode(examPeriodCode: number): Observable<ExamPeriodDateInfo[]> {
     const params = new HttpParams().set('examPeriodCode', <string><any>examPeriodCode);
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByCourseCodes(courseCodes: string[]): Observable<ExamPeriodDateInfo[]> {
     const params = new HttpParams().set('courseCodes', courseCodes.join(','));
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByYearAndExamPeriodCode(year: number, examPeriodCode: number): Observable<ExamPeriodDateInfo[]> {
@@ -41,7 +37,7 @@ export class ExamPeriodDateService {
       .set('year', <string><any>year)
       .set('examPeriodCode', <string><any>examPeriodCode);
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByYearAndCourseCodes(year: number, courseCodes: string[]): Observable<ExamPeriodDateInfo[]> {
@@ -49,7 +45,7 @@ export class ExamPeriodDateService {
       .set('year', <string><any>year)
       .set('courseCodes', courseCodes.join(','));
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByExamPeriodCodeAndCourseCodes(examPeriodCode: number, courseCodes: string[]): Observable<ExamPeriodDateInfo[]> {
@@ -57,7 +53,7 @@ export class ExamPeriodDateService {
       .set('examPeriodCode', <string><any>examPeriodCode)
       .set('courseCodes', courseCodes.join(','));
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
   getExamPeriodDatesByYearAndExamPeriodCodeAndCourseCodes(year: number, examPeriodCode: number, courseCodes: string[]): Observable<ExamPeriodDateInfo[]> {
@@ -66,7 +62,7 @@ export class ExamPeriodDateService {
       .set('examPeriodCode', <string><any>examPeriodCode)
       .set('courseCodes', courseCodes.join(','));
 
-    return this.http.get<ExamPeriodDateInfo[]>(`${this._endPoint}/rest/examperioddates`, { params });
+    return this.http.get<ExamPeriodDateInfo[]>('/rest/examperioddates', { params });
   }
 
 }
