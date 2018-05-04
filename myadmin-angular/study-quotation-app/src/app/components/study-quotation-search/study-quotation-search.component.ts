@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {StudyQuotationInfo, StudyUnitInfo} from '../../info-objects';
+import { StudyFeeCriteriaService } from '../../services';
 
 @Component({
   selector: 'app-study-quotation-search',
@@ -10,25 +12,28 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 })
 export class StudyQuotationSearchComponent implements OnInit {
 
-  public today: Date;
-
-  public studyFeeForm: FormGroup;
+  public studyFeeForm:FormGroup;
 
   @BlockUI()
-  private blockUI: NgBlockUI;
+  private blockUI:NgBlockUI;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router:Router, private formBuilder:FormBuilder, private studyFeeCriteriaService: StudyFeeCriteriaService) {
     this.initForm();
   }
 
   /**
    * Create the form
    */
-  private initForm(): void {
+  private initForm():void {
     this.blockUI.start();
-    //Todo need 3x6 coursecode array
     this.studyFeeForm = this.formBuilder.group({
-      courseCodes : this.formBuilder.array([
+      academicYear: new FormControl(new Date().getFullYear()),
+      countryCode: new FormControl(),
+      qualificationType: new FormControl('02011'),
+      qualificationCode: new FormControl(),
+      libraryCard: new FormControl('N'),
+      matricExemption: new FormControl('N'),
+      courseCodes: this.formBuilder.array([
         new FormControl(),
         new FormControl(),
         new FormControl(),
@@ -40,16 +45,16 @@ export class StudyQuotationSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.today = new Date();
     this.blockUI.stop();
   }
 
   onSubmit() {
     this.blockUI.start("Loading quote...");
+    this.studyFeeCriteriaService.searchCriteria = {...this.studyFeeForm.value};
     this.router.navigate(["result"]);
   }
 
-  get courseCodes(): FormArray{
+  get courseCodes():FormArray {
     return <FormArray>this.studyFeeForm.controls['courseCodes'];
   }
 

@@ -20,9 +20,25 @@
 			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
 			<artifactId>study-quotation-app</artifactId>
 		</dependency>
+		<!-- Unisa myAdmin service -->
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>study-quotation-service</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
+    		 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
+		<finalName>studyquotation</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<!-- It is used to create executable JAR of the application. -->
 			<plugin>
