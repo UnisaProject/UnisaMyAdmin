@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.service.exam.period.impl;
+package za.ac.unisa.myadmin.service.studyquotation.quotation.impl;
 
 import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
 import org.springframework.stereotype.Service;

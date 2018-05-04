@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.service.exam.period.impl;
+package za.ac.unisa.myadmin.service.studyquotation.quotation.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,9 +16,13 @@ public class StudyQuotationRestServiceImpl {
 	@Qualifier("StudyQuotationService")
 	private StudyQuotationService studyQuotationService;
 
-	@PostMapping(path = { "/studyQuotation/calculateQuotation" })
+	@PostMapping(path = "/studyQuotation/calculateQuotation")
 	public StudyQuotation getQuotation(StudyQuotationRequest studyQuotationRequest) throws OperationFailedException {
 		return this.studyQuotationService.calculateStudyQuotation(studyQuotationRequest);
 	}
 
+	@GetMapping(path = "/studyQuotation/quotationYear")
+	public int getValidQuotationYear(){
+		return 2018; // TODO stub
+	}
 }

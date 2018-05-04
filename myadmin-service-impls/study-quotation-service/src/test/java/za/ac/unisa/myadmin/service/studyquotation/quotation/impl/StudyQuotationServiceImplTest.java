@@ -1,12 +1,12 @@
-package za.ac.unisa.myadmin.service.exam.period.impl;
+package za.ac.unisa.myadmin.service.studyquotation.quotation.impl;
 
 import org.junit.Test;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.service.studyquotation.quotation.impl.StudyQuotationServiceImpl;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class StudyQuotationServiceImplTest {
 
