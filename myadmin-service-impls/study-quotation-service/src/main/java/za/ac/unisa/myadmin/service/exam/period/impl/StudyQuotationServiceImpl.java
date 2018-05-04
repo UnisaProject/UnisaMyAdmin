@@ -8,11 +8,9 @@ import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationService;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyUnit;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service("StudyQuotationService")
@@ -84,16 +82,6 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage)){
 			throw new OperationFailedException("Error while trying to get study unit cost information. " + errorMessage);
 		}
-
-//		setCount(studyFeeProxy.getOutGroupCount());
-//		setExitStateType(studyFeeProxy.getExitStateType());
-//		setExitStateMessage(studyFeeProxy.getExitStateMsg());
-//
-//		if (exception.getException() != null) {
-//			throw exception.getException();
-//		} else if (getExitStateType() < 3) {
-//			throw new Exception(getExitStateMessage());
-//		}
 
 		for(int i=0; i < (studyFeeProxy.getOutGroupCount()-1) ; i++){
 			StudyUnit studyUnit = new StudyUnit();
