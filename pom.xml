@@ -153,6 +153,12 @@
 				<version>2.1.0</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.sakaiproject</groupId>
+				<artifactId>unisa-javaproxies</artifactId>
+				<version>10.5</version>
+			</dependency>
+
 			<!-- Internal dependencies -->
 			<dependency>
 				<groupId>za.ac.unisa.myadmin.services.api</groupId>
