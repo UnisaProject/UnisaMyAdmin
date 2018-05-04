@@ -8,9 +8,15 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
+	<artifactId>study-quotation-service</artifactId>
 	<name>Unisa myAdmin Study Quotation Services</name>
 	<description>Unisa myAdmin Study Quotation Service Implementations</description>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services.api</groupId>
 			<artifactId>service-api</artifactId>
@@ -21,8 +27,12 @@
 			<artifactId>unisa-javaproxies</artifactId>
 			<version>10.5</version>
 		</dependency>
+		<dependency>
+			<groupId>allfusion</groupId>
+			<artifactId>genrt</artifactId>
+			<version>80</version>
+		</dependency>
 	</dependencies>
-	<artifactId>study-quotation-service</artifactId>
 
 
 </project>

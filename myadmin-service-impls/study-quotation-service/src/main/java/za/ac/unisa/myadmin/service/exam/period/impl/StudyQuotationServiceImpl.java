@@ -1,104 +1,142 @@
 package za.ac.unisa.myadmin.service.exam.period.impl;
 
 import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
+import org.springframework.stereotype.Service;
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationService;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyUnit;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
-import java.util.Vector;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class StudyQuotationServiceImpl {
+@Service("StudyQuotationService")
+public class StudyQuotationServiceImpl implements StudyQuotationService {
 
-
-	private Srrqn01sQuoteStudyFees srrqn01sQuoteStudyFees;
-
-	public static final int QUAL_CODE_MISSING = 0;
-	public static final int COOLGEN_ERROR = 1;
-	public static final int NO_ERRORS = 2;
-
-	public void init() throws PropertyVetoException {
-		srrqn01sQuoteStudyFees = new Srrqn01sQuoteStudyFees();
-		srrqn01sQuoteStudyFees.clear();
-		srrqn01sQuoteStudyFees.setInWsUserNumber(9999);
-		srrqn01sQuoteStudyFees.setInWsWorkstationCode("internet");
-		srrqn01sQuoteStudyFees.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-		srrqn01sQuoteStudyFees.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-		srrqn01sQuoteStudyFees.setInCsfClientServerCommunicationsAction("P");
-		srrqn01sQuoteStudyFees.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-		srrqn01sQuoteStudyFees.setInStudentAnnualRecordMkStudentNr(0);
-		srrqn01sQuoteStudyFees.setInWsStudentSurname("A");
-		srrqn01sQuoteStudyFees.setInWsStudentInitials("A");
-		srrqn01sQuoteStudyFees.setInWsStudentMkCorrespondenceLanguage("E");
-		srrqn01sQuoteStudyFees.setInWsAddressPostalCode((short) 1);
+	/**
+	 * Get an instance of the StudyFee proxy
+	 * @return
+	 * @throws PropertyVetoException
+	 */
+	private Srrqn01sQuoteStudyFees getProxyInstance() throws PropertyVetoException {
+		Srrqn01sQuoteStudyFees studyFeeProxy = new Srrqn01sQuoteStudyFees();
+		studyFeeProxy.clear();
+		studyFeeProxy.setInWsUserNumber(9999);
+		studyFeeProxy.setInWsWorkstationCode("internet");
+		studyFeeProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
+		studyFeeProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
+		studyFeeProxy.setInCsfClientServerCommunicationsAction("P");
+		studyFeeProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
+		studyFeeProxy.setInStudentAnnualRecordMkStudentNr(0);
+		studyFeeProxy.setInWsStudentSurname("A");
+		studyFeeProxy.setInWsStudentInitials("A");
+		studyFeeProxy.setInWsStudentMkCorrespondenceLanguage("E");
+		studyFeeProxy.setInWsAddressPostalCode((short) 1);
+		return studyFeeProxy;
 	}
 
-	public int calculateStudyQuotation(StudyQuotation studyQuotation) throws PropertyVetoException, Exception {
-		init();
-		srrqn01sQuoteStudyFees.setInStudentAnnualRecordMkAcademicYear(studyQuotation.getAcademicYear());
+	/**
+	 * Populate all the input parameters from the <code>StudyQuotationRequest</code> onto the proxy class
+	 * @param studyFeeProxy The proxy to populate the inputs to
+	 * @param request The quotation request to copy the inputs from.
+	 * @throws PropertyVetoException
+	 * @throws OperationFailedException
+	 */
+	private void populateInputs(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws PropertyVetoException, OperationFailedException {
+		studyFeeProxy.setInStudentAnnualRecordMkAcademicYear((short)request.getAcademicYear());
 
-		//if ((studyQuotation.getQualification().equalsIgnoreCase("99999")) && (studyQuotation.getQualificationCode().equalsIgnoreCase("00000"))) {
-		if ((studyQuotation.getQualification().equalsIgnoreCase("99999")) && (studyQuotation.getQualificationCode().equalsIgnoreCase(""))) {
-			studyQuotation.reset();
-			return QUAL_CODE_MISSING;
-			//} else if ((studyQuotation.getQualification().equalsIgnoreCase("99999")) && (!studyQuotation.getQualificationCode().equalsIgnoreCase("00000"))) {
-		} else if ((studyQuotation.getQualification().equalsIgnoreCase("99999")) && (!studyQuotation.getQualificationCode().equalsIgnoreCase(""))) {
-			srrqn01sQuoteStudyFees.setInStudentAcademicRecordMkQualificationCode(
-					studyQuotation.getQualificationCode()
-			);
-			studyQuotation.setQualification(studyQuotation.getQualificationCode());
+		if ((request.getQualification().equalsIgnoreCase("99999")) && (request.getQualificationCode().equalsIgnoreCase(""))) {
+			throw new OperationFailedException("Qualification code is missing");
+		} else if ((request.getQualification().equalsIgnoreCase("99999")) && (!request.getQualificationCode().equalsIgnoreCase(""))) {
+			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(request.getQualificationCode());
+			request.setQualification(request.getQualificationCode());
 		} else {
-			srrqn01sQuoteStudyFees.setInStudentAcademicRecordMkQualificationCode(
-					studyQuotation.getQualification()
-			);
+			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(request.getQualification());
 		}
 
-		srrqn01sQuoteStudyFees.setInWsCountryCode(studyQuotation.getCountryCode());
-		srrqn01sQuoteStudyFees.setInSmartcardIefSuppliedFlag(studyQuotation.getLibraryCard().toString());
-		srrqn01sQuoteStudyFees.setInMatrExemptionIefSuppliedFlag(studyQuotation.getMatricExemption());
+		studyFeeProxy.setInWsCountryCode(request.getCountryCode());
+		studyFeeProxy.setInSmartcardIefSuppliedFlag(request.isLibraryCard() ? "Y" : "N");
+		studyFeeProxy.setInMatrExemptionIefSuppliedFlag(request.isMatricExemption() ? "Y" : "N");
 
-		List<String> studyCodes = studyQuotation.getStudyCodes();
+		List<String> studyCodes = request.getStudyCodes();
 		for(int idx = 0 ; idx < studyCodes.size(); idx++){
 			String code = studyCodes.get(idx);
-			srrqn01sQuoteStudyFees.setInGStudentStudyUnitMkStudyUnitCode(idx+1, code.toUpperCase());
+			studyFeeProxy.setInGStudentStudyUnitMkStudyUnitCode(idx+1, code.toUpperCase());
 		}
-		srrqn01sQuoteStudyFees.execute();
+	}
 
-		String errorMessage = srrqn01sQuoteStudyFees.getOutCsfStringsString500();
+	/**
+	 * Build a study quotation using the input request, and the response from the proxy execution.
+	 * @param studyFeeProxy The <code>Srrqn01sQuoteStudyFees</code> proxy that was used to execute the request
+	 * @param request The <code>StudyQuotationRequest</code> request used to request the quotation.
+	 * @return A <code>StudyQuotation</code> object.
+	 * @throws OperationFailedException
+	 */
+	private StudyQuotation buildResponse(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws OperationFailedException {
+		final StudyQuotation responseQuotation = new StudyQuotation(request);
+
+		String errorMessage = studyFeeProxy.getOutCsfStringsString500();
 		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage)){
-			setErrorMessage(errorMessage);
-			if ((errorMessage != null) && (!errorMessage.equals(""))) {
-				studyQuotation.reset();
-				return COOLGEN_ERROR;
-			}
+			throw new OperationFailedException("Error while trying to get study unit cost information. " + errorMessage);
 		}
 
-		setCount(srrqn01sQuoteStudyFees.getOutGroupCount());
-		setExitStateType(srrqn01sQuoteStudyFees.getExitStateType());
-		setExitStateMessage(srrqn01sQuoteStudyFees.getExitStateMsg());
+//		setCount(studyFeeProxy.getOutGroupCount());
+//		setExitStateType(studyFeeProxy.getExitStateType());
+//		setExitStateMessage(studyFeeProxy.getExitStateMsg());
+//
+//		if (exception.getException() != null) {
+//			throw exception.getException();
+//		} else if (getExitStateType() < 3) {
+//			throw new Exception(getExitStateMessage());
+//		}
 
-		if (exception.getException() != null) {
-			throw exception.getException();
-		} else if (getExitStateType() < 3) {
-			throw new Exception(getExitStateMessage());
-		}
-
-		Vector studyUnits = new Vector();
-		for(int i=0; i < (count-1) ; i++){
+		for(int i=0; i < (studyFeeProxy.getOutGroupCount()-1) ; i++){
 			StudyUnit studyUnit = new StudyUnit();
-			studyUnit.setStudyUnitcode(srrqn01sQuoteStudyFees.getOutGInternetWsStudyUnitCode(i));
-			studyUnit.setDescription(srrqn01sQuoteStudyFees.getOutGInternetWsStudyUnitEngShortDescription(i));
-			studyUnit.setFee(srrqn01sQuoteStudyFees.getOutGStudyUnitCostIefSuppliedTotalCurrency(i));
-			studyUnits.add(studyUnit);
+			studyUnit.setStudyUnitcode(studyFeeProxy.getOutGInternetWsStudyUnitCode(i));
+			studyUnit.setDescription(studyFeeProxy.getOutGInternetWsStudyUnitEngShortDescription(i));
+			studyUnit.setFee(studyFeeProxy.getOutGStudyUnitCostIefSuppliedTotalCurrency(i));
+			responseQuotation.addStudyUnit(studyUnit);
 		}
-		studyQuotation.setStudyUnits(studyUnits);
-		studyQuotation.setForeignLevy(srrqn01sQuoteStudyFees.getOutForeignLevyIefSuppliedTotalCurrency());
-		studyQuotation.setLibraryCardCost(srrqn01sQuoteStudyFees.getOutSmartcardIefSuppliedTotalCurrency());
-		studyQuotation.setMatricExemptionCost(srrqn01sQuoteStudyFees.getOutMatrExemptionIefSuppliedTotalCurrency());
-		studyQuotation.setTotalFee(srrqn01sQuoteStudyFees.getOutTotalIefSuppliedTotalCurrency());
-		studyQuotation.setPaymentDue(srrqn01sQuoteStudyFees.getOutRegPaymentIefSuppliedTotalCurrency());
-		studyQuotation.setPrescribedBooks(srrqn01sQuoteStudyFees.getOutWsPrescribedBooksAmount());
+		responseQuotation.setForeignLevy(studyFeeProxy.getOutForeignLevyIefSuppliedTotalCurrency());
+		responseQuotation.setLibraryCardCost(studyFeeProxy.getOutSmartcardIefSuppliedTotalCurrency());
+		responseQuotation.setMatricExemptionCost(studyFeeProxy.getOutMatrExemptionIefSuppliedTotalCurrency());
+		responseQuotation.setTotalFee(studyFeeProxy.getOutTotalIefSuppliedTotalCurrency());
+		responseQuotation.setPaymentDue(studyFeeProxy.getOutRegPaymentIefSuppliedTotalCurrency());
+		responseQuotation.setPrescribedBooks(studyFeeProxy.getOutWsPrescribedBooksAmount());
 
-		return NO_ERRORS;
+		return responseQuotation;
+	}
+
+
+	public StudyQuotation calculateStudyQuotation(StudyQuotationRequest request) throws OperationFailedException {
+		try {
+			// Get a reference to the proxy
+			final Srrqn01sQuoteStudyFees studyFeeProxy = getProxyInstance();
+			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
+			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
+
+			studyFeeProxy.addExceptionListener(exceptionListener);
+
+			// Set all the inputs on the proxy
+			populateInputs(studyFeeProxy, request);
+
+			// Execute the remote call
+			studyFeeProxy.execute();
+
+			// Check if there was an exception
+			if(exceptionReference.get() != null){
+				throw exceptionReference.get();
+			}
+
+			// Get the response from the proxy and return the quotation
+			return buildResponse(studyFeeProxy, request);
+		}catch (PropertyVetoException e){
+			throw new OperationFailedException(e);
+		}
 	}
 }

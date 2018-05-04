@@ -1,11 +1,13 @@
 package za.ac.unisa.myadmin.studyquotation.quotation;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Vector;
 
-public class StudyQuotation {
+/**
+ * The type Study quotation.
+ */
+public class StudyQuotation extends StudyQuotationRequest{
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,13 +15,7 @@ public class StudyQuotation {
 	private String registrationFee;
 
 	/** libraryCard property */
-	private String libraryCard;
-
-	/** libraryCard property */
 	private double libraryCardCost;
-
-	/** matricExemption */
-	private String matricExemption;
 
 	/** matricExemption */
 	private double matricExemptionCost;
@@ -30,14 +26,8 @@ public class StudyQuotation {
 	/** year property */
 	private short academicYear;
 
-	/** qualificationCode property */
-	private String qualificationCode;
-
 	/** foreignLevy property */
 	private double foreignLevy;
-
-	/** countryCode property */
-	private String countryCode;
 
 	/** totalFee property */
 	private double totalFee;
@@ -45,32 +35,29 @@ public class StudyQuotation {
 	/** paymentDue property */
 	private double paymentDue;
 
-	/** qualification property */
-	private String qualification;
-
 	/** studyUnits */
-	private Vector studyUnits;
-
-	/** studyCodes */
-	private List<String> studyCodes;
+	private final List<StudyUnit> studyUnits = new ArrayList<>();
 
 
-	public void reset() {
-		if (Calendar.getInstance().get(Calendar.MONTH) < 11) {
-			academicYear = (short) Calendar.getInstance().get(Calendar.YEAR);
-		} else {
-			/*Removed for test purposes +1*/
-			academicYear = (short) (Calendar.getInstance().get(Calendar.YEAR) + 1 );
-		}
-		this.setCountryCode("1015");
-		this.setQualification("99999");
-		this.setLibraryCard("N");
-		this.setMatricExemption("N");
+	/**
+	 * Instantiates a new Study quotation.
+	 */
+	public StudyQuotation(){}
+
+	/**
+	 * Instantiates a new Study quotation.
+	 *
+	 * @param request the request
+	 */
+	public StudyQuotation(StudyQuotationRequest request){
+		super(request);
 	}
+
 
 	/**
 	 * Returns the registrationFee.
-	 * @return String
+	 *
+	 * @return String registration fee
 	 */
 	public String getRegistrationFee() {
 		return registrationFee;
@@ -78,6 +65,7 @@ public class StudyQuotation {
 
 	/**
 	 * Set the registrationFee.
+	 *
 	 * @param registrationFee The registrationFee to set
 	 */
 	public void setRegistrationFee(String registrationFee) {
@@ -86,7 +74,8 @@ public class StudyQuotation {
 
 	/**
 	 * Returns the prescribedBooks.
-	 * @return String
+	 *
+	 * @return String prescribed books
 	 */
 	public double getPrescribedBooks() {
 		return prescribedBooks;
@@ -94,30 +83,18 @@ public class StudyQuotation {
 
 	/**
 	 * Set the prescribedBooks.
+	 *
 	 * @param prescribedBooks The prescribedBooks to set
 	 */
 	public void setPrescribedBooks(double prescribedBooks) {
 		this.prescribedBooks = prescribedBooks;
 	}
-	/**
-	 * Returns the qualificationCode.
-	 * @return String
-	 */
-	public String getQualificationCode() {
-		return qualificationCode;
-	}
 
-	/**
-	 * Set the qualificationCode.
-	 * @param qualificationCode The qualificationCode to set
-	 */
-	public void setQualificationCode(String qualificationCode) {
-		this.qualificationCode = qualificationCode;
-	}
 
 	/**
 	 * Returns the foreignLevy.
-	 * @return String
+	 *
+	 * @return String foreign levy
 	 */
 	public double getForeignLevy() {
 		return foreignLevy;
@@ -125,31 +102,18 @@ public class StudyQuotation {
 
 	/**
 	 * Set the foreignLevy.
+	 *
 	 * @param d The foreignLevy to set
 	 */
 	public void setForeignLevy(double d) {
 		this.foreignLevy = d;
 	}
 
-	/**
-	 * Returns the countryCode.
-	 * @return String
-	 */
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	/**
-	 * Set the countryCode.
-	 * @param countryCode The countryCode to set
-	 */
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
 
 	/**
 	 * Returns the totalFee.
-	 * @return String
+	 *
+	 * @return String total fee
 	 */
 	public double getTotalFee() {
 		return totalFee;
@@ -157,85 +121,110 @@ public class StudyQuotation {
 
 	/**
 	 * Set the totalFee.
+	 *
 	 * @param totalFee The totalFee to set
 	 */
 	public void setTotalFee(double totalFee) {
 		this.totalFee = totalFee;
 	}
 
-	public Vector getStudyUnits() {
+	/**
+	 * Gets study units.
+	 *
+	 * @return the study units
+	 */
+	public List<StudyUnit> getStudyUnits() {
 		return studyUnits;
 	}
 
-	public void setStudyUnits(Vector studyUnits) {
-		this.studyUnits = studyUnits;
+	/**
+	 * Add study unit.
+	 *
+	 * @param studyUnit the study unit
+	 */
+	public void addStudyUnit(StudyUnit studyUnit){
+		this.studyUnits.add(studyUnit);
 	}
 
-	public String getMatricExemption() {
-		return matricExemption;
+	/**
+	 * Sets study units.
+	 *
+	 * @param studyUnits the study units
+	 */
+	public void setStudyUnits(List<StudyUnit> studyUnits) {
+		this.studyUnits.clear();
+		if(Objects.nonNull(studyUnits)){
+			this.studyUnits.addAll(studyUnits);
+		}
 	}
 
-	public void setMatricExemption(String matricExemption) {
-		this.matricExemption = matricExemption;
-	}
 
-	public short getAcademicYear() {
+	public int getAcademicYear() {
 		return academicYear;
 	}
 
+	/**
+	 * Sets academic year.
+	 *
+	 * @param academicYear the academic year
+	 */
 	public void setAcademicYear(short academicYear) {
 		this.academicYear = academicYear;
 	}
 
-	public String getQualification() {
-		return qualification;
-	}
 
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
-	}
-
-
+	/**
+	 * Gets library card cost.
+	 *
+	 * @return the library card cost
+	 */
 	public double getLibraryCardCost() {
 		return libraryCardCost;
 	}
 
+	/**
+	 * Sets library card cost.
+	 *
+	 * @param libraryCardCost the library card cost
+	 */
 	public void setLibraryCardCost(double libraryCardCost) {
 		this.libraryCardCost = libraryCardCost;
 	}
 
-	public String getLibraryCard() {
-		return libraryCard;
-	}
 
-	public void setLibraryCard(String libraryCard) {
-		this.libraryCard = libraryCard;
-	}
-
+	/**
+	 * Gets matric exemption cost.
+	 *
+	 * @return the matric exemption cost
+	 */
 	public double getMatricExemptionCost() {
 		return matricExemptionCost;
 	}
 
+	/**
+	 * Sets matric exemption cost.
+	 *
+	 * @param matricExemptionCost the matric exemption cost
+	 */
 	public void setMatricExemptionCost(double matricExemptionCost) {
 		this.matricExemptionCost = matricExemptionCost;
 	}
 
+	/**
+	 * Gets payment due.
+	 *
+	 * @return the payment due
+	 */
 	public double getPaymentDue() {
 		return paymentDue;
 	}
 
+	/**
+	 * Sets payment due.
+	 *
+	 * @param paymentDue the payment due
+	 */
 	public void setPaymentDue(double paymentDue) {
 		this.paymentDue = paymentDue;
-	}
-
-	public List<String> getStudyCodes() {
-		return studyCodes;
-	}
-
-	public void setStudyCodes(List<String> studyCodes) {
-		this.studyCodes.clear();
-		if (Objects.nonNull(studyCodes)) {
-			this.studyCodes.addAll(studyCodes);
-		}
 	}
 }

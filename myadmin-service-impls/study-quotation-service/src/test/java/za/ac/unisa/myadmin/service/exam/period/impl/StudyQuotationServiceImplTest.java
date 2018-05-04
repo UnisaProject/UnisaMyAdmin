@@ -1,22 +1,31 @@
 package za.ac.unisa.myadmin.service.exam.period.impl;
 
+import org.junit.Test;
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
-import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class StudyQuotationServiceImplTest {
 
 
-    public StudyQuotation createRequest(){
-        return null;
+    public StudyQuotationRequest createRequest(){
+        StudyQuotationRequest request = new StudyQuotationRequest();
+        request.setStudyCodes(Arrays.asList("a", "b"));
+        request.setQualification("qual");
+        request.setQualificationCode("aa");
+        request.setCountryCode("1015");
+        request.setAcademicYear((short)2018);
+        request.setMatricExemption(true);
+        request.setLibraryCard(true);
+        return request;
     }
 
-    public Srrqn01sQuoteStudyFees getProxyService(){
-        return null;
-    }
-
-    public void testGetQuotation(){
-
+    @Test
+    public void testGetQuotation() throws OperationFailedException {
+        StudyQuotationServiceImpl studyQuotationService = new StudyQuotationServiceImpl();
+        StudyQuotation quotation = studyQuotationService.calculateStudyQuotation(createRequest());
     }
 }
