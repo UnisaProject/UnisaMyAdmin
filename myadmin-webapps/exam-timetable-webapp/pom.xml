@@ -19,32 +19,27 @@
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
 			<artifactId>exam-timetable-app</artifactId>
-			<version>${exam-timetable-app-version}</version>
 		</dependency>
 
 		<!-- Unisa myAdmin services -->
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>exam-period-service</artifactId>
-			<version>${exam-period-services-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>exam-admission-service</artifactId>
-			<version>${exam-admission-services-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>exam-period-date-service</artifactId>
-			<version>${exam-period-date-services-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>exam-paper-details-service</artifactId>
-			<version>${exam-paper-details-services-version}</version>
 		</dependency>
 	</dependencies>
 
@@ -52,14 +47,14 @@
 		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
 			 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
 		<finalName>examtimetable</finalName>
-		
+
 		<resources>
 	        <resource>
 	            <directory>src/main/resources</directory>
 	            <filtering>true</filtering>
 	        </resource>
 	    </resources>
-    
+
 		<plugins>
 			<!-- It is used to create executable JAR of the application. -->
 			<plugin>

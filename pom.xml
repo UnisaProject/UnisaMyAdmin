@@ -21,18 +21,6 @@
 	</parent>
 
 	<properties>
-		<!-- Unisa myAdmin service projects version -->
-		<common-services-version>1.0.0-SNAPSHOT</common-services-version>
-		<exam-admission-services-version>1.0.0-SNAPSHOT</exam-admission-services-version>
-		<exam-paper-details-services-version>1.0.0-SNAPSHOT</exam-paper-details-services-version>
-		<exam-period-date-services-version>1.0.0-SNAPSHOT</exam-period-date-services-version>
-		<exam-period-services-version>1.0.0-SNAPSHOT</exam-period-services-version>
-		<service-api-version>1.0.0-SNAPSHOT</service-api-version>
-
-		<!-- Unisa myAdmin UI projects version -->
-		<exam-timetable-app-version>1.0.0-SNAPSHOT</exam-timetable-app-version>
-		<study-quotation-app-version>1.0.0-SNAPSHOT</study-quotation-app-version>
-
 		<!--  3rd party libraries -->
 		<java.version>1.8</java.version> <!-- Default java version is 1.6 configured in the spring starter parent project -->
 		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
@@ -57,7 +45,7 @@
 		<module>myadmin-angular</module>
 		<module>myadmin-webapps</module>
 	</modules>
-	
+
 	<profiles>
 		<profile>
 			<id>local</id>
@@ -80,7 +68,7 @@
 				</pluginManagement>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>dev</id>
 			<properties>
@@ -139,11 +127,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<!-- Define the version of the JBoss Java EE APIs we want to use -->
-			<!-- JBoss distributes a complete set of Java EE APIs including a Bill 
-				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
-				of artifacts. We use this here so that we always get the correct versions 
-				of artifacts. Here we use the jboss-javaee-7.0 stack (you can read this as 
-				the JBoss stack of the Java EE APIs). You can actually use this stack with 
+			<!-- JBoss distributes a complete set of Java EE APIs including a Bill
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
+				of artifacts. We use this here so that we always get the correct versions
+				of artifacts. Here we use the jboss-javaee-7.0 stack (you can read this as
+				the JBoss stack of the Java EE APIs). You can actually use this stack with
 				any version of WildFly that implements Java EE. -->
 			<dependency>
 				<groupId>org.jboss.spec</groupId>
@@ -152,9 +140,78 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${javax.ws.rs-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>javax.persistence</artifactId>
+				<version>2.1.0</version>
+			</dependency>
+
+			<!-- Internal dependencies -->
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services.api</groupId>
+				<artifactId>service-api</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>common-services</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>exam-admission-service</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>exam-period-service</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>exam-admission-service</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>exam-period-date-service</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>exam-paper-details-service</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<!-- Angular Apps -->
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
+				<artifactId>study-quotation-app</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
+				<artifactId>exam-timetable-app</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
-	
+
 	<dependencies>
 		<!-- Import the Servlet API, we use provided scope as the API is included in WildFly -->
 		<dependency>
@@ -162,7 +219,7 @@
 			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Embedded database for local development environment -->
 		<dependency>
 			<groupId>com.h2database</groupId>

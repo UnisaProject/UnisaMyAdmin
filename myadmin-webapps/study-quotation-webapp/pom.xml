@@ -19,7 +19,6 @@
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
 			<artifactId>study-quotation-app</artifactId>
-			<version>${study-quotation-app-version}</version>
 		</dependency>
 	</dependencies>
 
