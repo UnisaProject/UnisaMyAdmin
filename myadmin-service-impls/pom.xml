@@ -24,5 +24,6 @@
 		<module>exam-paper-details-service</module>
 		<module>exam-period-date-service</module>
 		<module>exam-period-service</module>
+		<module>study-quotation-service</module>
 	</modules>
 </project>
