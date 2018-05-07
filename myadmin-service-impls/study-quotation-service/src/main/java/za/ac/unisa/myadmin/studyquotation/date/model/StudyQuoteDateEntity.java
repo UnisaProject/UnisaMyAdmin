@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table("REGDAT")
+@Table(name="REGDAT")
 @Entity
 public class StudyQuoteDateEntity implements Serializable {
 
