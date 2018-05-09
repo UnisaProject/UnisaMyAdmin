@@ -1,11 +1,11 @@
-package za.ac.unisa.myadmin.studyquotation.date.impl;
+package za.ac.unisa.myadmin.service.studyquotation.date.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import za.ac.unisa.myadmin.studyquotation.date.StudyQuotationDateService;
-import za.ac.unisa.myadmin.studyquotation.date.dao.StudyQuoteDateRepository;
-import za.ac.unisa.myadmin.studyquotation.date.model.StudyQuoteDateEntity;
+import za.ac.unisa.myadmin.service.studyquotation.date.StudyQuotationDateService;
+import za.ac.unisa.myadmin.service.studyquotation.date.dao.StudyQuoteDateRepository;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
 
 import java.time.Instant;
 import java.time.temporal.ChronoField;

@@ -9,13 +9,13 @@
     <div class="col-sm-2">
       <p class="font-weight-bold">Academic Year</p>
     </div>
-    <div class="col-sm-6">{{ studyQuotationInfo.academicYear }}</div>
+    <div class="col-sm-6">{{ studyQuotationInfo?.academicYear }}</div>
   </div>
   <div class="row">
     <div class="col-sm-2">
       <p class="font-weight-bold">Qualification Code</p>
     </div>
-    <div class="col-sm-6">{{ studyQuotationInfo.qualificationType }} : {{studyQuotationInfo.qualificationCode}}</div>
+    <div class="col-sm-6">{{ studyQuotationInfo?.qualificationType }} : {{studyQuotationInfo?.qualificationCode}}</div>
   </div>
   <h4>Study Fees</h4>
   <table class="table table-sm table-striped table-hover">
@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let studyUnit of studyQuotationInfo.studyUnits">
+    <tr *ngFor="let studyUnit of studyQuotationInfo?.studyUnits">
       <td>{{ studyUnit.studyUnitcode }}</td>
       <td>{{ studyUnit.description }}</td>
       <td>R {{ studyUnit.fee }}</td>

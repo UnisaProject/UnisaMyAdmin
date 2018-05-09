@@ -1,11 +1,10 @@
-package za.ac.unisa.myadmin.studyquotation.date.dao;
+package za.ac.unisa.myadmin.service.studyquotation.date.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import za.ac.unisa.myadmin.studyquotation.date.model.StudyQuoteDateEntity;
-import za.ac.unisa.myadmin.studyquotation.date.model.StudyQuoteDateIdentity;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateIdentity;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.Optional;
 
 public interface StudyQuoteDateRepository extends JpaRepository<StudyQuoteDateEntity, StudyQuoteDateIdentity> {

@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.studyquotation.date.model;
+package za.ac.unisa.myadmin.service.studyquotation.date.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

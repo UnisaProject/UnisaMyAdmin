@@ -14,6 +14,7 @@ public class StudyQuotationApplication extends SpringBootServletInitializer {
 	// Jboss/Wildfly application server.
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		javax.xml.ws.Provider x ;
 		return application.sources(StudyQuotationApplication.class);
 	}
 

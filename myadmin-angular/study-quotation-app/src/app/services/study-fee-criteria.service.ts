@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { StudyQuotationInfo } from '../info-objects';
+import { StudyQuotationRequest } from '../info-objects';
 
 @Injectable()
 export class StudyFeeCriteriaService {
-  searchCriteria: StudyQuotationInfo;
+  searchCriteria: StudyQuotationRequest;
 
   constructor() {
-    this.searchCriteria = new StudyQuotationInfo();
+    this.searchCriteria = new StudyQuotationRequest();
   }
 
 }

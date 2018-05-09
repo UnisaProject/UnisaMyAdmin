@@ -1,0 +1,6 @@
+<scanning xmlns="urn:jboss:scanning:1.0">
+	<path name="genrt-80.jar">
+		<exclude name="com.ca.gen800.**"/>
+		<exclude name="com.ca.gen80.wsrt.router.GenServiceRouter"/>
+	</path>
+</scanning>

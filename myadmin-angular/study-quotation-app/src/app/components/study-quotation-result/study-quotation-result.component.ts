@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import { StudyFeeCriteriaService, StudyFeeQuotationService } from '../../services';
-import { StudyQuotationInfo, StudyUnitInfo } from '../../info-objects';
+import { StudyQuotationRequest, StudyUnitInfo } from '../../info-objects';
 import {Router} from '@angular/router';
 
 @Component({
@@ -11,21 +11,22 @@ import {Router} from '@angular/router';
 })
 export class StudyQuotationResultComponent implements OnInit {
 
-  public studyQuotationInfo:StudyQuotationInfo;
+  public studyQuotationInfo:StudyQuotationRequest;
 
   @BlockUI()
   private blockUI: NgBlockUI;
 
-  constructor( private studyFeeCriteriaService: StudyFeeCriteriaService, private studyFeeQuotationService: StudyFeeQuotationService) { }
+  constructor(private studyFeeCriteriaService: StudyFeeCriteriaService,
+              private studyFeeQuotationService: StudyFeeQuotationService) { }
 
   ngOnInit() {
     this.blockUI.stop();
     this.calculateStudyQuotation(this.studyFeeCriteriaService.searchCriteria);
   }
 
-  private calculateStudyQuotation(searchCriteria: StudyQuotationInfo): void {
+  private calculateStudyQuotation(searchCriteria: StudyQuotationRequest): void {
     this.studyFeeQuotationService.calculateStudyQuotation(searchCriteria)
-      .subscribe((studyQuotationInfo: StudyQuotationInfo) => {
+      .subscribe((studyQuotationInfo: StudyQuotationRequest) => {
           this.studyQuotationInfo = studyQuotationInfo;
         },
         error => {

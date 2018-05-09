@@ -1,2 +1,2 @@
-export * from './study-quotation-info';
+export * from './study-quotation-request';
 export * from './study-unit-info';

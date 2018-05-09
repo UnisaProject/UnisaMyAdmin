@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.studyquotation.date;
+package za.ac.unisa.myadmin.service.studyquotation.date;
 
 public interface StudyQuotationDateService {
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {StudyQuotationInfo, StudyUnitInfo} from '../../info-objects';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {StudyQuotationRequest, StudyUnitInfo} from '../../info-objects';
 import { StudyFeeCriteriaService } from '../../services';
 
 @Component({
@@ -27,13 +27,25 @@ export class StudyQuotationSearchComponent implements OnInit {
   private initForm():void {
     this.blockUI.start();
     this.studyFeeForm = this.formBuilder.group({
-      academicYear: new FormControl(new Date().getFullYear()),
-      countryCode: new FormControl(),
-      qualificationType: new FormControl('02011'),
-      qualificationCode: new FormControl(),
-      libraryCard: new FormControl('N'),
-      matricExemption: new FormControl('N'),
+      academicYear: [new Date().getFullYear(), Validators.required],
+      countryCode: ["1015", Validators.required],
+      qualificationType: ["02011", Validators.required],
+      qualificationCode: [null, Validators.required],
+      libraryCard: [false, Validators.required],
+      matricExemption: [false, Validators.required],
       courseCodes: this.formBuilder.array([
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
         new FormControl(),
         new FormControl(),
         new FormControl(),

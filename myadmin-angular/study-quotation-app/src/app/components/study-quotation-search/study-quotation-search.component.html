@@ -71,29 +71,30 @@
       <label class="col-sm-6 col-form-label font-weight-bold">Library access card required? (indicate 'Yes' if you are
         not in possession of a library card and need access to the library)</label>
       <div class="col-sm-4">
-        <input type="radio" value="N" formControlName="libraryCard"> No
-        <input type="radio" value="Y" formControlName="libraryCard"> Yes
+        <input type="radio" [value]="false" formControlName="libraryCard"> No
+        <input type="radio" [value]="true" formControlName="libraryCard"> Yes
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-6 col-form-label font-weight-bold">Do you need to apply for matriculation exemption?</label>
       <div class="col-sm-4">
-        <input type="radio" value="N" formControlName="matricExemption"> No
-        <input type="radio" value="Y" formControlName="matricExemption"> Yes
+        <input type="radio" [value]="false" formControlName="matricExemption"> No
+        <input type="radio" [value]="true" formControlName="matricExemption"> Yes
       </div>
     </div>
-    <div class="form-group">
+    {{studyFeeForm.value | json}}
+    <div class="form-group"  formArrayName="courseCodes">
       <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
-      <div class="form-row" formArrayName="courseCodes">
-        <div class="col-sm mt-3" *ngFor="let cs of courseCodes.controls; index as i">
-          <input type="text" class="form-control" name="courseCode" [formControlName]="i" maxlength="7">
+      <div class="form-row" *ngFor="let row of [0,6,12]">
+        <div class="col-sm mt-3" *ngFor="let col of [0,1,2,3,4,5]">
+          <input type="text" class="form-control" name="courseCode" [formControlName]="col + row" maxlength="7">
         </div>
       </div>
     </div>
 
     <div class="form-group text-center">
       <button type="submit" class="btn btn-primary ">Display</button>
-      <!--<button type="reset" class="btn btn-secondary">Clear</button>-->
+      <button type="reset" class="btn btn-secondary">Clear</button>
     </div>
   </form>
   <br/>

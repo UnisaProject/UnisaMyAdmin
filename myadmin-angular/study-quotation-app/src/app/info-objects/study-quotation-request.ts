@@ -1,12 +1,12 @@
 import {StudyUnitInfo} from './';
 
-export class StudyQuotationInfo {
+export class StudyQuotationRequest {
   academicYear:number;
   countryCode:string;
   qualificationType:string;
   qualificationCode:string;
-  libraryCard:string;
-  matricExemption:string;
+  libraryCard:boolean;
+  matricExemption:boolean;
   courseCodes:string[];
   studyUnits:StudyUnitInfo[];
 
@@ -14,8 +14,8 @@ export class StudyQuotationInfo {
               countryCode?:string,
               qualificationType?:string,
               qualificationCode?:string,
-              libraryCard?:string,
-              matricExemption?:string,
+              libraryCard?:boolean,
+              matricExemption?:boolean,
               studyUnits?:StudyUnitInfo[],
               ...courseCodes:string[]) {
     this.academicYear = academicYear;
