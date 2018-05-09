@@ -2,6 +2,7 @@ package za.ac.unisa.myadmin.service.studyquotation.quotation.impl;
 
 import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
@@ -48,13 +49,22 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 	private void populateInputs(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws PropertyVetoException, OperationFailedException {
 		studyFeeProxy.setInStudentAnnualRecordMkAcademicYear((short)request.getAcademicYear());
 
-		if ((request.getQualification().equalsIgnoreCase("99999")) && (request.getQualificationCode().equalsIgnoreCase(""))) {
+		final String POSTGRAD = "99999";
+		final String inputQualification = request.getQualification();
+		final String inputQualificationCode = request.getQualificationCode();
+
+		// If both the qualification and qualification code is unset
+		if ((POSTGRAD.equalsIgnoreCase(inputQualification)) && ("".equalsIgnoreCase(inputQualificationCode))) {
 			throw new OperationFailedException("Qualification code is missing");
-		} else if ((request.getQualification().equalsIgnoreCase("99999")) && (!request.getQualificationCode().equalsIgnoreCase(""))) {
-			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(request.getQualificationCode());
-			request.setQualification(request.getQualificationCode());
-		} else {
-			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(request.getQualification());
+		}
+		// If the qualification is unset, but the qualification code is set
+		else if ((POSTGRAD.equalsIgnoreCase(inputQualification)) && (!"".equalsIgnoreCase(inputQualificationCode))) {
+			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(inputQualificationCode);
+			request.setQualification(inputQualificationCode);
+		}
+		// Else both qualification and qualification code is set
+		else {
+			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(inputQualification);
 		}
 
 		studyFeeProxy.setInWsCountryCode(request.getCountryCode());
@@ -79,7 +89,7 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		final StudyQuotation responseQuotation = new StudyQuotation(request);
 
 		String errorMessage = studyFeeProxy.getOutCsfStringsString500();
-		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage)){
+		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage) && StringUtils.hasText(errorMessage)){
 			throw new OperationFailedException("Error while trying to get study unit cost information. " + errorMessage);
 		}
 
