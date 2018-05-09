@@ -9,7 +9,6 @@
 		<groupId>za.ac.unisa.myadmin.services</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
 	<artifactId>study-quotation-service</artifactId>
 	<name>Unisa myAdmin Study Quotation Services</name>
 
@@ -33,16 +32,17 @@
 			<groupId>za.ac.unisa.myadmin.services.api</groupId>
 			<artifactId>service-api</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.sakaiproject</groupId>
 			<artifactId>unisa-javaproxies</artifactId>
-			<version>10.5</version>
 		</dependency>
 		<dependency>
 			<groupId>allfusion</groupId>
 			<artifactId>genrt</artifactId>
-			<version>80</version>
 		</dependency>
 	</dependencies>
 
