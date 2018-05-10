@@ -4,6 +4,7 @@ import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {StudyQuotationRequest, StudyUnitInfo} from '../../info-objects';
 import { StudyFeeCriteriaService } from '../../services';
+import {atleastOneCourseCode} from './atleast-one.validator';
 
 @Component({
   selector: 'app-study-quotation-search',
@@ -53,7 +54,7 @@ export class StudyQuotationSearchComponent implements OnInit {
         new FormControl(),
         new FormControl(),
       ])
-    });
+    },{ validator : Validators.compose([atleastOneCourseCode()])});
   }
 
   ngOnInit() {
