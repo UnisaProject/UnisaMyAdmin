@@ -20,7 +20,6 @@ export class StudyQuotationResultComponent implements OnInit {
               private studyFeeQuotationService: StudyFeeQuotationService) { }
 
   ngOnInit() {
-    this.blockUI.stop();
     this.calculateStudyQuotation(this.studyFeeCriteriaService.searchCriteria);
   }
 
@@ -30,10 +29,11 @@ export class StudyQuotationResultComponent implements OnInit {
           this.studyQuotationInfo = studyQuotationInfo;
         },
         error => {
-          console.log(error)
+          console.log(error);
+          this.blockUI.stop();
         },
         () => {
-          this.blockUI.stop()
+          this.blockUI.stop();
         }
       );
   }
