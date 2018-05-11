@@ -18,22 +18,65 @@
     <div class="col-sm-6">{{ studyQuotationInfo?.qualificationType }} : {{studyQuotationInfo?.qualificationCode}}</div>
   </div>
   <h4>Study Fees</h4>
-  <table class="table table-sm table-striped table-hover">
+<div class="table-responsive-sm">
+  <table class="table table-hover">
     <thead>
     <tr>
       <th scope="col">Study Unit</th>
-      <th scope="col">Description</th>
+      <th scope="col" colspan="2">Description</th>
       <th scope="col">Fee</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let studyUnit of studyQuotationInfo?.studyUnits">
       <td>{{ studyUnit.studyUnitcode }}</td>
-      <td>{{ studyUnit.description }}</td>
+      <td colspan="2">{{ studyUnit.description }}</td>
       <td>R {{ studyUnit.fee }}</td>
+    </tr>
+    <tr><td colspan="4"> <br></td></tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Prescribed Books</th>
+      <th>{{studyQuotationInfo?.prescribedBooks}}</th>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Levy for Foreign Countries</th>
+      <th>{{studyQuotationInfo?.foreignLevy}}</th>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Library Access Card</th>
+      <th>{{studyQuotationInfo?.libraryCardCost}}</th>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Matriculation Exemption Fee</th>
+      <th>{{studyQuotationInfo?.matricExemptionCost}}</th>
+    </tr>
+    <tr><td colspan="4"> <br></td></tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row" class="text-right">Total</th>
+      <th>{{studyQuotationInfo?.totalFee}}</th>
+    </tr>
+    <tr><td colspan="4"> <br></td></tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row" class="text-right">Payment due with Registration</th>
+      <th>{{studyQuotationInfo?.paymentDue}}</th>
     </tr>
     </tbody>
   </table>
+  </div>
+  <div class="row">
+    <p>NB. Please note that this 'Study Fees Quotation' calculates the appropriate monies in respect of study fees and postage fees only. It does not take the balance on your student account into consideration.</p>
+  </div>
+  <div class="row">
+    <p>NB: The Matriculation exemption fee forms part of the minimum amount payable on registration. If you indicated 'No' at 'Do you need to apply for matriculation exemption?' and it is determined on registration that you should have applied, you will be required to pay the appropriate amount before your application for registration can be processed.</p>
+  </div>
   <div class="row mb-3">
     <div class="col">
       <a class="btn btn-primary" routerLink="/search">Back</a>
