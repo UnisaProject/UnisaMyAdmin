@@ -35,7 +35,7 @@ public class ExamPeriodDateRestServiceImpl {
 			@RequestParam(value = "courseCodes", required = false) List<String> courseCodes,
 			@Context HttpServletRequest httpServletRequest)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		Set<String> allowedParameters = new HashSet<String>();
+		Set<String> allowedParameters = new HashSet<>();
 
 		allowedParameters.clear();
 		allowedParameters.add("year");
