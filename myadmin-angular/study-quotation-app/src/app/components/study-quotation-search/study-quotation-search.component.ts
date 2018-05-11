@@ -63,7 +63,13 @@ export class StudyQuotationSearchComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start("Loading quote...");
-    this.studyFeeCriteriaService.searchCriteria = {...this.studyFeeForm.value};
+    const criteria: StudyQuotationRequest = {...this.studyFeeForm.value};
+
+    // Filter out any blank course codes
+    criteria.courseCodes = criteria.courseCodes.filter(c => c !== null && c !== "");
+
+
+    this.studyFeeCriteriaService.searchCriteria = criteria;
     this.router.navigate(["result"]);
   }
 
