@@ -67,6 +67,7 @@ export class StudyQuotationSearchComponent implements OnInit {
     }
     else{
       this.studyFeeForm.patchValue(this.studyFeeCriteriaService.searchCriteria)
+      this.blockUI.stop()
     }
   }
 

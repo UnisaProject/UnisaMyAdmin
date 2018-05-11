@@ -82,7 +82,6 @@
         <input type="radio" [value]="true" formControlName="matricExemption"> Yes
       </div>
     </div>
-    {{studyFeeForm.value | json}}
     <div class="form-group"  formArrayName="courseCodes">
       <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
       <div class="form-row" *ngFor="let row of [0,6,12]">
@@ -98,5 +97,4 @@
     </div>
   </form>
   <br/>
-  <!--<pre>{{ studyFeeForm.value | json }}</pre>-->
 </div>
