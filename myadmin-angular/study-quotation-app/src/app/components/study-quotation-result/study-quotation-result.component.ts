@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from '../../services';
-import {StudyQuotationRequest} from '../../info-objects';
-import {StudyQuotation} from "../../info-objects/study-quotation";
+import {StudyQuotationRequest, StudyQuotation} from '../../info-objects';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -23,6 +22,7 @@ export class StudyQuotationResultComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.blockUI.start("Loading quote...");
     this.calculateStudyQuotation(this.studyFeeCriteriaService.searchCriteria);
   }
 
