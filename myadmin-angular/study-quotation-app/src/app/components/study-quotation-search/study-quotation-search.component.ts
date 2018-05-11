@@ -58,6 +58,7 @@ export class StudyQuotationSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.studyFeeForm.patchValue(this.studyFeeCriteriaService.searchCriteria);
     this.blockUI.stop();
   }
 

@@ -6,7 +6,7 @@ export class StudyFeeCriteriaService {
   searchCriteria: StudyQuotationRequest;
 
   constructor() {
-    this.searchCriteria = new StudyQuotationRequest();
+    this.searchCriteria = new StudyQuotationRequest(new Date().getFullYear(), "1015", "02011", "00000", false, false, null);
   }
 
 }
