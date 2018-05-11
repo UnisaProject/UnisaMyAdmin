@@ -1,27 +1,41 @@
-import {StudyUnitInfo} from './';
+/**
+ * An interface the defines an object that represents the request details
+ * for a study fee quotation.
+ */
+export interface StudyQuotationRequest {
 
-export class StudyQuotationRequest {
+  /**
+   * Academic year to request a quotation for
+   */
   academicYear:number;
-  countryCode:string;
-  qualificationType:string;
-  qualificationCode:string;
-  libraryCard:boolean;
-  matricExemption:boolean;
-  courseCodes:string[];
 
-  constructor(academicYear?:number,
-              countryCode?:string,
-              qualificationType?:string,
-              qualificationCode?:string,
-              libraryCard?:boolean,
-              matricExemption?:boolean,
-              ...courseCodes:string[]) {
-    this.academicYear = academicYear;
-    this.countryCode = countryCode;
-    this.qualificationType = qualificationType;
-    this.qualificationCode = qualificationCode;
-    this.libraryCard = libraryCard;
-    this.matricExemption = matricExemption;
-    this.courseCodes = courseCodes;
-  }
+  /**
+   * Country code of study
+   */
+  countryCode:string;
+
+  /**
+   * Qualification type.
+   */
+  qualificationType:string;
+
+  /**
+   * Qualification code.
+   */
+  qualificationCode:string;
+
+  /**
+   * Flag if a library card is required
+   */
+  libraryCard:boolean;
+
+  /**
+   * Flag if matric exception is required.
+   */
+  matricExemption:boolean;
+
+  /**
+   * List of course codes to get a quotation for.
+   */
+  courseCodes:string[];
 }

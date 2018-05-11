@@ -5,13 +5,15 @@ import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntit
 import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateIdentity;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface StudyQuoteDateRepository extends JpaRepository<StudyQuoteDateEntity, StudyQuoteDateIdentity> {
 
 	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYear(String type, int semesterPeriod, int academicYear);
 
-	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqualAndToDateLessThanEqual(String type, int semesterPeriod, int academicYear, Instant sysdate, Instant sysDate);
+	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqualAndToDateLessThanEqual(String type, int semesterPeriod, int academicYear, LocalDate sysdate, LocalDate sysDate);
 
-	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqual(String type, int semesterPeriod, int academicYear, Instant sysDate);
+	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqual(String type, int semesterPeriod, int academicYear, LocalDate sysDate);
 }

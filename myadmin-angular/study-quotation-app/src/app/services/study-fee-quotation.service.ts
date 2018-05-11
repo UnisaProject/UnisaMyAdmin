@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
-import {StudyQuotationRequest} from './../info-objects';
+import {StudyQuotationRequest} from '../info-objects';
 import {StudyQuotation} from "../info-objects/study-quotation";
 
 @Injectable()

@@ -1,14 +1,20 @@
-export class StudyUnitInfo {
+/**
+ * An interface defining an object that represents study unit
+ */
+export interface StudyUnitInfo {
+
+  /**
+   * Study unit code.
+   */
   studyUnitcode:string;
+
+  /**
+   * Description of the study unit
+   */
   description:string;
+
+  /**
+   * For for the study unit.
+   */
   fee:number;
-
-  constructor(studyUnitcode?:string,
-              description?:string,
-              fee?:number) {
-    this.studyUnitcode = studyUnitcode;
-    this.description = description;
-    this.fee = fee;
-  }
-
 }

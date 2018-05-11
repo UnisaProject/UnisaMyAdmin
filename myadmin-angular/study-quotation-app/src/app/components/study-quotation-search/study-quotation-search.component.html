@@ -94,7 +94,7 @@
 
     <div class="form-group text-center">
       <button type="submit" class="btn btn-primary" [disabled]="studyFeeForm.invalid">Display</button>
-      <button type="reset" class="btn btn-secondary">Clear</button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">Clear</button>
     </div>
   </form>
   <br/>
