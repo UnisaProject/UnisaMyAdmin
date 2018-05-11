@@ -42,7 +42,7 @@ public class ExamPeriodRestServiceImpl {
 			@RequestParam(value = "codes", required = false) List<Integer> codes,
 			@Context HttpServletRequest httpServletRequest)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		Set<String> allowedParameters = new HashSet<String>();
+		Set<String> allowedParameters = new HashSet<>();
 
 		allowedParameters.clear();
 		allowedParameters.add("codes");

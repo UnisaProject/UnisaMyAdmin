@@ -5,9 +5,5 @@
 			<subsystem name="jaxrs" />
 			<subsystem name="webservices" />
 		</exclude-subsystems>
-		<exclusions>
-			<module name="org.jboss.as.webservices.*" />
-			<module name="org.jboss.ws.*" />
-		</exclusions>
 	</deployment>
 </jboss-deployment-structure>
