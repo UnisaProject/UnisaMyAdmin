@@ -8,6 +8,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angul
 import {atleastOneCourseCode} from "./atleast-one.validator";
 import {selectedExamPeriod} from "./exam-period.validator";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {OrderByPipe} from "../../directives/orderby.pipe";
 
 /**
  * Component to allow a user to enter criteria to search for an exam timetable.
@@ -15,7 +16,10 @@ import {BlockUI, NgBlockUI} from "ng-block-ui";
 @Component({
   selector: 'app-exam-timetable-search',
   templateUrl: './exam-timetable-search.component.html',
-  styleUrls: ['./exam-timetable-search.component.scss']
+  styleUrls: ['./exam-timetable-search.component.scss'],
+  providers : [
+    OrderByPipe
+  ]
 })
 export class ExamTimetableSearchComponent implements OnInit {
 
@@ -24,13 +28,10 @@ export class ExamTimetableSearchComponent implements OnInit {
    */
   public today: Date;
 
-  // TODO remove
-  public examYears: number[];
-
   /**
    * Exam periods the user can choose from
    */
-  public examPeriods: ExamPeriodInfo[];
+  public examPeriods: ExamPeriodInfo[] = [];
 
   /**
    * The form the user is busy completing on screen
@@ -51,12 +52,14 @@ export class ExamTimetableSearchComponent implements OnInit {
    * @param {ExamPeriodService} examPeriodService
    * @param {SearchCriteriaService} searchCriteriaService
    * @param {FormBuilder} formBuilder
+   * @param orderByPipe
    */
   constructor(private router: Router,
               private examAdmissionService: ExamAdmissionService,
               private examPeriodService: ExamPeriodService,
               private searchCriteriaService: SearchCriteriaService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private orderByPipe: OrderByPipe) {
     this.initForm();
   }
 
@@ -79,12 +82,36 @@ export class ExamTimetableSearchComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.getExamPeriods().then(()=>{
+    this.getExamPeriods().then(
+      ()=>{
+        this.blockUI.stop();
+        this.defaultForm()
+      },
+      ()=>{
+        this.blockUI.stop();
+      });
+  }
+
+  /**
+   * Set the form to a default state
+   */
+  private defaultForm(): void{
+    if(this.searchCriteriaService.searchCriteria !== null){
       this.searchForm.patchValue(this.searchCriteriaService.searchCriteria);
-      this.blockUI.stop();
-    }, ()=>{
-      this.blockUI.stop();
-    });
+    }
+    else {
+      this.resetForm();
+    }
+  }
+
+  /**
+   * Rest the form to a clean state
+   */
+  resetForm() : void{
+    this.searchForm.patchValue({
+      examPeriod : this.examPeriods[0],
+      courseCodes : [null, null, null, null, null, null ]
+    })
   }
 
   /**
@@ -114,31 +141,8 @@ export class ExamTimetableSearchComponent implements OnInit {
   private getExamPeriods(): Promise<any> {
     return this.examPeriodService.getExamPeriods().toPromise()
       .then((examPeriods: ExamPeriodInfo[]) => {
-        this.examPeriods = examPeriods;
+        this.examPeriods = this.orderByPipe.transform(examPeriods, 'code');
       });
-
-    /*this.examAdmissionService.getExamAdmissions()
-      .mergeMap((examAdmissions: ExamAdmissionInfo[]) => {
-        this.examYears = this.unique(examAdmissions.map(examAdmission => examAdmission.year));
-        let examPeriodCodes = this.unique(examAdmissions.map(examAdmission => examAdmission.examPeriodCode));
-        return this.examPeriodService.getExamPeriodByCodes(examPeriodCodes);
-      })
-      .subscribe((examPeriods: ExamPeriodInfo[]) => {
-        this.examPeriods = examPeriods;
-      },
-        error => {
-          console.log(error)
-        },
-        () => {
-          //Done
-        }
-      );*/
   }
-
-  /*private unique(arr) {
-    return arr.sort().filter(function (item, pos, ary) {
-      return !pos || item != ary[pos - 1];
-    })
-  }*/
 
 }

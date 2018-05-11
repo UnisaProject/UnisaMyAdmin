@@ -1,18 +1,11 @@
 import { DescriptionInfo } from './shared';
 
-export class ExamPeriodInfo {
+/**
+ * A class representing an exam period
+ */
+export interface ExamPeriodInfo {
     code: number;
     descriptionInfo: DescriptionInfo[];
     examYear: number;
     examType: string;
-
-    constructor(code?: number,
-        descriptionInfo?: DescriptionInfo[],
-        examYear?: number,
-        examType?: string) {
-        this.code = code;
-        this.descriptionInfo = descriptionInfo;
-        this.examYear = examYear;
-        this.examType = examType;
-    }
 }

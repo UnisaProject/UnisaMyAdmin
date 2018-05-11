@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 
-import { ExamAdmissionInfo } from './../info-objects';
+import { ExamAdmissionInfo } from '../info-objects';
 
 @Injectable()
 export class ExamAdmissionService {

@@ -1,13 +1,10 @@
 import { ExamPeriodInfo } from './../exam-period-info';
 
-export class SearchCriteriaInfo {
+/**
+ * A class representing the criteria to search for an exam timetable
+ */
+export interface SearchCriteriaInfo {
     year: number;
     examPeriod: ExamPeriodInfo;
     courseCodes: string[];
-
-    constructor(examPeriod?: ExamPeriodInfo, year?: number, ...courseCodes: string[]) {
-        this.year = year;
-        this.examPeriod = examPeriod;
-        this.courseCodes = courseCodes;
-    }
 }
