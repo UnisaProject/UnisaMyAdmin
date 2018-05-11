@@ -3,11 +3,14 @@ package za.ac.unisa.myadmin.service.studyquotation.date.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import za.ac.unisa.myadmin.service.studyquotation.date.StudyQuotationDateService;
 import za.ac.unisa.myadmin.service.studyquotation.date.dao.StudyQuoteDateRepository;
 import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -15,6 +18,7 @@ import java.util.Optional;
 /**
  *
  */
+@Service("StudyQuoteDateServiceImpl")
 public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 
 	/**
@@ -56,7 +60,7 @@ public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 	 */
 	private Integer getQuotationYear(int searchForYear){
 		Integer year = null;
-		final Instant truncatedNow = truncatedNow();
+		final LocalDate truncatedNow = LocalDate.now();
 		Optional<StudyQuoteDateEntity> entity = studyQuoteDateRepository.getFirstByTypeAndSemesterPeriodAndAcademicYear(TYPE, SEMESTER_PERIOD, searchForYear);
 		if(entity.isPresent()){
 			Instant toDateInstant = entity.get().getToDate().toInstant();
@@ -76,21 +80,13 @@ public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 	}
 
 	/**
-	 * Get an instant representing right now, with everything lower than the day zero'd
-	 * @return An <code>Instant</code> representing the current date accurate to the day.
-	 */
-	private Instant truncatedNow(){
-		return Instant.now().truncatedTo(ChronoUnit.DAYS);
-	}
-
-	/**
 	 * Get the current year to attempt to use.
 	 * If the current month is larger than the
 	 * @return The current year to use when querying for quotations
 	 */
 	private int getCurrentYear(){
-		int currentYear = Instant.now().get(ChronoField.YEAR);
-		final int currentMonth = Instant.now().get(ChronoField.MONTH_OF_YEAR);
+		int currentYear = LocalDate.now().get(ChronoField.YEAR);
+		final int currentMonth = LocalDate.now().get(ChronoField.MONTH_OF_YEAR);
 		// In the default ISO calendar system, this has values from January (1) to December (12).
 		// If the month is larger than July, use the next year
 		if(currentMonth > 7){

@@ -28,7 +28,7 @@ export class StudyQuotationSearchComponent implements OnInit {
   private initForm():void {
     this.blockUI.start();
     this.studyFeeForm = this.formBuilder.group({
-      academicYear: [new Date().getFullYear(), Validators.required],
+      academicYear: [null, Validators.required],
       countryCode: ["1015", Validators.required],
       qualificationType: ["02011", Validators.required],
       qualificationCode: [null, Validators.required],
@@ -58,7 +58,14 @@ export class StudyQuotationSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.blockUI.stop();
+    // TODO only set this the criteria was not empty
+
+    this.studyFeeCriteriaService.getQuotationYear().subscribe(
+      (year) => this.studyFeeForm.patchValue({academicYear : year}),
+      () => this.blockUI.stop(),
+      ()=> this.blockUI.stop()
+    );
+
   }
 
   onSubmit() {
@@ -67,7 +74,6 @@ export class StudyQuotationSearchComponent implements OnInit {
 
     // Filter out any blank course codes
     criteria.courseCodes = criteria.courseCodes.filter(c => c !== null && c !== "");
-
 
     this.studyFeeCriteriaService.searchCriteria = criteria;
     this.router.navigate(["result"]);
