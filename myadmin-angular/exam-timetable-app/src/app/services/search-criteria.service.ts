@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { SearchCriteriaInfo } from './../info-objects/shared/search-criteria-info';
-import { ExamPeriodInfo } from '../info-objects';
+import {Injectable} from '@angular/core';
+import {SearchCriteriaInfo} from '../info-objects/shared/search-criteria-info';
 
-@Injectable() 
+@Injectable()
 export class SearchCriteriaService {
-  searchCriteria: SearchCriteriaInfo;
+
+  /**
+   * The currently active search criteria
+   */
+  searchCriteria: SearchCriteriaInfo = null;
 
   constructor() {
-    this.searchCriteria = new SearchCriteriaInfo(new ExamPeriodInfo());
    }
 
 }

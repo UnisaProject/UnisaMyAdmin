@@ -33,7 +33,7 @@
             formControlName="examPeriod"
             required
             [compareWith]="compareExamPeriod">
-              <option *ngFor="let examPeriod of examPeriods | orderBy: 'code'" [ngValue]="examPeriod">
+              <option *ngFor="let examPeriod of examPeriods" [ngValue]="examPeriod">
                 {{ examPeriod.descriptionInfo | description:'en_ZA' }} {{ examPeriod.examYear }}
               </option>
             </select>
@@ -49,7 +49,7 @@
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary" [disabled]="searchForm.invalid">Display</button>
-      <button type="reset" class="btn btn-secondary">Clear</button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">Clear</button>
     </div>
   </form>
 </div>

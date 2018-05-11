@@ -1,7 +1,7 @@
 <div class="container">
 <div class="row">
   <div class="col-12">
-  <h5>Unisa Examination Timetable for {{ examPeriod.descriptionInfo | description:'en_ZA' }} {{ examPeriod.examYear }}</h5>
+  <h5>Unisa Examination Timetable for {{ examPeriod ? (examPeriod.descriptionInfo | description:'en_ZA') : '' }} {{ examPeriod?.examYear }}</h5>
   <p>To print this web page, right-click with your mouse on this section of the screen and then click the
     "Print..." option OR click with your mouse on this section of the screen and then go to File, select Print.</p>
 </div>
@@ -17,7 +17,7 @@
   <div class="col-sm-2">
     <p class="font-weight-bold">Status</p>
   </div>
-  <div class="col-sm-6">{{ examPeriod.examType }}</div>
+  <div class="col-sm-6">{{ examPeriod?.examType }}</div>
 </div>
   <table class="table table-sm table-striped table-hover">
     <thead>
