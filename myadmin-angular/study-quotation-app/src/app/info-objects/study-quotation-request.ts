@@ -8,7 +8,6 @@ export class StudyQuotationRequest {
   libraryCard:boolean;
   matricExemption:boolean;
   courseCodes:string[];
-  studyUnits:StudyUnitInfo[];
 
   constructor(academicYear?:number,
               countryCode?:string,
@@ -16,7 +15,6 @@ export class StudyQuotationRequest {
               qualificationCode?:string,
               libraryCard?:boolean,
               matricExemption?:boolean,
-              studyUnits?:StudyUnitInfo[],
               ...courseCodes:string[]) {
     this.academicYear = academicYear;
     this.countryCode = countryCode;
@@ -25,6 +23,5 @@ export class StudyQuotationRequest {
     this.libraryCard = libraryCard;
     this.matricExemption = matricExemption;
     this.courseCodes = courseCodes;
-    this.studyUnits = studyUnits;
   }
 }

@@ -3,4 +3,5 @@ import {StudyQuotationRequest} from "./study-quotation-request";
 
 export interface StudyQuotation extends StudyQuotationRequest{
 
+  studyUnits:StudyUnitInfo[];
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import { StudyFeeCriteriaService, StudyFeeQuotationService } from '../../services';
-import { StudyQuotationRequest, StudyUnitInfo } from '../../info-objects';
-import {Router} from '@angular/router';
+import {StudyFeeCriteriaService, StudyFeeQuotationService} from '../../services';
+import {StudyQuotationRequest} from '../../info-objects';
+import {StudyQuotation} from "../../info-objects/study-quotation";
 
 @Component({
   selector: 'app-study-quotation-result',
@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class StudyQuotationResultComponent implements OnInit {
 
-  public studyQuotationInfo:StudyQuotationRequest;
+  public studyQuotationInfo:StudyQuotation;
 
   @BlockUI()
   private blockUI: NgBlockUI;
@@ -25,7 +25,7 @@ export class StudyQuotationResultComponent implements OnInit {
 
   private calculateStudyQuotation(searchCriteria: StudyQuotationRequest): void {
     this.studyFeeQuotationService.calculateStudyQuotation(searchCriteria)
-      .subscribe((studyQuotationInfo: StudyQuotationRequest) => {
+      .subscribe((studyQuotationInfo: StudyQuotation) => {
           this.studyQuotationInfo = studyQuotationInfo;
         },
         error => {

@@ -23,9 +23,6 @@ public class StudyQuotation extends StudyQuotationRequest{
 	/** prescribedBooks property */
 	private double prescribedBooks;
 
-	/** year property */
-	private short academicYear;
-
 	/** foreignLevy property */
 	private double foreignLevy;
 
@@ -157,21 +154,6 @@ public class StudyQuotation extends StudyQuotationRequest{
 			this.studyUnits.addAll(studyUnits);
 		}
 	}
-
-
-	public int getAcademicYear() {
-		return academicYear;
-	}
-
-	/**
-	 * Sets academic year.
-	 *
-	 * @param academicYear the academic year
-	 */
-	public void setAcademicYear(short academicYear) {
-		this.academicYear = academicYear;
-	}
-
 
 	/**
 	 * Gets library card cost.
