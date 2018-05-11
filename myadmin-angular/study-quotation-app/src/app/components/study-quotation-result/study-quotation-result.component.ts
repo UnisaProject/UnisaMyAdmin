@@ -30,6 +30,7 @@ export class StudyQuotationResultComponent implements OnInit {
     this.studyFeeQuotationService.calculateStudyQuotation(searchCriteria)
       .subscribe((studyQuotationInfo:StudyQuotation) => {
           this.studyQuotationInfo = studyQuotationInfo;
+          this.blockUI.stop();
         },
         error => {
           if (error instanceof HttpErrorResponse) {
@@ -37,11 +38,7 @@ export class StudyQuotationResultComponent implements OnInit {
             this.errorMessage = error.message;
           }
           this.blockUI.stop();
-        },
-        () => {
-          this.blockUI.stop();
-        }
-      );
+        });
   }
 
 }
