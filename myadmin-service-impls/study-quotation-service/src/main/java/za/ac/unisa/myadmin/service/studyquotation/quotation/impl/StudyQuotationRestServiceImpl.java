@@ -53,7 +53,7 @@ public class StudyQuotationRestServiceImpl {
 	}
 
 	@GetMapping(path = "/studyfeequotation/quotationYear")
-	public int getValidQuotationYear(){
+	public int getValidQuotationYear() throws OperationFailedException {
 		return studyQuotationDateService.getValidQuotationYear();
 	}
 }

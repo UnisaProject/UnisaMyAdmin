@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.service.studyquotation.date.StudyQuotationDateService;
 import za.ac.unisa.myadmin.service.studyquotation.date.dao.StudyQuoteDateRepository;
 import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
@@ -43,12 +44,15 @@ public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 	private static final int SEMESTER_PERIOD = 0;
 
 	@Override
-	public int getValidQuotationYear() {
+	public int getValidQuotationYear() throws OperationFailedException {
 		int currentYear = getCurrentYear();
 		Integer year = getQuotationYear(currentYear);
 		if(year == null){
 			//Try again with current year + 1
 			year = getQuotationYear(currentYear + 1);
+		}
+		if(year == null){
+			throw new OperationFailedException("Failed to get a valid academic year");
 		}
 		return year;
 	}
