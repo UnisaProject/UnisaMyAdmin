@@ -7,13 +7,15 @@ import org.springframework.stereotype.Service;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.service.studyquotation.date.StudyQuotationDateService;
 import za.ac.unisa.myadmin.service.studyquotation.date.dao.StudyQuoteDateRepository;
-import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.RegistrationDateEntity;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -65,17 +67,19 @@ public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 	private Integer getQuotationYear(int searchForYear){
 		Integer year = null;
 		final LocalDate truncatedNow = LocalDate.now();
-		Optional<StudyQuoteDateEntity> entity = studyQuoteDateRepository.getFirstByTypeAndSemesterPeriodAndAcademicYear(TYPE, SEMESTER_PERIOD, searchForYear);
+		Date truncDateNow = Date.from(truncatedNow.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		Optional<RegistrationDateEntity> entity = studyQuoteDateRepository.getTopByTypeAndSemesterPeriodAndAcademicYear(TYPE, SEMESTER_PERIOD, searchForYear);
 		if(entity.isPresent()){
 			Instant toDateInstant = entity.get().getToDate().toInstant();
-			if(toDateInstant.get(ChronoField.YEAR) == 1){
-				entity = studyQuoteDateRepository.getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqual(TYPE, SEMESTER_PERIOD, searchForYear, truncatedNow);
+			if(toDateInstant.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR) == 1){
+				entity = studyQuoteDateRepository.getTopByTypeAndSemesterPeriodAndAcademicYearAndFromDateLessThan(TYPE, SEMESTER_PERIOD, searchForYear, truncDateNow);
 			}
 			else{
-				entity = studyQuoteDateRepository.getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqualAndToDateLessThanEqual(TYPE, SEMESTER_PERIOD, searchForYear, truncatedNow, truncatedNow);
+				entity = studyQuoteDateRepository.getTopByTypeAndSemesterPeriodAndAcademicYearAndFromDateLessThanEqualAndToDateGreaterThanEqual(TYPE, SEMESTER_PERIOD, searchForYear, truncDateNow, truncDateNow);
 			}
 			if(entity.isPresent()){
-				year = entity.get().getToDate().toInstant().get(ChronoField.YEAR);
+
+				year = entity.get().getToDate().toInstant().atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
 			}
 		}
 

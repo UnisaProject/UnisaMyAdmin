@@ -1,19 +1,19 @@
 package za.ac.unisa.myadmin.service.studyquotation.date.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateEntity;
-import za.ac.unisa.myadmin.service.studyquotation.date.model.StudyQuoteDateIdentity;
+import org.springframework.stereotype.Repository;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.RegistrationDateEntity;
+import za.ac.unisa.myadmin.service.studyquotation.date.model.RegistrationDateIdentity;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
-public interface StudyQuoteDateRepository extends JpaRepository<StudyQuoteDateEntity, StudyQuoteDateIdentity> {
+@Repository
+public interface StudyQuoteDateRepository extends JpaRepository<RegistrationDateEntity, RegistrationDateIdentity> {
 
-	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYear(String type, int semesterPeriod, int academicYear);
+	public Optional<RegistrationDateEntity> getTopByTypeAndSemesterPeriodAndAcademicYear(String type, int semesterPeriod, int academicYear);
 
-	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqualAndToDateLessThanEqual(String type, int semesterPeriod, int academicYear, LocalDate sysdate, LocalDate sysDate);
+	public Optional<RegistrationDateEntity> getTopByTypeAndSemesterPeriodAndAcademicYearAndFromDateLessThanEqualAndToDateGreaterThanEqual(String type, int semesterPeriod, int academicYear, Date sysdate, Date sysDate);
 
-	Optional<StudyQuoteDateEntity> getFirstByTypeAndSemesterPeriodAndAcademicYearAndFromDateGreaterThanEqual(String type, int semesterPeriod, int academicYear, LocalDate sysDate);
+	public Optional<RegistrationDateEntity> getTopByTypeAndSemesterPeriodAndAcademicYearAndFromDateLessThan(String type, int semesterPeriod, int academicYear, Date sysDate);
 }
