@@ -17,7 +17,7 @@ export interface StudyQuotationRequest {
   /**
    * Qualification type.
    */
-  qualificationType:string;
+  qualification:string;
 
   /**
    * Qualification code.

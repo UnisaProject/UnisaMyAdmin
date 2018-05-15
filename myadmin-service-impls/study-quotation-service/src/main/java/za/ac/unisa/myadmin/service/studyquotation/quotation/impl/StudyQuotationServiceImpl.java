@@ -19,6 +19,7 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 
 	/**
 	 * Get an instance of the StudyFee proxy
+	 *
 	 * @return
 	 * @throws PropertyVetoException
 	 */
@@ -41,13 +42,14 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 
 	/**
 	 * Populate all the input parameters from the <code>StudyQuotationRequest</code> onto the proxy class
+	 *
 	 * @param studyFeeProxy The proxy to populate the inputs to
-	 * @param request The quotation request to copy the inputs from.
+	 * @param request       The quotation request to copy the inputs from.
 	 * @throws PropertyVetoException
 	 * @throws OperationFailedException
 	 */
 	private void populateInputs(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws PropertyVetoException, OperationFailedException {
-		studyFeeProxy.setInStudentAnnualRecordMkAcademicYear((short)request.getAcademicYear());
+		studyFeeProxy.setInStudentAnnualRecordMkAcademicYear((short) request.getAcademicYear());
 
 		final String POSTGRAD = "99999";
 		final String inputQualification = request.getQualification();
@@ -60,11 +62,11 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		// If the qualification is unset, but the qualification code is set
 		else if ((POSTGRAD.equalsIgnoreCase(inputQualification)) && (!"".equalsIgnoreCase(inputQualificationCode))) {
 			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(inputQualificationCode);
-			request.setQualification(inputQualificationCode);
+			request.setQualification(inputQualification);
 		}
 		// Else both qualification and qualification code is set
 		else {
-			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(inputQualification);
+			studyFeeProxy.setInStudentAcademicRecordMkQualificationCode(inputQualificationCode);
 		}
 
 		studyFeeProxy.setInWsCountryCode(request.getCountryCode());
@@ -72,16 +74,17 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		studyFeeProxy.setInMatrExemptionIefSuppliedFlag(request.isMatricExemption() ? "Y" : "N");
 
 		List<String> studyCodes = request.getStudyCodes();
-		for(int idx = 0 ; idx < studyCodes.size(); idx++){
+		for (int idx = 0; idx < studyCodes.size(); idx++) {
 			String code = studyCodes.get(idx);
-			studyFeeProxy.setInGStudentStudyUnitMkStudyUnitCode(idx+1, code.toUpperCase());
+			studyFeeProxy.setInGStudentStudyUnitMkStudyUnitCode(idx + 1, code.toUpperCase());
 		}
 	}
 
 	/**
 	 * Build a study quotation using the input request, and the response from the proxy execution.
+	 *
 	 * @param studyFeeProxy The <code>Srrqn01sQuoteStudyFees</code> proxy that was used to execute the request
-	 * @param request The <code>StudyQuotationRequest</code> request used to request the quotation.
+	 * @param request       The <code>StudyQuotationRequest</code> request used to request the quotation.
 	 * @return A <code>StudyQuotation</code> object.
 	 * @throws OperationFailedException
 	 */
@@ -89,11 +92,11 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		final StudyQuotation responseQuotation = new StudyQuotation(request);
 
 		String errorMessage = studyFeeProxy.getOutCsfStringsString500();
-		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage) && StringUtils.hasText(errorMessage)){
+		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage) && StringUtils.hasText(errorMessage)) {
 			throw new OperationFailedException("Error while trying to get study unit cost information. " + errorMessage);
 		}
 
-		for(int i=0; i < (studyFeeProxy.getOutGroupCount()-1) ; i++){
+		for (int i = 0; i < (studyFeeProxy.getOutGroupCount() - 1); i++) {
 			StudyUnit studyUnit = new StudyUnit();
 			studyUnit.setStudyUnitcode(studyFeeProxy.getOutGInternetWsStudyUnitCode(i));
 			studyUnit.setDescription(studyFeeProxy.getOutGInternetWsStudyUnitEngShortDescription(i));

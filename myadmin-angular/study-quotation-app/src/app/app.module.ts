@@ -9,12 +9,14 @@ import {AppComponent} from './app.component';
 import {StudyQuotationSearchComponent} from './components/study-quotation-search/study-quotation-search.component';
 import {StudyQuotationResultComponent} from './components/study-quotation-result/study-quotation-result.component';
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from './services';
+import { StudyQuotationClosedComponent } from './components/study-quotation-closed/study-quotation-closed.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudyQuotationSearchComponent,
-    StudyQuotationResultComponent
+    StudyQuotationResultComponent,
+    StudyQuotationClosedComponent
   ],
   imports: [
     BrowserModule,

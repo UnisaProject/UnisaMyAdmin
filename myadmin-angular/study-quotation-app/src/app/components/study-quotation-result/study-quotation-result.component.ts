@@ -39,10 +39,17 @@ export class StudyQuotationResultComponent implements OnInit {
           this.studyQuotationInfo = studyQuotationInfo;
           this.blockUI.stop();
         },
-        error => {
-          if (error instanceof HttpErrorResponse) {
-            console.log(error);
-            this.errorMessage = error.message;
+        response => {
+          if(response.error instanceof Error){
+            this.errorMessage = response.error.message;
+          }
+          // If it looks like a framework error
+          else if(response.error && response.error.message){
+            this.errorMessage = 'Unexpected Error: ' + response.error.message;
+          }
+          else {
+            console.log(response);
+            this.errorMessage = response.message;
           }
           this.blockUI.stop();
         });

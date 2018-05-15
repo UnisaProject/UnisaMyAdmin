@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  *
  */
-@Service("StudyQuoteDateServiceImpl")
+@Service("StudyQuoteDateService")
 public class StudyQuoteDateServiceImpl implements StudyQuotationDateService {
 
 	/**

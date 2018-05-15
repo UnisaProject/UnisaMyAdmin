@@ -27,7 +27,7 @@ public class StudyQuotationRestServiceImpl {
 
 
 	@Autowired
-	@Qualifier("StudyQuoteDateServiceImpl")
+	@Qualifier("StudyQuoteDateService")
 	private StudyQuotationDateService studyQuotationDateService;
 
 	@GetMapping(path = "/studyfeequotation/calculateQuotation")

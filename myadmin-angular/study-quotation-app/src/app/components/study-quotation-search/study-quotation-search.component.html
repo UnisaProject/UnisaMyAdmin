@@ -45,13 +45,13 @@
         <fieldset class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" #radioUnder value="99999" formControlName="qualificationType">
+              <input type="radio" class="form-check-input" #radioUnder value="02011" formControlName="qualification">
               Undergraduate
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" #radioPost value="02011"  formControlName="qualificationType">
+              <input type="radio" class="form-check-input" #radioPost value="99999"  formControlName="qualification">
               Postgraduate
             </label>
           </div>
@@ -62,7 +62,7 @@
       <label class="col-sm-6 col-form-label font-weight-bold">Qualification Code</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" id="qualificationCode" placeholder="00000" value="" formControlName="qualificationCode" maxlength="5">
-        <small *ngIf="radioPost.checked && studyFeeForm.get('qualificationCode').invalid" class="text-danger">
+        <small *ngIf="radioPost.checked && studyFeeForm.get('qualification').invalid" class="text-danger">
           Qualification Code is required for PostGraduate.
         </small>
       </div>

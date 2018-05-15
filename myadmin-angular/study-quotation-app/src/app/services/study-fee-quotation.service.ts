@@ -14,7 +14,7 @@ export class StudyFeeQuotationService {
     const params = new HttpParams()
       .set('academicYear', <string><any>studyQuotationInfo.academicYear)
       .set('countryCode', <string><any>studyQuotationInfo.countryCode)
-      .set('qualificationType', <string><any>studyQuotationInfo.qualificationType)
+      .set('qualificationType', <string><any>studyQuotationInfo.qualification)
       .set('qualificationCode', <string><any>studyQuotationInfo.qualificationCode)
       .set('libraryCard', <string><any>studyQuotationInfo.libraryCard)
       .set('matricExemption', <string><any>studyQuotationInfo.matricExemption)

@@ -30,7 +30,7 @@ export class StudyQuotationSearchComponent implements OnInit {
     this.studyFeeForm = this.formBuilder.group({
       academicYear: [null, Validators.required],
       countryCode: [null, Validators.required],
-      qualificationType: [null, Validators.required],
+      qualification: [null, Validators.required],
       qualificationCode: [null, Validators.required],
       libraryCard: [false, Validators.required],
       matricExemption: [false, Validators.required],
@@ -74,7 +74,7 @@ export class StudyQuotationSearchComponent implements OnInit {
   resetForm(): void{
     this.studyFeeForm.patchValue({
       countryCode : "1015",
-      qualificationType: "02011",
+      qualification: "99999",
       qualificationCode: null,
       libraryCard: false,
       matricExemption: false,
@@ -86,7 +86,9 @@ export class StudyQuotationSearchComponent implements OnInit {
     });
     this.studyFeeCriteriaService.getQuotationYear().subscribe(
       (year) => this.studyFeeForm.patchValue({academicYear : year}),
-      () => this.blockUI.stop(),
+      error => {() => this.blockUI.stop();
+        this.router.navigate(["closed"]);
+      },
       ()=> this.blockUI.stop()
     );
   }
