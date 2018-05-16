@@ -159,12 +159,6 @@
 				<version>10.5</version>
 			</dependency>
 
-			<dependency>
-				<groupId>allfusion</groupId>
-				<artifactId>genrt</artifactId>
-				<version>80</version>
-			</dependency>
-
 			<!-- Internal dependencies -->
 			<dependency>
 				<groupId>za.ac.unisa.myadmin.services.api</groupId>
