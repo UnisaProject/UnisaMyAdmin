@@ -1,11 +1,13 @@
 package za.ac.unisa.myadmin.service.exam.admission.model;
 
-import za.ac.unisa.myadmin.exam.admission.ExamAdmissionInfo;
-
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import za.ac.unisa.myadmin.exam.admission.ExamAdmissionInfo;
+import za.ac.unisa.myadmin.service.sql.converter.YesOrNoBooleanConverter;
 
 @Entity
 @Table(name = "XADDON")
@@ -24,9 +26,11 @@ public class ExamAdmissionEntity {
 	private Integer examType;
 
 	@Column(name = "ADMISSION_DONE_FLAG")
+	@Convert(converter = YesOrNoBooleanConverter.class)
 	private boolean admissionDone;
 
 	@Column(name = "XAMARR_FLAG")
+	@Convert(converter = YesOrNoBooleanConverter.class)
 	private boolean examArrangement;
 
 	public ExamAdmissionEntity() {
