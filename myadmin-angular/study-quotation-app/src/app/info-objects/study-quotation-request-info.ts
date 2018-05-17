@@ -2,7 +2,7 @@
  * An interface the defines an object that represents the request details
  * for a study fee quotation.
  */
-export interface StudyQuotationRequest {
+export interface StudyQuotationRequestInfo {
 
   /**
    * Academic year to request a quotation for

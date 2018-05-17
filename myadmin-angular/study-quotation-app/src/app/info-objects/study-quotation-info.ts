@@ -1,10 +1,10 @@
 import {StudyUnitInfo} from './';
-import {StudyQuotationRequest} from "./study-quotation-request";
+import {StudyQuotationRequestInfo} from "./study-quotation-request-info";
 
 /**
  * An interface representing an object that defines a Study quotation
  */
-export interface StudyQuotation extends StudyQuotationRequest {
+export interface StudyQuotationInfo extends StudyQuotationRequestInfo {
 
   /**
    * Fee for the registration.
@@ -44,7 +44,7 @@ export interface StudyQuotation extends StudyQuotationRequest {
   /**
    * Information for the study units
    */
-  studyUnits:StudyUnitInfo[];
+  studyUnitInfos:StudyUnitInfo[];
 
   /**
    * Validation message from coolgen

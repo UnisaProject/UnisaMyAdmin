@@ -5,7 +5,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {ToasterNotificationService} from '../services';
-import {FrameworkError} from "../info-objects/shared/framework-error";
+import {ErrorInfo} from "../info-objects/shared/error-info";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -21,8 +21,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
         // If it looks like a framework error
         else if(response.error && response.error.message){
-          const frameworkError: FrameworkError = response.error;
-          toaster.error('Unexpected Error', frameworkError.message);
+          const errorInfo: ErrorInfo = response.error;
+          toaster.error('Unexpected Error', errorInfo.message);
         }
         else {
           toaster.error('Unexpected Error', response.message);

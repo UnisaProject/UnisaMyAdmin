@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {StudyQuotationRequest} from '../../info-objects';
+import {StudyQuotationRequestInfo} from '../../info-objects';
 import { StudyFeeCriteriaService } from '../../services';
 import {atleastOneCourseCode} from './atleast-one.validator';
 
@@ -95,7 +95,7 @@ export class StudyQuotationSearchComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start("Loading quote...");
-    const criteria: StudyQuotationRequest = {...this.studyFeeForm.value};
+    const criteria: StudyQuotationRequestInfo = {...this.studyFeeForm.value};
 
     // Filter out any blank course codes
     criteria.courseCodes = criteria.courseCodes.filter(c => c !== null && c !== "");

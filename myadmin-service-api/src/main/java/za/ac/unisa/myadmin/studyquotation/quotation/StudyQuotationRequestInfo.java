@@ -2,8 +2,6 @@ package za.ac.unisa.myadmin.studyquotation.quotation;
 
 import java.time.Instant;
 import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.Objects;
 /**
  * The type Study quotation request.
  */
-public class StudyQuotationRequest {
+public class StudyQuotationRequestInfo {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,22 +38,22 @@ public class StudyQuotationRequest {
 	/**
 	 * Instantiates a new Study quotation request.
 	 */
-	public StudyQuotationRequest() {
+	public StudyQuotationRequestInfo() {
 	}
 
 	/**
 	 * Instantiates a new Study quotation request.
 	 *
-	 * @param studyQuotationRequest the study quotation request
+	 * @param studyQuotationRequestInfo the study quotation request
 	 */
-	public StudyQuotationRequest(StudyQuotationRequest studyQuotationRequest) {
-		this.setLibraryCard(studyQuotationRequest.isLibraryCard());
-		this.setMatricExemption(studyQuotationRequest.isMatricExemption());
-		this.setAcademicYear(studyQuotationRequest.getAcademicYear());
-		this.setQualificationCode(studyQuotationRequest.getQualificationCode());
-		this.setCountryCode(studyQuotationRequest.getCountryCode());
-		this.setQualification(studyQuotationRequest.getQualification());
-		this.setStudyCodes(studyQuotationRequest.getStudyCodes());
+	public StudyQuotationRequestInfo(StudyQuotationRequestInfo studyQuotationRequestInfo) {
+		this.setLibraryCard(studyQuotationRequestInfo.isLibraryCard());
+		this.setMatricExemption(studyQuotationRequestInfo.isMatricExemption());
+		this.setAcademicYear(studyQuotationRequestInfo.getAcademicYear());
+		this.setQualificationCode(studyQuotationRequestInfo.getQualificationCode());
+		this.setCountryCode(studyQuotationRequestInfo.getCountryCode());
+		this.setQualification(studyQuotationRequestInfo.getQualification());
+		this.setStudyCodes(studyQuotationRequestInfo.getStudyCodes());
 	}
 
 	/**

@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * The type Study quotation.
  */
-public class StudyQuotation extends StudyQuotationRequest{
+public class StudyQuotationInfo extends StudyQuotationRequestInfo {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,8 +32,8 @@ public class StudyQuotation extends StudyQuotationRequest{
 	/** paymentDue property */
 	private double paymentDue;
 
-	/** studyUnits */
-	private final List<StudyUnit> studyUnits = new ArrayList<>();
+	/** studyUnitInfos */
+	private final List<StudyUnitInfo> studyUnitInfos = new ArrayList<>();
 
 	/** coolgenErrorMsg property */
 	private String coolgenErrorMsg;
@@ -42,14 +42,14 @@ public class StudyQuotation extends StudyQuotationRequest{
 	/**
 	 * Instantiates a new Study quotation.
 	 */
-	public StudyQuotation(){}
+	public StudyQuotationInfo(){}
 
 	/**
 	 * Instantiates a new Study quotation.
 	 *
 	 * @param request the request
 	 */
-	public StudyQuotation(StudyQuotationRequest request){
+	public StudyQuotationInfo(StudyQuotationRequestInfo request){
 		super(request);
 	}
 
@@ -133,28 +133,28 @@ public class StudyQuotation extends StudyQuotationRequest{
 	 *
 	 * @return the study units
 	 */
-	public List<StudyUnit> getStudyUnits() {
-		return studyUnits;
+	public List<StudyUnitInfo> getStudyUnitInfos() {
+		return studyUnitInfos;
 	}
 
 	/**
 	 * Add study unit.
 	 *
-	 * @param studyUnit the study unit
+	 * @param studyUnitInfo the study unit
 	 */
-	public void addStudyUnit(StudyUnit studyUnit){
-		this.studyUnits.add(studyUnit);
+	public void addStudyUnit(StudyUnitInfo studyUnitInfo){
+		this.studyUnitInfos.add(studyUnitInfo);
 	}
 
 	/**
 	 * Sets study units.
 	 *
-	 * @param studyUnits the study units
+	 * @param studyUnitInfos the study units
 	 */
-	public void setStudyUnits(List<StudyUnit> studyUnits) {
-		this.studyUnits.clear();
-		if(Objects.nonNull(studyUnits)){
-			this.studyUnits.addAll(studyUnits);
+	public void setStudyUnitInfos(List<StudyUnitInfo> studyUnitInfos) {
+		this.studyUnitInfos.clear();
+		if(Objects.nonNull(studyUnitInfos)){
+			this.studyUnitInfos.addAll(studyUnitInfos);
 		}
 	}
 

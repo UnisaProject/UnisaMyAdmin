@@ -10,5 +10,5 @@ public interface StudyQuotationService {
 	 * @return A quotation for the requested inputs
 	 * @throws OperationFailedException
 	 */
-	StudyQuotation calculateStudyQuotation(StudyQuotationRequest request) throws OperationFailedException;
+	StudyQuotationInfo calculateStudyQuotation(StudyQuotationRequestInfo request) throws OperationFailedException;
 }

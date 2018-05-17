@@ -11,8 +11,8 @@ import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.service.studyquotation.date.StudyQuotationDateService;
-import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
-import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationInfo;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequestInfo;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationService;
 
 import java.util.List;
@@ -31,16 +31,16 @@ public class StudyQuotationRestServiceImpl {
 	private StudyQuotationDateService studyQuotationDateService;
 
 	@GetMapping(path = "/studyfeequotation/calculateQuotation")
-	public StudyQuotation calculateStudyFeeQuotation(@RequestParam(value = "academicYear", required = false) Integer academicYear,
-													 @RequestParam(value = "countryCode", required = false) String countryCode,
-													 @RequestParam(value = "qualificationType", required = false) String qualificationType,
-													 @RequestParam(value = "qualificationCode", required = false) String qualificationCode,
-													 @RequestParam(value = "libraryCard", required = false) boolean libraryCard,
-													 @RequestParam(value = "matricExemption", required = false) boolean matricExemption,
-													 @RequestParam(value = "courseCodes", required = false) List<String> courseCodes) throws DoesNotExistException,
+	public StudyQuotationInfo calculateStudyFeeQuotation(@RequestParam(value = "academicYear", required = false) Integer academicYear,
+														 @RequestParam(value = "countryCode", required = false) String countryCode,
+														 @RequestParam(value = "qualificationType", required = false) String qualificationType,
+														 @RequestParam(value = "qualificationCode", required = false) String qualificationCode,
+														 @RequestParam(value = "libraryCard", required = false) boolean libraryCard,
+														 @RequestParam(value = "matricExemption", required = false) boolean matricExemption,
+														 @RequestParam(value = "courseCodes", required = false) List<String> courseCodes) throws DoesNotExistException,
 			MissingParameterException, InvalidParameterException, OperationFailedException {
 		//Stub out
-		StudyQuotationRequest studyQuotationInfo = new StudyQuotationRequest();
+		StudyQuotationRequestInfo studyQuotationInfo = new StudyQuotationRequestInfo();
 		studyQuotationInfo.setAcademicYear(academicYear);
 		studyQuotationInfo.setCountryCode(countryCode);
 		studyQuotationInfo.setQualification(qualificationType);

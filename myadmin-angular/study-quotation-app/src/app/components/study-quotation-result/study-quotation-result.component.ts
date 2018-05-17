@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from '../../services';
-import {StudyQuotationRequest, StudyQuotation} from '../../info-objects';
+import {StudyQuotationRequestInfo, StudyQuotationInfo} from '../../info-objects';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from "@angular/router";
 
@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class StudyQuotationResultComponent implements OnInit {
 
-  public studyQuotationInfo:StudyQuotation;
+  public studyQuotationInfo:StudyQuotationInfo;
   public errorMessage:string;
 
   @BlockUI()
@@ -33,9 +33,9 @@ export class StudyQuotationResultComponent implements OnInit {
     }
   }
 
-  private calculateStudyQuotation(searchCriteria:StudyQuotationRequest):void {
+  private calculateStudyQuotation(searchCriteria:StudyQuotationRequestInfo):void {
     this.studyFeeQuotationService.calculateStudyQuotation(searchCriteria)
-      .subscribe((studyQuotationInfo:StudyQuotation) => {
+      .subscribe((studyQuotationInfo:StudyQuotationInfo) => {
           this.studyQuotationInfo = studyQuotationInfo;
           if(this.studyQuotationInfo.coolgenErrorMsg){
             this.errorMessage = this.studyQuotationInfo.coolgenErrorMsg;
@@ -43,6 +43,7 @@ export class StudyQuotationResultComponent implements OnInit {
           this.blockUI.stop();
         },
         response => {
+          this.studyQuotationInfo = searchCriteria;
           if(response.error instanceof Error){
             this.errorMessage = response.error.message;
           }

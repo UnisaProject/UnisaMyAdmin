@@ -5,7 +5,7 @@
   <div class="row">
     <p>Ensure that you have entered valid UNISA study unit codes to generate study fees quotation.</p>
   </div>
-  <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+  <div class="alert alert-danger text-center" role="alert" *ngIf="errorMessage">
     <strong>Error: </strong>{{errorMessage}}
   </div>
   <div class="row">
@@ -32,10 +32,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let studyUnit of studyQuotationInfo?.studyUnits">
-      <td>{{ studyUnit.studyUnitcode }}</td>
-      <td colspan="2">{{ studyUnit.description }}</td>
-      <td>{{ studyUnit.fee | number:'1.2-4'}}</td>
+    <tr *ngFor="let studyUnitInfo of studyQuotationInfo?.studyUnitInfos">
+      <td>{{ studyUnitInfo.studyUnitcode }}</td>
+      <td colspan="2">{{ studyUnitInfo.description }}</td>
+      <td>{{ studyUnitInfo.fee | number:'1.2-4'}}</td>
     </tr>
     <tr><td colspan="4"> <br></td></tr>
     <tr>

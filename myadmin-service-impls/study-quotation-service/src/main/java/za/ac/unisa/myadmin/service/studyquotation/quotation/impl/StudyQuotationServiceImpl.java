@@ -4,10 +4,10 @@ import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotation;
-import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequest;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationInfo;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationRequestInfo;
 import za.ac.unisa.myadmin.studyquotation.quotation.StudyQuotationService;
-import za.ac.unisa.myadmin.studyquotation.quotation.StudyUnit;
+import za.ac.unisa.myadmin.studyquotation.quotation.StudyUnitInfo;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -41,14 +41,14 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 	}
 
 	/**
-	 * Populate all the input parameters from the <code>StudyQuotationRequest</code> onto the proxy class
+	 * Populate all the input parameters from the <code>StudyQuotationRequestInfo</code> onto the proxy class
 	 *
 	 * @param studyFeeProxy The proxy to populate the inputs to
 	 * @param request       The quotation request to copy the inputs from.
 	 * @throws PropertyVetoException
 	 * @throws OperationFailedException
 	 */
-	private void populateInputs(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws PropertyVetoException, OperationFailedException {
+	private void populateInputs(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequestInfo request) throws PropertyVetoException, OperationFailedException {
 		studyFeeProxy.setInStudentAnnualRecordMkAcademicYear((short) request.getAcademicYear());
 
 		final String POSTGRAD = "99999";
@@ -84,12 +84,12 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 	 * Build a study quotation using the input request, and the response from the proxy execution.
 	 *
 	 * @param studyFeeProxy The <code>Srrqn01sQuoteStudyFees</code> proxy that was used to execute the request
-	 * @param request       The <code>StudyQuotationRequest</code> request used to request the quotation.
-	 * @return A <code>StudyQuotation</code> object.
+	 * @param request       The <code>StudyQuotationRequestInfo</code> request used to request the quotation.
+	 * @return A <code>StudyQuotationInfo</code> object.
 	 * @throws OperationFailedException
 	 */
-	private StudyQuotation buildResponse(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequest request) throws OperationFailedException {
-		final StudyQuotation responseQuotation = new StudyQuotation(request);
+	private StudyQuotationInfo buildResponse(Srrqn01sQuoteStudyFees studyFeeProxy, StudyQuotationRequestInfo request) throws OperationFailedException {
+		final StudyQuotationInfo responseQuotation = new StudyQuotationInfo(request);
 
 		String errorMessage = studyFeeProxy.getOutCsfStringsString500();
 		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage) && StringUtils.hasText(errorMessage)) {
@@ -100,11 +100,11 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 		}
 
 		for (int i = 0; i < (studyFeeProxy.getOutGroupCount() - 1); i++) {
-			StudyUnit studyUnit = new StudyUnit();
-			studyUnit.setStudyUnitcode(studyFeeProxy.getOutGInternetWsStudyUnitCode(i));
-			studyUnit.setDescription(studyFeeProxy.getOutGInternetWsStudyUnitEngShortDescription(i));
-			studyUnit.setFee(studyFeeProxy.getOutGStudyUnitCostIefSuppliedTotalCurrency(i));
-			responseQuotation.addStudyUnit(studyUnit);
+			StudyUnitInfo studyUnitInfo = new StudyUnitInfo();
+			studyUnitInfo.setStudyUnitcode(studyFeeProxy.getOutGInternetWsStudyUnitCode(i));
+			studyUnitInfo.setDescription(studyFeeProxy.getOutGInternetWsStudyUnitEngShortDescription(i));
+			studyUnitInfo.setFee(studyFeeProxy.getOutGStudyUnitCostIefSuppliedTotalCurrency(i));
+			responseQuotation.addStudyUnit(studyUnitInfo);
 		}
 		responseQuotation.setForeignLevy(studyFeeProxy.getOutForeignLevyIefSuppliedTotalCurrency());
 		responseQuotation.setLibraryCardCost(studyFeeProxy.getOutSmartcardIefSuppliedTotalCurrency());
@@ -117,7 +117,7 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 	}
 
 
-	public StudyQuotation calculateStudyQuotation(StudyQuotationRequest request) throws OperationFailedException {
+	public StudyQuotationInfo calculateStudyQuotation(StudyQuotationRequestInfo request) throws OperationFailedException {
 		try {
 			// Get a reference to the proxy
 			final Srrqn01sQuoteStudyFees studyFeeProxy = getProxyInstance();

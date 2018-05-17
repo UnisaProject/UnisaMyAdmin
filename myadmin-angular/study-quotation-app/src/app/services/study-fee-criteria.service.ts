@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {StudyQuotationRequest} from '../info-objects';
+import {StudyQuotationRequestInfo} from '../info-objects';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class StudyFeeCriteriaService {
-  searchCriteria: StudyQuotationRequest = null;
+  searchCriteria: StudyQuotationRequestInfo = null;
 
   constructor(private http:HttpClient) {
   }
