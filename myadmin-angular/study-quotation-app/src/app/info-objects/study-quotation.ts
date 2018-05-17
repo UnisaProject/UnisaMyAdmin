@@ -45,4 +45,9 @@ export interface StudyQuotation extends StudyQuotationRequest {
    * Information for the study units
    */
   studyUnits:StudyUnitInfo[];
+
+  /**
+   * Validation message from coolgen
+   */
+  coolgenErrorMsg?:string;
 }

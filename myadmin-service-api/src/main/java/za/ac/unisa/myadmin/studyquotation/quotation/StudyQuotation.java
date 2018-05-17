@@ -35,6 +35,9 @@ public class StudyQuotation extends StudyQuotationRequest{
 	/** studyUnits */
 	private final List<StudyUnit> studyUnits = new ArrayList<>();
 
+	/** coolgenErrorMsg property */
+	private String coolgenErrorMsg;
+
 
 	/**
 	 * Instantiates a new Study quotation.
@@ -208,5 +211,24 @@ public class StudyQuotation extends StudyQuotationRequest{
 	 */
 	public void setPaymentDue(double paymentDue) {
 		this.paymentDue = paymentDue;
+	}
+
+
+	/**
+	 * Gets coolgenErrorMsg.
+	 *
+	 * @return
+	 */
+	public String getCoolgenErrorMsg() {
+		return coolgenErrorMsg;
+	}
+
+	/**
+	 * Sets coolgenErrorMsg.
+	 *
+	 * @param coolgenErrorMsg
+	 */
+	public void setCoolgenErrorMsg(String coolgenErrorMsg) {
+		this.coolgenErrorMsg = coolgenErrorMsg;
 	}
 }

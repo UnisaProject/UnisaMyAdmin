@@ -5,7 +5,9 @@
   <div class="row">
     <p>Ensure that you have entered valid UNISA study unit codes to generate study fees quotation.</p>
   </div>
-  <div *ngIf="errorMessage"><small class="text-danger">{{errorMessage}}</small></div>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    <strong>Error: </strong>{{errorMessage}}
+  </div>
   <div class="row">
     <div class="col-sm-2">
       <p class="font-weight-bold">Academic Year</p>
@@ -39,22 +41,22 @@
     <tr>
       <td></td>
       <th scope="row" colspan="2">Prescribed Books</th>
-      <td *ngIf="studyQuotationInfo?.prescribedBooks > 0">{{studyQuotationInfo?.prescribedBooks | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.prescribedBooks == 0">N/A</td>
+      <td *ngIf="studyQuotationInfo?.prescribedBooks != 0">{{studyQuotationInfo?.prescribedBooks | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.prescribedBooks == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Levy for Foreign Countries</th>
-      <td *ngIf="studyQuotationInfo?.foreignLevy > 0">{{studyQuotationInfo?.foreignLevy | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.foreignLevy == 0">N/A</td>
+      <td *ngIf="studyQuotationInfo?.foreignLevy != 0">{{studyQuotationInfo?.foreignLevy | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.foreignLevy == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Library Access Card</th>
-      <td *ngIf="studyQuotationInfo?.libraryCardCost > 0">{{studyQuotationInfo?.libraryCardCost | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.libraryCardCost == 0">N/A</td>
+      <td *ngIf="studyQuotationInfo?.libraryCardCost != 0">{{studyQuotationInfo?.libraryCardCost | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.libraryCardCost == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Matriculation Exemption Fee</th>
-      <td *ngIf="studyQuotationInfo?.matricExemptionCost > 0">{{studyQuotationInfo?.matricExemptionCost | number:'1.2-4'}}</td> <td *ngIf="studyQuotationInfo?.matricExemptionCost == 0">N/A</td>
+      <td *ngIf="studyQuotationInfo?.matricExemptionCost != 0">{{studyQuotationInfo?.matricExemptionCost | number:'1.2-4'}}</td> <td *ngIf="studyQuotationInfo?.matricExemptionCost == 0">N/A</td>
     </tr>
     <tr><td colspan="4"> <br></td></tr>
     <tr>

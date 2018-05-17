@@ -57,7 +57,7 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 
 		// If both the qualification and qualification code is unset
 		if ((POSTGRAD.equalsIgnoreCase(inputQualification)) && ("".equalsIgnoreCase(inputQualificationCode))) {
-			throw new OperationFailedException("Qualification code is missing");
+			throw new OperationFailedException("Qualification code must be entered");
 		}
 		// If the qualification is unset, but the qualification code is set
 		else if ((POSTGRAD.equalsIgnoreCase(inputQualification)) && (!"".equalsIgnoreCase(inputQualificationCode))) {
@@ -93,7 +93,10 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 
 		String errorMessage = studyFeeProxy.getOutCsfStringsString500();
 		if (!"Error reading study unit cost information".equalsIgnoreCase(errorMessage) && StringUtils.hasText(errorMessage)) {
-			throw new OperationFailedException("Error while trying to get study unit cost information. " + errorMessage);
+			throw new OperationFailedException(errorMessage);
+		}
+		else if(StringUtils.hasText(errorMessage)){
+			responseQuotation.setCoolgenErrorMsg(errorMessage);
 		}
 
 		for (int i = 0; i < (studyFeeProxy.getOutGroupCount() - 1); i++) {
@@ -130,8 +133,10 @@ public class StudyQuotationServiceImpl implements StudyQuotationService {
 			studyFeeProxy.execute();
 
 			// Check if there was an exception
-			if(exceptionReference.get() != null){
+			if (exceptionReference.get() != null) {
 				throw exceptionReference.get();
+			} else if (studyFeeProxy.getExitStateType() < 3) {
+				throw new OperationFailedException(studyFeeProxy.getExitStateMsg());
 			}
 
 			// Get the response from the proxy and return the quotation

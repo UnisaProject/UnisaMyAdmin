@@ -37,6 +37,9 @@ export class StudyQuotationResultComponent implements OnInit {
     this.studyFeeQuotationService.calculateStudyQuotation(searchCriteria)
       .subscribe((studyQuotationInfo:StudyQuotation) => {
           this.studyQuotationInfo = studyQuotationInfo;
+          if(this.studyQuotationInfo.coolgenErrorMsg){
+            this.errorMessage = this.studyQuotationInfo.coolgenErrorMsg;
+          }
           this.blockUI.stop();
         },
         response => {
@@ -45,7 +48,7 @@ export class StudyQuotationResultComponent implements OnInit {
           }
           // If it looks like a framework error
           else if(response.error && response.error.message){
-            this.errorMessage = 'Unexpected Error: ' + response.error.message;
+            this.errorMessage = response.error.message;
           }
           else {
             console.log(response);
