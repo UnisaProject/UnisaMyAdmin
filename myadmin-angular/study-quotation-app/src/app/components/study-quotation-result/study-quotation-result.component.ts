@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-study-quotation-result',
   templateUrl: './study-quotation-result.component.html',
-  styleUrls: ['./study-quotation-result.component.css']
+  styleUrls: ['./study-quotation-result.component.scss']
 })
 export class StudyQuotationResultComponent implements OnInit {
 

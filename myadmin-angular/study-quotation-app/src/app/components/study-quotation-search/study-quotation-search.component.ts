@@ -9,7 +9,7 @@ import {atleastOneCourseCode} from './atleast-one.validator';
 @Component({
   selector: 'app-study-quotation-search',
   templateUrl: './study-quotation-search.component.html',
-  styleUrls: ['./study-quotation-search.component.css']
+  styleUrls: ['./study-quotation-search.component.scss']
 })
 export class StudyQuotationSearchComponent implements OnInit {
 
