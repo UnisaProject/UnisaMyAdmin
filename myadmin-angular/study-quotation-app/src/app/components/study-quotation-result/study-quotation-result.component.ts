@@ -43,7 +43,11 @@ export class StudyQuotationResultComponent implements OnInit {
           this.blockUI.stop();
         },
         response => {
-          this.studyQuotationInfo = searchCriteria;
+          this.studyQuotationInfo = <StudyQuotationInfo> {
+            academicYear : searchCriteria.academicYear,
+            qualification : searchCriteria.qualification,
+            qualificationCode : searchCriteria.qualificationCode
+          }
           if(response.error instanceof Error){
             this.errorMessage = response.error.message;
           }
