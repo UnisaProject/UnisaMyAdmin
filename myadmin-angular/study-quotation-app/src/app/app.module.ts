@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {BlockUIModule} from "ng-block-ui";
+import {ClarityModule} from '@clr/angular';
 
 import {AppComponent} from './app.component';
 import {StudyQuotationSearchComponent} from './components/study-quotation-search/study-quotation-search.component';
@@ -19,8 +20,9 @@ import { StudyQuotationClosedComponent } from './components/study-quotation-clos
     StudyQuotationClosedComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
+    ClarityModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
