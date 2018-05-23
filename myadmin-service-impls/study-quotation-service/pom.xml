@@ -33,6 +33,7 @@
 			<groupId>za.ac.unisa.myadmin.services.api</groupId>
 			<artifactId>service-api</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>common-services</artifactId>
@@ -44,14 +45,16 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-test-autoconfigure</artifactId>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>common-services</artifactId>
+			<version>${project.parent.version}</version>
+			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
