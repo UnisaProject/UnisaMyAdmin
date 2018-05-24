@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-6 col-form-label font-weight-bold">Qualification Code</label>
+      <label class="col-sm-6 col-form-label font-weight-bold">Qualification Code <span class="badge badge-primary">E.g 02632</span></label>
       <div class="col-sm-2">
         <input type="text" class="form-control" id="qualificationCode" placeholder="00000" value="" formControlName="qualificationCode" maxlength="5">
         <small *ngIf="radioPost.checked && studyFeeForm.get('qualification').invalid" class="text-danger">
@@ -83,10 +83,10 @@
       </div>
     </div>
     <div class="form-group"  formArrayName="courseCodes">
-      <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
+      <label class="form-check-label font-weight-bold">Enter Module Codes <span class="badge badge-primary">E.g DSC4825</span></label>
       <div class="form-row" *ngFor="let row of [0,6,12]">
         <div class="col-sm mt-3" *ngFor="let col of [0,1,2,3,4,5]">
-          <input type="text" class="form-control" name="courseCode" [formControlName]="col + row" maxlength="7">
+          <input type="text" class="form-control" name="courseCode" [formControlName]="col + row" maxlength="7" placeholder="DSC4825">
         </div>
       </div>
     </div>

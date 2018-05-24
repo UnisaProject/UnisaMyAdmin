@@ -3,7 +3,7 @@
     <h5>Student Fees Quotation</h5>
   </div>
   <div class="row">
-    <p>Ensure that you have entered valid UNISA study unit codes to generate study fees quotation.</p>
+    <p>Ensure that you have entered valid UNISA module codes to generate study fees quotation.</p>
   </div>
   <div class="alert alert-danger text-center" role="alert" *ngIf="errorMessage">
     <strong>Error: </strong>{{errorMessage}}
@@ -26,50 +26,50 @@
   <table class="table table-sm table-hover">
     <thead>
     <tr>
-      <th scope="col">Study Unit</th>
+      <th scope="col">Module Code</th>
       <th scope="col" colspan="2">Description</th>
-      <th scope="col">Fee</th>
+      <th scope="col" class="text-right">Fee</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let studyUnitInfo of studyQuotationInfo?.studyUnitInfos">
       <td>{{ studyUnitInfo.studyUnitcode }}</td>
       <td colspan="2">{{ studyUnitInfo.description }}</td>
-      <td>{{ studyUnitInfo.fee | number:'1.2-4'}}</td>
+      <td class="text-right" >{{ studyUnitInfo.fee | number:'1.2-4'}}</td>
     </tr>
     <tr><td colspan="4"> <br></td></tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Prescribed Books</th>
-      <td *ngIf="studyQuotationInfo?.prescribedBooks != 0">{{studyQuotationInfo?.prescribedBooks | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.prescribedBooks == 0">N/A</td>
+      <td class="text-right" *ngIf="studyQuotationInfo?.prescribedBooks != 0">{{studyQuotationInfo?.prescribedBooks | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.prescribedBooks == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Levy for Foreign Countries</th>
-      <td *ngIf="studyQuotationInfo?.foreignLevy != 0">{{studyQuotationInfo?.foreignLevy | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.foreignLevy == 0">N/A</td>
+      <td class="text-right" *ngIf="studyQuotationInfo?.foreignLevy != 0">{{studyQuotationInfo?.foreignLevy | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.foreignLevy == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Library Access Card</th>
-      <td *ngIf="studyQuotationInfo?.libraryCardCost != 0">{{studyQuotationInfo?.libraryCardCost | number:'1.2-4'}}</td><td *ngIf="studyQuotationInfo?.libraryCardCost == 0">N/A</td>
+      <td class="text-right" *ngIf="studyQuotationInfo?.libraryCardCost != 0">{{studyQuotationInfo?.libraryCardCost | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.libraryCardCost == 0">N/A</td>
     </tr>
     <tr>
       <td></td>
       <th scope="row" colspan="2">Matriculation Exemption Fee</th>
-      <td *ngIf="studyQuotationInfo?.matricExemptionCost != 0">{{studyQuotationInfo?.matricExemptionCost | number:'1.2-4'}}</td> <td *ngIf="studyQuotationInfo?.matricExemptionCost == 0">N/A</td>
+      <td *ngIf="studyQuotationInfo?.matricExemptionCost != 0" class="text-right">{{studyQuotationInfo?.matricExemptionCost | number:'1.2-4'}}</td> <td class="text-right" *ngIf="studyQuotationInfo?.matricExemptionCost == 0">N/A</td>
     </tr>
     <tr><td colspan="4"> <br></td></tr>
     <tr>
       <td></td>
       <td></td>
       <th scope="row" class="text-right">Total</th>
-      <th>{{studyQuotationInfo?.totalFee | number:'1.2-4'}}</th>
+      <th class="text-right">R {{studyQuotationInfo?.totalFee | number:'1.2-4'}}</th>
     </tr>
     <tr>
       <td></td>
       <td></td>
       <th scope="row" class="text-right">Payment due with Registration</th>
-      <th>{{studyQuotationInfo?.paymentDue | number:'1.2-4'}}</th>
+      <th class="text-right">R {{studyQuotationInfo?.paymentDue | number:'1.2-4'}}</th>
     </tr>
     </tbody>
   </table>
