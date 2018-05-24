@@ -76,6 +76,11 @@ export class ExamTimetableSearchComponent implements OnInit {
         new FormControl(),
         new FormControl(),
         new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
+        new FormControl(),
       ])
     }, { validator : Validators.compose([atleastOneCourseCode()])});
   }

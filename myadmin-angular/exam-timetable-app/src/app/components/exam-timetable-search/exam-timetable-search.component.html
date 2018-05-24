@@ -2,8 +2,7 @@
 <div class="row">
   <div class="col-12">
     <h5>Unisa Examination Timetable</h5>
-    <p>Enter the required study unit codes into the request form below and select "Display" to view the timetable.</p>
-    <p>The minimum length to enter is the&nbsp;<strong>first 6 characters</strong>&nbsp;of the study unit code. Invalid codes will be ignored.</p>
+    <p>Enter the required study unit codes into the request form below and select "Display" to view the timetable. Invalid codes will be ignored.</p>
   </div>
 </div>
   <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
@@ -13,16 +12,6 @@
         <p class="form-control-plaintext" id="listdate">{{ today | date: 'yyyy-MM-dd HH:mm' }}</p>
       </div>
     </div>
-    <!-- <div class="form-group row">
-      <label for="examinationyear" class="col-sm-2 col-form-label font-weight-bold">Examination Year</label>
-      <div class="col-sm-2">
-          <select class="form-control" id="examinationyear" name="examinationyear" [(ngModel)]="searchCriteria.year">
-              <option *ngFor="let year of examYears" [ngValue]="year">
-                {{ year }}
-              </option>
-            </select>
-      </div>
-    </div> -->
     <div class="form-group row  ml-2">
       <label for="examinationperiod" class="col-sm-2 col-form-label font-weight-bold">Examination Period</label>
       <div class="col-sm-3">
@@ -40,10 +29,12 @@
       </div>
     </div>
     <div class="form-group  ml-4">
-      <label class="form-check-label font-weight-bold">Enter Study Unit Codes</label>
+      <label class="form-check-label font-weight-bold">Enter Module Codes <span class="badge badge-primary">E.g DSC4825</span></label>
       <div class="form-row" formArrayName="courseCodes">
-        <div class="col-sm mt-3" *ngFor="let cs of courseCodes.controls; index as i">
-          <input type="text" class="form-control" name="courseCode" [formControlName]="i" maxlength="7">
+        <div class="form-row" *ngFor="let row of [0,5]">
+          <div class="col-sm mt-3" *ngFor="let col of [0,1,2,3,4]">
+            <input type="text" class="form-control" name="courseCode" [formControlName]="col + row" maxlength="7" placeholder="DSC4825">
+          </div>
         </div>
       </div>
     </div>
