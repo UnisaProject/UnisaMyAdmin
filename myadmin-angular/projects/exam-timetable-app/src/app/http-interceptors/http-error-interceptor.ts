@@ -1,11 +1,9 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import {Observable, throwError} from 'rxjs';
 import {ToasterNotificationService} from '../services';
 import {ErrorInfo} from "../info-objects/shared/error-info";
+import {catchError} from "rxjs/internal/operators";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -14,8 +12,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const toaster = this.injector.get(ToasterNotificationService);
-    return next.handle(req)
-      .catch((response: HttpErrorResponse) => {
+    return next.handle(req).pipe(
+      catchError((response: HttpErrorResponse) => {
         if(response.error instanceof Error){
           toaster.error('Client Error', response.error.message);
         }
@@ -27,7 +25,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         else {
           toaster.error('Unexpected Error', response.message);
         }
-        return Observable.throw(response);
-      });
+        return throwError(response);
+      })
+    );
   }
 }

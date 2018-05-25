@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExamPeriodInfo, ExamPeriodDateInfo } from '../../info-objects';
 import { ExamPeriodDateService, SearchCriteriaService } from '../../services';
-import { SearchCriteriaInfo } from '../../info-objects/shared/search-criteria-info';
+import { SearchCriteriaInfo } from '../../info-objects/shared';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {Router} from "@angular/router";
 

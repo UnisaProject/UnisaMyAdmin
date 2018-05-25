@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
-import { ExamPeriodInfo } from './../info-objects';
+import { ExamPeriodInfo } from '../info-objects';
 
 @Injectable()
 export class ExamPeriodService {
