@@ -16,7 +16,7 @@
 		<artifactId>unisa-myadmin</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<properties>
 		<frontend.maven.plugin.version>1.6</frontend.maven.plugin.version>
 		<node.version>v8.10.0</node.version>
@@ -26,5 +26,6 @@
 	<modules>
 		<module>exam-timetable-app</module>
 		<module>study-quotation-app</module>
+		<module>shared-library</module>
 	</modules>
 </project>
