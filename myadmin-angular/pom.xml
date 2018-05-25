@@ -26,6 +26,6 @@
 	<modules>
 		<module>exam-timetable-app</module>
 		<module>study-quotation-app</module>
-		<module>shared-library</module>
+		<module>myadmin-library</module>
 	</modules>
 </project>
