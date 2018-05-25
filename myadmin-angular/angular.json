@@ -1,0 +1,265 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "exam-timetable-app": {
+      "root": "projects/exam-timetable-app/",
+      "sourceRoot": "projects/exam-timetable-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/exam-timetable-app",
+            "index": "projects/exam-timetable-app/src/index.html",
+            "main": "projects/exam-timetable-app/src/main.ts",
+            "polyfills": "projects/exam-timetable-app/src/polyfills.ts",
+            "tsConfig": "projects/exam-timetable-app/tsconfig.app.json",
+            "assets": [
+              "projects/exam-timetable-app/src/favicon.ico",
+              "projects/exam-timetable-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/exam-timetable-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/exam-timetable-app/src/environments/environment.ts",
+                  "with": "projects/exam-timetable-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "exam-timetable-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "exam-timetable-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "exam-timetable-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/exam-timetable-app/src/test.ts",
+            "polyfills": "projects/exam-timetable-app/src/polyfills.ts",
+            "tsConfig": "projects/exam-timetable-app/tsconfig.spec.json",
+            "karmaConfig": "projects/exam-timetable-app/karma.conf.js",
+            "styles": [
+              "projects/exam-timetable-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/exam-timetable-app/src/favicon.ico",
+              "projects/exam-timetable-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/exam-timetable-app/tsconfig.app.json",
+              "projects/exam-timetable-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "myadmin-lib": {
+      "root": "projects/myadmin-lib",
+      "sourceRoot": "projects/myadmin-lib/src",
+      "projectType": "library",
+      "prefix": "unisa",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/myadmin-lib/tsconfig.lib.json",
+            "project": "projects/myadmin-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/myadmin-lib/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/myadmin-lib/src/test.ts",
+            "tsConfig": "projects/myadmin-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/myadmin-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/myadmin-lib/tsconfig.lib.json",
+              "projects/myadmin-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "study-quotation-app": {
+      "root": "projects/study-quotation-app/",
+      "sourceRoot": "projects/study-quotation-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/study-quotation-app",
+            "index": "projects/study-quotation-app/src/index.html",
+            "main": "projects/study-quotation-app/src/main.ts",
+            "polyfills": "projects/study-quotation-app/src/polyfills.ts",
+            "tsConfig": "projects/study-quotation-app/tsconfig.app.json",
+            "assets": [
+              "projects/study-quotation-app/src/favicon.ico",
+              "projects/study-quotation-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/study-quotation-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/study-quotation-app/src/environments/environment.ts",
+                  "with": "projects/study-quotation-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "study-quotation-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "study-quotation-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "study-quotation-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/study-quotation-app/src/test.ts",
+            "polyfills": "projects/study-quotation-app/src/polyfills.ts",
+            "tsConfig": "projects/study-quotation-app/tsconfig.spec.json",
+            "karmaConfig": "projects/study-quotation-app/karma.conf.js",
+            "styles": [
+              "projects/study-quotation-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/study-quotation-app/src/favicon.ico",
+              "projects/study-quotation-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/study-quotation-app/tsconfig.app.json",
+              "projects/study-quotation-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "exam-timetable-app"
+}
