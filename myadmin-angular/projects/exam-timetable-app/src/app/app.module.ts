@@ -4,9 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ClarityModule} from '@clr/angular';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { ExamTimetableSearchComponent } from './components/exam-timetable-search/exam-timetable-search.component';
 import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService, ToasterNotificationService } from './services';
@@ -17,6 +15,9 @@ import { HttpInterceptorProviders } from './http-interceptors';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
+
+import '@clr/icons';
+import '@clr/icons/shapes/all-shapes';
 
 @NgModule({
   declarations: [
