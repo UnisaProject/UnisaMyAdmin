@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from '../../services';
 import {StudyQuotationRequestInfo, StudyQuotationInfo} from '../../info-objects';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from "@angular/router";
 
 @Component({
