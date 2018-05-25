@@ -12,6 +12,7 @@ import {StudyQuotationResultComponent} from './components/study-quotation-result
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from './services';
 import { StudyQuotationClosedComponent } from './components/study-quotation-closed/study-quotation-closed.component';
 
+import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
 

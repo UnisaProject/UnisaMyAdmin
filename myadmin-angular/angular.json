@@ -82,10 +82,7 @@
             "styles": [
               "projects/exam-timetable-app/src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-              "node_modules/@clr/icons/clr-icons.min.js"
-            ],
+            "scripts": [],
             "assets": [
               "projects/exam-timetable-app/src/favicon.ico",
               "projects/exam-timetable-app/src/assets"
@@ -195,8 +192,6 @@
               "projects/study-quotation-app/src/styles.scss"
             ],
             "scripts": [
-              "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-              "node_modules/@clr/icons/clr-icons.min.js"
             ]
           },
           "configurations": {
@@ -248,8 +243,6 @@
               "projects/study-quotation-app/src/styles.scss"
             ],
             "scripts": [
-              "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-              "node_modules/@clr/icons/clr-icons.min.js"
             ],
             "assets": [
               "projects/study-quotation-app/src/favicon.ico",

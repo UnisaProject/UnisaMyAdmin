@@ -16,6 +16,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 
+import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
 
