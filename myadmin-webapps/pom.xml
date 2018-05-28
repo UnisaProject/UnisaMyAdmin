@@ -18,8 +18,7 @@
 	</parent>
 
 	<modules>
-		<module>exam-timetable-webapp</module>
-		<module>study-quotation-webapp</module>
+		<module>myadmin-services-webapp</module>
 	</modules>
 
 	<dependencies>

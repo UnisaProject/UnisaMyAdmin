@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class StudyQuotationApplication extends SpringBootServletInitializer {
+public class ServicesApplication extends SpringBootServletInitializer {
 
 	// By extending SpringBootServletInitializer and override the configure method
 	// so that the Spring application sources can be configured by
@@ -14,11 +14,11 @@ public class StudyQuotationApplication extends SpringBootServletInitializer {
 	// Jboss/Wildfly application server.
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(StudyQuotationApplication.class);
+		return application.sources(ServicesApplication.class);
 	}
 
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(StudyQuotationApplication.class);
+		SpringApplication app = new SpringApplication(ServicesApplication.class);
 		app.run(args);
 	}
 

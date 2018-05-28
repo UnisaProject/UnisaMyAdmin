@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>za.ac.unisa.myadmin.webapps</groupId>
-	<artifactId>exam-timetable-webapp</artifactId>
+	<artifactId>myadmin-services-webapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -15,45 +15,44 @@
 	</parent>
 
 	<dependencies>
-		<!-- Import the Angular UI artifact for this webapp -->
-		<dependency>
-			<groupId>za.ac.unisa.myadmin.ui.angular</groupId>
-			<artifactId>exam-timetable-app</artifactId>
-		</dependency>
+		<!--  Unisa myAdmin service -->
 
-		<!-- Unisa myAdmin services -->
 		<dependency>
-			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>exam-period-service</artifactId>
+		<groupId>za.ac.unisa.myadmin.services</groupId>
+		<artifactId>exam-period-service</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>exam-admission-service</artifactId>
+		<groupId>za.ac.unisa.myadmin.services</groupId>
+		<artifactId>exam-admission-service</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>exam-period-date-service</artifactId>
+		<groupId>za.ac.unisa.myadmin.services</groupId>
+		<artifactId>exam-period-date-service</artifactId>
 		</dependency>
 
 		<dependency>
+		<groupId>za.ac.unisa.myadmin.services</groupId>
+		<artifactId>exam-paper-details-service</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>exam-paper-details-service</artifactId>
+			<artifactId>study-quotation-service</artifactId>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
-			 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
-		<finalName>examtimetable</finalName>
+    		 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
+		<finalName>myadmin-services</finalName>
 
 		<resources>
-	        <resource>
-	            <directory>src/main/resources</directory>
-	            <filtering>true</filtering>
-	        </resource>
-	    </resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 
 		<plugins>
 			<!-- It is used to create executable JAR of the application. -->
