@@ -50,6 +50,8 @@
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
+
+          <!-- Build library -->
 					<execution>
 						<id>yarn build myadmin-lib</id>
 						<goals>
@@ -60,6 +62,8 @@
 							<arguments>build myadmin-lib</arguments>
 						</configuration>
 					</execution>
+
+          <!-- Build exam timetable -->
 					<execution>
 						<id>yarn build exam-timetable-app</id>
 						<goals>
@@ -68,6 +72,18 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<arguments>build exam-timetable-app</arguments>
+						</configuration>
+					</execution>
+
+          <!-- Build exam study quotation -->
+					<execution>
+						<id>yarn build study-quotation-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build study-quotation-app</arguments>
 						</configuration>
 					</execution>
 				</executions>
