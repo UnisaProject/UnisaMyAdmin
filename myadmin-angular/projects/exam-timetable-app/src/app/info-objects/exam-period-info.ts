@@ -1,8 +1,8 @@
-import { DescriptionInfo } from './shared';
-
 /**
  * A class representing an exam period
  */
+import {DescriptionInfo} from "myadmin-lib";
+
 export interface ExamPeriodInfo {
     code: number;
     descriptionInfo: DescriptionInfo[];

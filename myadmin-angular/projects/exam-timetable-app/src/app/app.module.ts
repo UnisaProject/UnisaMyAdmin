@@ -7,18 +7,24 @@ import {ClarityModule} from '@clr/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExamTimetableSearchComponent } from './components/exam-timetable-search/exam-timetable-search.component';
-import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService, ToasterNotificationService } from './services';
+import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService} from './services';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { ExamTimetableResultComponent } from './components/exam-timetable-result/exam-timetable-result.component';
 import { BlockUIModule} from "ng-block-ui";
-import { HttpInterceptorProviders } from './http-interceptors';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 
 import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
+import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+/** Http interceptor providers in outside-in order */
+export const HttpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+];
+
 
 @NgModule({
   declarations: [
@@ -32,12 +38,12 @@ import '@clr/icons/shapes/all-shapes';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MyadminLibModule,
     ClarityModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ToasterModule,
     BlockUIModule.forRoot()
   ],
   providers: [
@@ -45,9 +51,7 @@ import '@clr/icons/shapes/all-shapes';
     ExamPeriodService,
     ExamPeriodDateService,
     SearchCriteriaService,
-    ToasterService,
-    ToasterNotificationService,
-    HttpInterceptorProviders,
+    HttpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

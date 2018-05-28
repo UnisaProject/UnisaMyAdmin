@@ -1,4 +1,4 @@
-import { ExamPeriodInfo } from './../exam-period-info';
+import { ExamPeriodInfo } from './exam-period-info';
 
 /**
  * A class representing the criteria to search for an exam timetable

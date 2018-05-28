@@ -9,6 +9,8 @@ import {atleastOneCourseCode} from "./atleast-one.validator";
 import {selectedExamPeriod} from "./exam-period.validator";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {OrderByPipe} from "../../directives/orderby.pipe";
+import {Observable} from "rxjs/Rx";
+import {tap} from "rxjs/internal/operators";
 
 /**
  * Component to allow a user to enter criteria to search for an exam timetable.
@@ -87,12 +89,12 @@ export class ExamTimetableSearchComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.getExamPeriods().then(
+    this.getExamPeriods().subscribe(
       ()=>{
         this.blockUI.stop();
         this.defaultForm()
       },
-      ()=>{
+      (error)=>{
         this.blockUI.stop();
       });
   }
@@ -143,11 +145,13 @@ export class ExamTimetableSearchComponent implements OnInit {
    * Call to get the exam periods
    * @returns {Promise<any>}
    */
-  private getExamPeriods(): Promise<any> {
-    return this.examPeriodService.getExamPeriods().toPromise()
-      .then((examPeriods: ExamPeriodInfo[]) => {
-        this.examPeriods = this.orderByPipe.transform(examPeriods, 'code');
-      });
+  private getExamPeriods(): Observable<ExamPeriodInfo[]> {
+    return this.examPeriodService.getExamPeriods()
+      .pipe(
+        tap((examPeriods: ExamPeriodInfo[]) => {
+          this.examPeriods = this.orderByPipe.transform(examPeriods, 'code');
+        })
+      );
   }
 
 }

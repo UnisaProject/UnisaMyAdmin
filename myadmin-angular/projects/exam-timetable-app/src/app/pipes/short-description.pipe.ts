@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {DescriptionInfo} from "../info-objects/shared";
+import {DescriptionInfo} from "myadmin-lib";
 
 /**
  * Filter to get the short description of a list of DescriptionInfo objects that matches

@@ -1,9 +1,9 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {ToasterNotificationService} from '../services';
-import {ErrorInfo} from "../info-objects/shared/error-info";
 import {catchError} from "rxjs/internal/operators";
+import {ToasterNotificationService} from "../services/toaster-notification.service";
+import {ErrorInfo} from "../info-objects";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
