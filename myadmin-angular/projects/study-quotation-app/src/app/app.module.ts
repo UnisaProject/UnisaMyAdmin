@@ -11,10 +11,20 @@ import {StudyQuotationSearchComponent} from './components/study-quotation-search
 import {StudyQuotationResultComponent} from './components/study-quotation-result/study-quotation-result.component';
 import {StudyFeeCriteriaService, StudyFeeQuotationService} from './services';
 import { StudyQuotationClosedComponent } from './components/study-quotation-closed/study-quotation-closed.component';
+import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+/** Http interceptor providers in outside-in order */
+export const HttpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+];
+
+
 
 import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -26,13 +36,19 @@ import '@clr/icons/shapes/all-shapes';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     ClarityModule,
+    MyadminLibModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BlockUIModule.forRoot()
   ],
-  providers: [StudyFeeCriteriaService, StudyFeeQuotationService],
+  providers: [
+    StudyFeeCriteriaService,
+    StudyFeeQuotationService,
+    HttpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

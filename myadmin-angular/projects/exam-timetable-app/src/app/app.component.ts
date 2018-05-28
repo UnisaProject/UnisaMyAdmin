@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToasterConfig } from 'angular2-toaster';
+import {unisaToasterConfig} from "myadmin-lib";
 
 @Component({
   selector: 'unisa-root',
@@ -7,13 +8,6 @@ import { ToasterConfig } from 'angular2-toaster';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
 
-  public toasterConfig: ToasterConfig = new ToasterConfig({
-    animation: 'flyLeft',
-    showCloseButton: true,
-    timeout: 0,
-    mouseoverTimerStop: false,
-    positionClass: 'toast-top-right'
-  });
+  toasterConfig: ToasterConfig = unisaToasterConfig;
 }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ToasterConfig } from 'angular2-toaster';
+import { unisaToasterConfig } from "myadmin-lib";
 
 @Component({
   selector: 'unisa-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  toasterConfig: ToasterConfig = unisaToasterConfig;
 }
