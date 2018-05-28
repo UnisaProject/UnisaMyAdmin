@@ -75,7 +75,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build myadmin-lib</arguments>
+							<arguments>build-prod myadmin-lib</arguments>
 						</configuration>
 					</execution>
 
@@ -87,7 +87,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build exam-timetable-app</arguments>
+							<arguments>build-prod exam-timetable-app</arguments>
 						</configuration>
 					</execution>
 
@@ -99,7 +99,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build study-quotation-app</arguments>
+							<arguments>build-prod study-quotation-app</arguments>
 						</configuration>
 					</execution>
 				</executions>
