@@ -2,22 +2,19 @@
   "/examtimetable/rest": {
     "target": "http://localhost:8080",
     "secure": false,
-    "logLevel": "debug",
     "pathRewrite": {
-      "^/examtimetable": "myadmin-services"
+      "^/examtimetable": "/myadmin-services"
     }
   },
   "/studyquotation/rest": {
     "target": "http://localhost:8080",
     "secure": false,
-    "logLevel": "debug",
     "pathRewrite": {
-      "^/studyquotation": "myadmin-services"
+      "^/studyquotation": "/myadmin-services"
     }
   },
   "/myadmin-services/rest/*": {
     "target": "http://localhost:8080",
-    "secure": false,
-    "logLevel": "debug"
+    "secure": false
   }
 }
