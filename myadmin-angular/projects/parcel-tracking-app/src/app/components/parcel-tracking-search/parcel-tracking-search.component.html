@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5>Parcel Tracking</h5>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <form (ngSubmit)="onSubmit()" >
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-2">
+        <!--formControlName="studentNumber"-->
+        <input type="number" class="form-control" id="studentNumber" name="studentNumber"  [(ngModel)]="studentNumber">
+      </div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary"> Display</button>
+      <!--<button type="button" class="btn btn-secondary" (click)="resetForm()">Clear</button>-->
+    </div>
+  </form>
+</div>

@@ -191,8 +191,7 @@
               "node_modules/@clr/icons/clr-icons.min.css",
               "projects/study-quotation-app/src/styles.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -218,7 +217,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "study-quotation-app:build",
-            "baseHref" : "/studyquotation/"
+            "baseHref": "/studyquotation/"
           },
           "configurations": {
             "production": {
@@ -242,8 +241,7 @@
             "styles": [
               "projects/study-quotation-app/src/styles.scss"
             ],
-            "scripts": [
-            ],
+            "scripts": [],
             "assets": [
               "projects/study-quotation-app/src/favicon.ico",
               "projects/study-quotation-app/src/assets"
@@ -256,6 +254,125 @@
             "tsConfig": [
               "projects/study-quotation-app/tsconfig.app.json",
               "projects/study-quotation-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "parcel-tracking-app": {
+      "root": "projects/parcel-tracking-app/",
+      "sourceRoot": "projects/parcel-tracking-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/parcel-tracking-app",
+            "index": "projects/parcel-tracking-app/src/index.html",
+            "main": "projects/parcel-tracking-app/src/main.ts",
+            "polyfills": "projects/parcel-tracking-app/src/polyfills.ts",
+            "tsConfig": "projects/parcel-tracking-app/tsconfig.app.json",
+            "assets": [
+              "projects/parcel-tracking-app/src/favicon.ico",
+              "projects/parcel-tracking-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/parcel-tracking-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/parcel-tracking-app/src/environments/environment.ts",
+                  "with": "projects/parcel-tracking-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "parcel-tracking-app:build",
+            "baseHref": "/parceltracking/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "parcel-tracking-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "parcel-tracking-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/parcel-tracking-app/src/test.ts",
+            "polyfills": "projects/parcel-tracking-app/src/polyfills.ts",
+            "tsConfig": "projects/parcel-tracking-app/tsconfig.spec.json",
+            "karmaConfig": "projects/parcel-tracking-app/karma.conf.js",
+            "styles": [
+              "projects/parcel-tracking-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/parcel-tracking-app/src/favicon.ico",
+              "projects/parcel-tracking-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/parcel-tracking-app/tsconfig.app.json",
+              "projects/parcel-tracking-app/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

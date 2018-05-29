@@ -102,6 +102,17 @@
 							<arguments>build-prod study-quotation-app</arguments>
 						</configuration>
 					</execution>
+          <!-- Build parcel tracking -->
+          <execution>
+            <id>yarn build parcel-tracking-app</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>build parcel-tracking-app</arguments>
+            </configuration>
+          </execution>
 				</executions>
 			</plugin>
 		</plugins>
