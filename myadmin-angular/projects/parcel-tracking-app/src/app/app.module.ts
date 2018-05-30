@@ -12,6 +12,7 @@ import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ParcelTrackingSearchComponent} from './components/parcel-tracking-search/parcel-tracking-search.component';
 import {ParcelTrackingResultComponent} from './components/parcel-tracking-result/parcel-tracking-result.component';
+import {ParcelTrackingService} from './services/parcel-tracking.service';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
@@ -33,7 +34,10 @@ export const HttpInterceptorProviders = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [HttpInterceptorProviders],
+  providers: [
+    ParcelTrackingService,
+    HttpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

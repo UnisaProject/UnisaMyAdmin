@@ -25,6 +25,6 @@ export class ParcelTrackingSearchComponent implements OnInit {
   onSubmit() {
     this.blockUI.start("Parcel Tracking...");
 
-    this.router.navigate(["result"]);
+    this.router.navigate(["result/" + this.studentNumber]);
   }
 }

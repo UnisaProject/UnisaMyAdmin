@@ -6,7 +6,7 @@ import {ParcelTrackingResultComponent} from './components/parcel-tracking-result
 const routes:Routes = [
   {path: '', redirectTo: '/search', pathMatch: 'full'},
   {path: 'search', component: ParcelTrackingSearchComponent},
-  {path: 'result', component: ParcelTrackingResultComponent}
+  {path: 'result/:id', component: ParcelTrackingResultComponent}
 ];
 
 @NgModule({

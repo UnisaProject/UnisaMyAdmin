@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ParcelTrackingService} from '../../services/parcel-tracking.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import 'rxjs/add/operator/map';
+import {ParcelTrackingInfo} from '../../info-objects';
 
 @Component({
   selector: 'unisa-parcel-tracking-result',
@@ -8,15 +12,48 @@ import {BlockUI, NgBlockUI} from "ng-block-ui";
 })
 export class ParcelTrackingResultComponent implements OnInit {
 
+  public parcelTrackingInfo:ParcelTrackingInfo;
+
+  public studentNumber:number;
+
+  public errorMessage:string;
+
   @BlockUI()
   private blockUI:NgBlockUI;
 
-  constructor() {
+  constructor(private route:ActivatedRoute,
+              private router:Router,
+              private parcelTrackingService:ParcelTrackingService) {
     this.blockUI.start("Loading quote...");
   }
 
   ngOnInit() {
-    this.blockUI.stop();
+    // get parcel when `id` param changes
+    console.log('Test');
+    //this.route.params.subscribe(p => console.log(p && p['id']));
+    this.route.params.subscribe(p => this.getStudentParcelTracking(p && p['id']));
   }
 
+  private getStudentParcelTracking(userId:number): void{
+    this.studentNumber = userId;
+    this.parcelTrackingService.trackStudentParcel(this.studentNumber)
+      .subscribe((parcelTrackingInfo:ParcelTrackingInfo) => {
+        this.parcelTrackingInfo = parcelTrackingInfo;
+        this.blockUI.stop();
+      },
+        response => {
+          if(response.error instanceof Error){
+            this.errorMessage = response.error.message;
+          }
+          // If it looks like a framework error
+          else if(response.error && response.error.message){
+            this.errorMessage = response.error.message;
+          }
+          else {
+            console.log(response);
+            this.errorMessage = response.message;
+          }
+          this.blockUI.stop();
+        })
+  }
 }
