@@ -25,5 +25,6 @@
 		<module>exam-period-date-service</module>
 		<module>exam-period-service</module>
 		<module>study-quotation-service</module>
+		<module>parcel-tracking-service</module>
 	</modules>
 </project>
