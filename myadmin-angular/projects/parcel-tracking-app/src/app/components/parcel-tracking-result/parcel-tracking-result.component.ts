@@ -24,17 +24,15 @@ export class ParcelTrackingResultComponent implements OnInit {
   constructor(private route:ActivatedRoute,
               private router:Router,
               private parcelTrackingService:ParcelTrackingService) {
-    this.blockUI.start("Loading quote...");
+    this.blockUI.start("Parcel Tracking...");
   }
 
   ngOnInit() {
-    // get parcel when `id` param changes
-    console.log('Test');
-    //this.route.params.subscribe(p => console.log(p && p['id']));
     this.route.params.subscribe(p => this.getStudentParcelTracking(p && p['id']));
   }
 
   private getStudentParcelTracking(userId:number): void{
+    this.blockUI.start("Parcel Tracking...");
     this.studentNumber = userId;
     this.parcelTrackingService.trackStudentParcel(this.studentNumber)
       .subscribe((parcelTrackingInfo:ParcelTrackingInfo) => {

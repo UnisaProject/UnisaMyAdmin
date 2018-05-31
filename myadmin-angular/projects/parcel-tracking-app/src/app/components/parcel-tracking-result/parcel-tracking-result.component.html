@@ -2,63 +2,68 @@
   <div class="row">
     <div class="col-12">
       <h5>Parcel Tracking</h5>
+      <br/>
       <p>Please note that items sent by normal mail, including international airmail, such as official correspondence
         and single page tutorial letters are not considered parcels and will not be listed here.
-      </p>
-      <br/>
-      <p>The contact details for postal agents are as follows:<br/><br/>&nbsp;&bull;&nbsp;&nbsp;&nbsp;
+        <br/>
+        <br/>
+        The contact details for postal agents are as follows:<br/><br/>&bull;&nbsp;&nbsp;&nbsp;
         <b>SA Post Office </b>at the following number:<b> 0860-111-502 </b> (toll-free from South Africa only).
-      </p>
-      <br/>
-      <p>The contact details for courier agents are as follows:<br><br> All study material for the international
-        students is sent via <b>UPS</b> Courier Services.<br>Please use the link:
-      </p>
-      <br/>
-      <p><a href="https://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1" target="_blank">http://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1</a>
-      </p>
-      <br/>
-      <p>
-        Step 1 - Click on the \u2018Tracking\u2019 tab and then click on \u2018Track by Reference\u2019 on the Tracking
-        page.<br>Step 2 - Indicate your shipment type as \u2018Package\u2019.
-      </p>
-      <p>Step 3 - Select your shipment date range and type your Student Number in the Shipment Reference.<br></p>
-      <p>Step 4 \u2013 Click on the \u2018Track\u2019 button to complete the process.<br><br><br></p>
-      <p>For domestic students who are registered for modules from the following colleges: <br>CEMS \u2013 College of
-        Economic and Management Sciences,<br></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;College of Accounting
-        Sciences,<br>CEDU \u2013 College of Education,<br>CLAW \u2013 College of Law,<br></p>
-      <p><br/></p>
-      <p><br/></p>
-      <p>CSET \u2013College of Science, Engineering and Technology,<br>CHS \u2013 College of Human Sciences,<br>CAES
-        \u2013 College of Agriculture and Environmental Sciences,<br>the study material is sent via <b>DSV</b> Courier
-        Services.<br></p>
-      <p>Please use the link:<br><a href="https://distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/"
-                                    target="_blank">distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/</a><br>
+        <br/>
+        <br/>
+        The contact details for courier agents are as follows:<br><br>
+        All study material for the international students is sent via <b>UPS</b> Courier Services.
+        <br>
+        Please use the link:
+        <br/>
+        <a href="https://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1" target="_blank">http://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1</a>
+
+        <br/>
+
+        Step 1 - Click on the 'Tracking' tab and then click on 'Track by Reference' on the Tracking page.
+        <br>
+        Step 2 - Indicate your shipment type as 'Package'.
+        <br>
+        Step 3 - Select your shipment date range and type your Student Number in the Shipment Reference.<br>
+        Step 4 - Click on the 'Track' button to complete the process.
+        <br><br>
+        For domestic students who are registered for modules from the following colleges:
+        <br>
+        CEMS - College of Economic and Management Sciences,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- College of Accounting Sciences,<br>
+        CEDU - College of Education,<br>
+        CLAW - College of Law,<br>
+        CSET&nbsp;&nbsp;- College of Science, Engineering and Technology,<br>
+        CHS &nbsp;&nbsp;- College of Human Sciences,<br>
+        CAES  - College of Agriculture and Environmental Sciences,<br><br>The study material is sent via <b>DSV</b> Courier
+        Services.<br>
+        Please use the link:<br><a href="https://distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/"
+                                   target="_blank">https://distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/</a><br>
       </p>
 
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-sm-2">
-      <p class="font-weight-bold">Student number</p>
+  <form #resultForm="ngForm">
+    <div class="form-group row">
+      <div class="col-sm-2">
+        <p class="font-weight-bold">Student number</p>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*" [(ngModel)]="studentNumber" minlength="7" maxlength="8" required >
+      </div>
     </div>
-    <div class="col-sm-2">
-      <!--formControlName="studentNumber"-->
-      <input type="number" class="form-control" id="studentNumber" name="studentNumber"
-             [(ngModel)]="parcelTrackingInfo?.studentInfo.studentNumber">
+    <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="col-sm-1">
+        <button class="btn btn-primary"
+                (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
+        </button>
+      </div>
+      <div class="col-sm-1">
+        <a class="btn btn-secondary" routerLink="/search">New Student</a>
+        <!--<button type="reset" class="btn btn-secondary">New Student</button>-->
+      </div>
     </div>
-    <!--<div class="col-sm-6"> parcelTrackingInfo?.student?.number </div>-->
-  </div>
-  <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
-    <div class="col">
-      <button class="btn btn-primary" (click)="getStudentParcelTracking(parcelTrackingInfo?.studentInfo.studentNumber)">
-        Display
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="resetForm()">Clear</button>
-    </div>
-  </div>
-
+  </form>
   <hr>
   <h5>Student {{parcelTrackingInfo?.studentInfo.studentNumber}} : {{parcelTrackingInfo?.studentInfo.studentName}}
   </h5>
@@ -68,16 +73,20 @@
   </h6>
   <div class="table-responsive-sm col-sm-8">
     <table class="table table-sm table-hover">
+      <thead class="thead-light">
       <tr>
         <th scope="col">Date Processed</th>
         <th scope="col">Agent</th>
-        <th scope="col" class="text-right">Tracking Number</th>
+        <th scope="col">Tracking Number</th>
       </tr>
+      </thead>
+      <tbody>
       <tr *ngFor="let traceRecordInfo of parcelTrackingInfo?.traceRecordInfoList">
         <td>{{ traceRecordInfo.trackTraceDate }}</td>
-        <td >{{ traceRecordInfo.trackTraceAgent }}</td>
-        <td class="text-right">{{ traceRecordInfo.trackTraceNumber}}</td>
+        <td>{{ traceRecordInfo.trackTraceAgent }}</td>
+        <td>{{ traceRecordInfo.trackTraceNumber}}</td>
       </tr>
+      </tbody>
     </table>
   </div>
 
