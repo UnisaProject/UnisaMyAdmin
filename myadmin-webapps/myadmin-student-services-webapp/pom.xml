@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>za.ac.unisa.myadmin.webapps</groupId>
-	<artifactId>myadmin-services-webapp</artifactId>
+	<artifactId>myadmin-student-services-webapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -49,7 +49,7 @@
 	<build>
 		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
     		 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
-		<finalName>myadmin-services</finalName>
+		<finalName>myadmin-student-services</finalName>
 
 		<resources>
 			<resource>
