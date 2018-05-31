@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.unisa.myadmin.TestApplication;
 import za.ac.unisa.myadmin.exam.admission.ExamAdmissionService;
@@ -21,7 +20,6 @@ import za.ac.unisa.myadmin.service.exam.admission.impl.ExamAdmissionServiceImplT
  */
 @RunWith(SpringRunner.class)
 @Import(TestApplication.class)
-@DirtiesContext
 public class ExamAdmissionServiceYearCalculationDecoratorTest extends ExamAdmissionServiceImplTest {
 
 	@Autowired
