@@ -11,7 +11,7 @@ export class StudyFeeCriteriaService {
   }
 
   getQuotationYear():Observable<number> {
-       return this.http.get<number>('rest/studyfeequotation/quotationYear');
+       return this.http.get<number>('/myadmin-student-services/rest/studyfeequotation/quotationYear');
   }
 }
 

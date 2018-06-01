@@ -19,7 +19,7 @@ export class StudyFeeQuotationService {
       .set('matricExemption', <string><any>studyQuotationInfo.matricExemption)
       .set('courseCodes', studyQuotationInfo.courseCodes.join(','));
 
-    return this.http.get<StudyQuotationInfo>('rest/studyfeequotation/calculateQuotation', {params});
+    return this.http.get<StudyQuotationInfo>('/myadmin-student-services/rest/studyfeequotation/calculateQuotation', {params});
   }
 
 }

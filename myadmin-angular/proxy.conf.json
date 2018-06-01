@@ -1,25 +1,4 @@
 {
-  "/examtimetable/rest": {
-    "target": "http://localhost:8080",
-    "secure": false,
-    "pathRewrite": {
-      "^/examtimetable": "/myadmin-student-services"
-    }
-  },
-  "/studyquotation/rest": {
-    "target": "http://localhost:8080",
-    "secure": false,
-    "pathRewrite": {
-      "^/studyquotation": "/myadmin-student-services"
-    }
-  },
-  "/parceltracking/rest": {
-    "target": "http://localhost:8080",
-    "secure": false,
-    "pathRewrite": {
-      "^/parceltracking": "/myadmin-student-services"
-    }
-  },
   "/myadmin-student-services/rest/*": {
     "target": "http://localhost:8080",
     "secure": false

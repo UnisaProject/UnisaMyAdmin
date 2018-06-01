@@ -10,7 +10,7 @@ export class ParcelTrackingService {
   }
 
   trackStudentParcel(userId:number):Observable<ParcelTrackingInfo> {
-    return this.http.get<ParcelTrackingInfo>('rest/trackandtrace/' + userId);
+    return this.http.get<ParcelTrackingInfo>('/myadmin-student-services/rest/trackandtrace/' + userId);
   }
 
 }
