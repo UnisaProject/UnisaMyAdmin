@@ -11,6 +11,8 @@ import za.ac.unisa.myadmin.parceltracking.TrackAndTraceRecordInfo;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -21,55 +23,37 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Service("ParcelTrackingService")
 public class ParcelTrackingServiceImpl implements ParcelTrackingService {
+	/**
+	 * Get an instance of the StudyFee proxy
+	 *
+	 * @return
+	 * @throws PropertyVetoException
+	 */
+	private Smsij01sMntGenDespatchInfo getProxyInstance() throws PropertyVetoException {
+		Smsij01sMntGenDespatchInfo despatchProxy = new Smsij01sMntGenDespatchInfo();
+		despatchProxy.clear();
+		despatchProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
+		despatchProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
+		despatchProxy.setInCsfClientServerCommunicationsAction("D");
+		despatchProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
+		despatchProxy.setInSecurityWsPrinterCode("MYUNISA");
+		return despatchProxy;
+	}
 
 	@Override
 	public ParcelTrackingInfo trackAndTraceParcel(Integer studentNumber) throws OperationFailedException {
 		try {
-			//ParcelTrackingInfo parcelTrackingInfo = new ParcelTrackingInfo();
-//			ParcelTrackingDisplayForm parcelTrackingDisplayForm = (ParcelTrackingDisplayForm) form;
-//			ActionMessages messages = new ActionMessages();
-//
-//			messages = (ActionMessages) parcelTrackingDisplayForm.validate(mapping, request);
-//
-//			eventTrackingService = (EventTrackingService) ComponentManager.get(EventTrackingService.class);
-//			toolManager = (ToolManager) ComponentManager.get(ToolManager.class);
+			Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
+			//LocalDate.now().get(ChronoField.YEAR);
 
-			int tmpStudentNr = 0;
-
-//			if (!messages.isEmpty()) {
-//				addErrors(request, messages);
-//				return mapping.findForward("TrackandTraceInput");
-//			}
-			tmpStudentNr = studentNumber;
-			/** Current Year */
-
-			short currentYear;
-
-			if (Calendar.getInstance().get(Calendar.MONTH) < 11) {
-				currentYear = new Integer(Calendar.getInstance().get(Calendar.YEAR)).shortValue();
-
-				//System.out.println( "year  "+currentYear);
-			} else {
-				currentYear = new Integer(Calendar.getInstance().get(Calendar.YEAR)).shortValue();
-				//System.out.println(currentYear);
-			}
-
-			Smsij01sMntGenDespatchInfo despatchProxy = new Smsij01sMntGenDespatchInfo();
+			Smsij01sMntGenDespatchInfo despatchProxy = getProxyInstance();
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
-			//operListener opl = new operListener();
 			despatchProxy.addExceptionListener(exceptionListener);
-			despatchProxy.clear();
+			//Populate fields
+			despatchProxy.setInStudentAnnualRecordMkStudentNr(studentNumber);
+			despatchProxy.setInStudentAnnualRecordMkAcademicYear(currentYear.shortValue());
 
-			despatchProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-			despatchProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-			despatchProxy.setInCsfClientServerCommunicationsAction("D");
-			despatchProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-			despatchProxy.setInStudentAnnualRecordMkStudentNr(tmpStudentNr);
-			despatchProxy.setInStudentAnnualRecordMkAcademicYear(currentYear);
-			despatchProxy.setInSecurityWsPrinterCode("MYUNISA");
-
-			//System.out.println(tmpStudentNr);
 			despatchProxy.execute();
 			if (exceptionReference.get() != null) {
 				throw exceptionReference.get();
@@ -77,34 +61,23 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 			return buildResponse(despatchProxy, currentYear);
 		} catch (PropertyVetoException ex) {
 			throw new OperationFailedException(ex);
-			//ActionMessages messages = new ActionMessages();
-			//messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-			//	"errors.exceptionhappened", "An unepxected Error has happened, please close this tool and log on again"));
-			//return mapping.findForward("displayforward");
 		}
 	}
 
-	private ParcelTrackingInfo buildResponse(Smsij01sMntGenDespatchInfo despatchProxy, short currentYear) throws OperationFailedException {
+	private ParcelTrackingInfo buildResponse(Smsij01sMntGenDespatchInfo despatchProxy, Integer currentYear) throws OperationFailedException {
 		ParcelTrackingInfo parcelTrackingInfo = new ParcelTrackingInfo();
 		String errorMessage = despatchProxy.getOutCsfStringsString500();
 		if (StringUtils.hasText(errorMessage)) {
 			throw new OperationFailedException(errorMessage);
-//				messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-//					"error.coolgenerror", Errormsg));
-//				addErrors(request, messages);
-//				return mapping.findForward("TrackandTraceInput");
 		}
 		StudentInfo student = new StudentInfo();
 		student.setStudentNumber(String.valueOf(despatchProxy.getOutStudentAnnualRecordMkStudentNr()));
 		student.setStudentName((String.valueOf(despatchProxy.getOutWsStudentMkTitle()) + " " + String.valueOf(despatchProxy.getOutWsStudentFirstNames() + " " + String.valueOf(despatchProxy.getOutWsStudentSurname()))));
 		parcelTrackingInfo.setStudentInfo(student);
 
-		int count = despatchProxy.getOutLuGroupCount();//count gives total no. of records belongs to that student
 		List records = new ArrayList<>();
 
-
-		for (int i = 0; i < count; i++) {
-
+		for (int i = 0; i < despatchProxy.getOutLuGroupCount(); i++) {
 
 			if (!("".equals(despatchProxy.getOutGWsTrackAndTraceNumber(i)))) {
 				//DateFormat strDate = new SimpleDateFormat("dd-MM-yyyy");
@@ -132,10 +105,8 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 					tempday = Integer.toString(day);
 				}
 
-
 				int year = tmpDate.get(Calendar.YEAR);
-				if (currentYear == (new Integer(year).shortValue()) ||
-					((currentYear - 1) == (new Integer(year).shortValue()) && month > 10)) {
+				if (currentYear == year || ((currentYear - 1) == year && month > 10)) {
 					//set date in array list
 					TrackAndTraceRecordInfo trackAndTraceRecord = new TrackAndTraceRecordInfo();
 					if (despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1).equals("C") ||
@@ -160,13 +131,11 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 			}
 		}
 		parcelTrackingInfo.setTraceRecordInfoList(records);
-		parcelTrackingInfo.setStudentuser(false);
-		//request.setAttribute("records", records);
-		//parcelTrackingDisplayForm1.setTrackRecords(records);
+		parcelTrackingInfo.setStudentuser(true);
+
+		//TODO Unisa tool logs some event.
 		//eventTrackingService.post(
 		//	eventTrackingService.newEvent(EventTrackingTypes.EVENT_TRACKANDTRACE_VIEW, toolManager.getCurrentPlacement().getContext(), false));
-
-		//return mapping.findForward("displayforward");
 		return parcelTrackingInfo;
 	}
 

@@ -35,7 +35,8 @@
         CLAW - College of Law,<br>
         CSET&nbsp;&nbsp;- College of Science, Engineering and Technology,<br>
         CHS &nbsp;&nbsp;- College of Human Sciences,<br>
-        CAES  - College of Agriculture and Environmental Sciences,<br><br>The study material is sent via <b>DSV</b> Courier
+        CAES - College of Agriculture and Environmental Sciences,<br><br>The study material is sent via <b>DSV</b>
+        Courier
         Services.<br>
         Please use the link:<br><a href="https://distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/"
                                    target="_blank">https://distributionclientzone.go2uti.com/UTi.Unisa.TrackAndTrace/</a><br>
@@ -43,51 +44,78 @@
 
     </div>
   </div>
-  <form #resultForm="ngForm">
-    <div class="form-group row">
-      <div class="col-sm-2">
-        <p class="font-weight-bold">Student number</p>
+  <div *ngIf="parcelTrackingInfo?.traceRecordInfoList">
+    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Student number</p>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*"
+                 [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
+        </div>
       </div>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*" [(ngModel)]="studentNumber" minlength="7" maxlength="8" required >
+      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+        <div class="col-sm-1">
+          <button class="btn btn-primary"
+                  (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-secondary" routerLink="/search">New Student</a>
+          <!--<button type="reset" class="btn btn-secondary">New Student</button>-->
+        </div>
       </div>
+    </form>
+    <hr>
+    <h5>Student {{parcelTrackingInfo?.studentInfo.studentNumber}} : {{parcelTrackingInfo?.studentInfo.studentName}}
+    </h5>
+    <br/>
+    <h6>SA Post Office Parcels ,open the link blow and enter in the tracking number listed below.<br><a
+      href="https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html" target="_blank">https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html</a>
+    </h6>
+    <div class="table-responsive-sm col-sm-8">
+      <table class="table table-sm table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">Date Processed</th>
+          <th scope="col">Agent</th>
+          <th scope="col">Tracking Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let traceRecordInfo of parcelTrackingInfo?.traceRecordInfoList">
+          <td>{{ traceRecordInfo.trackTraceDate }}</td>
+          <td>{{ traceRecordInfo.trackTraceAgent }}</td>
+          <td>{{ traceRecordInfo.trackTraceNumber}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
-      <div class="col-sm-1">
-        <button class="btn btn-primary"
-                (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
-        </button>
-      </div>
-      <div class="col-sm-1">
-        <a class="btn btn-secondary" routerLink="/search">New Student</a>
-        <!--<button type="reset" class="btn btn-secondary">New Student</button>-->
-      </div>
-    </div>
-  </form>
-  <hr>
-  <h5>Student {{parcelTrackingInfo?.studentInfo.studentNumber}} : {{parcelTrackingInfo?.studentInfo.studentName}}
-  </h5>
-  <br/>
-  <h6>SA Post Office Parcels ,open the link blow and enter in the tracking number listed below.<br><a
-    href="https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html" target="_blank">https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html</a>
-  </h6>
-  <div class="table-responsive-sm col-sm-8">
-    <table class="table table-sm table-hover">
-      <thead class="thead-light">
-      <tr>
-        <th scope="col">Date Processed</th>
-        <th scope="col">Agent</th>
-        <th scope="col">Tracking Number</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let traceRecordInfo of parcelTrackingInfo?.traceRecordInfoList">
-        <td>{{ traceRecordInfo.trackTraceDate }}</td>
-        <td>{{ traceRecordInfo.trackTraceAgent }}</td>
-        <td>{{ traceRecordInfo.trackTraceNumber}}</td>
-      </tr>
-      </tbody>
-    </table>
   </div>
-
+  <div *ngIf="!parcelTrackingInfo?.traceRecordInfoList">
+    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Student number</p>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*"
+                 [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
+        </div>
+      </div>
+      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+        <div class="col-sm-1">
+          <button class="btn btn-primary"
+                  (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-secondary" routerLink="/search">New Student</a>
+          <!--<button type="reset" class="btn btn-secondary">New Student</button>-->
+        </div>
+      </div>
+    </form>
+  </div>
+  <br/><br/>
 </div>

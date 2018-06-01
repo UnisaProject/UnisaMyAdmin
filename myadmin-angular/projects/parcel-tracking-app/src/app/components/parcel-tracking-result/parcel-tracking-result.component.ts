@@ -52,6 +52,7 @@ export class ParcelTrackingResultComponent implements OnInit {
             this.errorMessage = response.message;
           }
           this.blockUI.stop();
+          this.router.navigateByUrl("search");
         })
   }
 }
