@@ -14,7 +14,12 @@ import '@clr/icons/shapes/all-shapes';
 import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PaymentSearchComponentComponent } from './components/payment-search-component/payment-search-component.component';
+import { QualInputComponentComponent } from './components/qual-input-component/qual-input-component.component';
+import { StudentInputComponentComponent } from './components/student-input-component/student-input-component.component';
+import { SummaryComponentComponent } from './components/summary-component/summary-component.component';
+import { ApplyPaymentComponentComponent } from './components/apply-payment-component/apply-payment-component.component';
+import { NonTpPaymentComponentComponent } from './components/non-tp-payment-component/non-tp-payment-component.component';
+import { TpPaymentComponentComponent } from './components/tp-payment-component/tp-payment-component.component';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -24,7 +29,12 @@ export const HttpInterceptorProviders = [
 @NgModule({
   declarations: [
     AppComponent,
-    PaymentSearchComponentComponent,
+    QualInputComponentComponent,
+    StudentInputComponentComponent,
+    SummaryComponentComponent,
+    ApplyPaymentComponentComponent,
+    NonTpPaymentComponentComponent,
+    TpPaymentComponentComponent,
   ],
   imports: [
     BrowserModule,
