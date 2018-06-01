@@ -58,7 +58,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "exam-timetable-app:build",
-            "baseHref" : "/examtimetable/"
+            "baseHref": "/examtimetable/"
           },
           "configurations": {
             "production": {
@@ -373,6 +373,121 @@
             "tsConfig": [
               "projects/parcel-tracking-app/tsconfig.app.json",
               "projects/parcel-tracking-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "creditcard-payment-app": {
+      "root": "projects/creditcard-payment-app/",
+      "sourceRoot": "projects/creditcard-payment-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/creditcard-payment-app",
+            "index": "projects/creditcard-payment-app/src/index.html",
+            "main": "projects/creditcard-payment-app/src/main.ts",
+            "polyfills": "projects/creditcard-payment-app/src/polyfills.ts",
+            "tsConfig": "projects/creditcard-payment-app/tsconfig.app.json",
+            "assets": [
+              "projects/creditcard-payment-app/src/favicon.ico",
+              "projects/creditcard-payment-app/src/assets"
+            ],
+            "styles": [
+              "projects/creditcard-payment-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/creditcard-payment-app/src/environments/environment.ts",
+                  "with": "projects/creditcard-payment-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "creditcard-payment-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "creditcard-payment-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "creditcard-payment-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/creditcard-payment-app/src/test.ts",
+            "polyfills": "projects/creditcard-payment-app/src/polyfills.ts",
+            "tsConfig": "projects/creditcard-payment-app/tsconfig.spec.json",
+            "karmaConfig": "projects/creditcard-payment-app/karma.conf.js",
+            "styles": [
+              "projects/creditcard-payment-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/creditcard-payment-app/src/favicon.ico",
+              "projects/creditcard-payment-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/creditcard-payment-app/tsconfig.app.json",
+              "projects/creditcard-payment-app/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
