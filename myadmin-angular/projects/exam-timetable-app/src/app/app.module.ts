@@ -8,11 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExamTimetableSearchComponent } from './components/exam-timetable-search/exam-timetable-search.component';
 import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService} from './services';
-import { OrderByPipe } from './directives/orderby.pipe';
 import { ExamTimetableResultComponent } from './components/exam-timetable-result/exam-timetable-result.component';
 import { BlockUIModule} from "ng-block-ui";
-import { DescriptionPipe } from './pipes/description.pipe';
-import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 
 import '@webcomponents/custom-elements';
 import '@clr/icons';
@@ -30,10 +27,7 @@ export const HttpInterceptorProviders = [
   declarations: [
     AppComponent,
     ExamTimetableSearchComponent,
-    OrderByPipe,
     ExamTimetableResultComponent,
-    DescriptionPipe,
-    ShortDescriptionPipe
   ],
   imports: [
     BrowserModule,
