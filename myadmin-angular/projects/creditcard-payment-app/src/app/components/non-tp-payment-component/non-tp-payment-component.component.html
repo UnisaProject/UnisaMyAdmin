@@ -1,3 +1,73 @@
-<p>
-  non-tp-payment-component works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit card payments</h5>
+      <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
+      <p>Required items marked with *</p>
+    </div>
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="nonTpForm">
+    <div class="row">
+      <div class="col">
+        <h5>Student Personal Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentNumber"
+          name="studentNumber"
+          [value]="creditCardPaymentForm?.studentNumber"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentName" class="col-sm-2 col-form-label font-weight-bold">Name</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentName"
+          name="studentName"
+          [value]="creditCardPaymentForm?.studentName"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="qualCode" class="col-sm-2 col-form-label font-weight-bold">Qualification Code</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="qualCode"
+          name="qualCode"
+          [value]="creditCardPaymentForm?.qualCode+' - ' + creditCardPaymentForm?.qualDesc"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="regstatus" class="col-sm-2 col-form-label font-weight-bold">Registration status</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="regstatus"
+          name="regstatus"
+          [value]="creditCardPaymentForm?.regStatusDescription"
+          required >
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid"> Continue</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+    </div>
+  </form>
+</div>
