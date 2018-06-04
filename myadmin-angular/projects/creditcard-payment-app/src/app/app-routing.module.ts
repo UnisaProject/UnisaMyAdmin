@@ -8,7 +8,7 @@ import {NonTpPaymentComponentComponent} from "./components/non-tp-payment-compon
 import {SummaryComponentComponent} from "./components/summary-component/summary-component.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/qualInput', pathMatch: 'full'},
+  { path: '', redirectTo: '/studentInput', pathMatch: 'full'},
   { path: 'studentInput', component: StudentInputComponentComponent},
   { path: 'qualInput', component: QualInputComponentComponent},
   { path: 'applyPayment', component: ApplyPaymentComponentComponent},

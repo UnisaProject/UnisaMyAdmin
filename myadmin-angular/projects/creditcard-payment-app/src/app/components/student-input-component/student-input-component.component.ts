@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'unisa-student-input-component',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentInputComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+
+  onSubmit(){
+      this.router.navigateByUrl('/qualInput')
   }
 
 }
