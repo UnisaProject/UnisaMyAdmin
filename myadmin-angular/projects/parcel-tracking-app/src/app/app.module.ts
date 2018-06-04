@@ -13,6 +13,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ParcelTrackingSearchComponent} from './components/parcel-tracking-search/parcel-tracking-search.component';
 import {ParcelTrackingResultComponent} from './components/parcel-tracking-result/parcel-tracking-result.component';
 import {ParcelTrackingService} from './services/parcel-tracking.service';
+import { ParcelTrackingUnknownuserComponent } from './components/parcel-tracking-unknownuser/parcel-tracking-unknownuser.component';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
@@ -22,7 +23,8 @@ export const HttpInterceptorProviders = [
   declarations: [
     AppComponent,
     ParcelTrackingSearchComponent,
-    ParcelTrackingResultComponent
+    ParcelTrackingResultComponent,
+    ParcelTrackingUnknownuserComponent
   ],
   imports: [
     AppRoutingModule,
