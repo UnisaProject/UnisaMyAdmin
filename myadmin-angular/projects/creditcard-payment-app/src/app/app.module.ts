@@ -20,6 +20,7 @@ import { SummaryComponentComponent } from './components/summary-component/summar
 import { ApplyPaymentComponentComponent } from './components/apply-payment-component/apply-payment-component.component';
 import { NonTpPaymentComponentComponent } from './components/non-tp-payment-component/non-tp-payment-component.component';
 import { TpPaymentComponentComponent } from './components/tp-payment-component/tp-payment-component.component';
+import {CreditCardFormService} from "./services/creditcard-form.service";
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -48,7 +49,8 @@ export const HttpInterceptorProviders = [
     BlockUIModule.forRoot()
   ],
   providers: [
-    HttpInterceptorProviders
+    HttpInterceptorProviders,
+    CreditCardFormService
   ],
   bootstrap: [AppComponent]
 })

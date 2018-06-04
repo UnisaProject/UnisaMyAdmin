@@ -6,7 +6,7 @@
         PLEASE NOTE: You need a <b>valid email address</b> to complete the payment process.</p>
     </div>
   </div>
-  <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="studentInputForm">
     <div class="row">
       <div class="col">
         <p>Please enter a valid student number or application reference number and choose Continue</p>
@@ -20,16 +20,13 @@
           class="form-control"
           id="studentNumber"
           name="studentNumber"
-          pattern="([0-9])*"
-          [(ngModel)]="studentNumber"
-          minlength="7"
-          maxlength="8"
+          formControlName="studentNumber"
           required >
       </div>
     </div>
     <br/>
     <div class="form-group">
-      <button type="submit" class="btn btn-icon btn-primary" [disabled]="searchForm.form.invalid"> Display</button>
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="studentInputForm.invalid">Continue</button>
     </div>
   </form>
 </div>

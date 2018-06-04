@@ -1,3 +1,45 @@
-<p>
-  qual-input-component works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit card payments</h5>
+      <p>Please check your qualification, change it if necessary and choose Continue.</p>
+    </div>
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="qualInputForm">
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentNumber"
+          name="studentNumber"
+          [value]="creditCardPaymentForm?.studentNumber"
+          required >
+      </div>
+    </div>
+     <div class="form-group row">
+      <label for="qualCode" class="col-sm-2 col-form-label font-weight-bold">Qualification code</label>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          class="form-control"
+          id="qualCode"
+          name="qualCode"
+          formControlName="qualCode"
+          required >
+      </div>
+       <div class="col-8">
+         <small class="form-text text-muted mt-2" *ngIf="creditCardPaymentForm?.qualDesc">
+           {{creditCardPaymentForm.qualDesc}}
+         </small>
+       </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="qualInputForm.invalid"> Continue</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+    </div>
+  </form>
+</div>
