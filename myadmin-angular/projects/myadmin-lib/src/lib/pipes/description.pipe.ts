@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {DescriptionInfo} from "myadmin-lib";
+import {DescriptionInfo} from "../info-objects/description-info";
 
 /**
  * Filter to get the description of a list of DescriptionInfo objects that matches
  * the request locale.
  */
 @Pipe({
-  name: 'description'
+  name: 'description',
 })
 export class DescriptionPipe implements PipeTransform {
 

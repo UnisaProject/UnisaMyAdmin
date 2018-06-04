@@ -8,9 +8,9 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angul
 import {atleastOneCourseCode} from "./atleast-one.validator";
 import {selectedExamPeriod} from "./exam-period.validator";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {OrderByPipe} from "../../directives/orderby.pipe";
+import {DescriptionPipe, OrderByPipe} from "myadmin-lib";
 import {Observable} from "rxjs/Rx";
-import {tap} from "rxjs/internal/operators";
+import {tap} from "rxjs/operators";
 
 /**
  * Component to allow a user to enter criteria to search for an exam timetable.
@@ -20,7 +20,8 @@ import {tap} from "rxjs/internal/operators";
   templateUrl: './exam-timetable-search.component.html',
   styleUrls: ['./exam-timetable-search.component.scss'],
   providers : [
-    OrderByPipe
+    OrderByPipe,
+    DescriptionPipe,
   ]
 })
 export class ExamTimetableSearchComponent implements OnInit {

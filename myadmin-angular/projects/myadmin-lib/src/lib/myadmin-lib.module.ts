@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
-import { MyadminLibComponent } from './myadmin-lib.component';
 import {ToasterContainerComponent, ToasterModule, ToasterService} from "angular2-toaster";
 import {ToasterNotificationService} from "./services/toaster-notification.service";
-import {DescriptionPipe, ShortDescriptionPipe, OrderByPipe} from "./pipes";
+import {OrderByPipe} from "./pipes/orderby.pipe";
+import {ShortDescriptionPipe} from "./pipes/short-description.pipe";
+import {DescriptionPipe} from "./pipes/description.pipe";
+
 
 @NgModule({
   imports: [
     ToasterModule,
   ],
   declarations: [
-    MyadminLibComponent,
     OrderByPipe,
     ShortDescriptionPipe,
     DescriptionPipe,
   ],
   exports: [
-    MyadminLibComponent,
     ToasterContainerComponent,
-
+    ShortDescriptionPipe,
+    DescriptionPipe,
   ],
   providers:[
     ToasterService,
