@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardPaymentForm} from "../../info-objects";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
@@ -22,7 +22,15 @@ export class NonTpPaymentComponentComponent implements OnInit {
 
   private initForm(){
     this.nonTpForm = this.formBuilder.group({
+      libraryFineFeeAmountInput : [0, Validators.required],
+      payMatricFirstAppFee : [false, Validators.required],
+      studyFeeAmountInput : [0, Validators.required],
 
+      // Credit card
+      cnumber : [null, Validators.required],
+      cardHolder : [null, Validators.required],
+      budgetPeriod : [null, Validators.required],
+      cvvnumber : [null, Validators.required],
     });
   }
 
@@ -35,8 +43,17 @@ export class NonTpPaymentComponentComponent implements OnInit {
       // TODO fake some data for now
       this.creditCardPaymentForm.studentName = "John Doe";
       this.creditCardPaymentForm.regStatusDescription = "Registered";
+      this.creditCardPaymentForm.email = "test@mail.com";
+      this.creditCardPaymentForm.creditDebitIndicator = "credit";
+      this.creditCardPaymentForm.libCreditDebitIndicator = "debit";
+      this.creditCardPaymentForm.libraryFineFee = 100.50;
+      this.creditCardPaymentForm.balanceAmount = 250.00;
       this.nonTpForm.patchValue({...this.creditCardPaymentForm});
     }
+  }
+
+  onSubmit(){
+
   }
 
 }
