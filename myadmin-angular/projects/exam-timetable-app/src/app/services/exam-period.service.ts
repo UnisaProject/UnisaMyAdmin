@@ -11,7 +11,7 @@ export class ExamPeriodService {
   }
 
   getExamPeriod(code: number): Observable<ExamPeriodInfo> {
-    return this.http.get<ExamPeriodInfo>('/myadmin-student-services/rest/examperiods/${code}');
+    return this.http.get<ExamPeriodInfo>(`/myadmin-student-services/rest/examperiods/${code}`);
   }
 
   getExamPeriods(): Observable<ExamPeriodInfo[]> {
