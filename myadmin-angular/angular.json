@@ -427,7 +427,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/angular2-toaster/toaster.css",
               "node_modules/@clr/icons/clr-icons.min.css",
-              "projects/creditcard-payment-app/src/styles.scss",
+              "projects/creditcard-payment-app/src/styles.scss"
             ],
             "scripts": []
           },

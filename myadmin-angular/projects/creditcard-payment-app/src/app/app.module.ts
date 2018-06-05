@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ClarityModule} from '@clr/angular';
+import { ClarityModule } from '@clr/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BlockUIModule} from "ng-block-ui";
@@ -20,7 +20,8 @@ import { SummaryComponentComponent } from './components/summary-component/summar
 import { ApplyPaymentComponentComponent } from './components/apply-payment-component/apply-payment-component.component';
 import { NonTpPaymentComponentComponent } from './components/non-tp-payment-component/non-tp-payment-component.component';
 import { TpPaymentComponentComponent } from './components/tp-payment-component/tp-payment-component.component';
-import {CreditCardFormService} from "./services/creditcard-form.service";
+import { CreditCardFormService } from "./services/creditcard-form.service";
+import { CreditCardPaymentService } from "./services/credit-card-payment.service";
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -50,7 +51,8 @@ export const HttpInterceptorProviders = [
   ],
   providers: [
     HttpInterceptorProviders,
-    CreditCardFormService
+    CreditCardFormService,
+    CreditCardPaymentService
   ],
   bootstrap: [AppComponent]
 })

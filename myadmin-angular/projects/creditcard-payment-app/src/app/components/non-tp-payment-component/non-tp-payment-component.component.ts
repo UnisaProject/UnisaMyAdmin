@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardPaymentForm} from "../../info-objects";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'unisa-non-tp-payment-component',
@@ -14,6 +15,13 @@ export class NonTpPaymentComponentComponent implements OnInit {
   nonTpForm: FormGroup;
   creditCardPaymentForm: CreditCardPaymentForm;
   expiryYears: string[] = [];
+
+
+  /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
 
   constructor(private router:Router,
               private formBuilder: FormBuilder,
@@ -49,19 +57,12 @@ export class NonTpPaymentComponentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.blockUI.stop();
     this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
-    if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentNumber === null){
+    if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentInfo === null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
       this.router.navigateByUrl("/studentInput")
     }
     else {
-      // TODO fake some data for now
-      this.creditCardPaymentForm.studentName = "John Doe";
-      this.creditCardPaymentForm.regStatusDescription = "Registered";
-      this.creditCardPaymentForm.email = "test@mail.com";
-      this.creditCardPaymentForm.creditDebitIndicator = "credit";
-      this.creditCardPaymentForm.libCreditDebitIndicator = "debit";
-      this.creditCardPaymentForm.libraryFineFee = 100.50;
-      this.creditCardPaymentForm.balanceAmount = 250.00;
       this.nonTpForm.patchValue({...this.creditCardPaymentForm});
     }
   }

@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
+import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
+import {CreditCardPaymentInfo} from "../../info-objects";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'unisa-student-input-component',
@@ -12,9 +15,17 @@ export class StudentInputComponentComponent implements OnInit {
 
   studentInputForm: FormGroup;
 
+
+  /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
+
   constructor(private router:Router,
               private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService) {
+              private creditCardFormService: CreditCardFormService,
+              private creditCardPaymentService: CreditCardPaymentService) {
 
     this.studentInputForm = this.formBuilder.group({
       studentNumber : [
@@ -35,13 +46,18 @@ export class StudentInputComponentComponent implements OnInit {
   }
 
   onSubmit(){
-    // Update the session with the student number
-    this.creditCardFormService.creditCardPaymentForm = {
-      studentNumber : this.studentInputForm.value.studentNumber
-    };
+    this.blockUI.start("Loading information...");
+    this.creditCardPaymentService.studentInput(this.studentInputForm.value.studentNumber).subscribe((creditCardPaymentInfo:CreditCardPaymentInfo)=>{
+      // Copy the data to the service
+      this.creditCardFormService.creditCardPaymentForm = {...creditCardPaymentInfo};
 
-    // Change page to prompt for qualification
-    this.router.navigateByUrl('/qualInput')
+      // Change page to prompt for qualification
+      this.router.navigateByUrl('/qualInput')
+    }, (error)=>{
+      this.blockUI.stop();
+    });
+
+
   }
 
 }

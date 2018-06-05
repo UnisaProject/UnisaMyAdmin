@@ -45,7 +45,7 @@ export const HttpInterceptorProviders = [
     ExamPeriodService,
     ExamPeriodDateService,
     SearchCriteriaService,
-    HttpInterceptorProviders
+    HttpInterceptorProviders,
   ],
   bootstrap: [AppComponent]
 })

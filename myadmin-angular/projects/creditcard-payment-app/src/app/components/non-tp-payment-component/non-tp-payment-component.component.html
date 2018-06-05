@@ -21,7 +21,7 @@
           class="form-control-plaintext"
           id="studentNumber"
           name="studentNumber"
-          [value]="creditCardPaymentForm?.studentNumber"
+          [value]="creditCardPaymentForm?.studentInfo.studentNumber"
           required >
       </div>
     </div>
@@ -34,7 +34,7 @@
           class="form-control-plaintext"
           id="studentName"
           name="studentName"
-          [value]="creditCardPaymentForm?.studentName"
+          [value]="creditCardPaymentForm?.studentInfo.studentName"
           required >
       </div>
     </div>
@@ -47,7 +47,7 @@
           class="form-control-plaintext"
           id="qualCode"
           name="qualCode"
-          [value]="creditCardPaymentForm?.qualCode+' - ' + creditCardPaymentForm?.qualDesc"
+          [value]="creditCardPaymentForm?.qualificationInfo.qualCode+' - ' + creditCardPaymentForm?.qualificationInfo.qualDesc"
           required >
       </div>
     </div>
@@ -77,7 +77,7 @@
           class="form-control"
           id="email"
           name="email"
-          [value]="creditCardPaymentForm?.email"
+          [value]="creditCardPaymentForm?.studentInfo.emailAddress"
           required >
       </div>
     </div>
@@ -97,7 +97,7 @@
           class="form-control-plaintext"
           id="balanceAmount"
           name="balanceAmount"
-          [value]="'R' + creditCardPaymentForm?.balanceAmount + ' ' + creditCardPaymentForm?.creditDebitIndicator"
+          [value]="'R' + creditCardPaymentForm?.balance + ' ' + creditCardPaymentForm?.creditDebitIndicator"
           required >
       </div>
     </div>

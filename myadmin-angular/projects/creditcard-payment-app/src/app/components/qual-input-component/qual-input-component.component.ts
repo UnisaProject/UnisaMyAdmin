@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {CreditCardPaymentForm} from "../../info-objects";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'unisa-qual-input-component',
@@ -13,6 +14,12 @@ export class QualInputComponentComponent implements OnInit {
 
   creditCardPaymentForm: CreditCardPaymentForm;
   qualInputForm: FormGroup;
+
+  /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
 
   constructor(private router:Router,
               private formBuilder: FormBuilder,
@@ -32,27 +39,31 @@ export class QualInputComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.blockUI.stop();
     this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
-    if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentNumber === null){
+    if(this.creditCardPaymentForm === null || this.creditCardPaymentForm.studentInfo == null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
       this.router.navigateByUrl("/studentInput")
     }
     else {
-      // TODO fake some data for now
-      this.creditCardPaymentForm.qualDesc = "PGCE (INT & SENIOR PHASE)";
-      this.creditCardPaymentForm.qualCode = "02623";
-      this.qualInputForm.patchValue({...this.creditCardPaymentForm});
+      this.qualInputForm.patchValue({
+        qualCode : this.creditCardPaymentForm.qualificationInfo.qualCode
+      });
     }
   }
 
   onSubmit(){
-    this.router.navigateByUrl('nonTpPayment')
+    this.blockUI.start("Loading account...");
+    this.creditCardPaymentForm.qualificationInfo.qualCode = this.qualInputForm.value.qualCode;
+    this.router.navigateByUrl('/nonTpPayment');
   }
 
   back(){
-
+    this.creditCardFormService.creditCardPaymentForm = null;
+    this.router.navigateByUrl('/studentInput');
   }
 
   cancel(){
-
+    this.creditCardFormService.creditCardPaymentForm = null;
+    this.router.navigateByUrl('/studentInput');
   }
 }
