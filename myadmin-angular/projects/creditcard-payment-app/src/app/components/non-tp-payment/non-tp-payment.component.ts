@@ -14,7 +14,6 @@ export class NonTpPaymentComponent implements OnInit {
 
   nonTpForm: FormGroup;
   creditCardPaymentForm: CreditCardPaymentForm;
-  expiryYears: string[] = [];
 
 
   /**
@@ -30,31 +29,14 @@ export class NonTpPaymentComponent implements OnInit {
   }
 
   private initForm(){
-    this.setupExpiryYears();
-
     this.nonTpForm = this.formBuilder.group({
       libraryFineFeeAmountInput : [0, Validators.required],
       payMatricFirstAppFee : [false, Validators.required],
       studyFeeAmountInput : [0, Validators.required],
-
-      // Credit card
-      cnumber : [null, Validators.required],
-      cardHolder : [null, Validators.required],
-      budgetPeriod : ["0", Validators.required],
-      cvvnumber : [null, Validators.required],
-      expiryYear : [this.expiryYears[0], Validators.required],
-      expiryMonth : ["01", Validators.required],
-
       ccTotalAmountInput : [0, Validators.required],
     });
   }
 
-  private setupExpiryYears(){
-    const currentYear = new Date().getFullYear();
-    for(let i = 0 ; i <= 10 ; i++){
-      this.expiryYears.push(`${currentYear+i}`);
-    }
-  }
 
   ngOnInit() {
     this.blockUI.stop();
