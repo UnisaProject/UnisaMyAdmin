@@ -14,14 +14,15 @@ import '@clr/icons/shapes/all-shapes';
 import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { QualInputComponentComponent } from './components/qual-input-component/qual-input-component.component';
-import { StudentInputComponentComponent } from './components/student-input-component/student-input-component.component';
-import { SummaryComponentComponent } from './components/summary-component/summary-component.component';
-import { ApplyPaymentComponentComponent } from './components/apply-payment-component/apply-payment-component.component';
-import { NonTpPaymentComponentComponent } from './components/non-tp-payment-component/non-tp-payment-component.component';
-import { TpPaymentComponentComponent } from './components/tp-payment-component/tp-payment-component.component';
+import { QualInputComponent } from './components/qual-input/qual-input.component';
+import { StudentInputComponent } from './components/student-input/student-input.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { ApplyPaymentComponent } from './components/apply-payment/apply-payment.component';
+import { NonTpPaymentComponent } from './components/non-tp-payment/non-tp-payment.component';
+import { TpPaymentComponent } from './components/tp-payment/tp-payment.component';
 import { CreditCardFormService } from "./services/creditcard-form.service";
 import { CreditCardPaymentService } from "./services/credit-card-payment.service";
+import { CreditCardInputComponent } from './components/credit-card-input/credit-card-input.component';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -31,12 +32,13 @@ export const HttpInterceptorProviders = [
 @NgModule({
   declarations: [
     AppComponent,
-    QualInputComponentComponent,
-    StudentInputComponentComponent,
-    SummaryComponentComponent,
-    ApplyPaymentComponentComponent,
-    NonTpPaymentComponentComponent,
-    TpPaymentComponentComponent,
+    QualInputComponent,
+    StudentInputComponent,
+    SummaryComponent,
+    ApplyPaymentComponent,
+    NonTpPaymentComponent,
+    TpPaymentComponent,
+    CreditCardInputComponent,
   ],
   imports: [
     BrowserModule,

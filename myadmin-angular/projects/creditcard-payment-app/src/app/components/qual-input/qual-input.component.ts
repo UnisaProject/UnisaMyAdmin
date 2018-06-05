@@ -6,11 +6,11 @@ import {CreditCardPaymentForm} from "../../info-objects";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
-  selector: 'unisa-qual-input-component',
-  templateUrl: './qual-input-component.component.html',
-  styleUrls: ['./qual-input-component.component.scss']
+  selector: 'unisa-qual-input',
+  templateUrl: './qual-input.component.html',
+  styleUrls: ['./qual-input.component.scss']
 })
-export class QualInputComponentComponent implements OnInit {
+export class QualInputComponent implements OnInit {
 
   creditCardPaymentForm: CreditCardPaymentForm;
   qualInputForm: FormGroup;

@@ -6,11 +6,11 @@ import {Router} from "@angular/router";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
-  selector: 'unisa-non-tp-payment-component',
-  templateUrl: './non-tp-payment-component.component.html',
-  styleUrls: ['./non-tp-payment-component.component.scss']
+  selector: 'unisa-non-tp-payment',
+  templateUrl: './non-tp-payment.component.html',
+  styleUrls: ['./non-tp-payment.component.scss']
 })
-export class NonTpPaymentComponentComponent implements OnInit {
+export class NonTpPaymentComponent implements OnInit {
 
   nonTpForm: FormGroup;
   creditCardPaymentForm: CreditCardPaymentForm;

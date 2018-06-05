@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {StudentInputComponentComponent} from "./components/student-input-component/student-input-component.component";
-import {QualInputComponentComponent} from "./components/qual-input-component/qual-input-component.component";
-import {ApplyPaymentComponentComponent} from "./components/apply-payment-component/apply-payment-component.component";
-import {TpPaymentComponentComponent} from "./components/tp-payment-component/tp-payment-component.component";
-import {NonTpPaymentComponentComponent} from "./components/non-tp-payment-component/non-tp-payment-component.component";
-import {SummaryComponentComponent} from "./components/summary-component/summary-component.component";
+import {StudentInputComponent} from "./components/student-input/student-input.component";
+import {QualInputComponent} from "./components/qual-input/qual-input.component";
+import {ApplyPaymentComponent} from "./components/apply-payment/apply-payment.component";
+import {TpPaymentComponent} from "./components/tp-payment/tp-payment.component";
+import {NonTpPaymentComponent} from "./components/non-tp-payment/non-tp-payment.component";
+import {SummaryComponent} from "./components/summary/summary.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/studentInput', pathMatch: 'full'},
-  { path: 'studentInput', component: StudentInputComponentComponent},
-  { path: 'qualInput', component: QualInputComponentComponent},
-  { path: 'applyPayment', component: ApplyPaymentComponentComponent},
-  { path: 'tpPayment', component: TpPaymentComponentComponent},
-  { path: 'nonTpPayment', component: NonTpPaymentComponentComponent},
-  { path: 'summary', component: SummaryComponentComponent},
+  { path: 'studentInput', component: StudentInputComponent},
+  { path: 'qualInput', component: QualInputComponent},
+  { path: 'applyPayment', component: ApplyPaymentComponent},
+  { path: 'tpPayment', component: TpPaymentComponent},
+  { path: 'nonTpPayment', component: NonTpPaymentComponent},
+  { path: 'summary', component: SummaryComponent},
 ];
 
 @NgModule({

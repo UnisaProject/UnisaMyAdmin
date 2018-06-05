@@ -7,11 +7,11 @@ import {CreditCardPaymentInfo} from "../../info-objects";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
-  selector: 'unisa-student-input-component',
-  templateUrl: './student-input-component.component.html',
-  styleUrls: ['./student-input-component.component.scss']
+  selector: 'unisa-student-component',
+  templateUrl: './student-input.component.html',
+  styleUrls: ['./student-input.component.scss']
 })
-export class StudentInputComponentComponent implements OnInit {
+export class StudentInputComponent implements OnInit {
 
   studentInputForm: FormGroup;
 
