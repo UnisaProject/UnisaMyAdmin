@@ -10,8 +10,6 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentService;
 
-import java.beans.PropertyVetoException;
-
 /**
  * Created by Adrian on 2018-06-04.
  */
@@ -24,7 +22,7 @@ public class CreditCardRestServiceImpl {
 	CreditCardPaymentService creditCardPaymentService;
 
 	@GetMapping(path = {"/studentinput"})
-	public CreditCardPaymentInfo processStudentInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws PropertyVetoException, OperationFailedException {
+	public CreditCardPaymentInfo processStudentInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
 		return creditCardPaymentService.processStudentInput(studentNumber);
 	}
 }

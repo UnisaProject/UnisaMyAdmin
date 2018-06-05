@@ -19,23 +19,22 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	private String libCreditDebitIndicator;
 
+	// set NON-TP matric +lib fees
 	private BigDecimal libraryFee;
-
+	private BigDecimal libraryFineFee;
 	private BigDecimal threeGDataBundleFee;
-
 	private BigDecimal matricFirstAppFee;
 
-	private BigDecimal libraryFineFee;
-
+	//TP Fees
 	private BigDecimal libraryFeeForStudent;
-	private BigDecimal libraryFeeAmount;
-	private BigDecimal libraryFineFeeAmount;
-	private BigDecimal threeGDataBundleFeeAmount;
+	private BigDecimal libraryFineFeeForStudent;
+	private BigDecimal threeGDataBundleFeeForStudent;
 	private BigDecimal matricFeeForStudent;
 	private BigDecimal fullAccount;
 	private BigDecimal dueImmediately;
 	private BigDecimal minimumStudyFee;
 	private BigDecimal minimumForReg;
+
 	private boolean canChooseLibraryCard;
 	private boolean canChooseMatric;
 	private boolean canChooseThreeGDataBundle;
@@ -161,28 +160,20 @@ public class CreditCardPaymentInfo implements Serializable {
 		this.libraryFeeForStudent = libraryFeeForStudent;
 	}
 
-	public BigDecimal getLibraryFeeAmount() {
-		return libraryFeeAmount;
+	public BigDecimal getLibraryFineFeeForStudent() {
+		return libraryFineFeeForStudent;
 	}
 
-	public void setLibraryFeeAmount(BigDecimal libraryFeeAmount) {
-		this.libraryFeeAmount = libraryFeeAmount;
+	public void setLibraryFineFeeForStudent(BigDecimal libraryFineFeeForStudent) {
+		this.libraryFineFeeForStudent = libraryFineFeeForStudent;
 	}
 
-	public BigDecimal getLibraryFineFeeAmount() {
-		return libraryFineFeeAmount;
+	public BigDecimal getThreeGDataBundleFeeForStudent() {
+		return threeGDataBundleFeeForStudent;
 	}
 
-	public void setLibraryFineFeeAmount(BigDecimal libraryFineFeeAmount) {
-		this.libraryFineFeeAmount = libraryFineFeeAmount;
-	}
-
-	public BigDecimal getThreeGDataBundleFeeAmount() {
-		return threeGDataBundleFeeAmount;
-	}
-
-	public void setThreeGDataBundleFeeAmount(BigDecimal threeGDataBundleFeeAmount) {
-		this.threeGDataBundleFeeAmount = threeGDataBundleFeeAmount;
+	public void setThreeGDataBundleFeeForStudent(BigDecimal threeGDataBundleFeeForStudent) {
+		this.threeGDataBundleFeeForStudent = threeGDataBundleFeeForStudent;
 	}
 
 	public BigDecimal getMatricFeeForStudent() {
@@ -255,6 +246,20 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	public void setCanChooseThreeGDataBundle(boolean canChooseThreeGDataBundle) {
 		this.canChooseThreeGDataBundle = canChooseThreeGDataBundle;
+	}
+
+
+	public String toStringStudent() {
+
+		StringBuilder result = new StringBuilder();
+		String NEW_LINE = System.getProperty("line.separator");
+
+		result.append(NEW_LINE + "Stud Nr: " + studentInfo.getStudentNumber() + NEW_LINE);
+		result.append("Qual: " + qualificationInfo.getQualCode() + NEW_LINE);
+		result.append("Reg status: " + regStatus + NEW_LINE);
+		result.append("Email: " + studentInfo.getEmailAddress() + NEW_LINE);
+
+		return result.toString();
 	}
 
 }
