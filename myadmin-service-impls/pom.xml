@@ -26,5 +26,6 @@
 		<module>exam-period-service</module>
 		<module>study-quotation-service</module>
 		<module>parcel-tracking-service</module>
+		<module>credit-card-payment-service</module>
 	</modules>
 </project>

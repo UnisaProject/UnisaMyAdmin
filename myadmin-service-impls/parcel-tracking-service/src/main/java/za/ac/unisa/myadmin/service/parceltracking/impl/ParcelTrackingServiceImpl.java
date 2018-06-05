@@ -23,8 +23,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Service("ParcelTrackingService")
 public class ParcelTrackingServiceImpl implements ParcelTrackingService {
+
 	/**
-	 * Get an instance of the StudyFee proxy
+	 * Get an instance of the despatch proxy
 	 *
 	 * @return
 	 * @throws PropertyVetoException

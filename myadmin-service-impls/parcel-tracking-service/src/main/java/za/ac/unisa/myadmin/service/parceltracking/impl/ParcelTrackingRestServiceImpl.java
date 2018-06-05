@@ -11,7 +11,7 @@ import za.ac.unisa.myadmin.parceltracking.ParcelTrackingService;
 
 @RestController
 @RequestMapping({"/rest"})
-public class ParcelTrackingRestService {
+public class ParcelTrackingRestServiceImpl {
 
 	@Autowired
 	private ParcelTrackingService trackingService;

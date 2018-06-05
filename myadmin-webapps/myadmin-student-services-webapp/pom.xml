@@ -44,6 +44,11 @@
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>parcel-tracking-service</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>credit-card-payment-service</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
