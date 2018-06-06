@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentService;
+import za.ac.unisa.myadmin.creditcard.payment.SummaryInfo;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -118,9 +120,95 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 				response.setApplyAmount(new BigDecimal(ccPaymentsProxy.getOutSmartcardAndApplCostWsAcademicYearApplicationCost()));
 
 				//------------------------------------------------------------------------------
-				LOG.debug("CreditCardPayment: isStudentValid(); " + response.toStringStudent());
+				LOG.debug("CreditCardPayment: processStudentInput(); " + response.toString());
 				//------------------------------------------------------------------------------
 			}
+			return response;
+		} catch (PropertyVetoException e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public SummaryInfo processApplicationPayment(ApplicationPaymentInfo paymentInfo) throws OperationFailedException {
+		//TODO
+		//eventTrackingService = (EventTrackingService) ComponentManager.get(EventTrackingService.class);
+		//toolManager = (ToolManager) ComponentManager.get(ToolManager.class);
+		try {
+			LOG.debug("CreditCardPayment: Start processApplicationPayment()");
+			SummaryInfo response = new SummaryInfo();
+			Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = new Sfrrf03sMntOnlineCcPayments();
+			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
+			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
+			ccPaymentsProxy.addExceptionListener(exceptionListener);
+			ccPaymentsProxy.clear();
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsAction("A");
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
+			ccPaymentsProxy.setInSecurityWsUserNumber(99998);
+			// student nr
+			ccPaymentsProxy.setInWsStudentNr(Integer.parseInt(paymentInfo.getStudentInfo().getStudentNumber()));
+			// email
+			ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			// applyForAmount
+			//
+			// credit card nr
+			ccPaymentsProxy.setInBundleDocumentAccountNr(paymentInfo.getCardInfo().getCardNumber());
+			// cvv nr
+			ccPaymentsProxy.setInCvvWsPostilionTranStartCvvNr(paymentInfo.getCardInfo().getCvvNo());
+			// card expiry date
+			ccPaymentsProxy.setInBundleDocumentCreditCardExpiryDate(Integer.parseInt(paymentInfo.getCardInfo().getExpiryYear() + paymentInfo.getCardInfo().getExpiryMonth()));
+			// budget period
+			ccPaymentsProxy.setInBundleDocumentCreditCardBudgetPeriod(Short.parseShort(paymentInfo.getCardInfo().getBudgetPeriod()));
+			// card holder
+			ccPaymentsProxy.setInBundleDocumentAccountHolder(paymentInfo.getCardInfo().getCardHolder());
+			//total card amount
+			ccPaymentsProxy.setInBundleDocumentAmountCreditCard(paymentInfo.getCreditCardTotalAmountInput().doubleValue());
+			ccPaymentsProxy.setInApplicationBundleDocumentTotalAmount(paymentInfo.getApplyAmountInput().doubleValue());
+
+			//--------------------------------------------------------------------------------
+			LOG.debug("CreditCardPayment: processApplyPayment(); " + paymentInfo.toString());
+			//--------------------------------------------------------------------------------
+
+			ccPaymentsProxy.execute();
+			boolean exceptionHappened = false;
+			if (exceptionReference.get() != null)
+				exceptionHappened = true;
+			//throw opl.getException();
+			if (ccPaymentsProxy.getExitStateType() < 3)
+				exceptionHappened = true;
+			//throw new Exception(op.getExitStateMsg());
+			if (exceptionHappened) {
+				String errmsg = "Technical Error happened, payment not processed";
+				throw new OperationFailedException(errmsg);
+				//creditForm.setSummaryMessage(errmsg);
+				//creditForm.setErrorOccured(true);
+			} else {
+				// Check error flag
+				if ("Y".equalsIgnoreCase(ccPaymentsProxy.getOutRetryXtnIefSuppliedFlag())) {
+					String errormsg = ccPaymentsProxy.getOutCsfStringsString500();
+					throw new OperationFailedException(errormsg);
+					//messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.coolgenerror", errormsg));
+					//addErrors(request, messages);
+					//return "applyPayment";
+				} else {
+					response.setSummaryMessage(ccPaymentsProxy.getOutCsfStringsString500());
+					if ("Y".equals(ccPaymentsProxy.getOutErrorIefSuppliedFlag())) {
+						response.setErrorFlag(true);
+					} else {
+						response.setErrorFlag(false);
+					}
+					// clear form vars
+					//reset(creditForm);
+				}
+
+			}
+			//eventTrackingService.post(eventTrackingService.newEvent(EventTrackingTypes.EVENT_CREDITCARD_PAYMENT, toolManager.getCurrentPlacement().getContext(), false));
+			//--------------------------------------------------------------------------------
+			LOG.debug("CreditCardPayment: processApplyPayment() result for stud: " + paymentInfo.getStudentInfo().getStudentNumber() + "; " + response.getSummaryMessage());
+			//--------------------------------------------------------------------------------
+
 			return response;
 		} catch (PropertyVetoException e) {
 			throw new OperationFailedException(e);

@@ -46,9 +46,12 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	private QualificationInfo qualificationInfo;
 
+	private CreditCardInfo creditCardInfo;
+
 	public CreditCardPaymentInfo() {
 		this.studentInfo = new CardStudentInfo();
 		this.qualificationInfo = new QualificationInfo();
+		this.creditCardInfo = new CreditCardInfo();
 	}
 
 	public CreditCardPaymentInfo(CardStudentInfo studentInfo, QualificationInfo qualificationInfo) {
@@ -248,6 +251,13 @@ public class CreditCardPaymentInfo implements Serializable {
 		this.canChooseThreeGDataBundle = canChooseThreeGDataBundle;
 	}
 
+	public CreditCardInfo getCreditCardInfo() {
+		return creditCardInfo;
+	}
+
+	public void setCreditCardInfo(CreditCardInfo creditCardInfo) {
+		this.creditCardInfo = creditCardInfo;
+	}
 
 	public String toStringStudent() {
 

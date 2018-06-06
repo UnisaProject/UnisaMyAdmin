@@ -25,4 +25,12 @@ public class StudentInfo implements Serializable {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
+
+	@Override
+	public String toString() {
+		return "StudentInfo{" +
+			"studentNumber='" + studentNumber + '\'' +
+			", studentName='" + studentName + '\'' +
+			'}';
+	}
 }

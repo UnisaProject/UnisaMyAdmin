@@ -37,4 +37,15 @@ public class CardStudentInfo extends StudentInfo {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+
+	@Override
+	public String toString() {
+		return "CardStudentInfo{" +
+			"studentNumber='" + getStudentNumber() + '\'' +
+			", studentName='" + getStudentName() + '\'' +
+			", title='" + title + '\'' +
+			", initials='" + initials + '\'' +
+			", emailAddress='" + emailAddress + '\'' +
+			'}';
+	}
 }

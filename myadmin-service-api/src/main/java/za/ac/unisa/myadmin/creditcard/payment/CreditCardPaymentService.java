@@ -13,4 +13,11 @@ public interface CreditCardPaymentService {
 	 * @throws OperationFailedException
 	 */
 	CreditCardPaymentInfo processStudentInput(Integer userId) throws OperationFailedException;
+
+	/**
+	 * @param paymentInfo
+	 * @return
+	 * @throws OperationFailedException
+	 */
+	SummaryInfo processApplicationPayment(ApplicationPaymentInfo paymentInfo) throws OperationFailedException;
 }
