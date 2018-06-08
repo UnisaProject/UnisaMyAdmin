@@ -30,22 +30,22 @@ public class CreditCardRestServiceImpl {
 	CreditCardPaymentService creditCardPaymentService;
 
 	@GetMapping(path = {"/creditcardpayment/studentinput"}, produces = APPLICATION_JSON_VALUE)
-	public CreditCardPaymentInfo processStudentInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
+	public CreditCardPaymentInfo processStudentInput(@RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
 		return creditCardPaymentService.processStudentInput(studentNumber);
 	}
 
 	@GetMapping(path = {"/creditcardpayment/qualinput"}, produces = APPLICATION_JSON_VALUE)
-	public CreditCardPaymentInfo processQualInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber, @RequestParam(value = "qualCode", required = true) String qualCode) throws OperationFailedException {
+	public CreditCardPaymentInfo processQualInput(@RequestParam(value = "studentNumber") Integer studentNumber, @RequestParam(value = "qualCode") String qualCode) throws OperationFailedException {
 		return creditCardPaymentService.processQualInput(studentNumber, qualCode);
 	}
 
 	@GetMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
-	public String getSmartCardValue(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
+	public String getSmartCardValue(@RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
 		return creditCardPaymentService.getSmartCardValue(studentNumber);
 	}
 
 	@PutMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
-	public int updateSmartCardValue(@RequestParam(value = "smartCard", required = true) String smartCard, @RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
+	public int updateSmartCardValue(@RequestParam(value = "smartCard") String smartCard, @RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
 		return creditCardPaymentService.updateSmartCardValue(smartCard, studentNumber);
 	}
 
