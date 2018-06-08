@@ -1,3 +1,255 @@
-<p>
-  tp-payment-component works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit card payments</h5>
+      <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
+      <p>Required items marked with *</p>
+    </div>
+  </div>
+  <form (ngSubmit)="payNow()" [formGroup]="tpForm">
+    <div class="row">
+      <div class="col">
+        <h5>Student Personal Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentNumber"
+          name="studentNumber"
+          [value]="creditCardPaymentForm?.studentInfo.studentNumber"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentName" class="col-sm-2 col-form-label font-weight-bold">Name</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentName"
+          name="studentName"
+          autocomplete="name"
+          [value]="creditCardPaymentForm?.studentInfo.studentName"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="qualCode" class="col-sm-2 col-form-label font-weight-bold">Qualification Code</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="qualCode"
+          name="qualCode"
+          [value]="creditCardPaymentForm?.qualificationInfo.qualCode+' - ' + creditCardPaymentForm?.qualificationInfo.qualDesc"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="regstatus" class="col-sm-2 col-form-label font-weight-bold">Registration status</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="regstatus"
+          name="regstatus"
+          [value]="creditCardPaymentForm?.regStatusDescription"
+          required >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Payment receipts will be sent to this e-mail address</p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label font-weight-bold">E-mail address: *</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          name="email"
+          autocomplete="email"
+          [value]="creditCardPaymentForm?.studentInfo.emailAddress"
+          required >
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <h5>Current Student Account Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="balanceAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee balance on this account:</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="balanceAmount"
+          name="balanceAmount"
+          [value]="'R' + creditCardPaymentForm?.balance + ' ' + creditCardPaymentForm?.creditDebitIndicator"
+          required >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library fine balance on this account :</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="libraryFineFee"
+          name="libraryFineFee"
+          [value]="'R' + creditCardPaymentForm?.libraryFineFee + ' ' + creditCardPaymentForm?.libCreditDebitIndicator"
+          required >
+      </div>
+    </div>
+
+
+
+    <div class="form-group row">
+      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Amount already outstanding on study fee account:</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            id="dueImmediately"
+            name="dueImmediately"
+            formControlName="dueImmediately"
+            required="required" >
+        </div>
+        <div class="form-text">Amount should be paid in full to receive services</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="minimumForReg" class="col-sm-4 col-form-label font-weight-bold">Minimum amount due to enable registration:</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            id="minimumForReg"
+            name="minimumForReg"
+            formControlName="minimumForReg"
+            required="required" >
+        </div>
+        <div class="form-text">Includes any outstanding fees and miscellaneous fees such as library access,
+          matriculation, foreign levy, prescribed books etc.</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="fullAccount" class="col-sm-4 col-form-label font-weight-bold">Pay this account in full:</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            id="fullAccount"
+            name="fullAccount"
+            formControlName="fullAccount"
+            required="required" >
+        </div>
+        <div class="form-text">Includes the outstanding balance and registration fees on the account</div>
+      </div>
+    </div>
+
+    <!--
+      TODO this form still has a lot of unimplemented logic
+    -->
+    <div class="row">
+      <div class="col">
+        <h5>Payment Details</h5>
+      </div>
+    </div>
+
+    <!-- TODO payThreeGDataBundleFee -->
+    <div class="form-group row">
+      <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you wish to pay: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="libraryFineFeeAmountInput"
+            name="libraryFineFeeAmountInput"
+            formControlName="libraryFineFeeAmountInput"
+            required="required">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="creditCardPaymentForm.min">
+      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to pay: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="studyFeeAmountInput"
+            name="studyFeeAmountInput"
+            formControlName="studyFeeAmountInput"
+            required="required" >
+        </div>
+      </div>
+    </div>
+
+    <unisa-credit-card-input [form]="tpForm"></unisa-credit-card-input>
+    <div class="form-group row">
+      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="ccTotalAmountInput"
+            name="ccTotalAmountInput"
+            formControlName="ccTotalAmountInput"
+            required="required">
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate payments.</div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="tpForm.invalid"> Pay Now</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>
+    </div>
+  </form>
+</div>

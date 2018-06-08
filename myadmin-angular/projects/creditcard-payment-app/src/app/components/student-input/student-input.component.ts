@@ -51,7 +51,7 @@ export class StudentInputComponent implements OnInit {
 
   onSubmit(){
     this.blockUI.start("Loading information...");
-    this.creditCardPaymentService.studentInput(this.studentInputForm.value.studentNumber).subscribe((creditCardPaymentInfo:CreditCardPaymentInfo)=>{
+    this.creditCardPaymentService.processStudentInput(this.studentInputForm.value.studentNumber).subscribe((creditCardPaymentInfo:CreditCardPaymentInfo)=>{
       // Copy the data to the service
       this.creditCardFormService.creditCardPaymentForm = {...creditCardPaymentInfo};
       this.creditCardFormService.creditCardPaymentForm.canCancelSmartCard = false; // Default value

@@ -93,12 +93,12 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 					// replace minus sign
 					response.setBalance(response.getBalance().abs());
 				}
-				response.setLibrayFineBalance(new BigDecimal(ccPaymentsProxy.getOutLdDueStudentAccountBalance()));
-				if (response.getLibrayFineBalance().compareTo(BigDecimal.ZERO) != 0) {
+				response.setLibraryFineBalance(new BigDecimal(ccPaymentsProxy.getOutLdDueStudentAccountBalance()));
+				if (response.getLibraryFineBalance().compareTo(BigDecimal.ZERO) != 0) {
 					response.setLibCreditDebitIndicator(ccPaymentsProxy.getOutLdDtCrIndCsfStringsString6());
 					// replace minus sign
-					response.setLibrayFineBalance(response.getLibrayFineBalance().abs());
-					//response.setLibrayFineBalance(response.getLibrayFineBalance().replace("-", ""));
+					response.setLibraryFineBalance(response.getLibraryFineBalance().abs());
+					//response.setLibraryFineBalance(response.getLibraryFineBalance().replace("-", ""));
 				}
 				// set NON-TP matric +lib fees
 				response.setLibraryFee(new BigDecimal(ccPaymentsProxy.getOutSmartcardAndApplCostWsAcademicYearSmartcardCost()));
@@ -536,11 +536,11 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 					// replace minus sign
 					response.setBalance(response.getBalance().abs());
 				}
-				response.setLibrayFineBalance(new BigDecimal(ccPaymentsProxy.getOutLdDueStudentAccountBalance()));
-				if (response.getLibrayFineBalance().compareTo(BigDecimal.ZERO) != 0) {
+				response.setLibraryFineBalance(new BigDecimal(ccPaymentsProxy.getOutLdDueStudentAccountBalance()));
+				if (response.getLibraryFineBalance().compareTo(BigDecimal.ZERO) != 0) {
 					response.setLibCreditDebitIndicator(ccPaymentsProxy.getOutLdDtCrIndCsfStringsString6());
 					// replace minus sign
-					response.setLibrayFineBalance(response.getLibrayFineBalance().abs());
+					response.setLibraryFineBalance(response.getLibraryFineBalance().abs());
 				}
 				// more TP fees
 				response.setFullAccount(new BigDecimal(ccPaymentsProxy.getOutDueImmediatelyIefSuppliedAverageCurrency()));

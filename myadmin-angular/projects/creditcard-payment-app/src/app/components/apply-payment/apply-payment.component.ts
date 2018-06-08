@@ -5,6 +5,7 @@ import {CreditCardPaymentForm} from "../../info-objects";
 import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
+import {ApplicationPaymentInfo} from "../../info-objects/application-payment-info";
 
 @Component({
   selector: 'unisa-apply-payment',
@@ -32,6 +33,7 @@ export class ApplyPaymentComponent implements OnInit {
 
   private initForm(){
     this.applyForm = this.formBuilder.group({
+      email : [null, Validators.email],
       applyAmount : [0, Validators.required],
       ccTotalAmountInput : [0, Validators.required]
     });
@@ -41,13 +43,15 @@ export class ApplyPaymentComponent implements OnInit {
 
   ngOnInit() {
     this.blockUI.stop();
-
     this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
+
     if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentInfo === null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
       this.router.navigateByUrl("/studentInput")
     }
     else {
-      this.applyForm.patchValue({...this.creditCardPaymentForm});
+      this.applyForm.patchValue({
+        email: this.creditCardPaymentForm.studentInfo.emailAddress
+      });
     }
   }
 
@@ -69,7 +73,22 @@ export class ApplyPaymentComponent implements OnInit {
   }
 
   payNow(){
+    this.blockUI.start("Processing transaction...");
+    const formValue = this.applyForm.value;
+    this.creditCardPaymentForm.studentInfo.emailAddress = formValue.email;
 
+    const applicationPaymentInfo: ApplicationPaymentInfo = {
+      cardInfo : {...formValue.creditCardInfo},
+      applyAmountInput : formValue.applyAmount,
+      creditCardTotalAmountInput : formValue.ccTotalAmountInput,
+      studentInfo : this.creditCardPaymentForm.studentInfo
+    };
+
+    this.creditCardPaymentService.processApplicationPayment(applicationPaymentInfo).subscribe((summaryInfo)=>{
+      this.blockUI.stop();
+    }, (error)=>{
+      this.blockUI.stop();
+    });
   }
 
 }

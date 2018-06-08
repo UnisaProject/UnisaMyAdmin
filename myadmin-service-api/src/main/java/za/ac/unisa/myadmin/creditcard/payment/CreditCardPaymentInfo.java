@@ -15,7 +15,7 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	private BigDecimal balance;
 
-	private BigDecimal librayFineBalance;
+	private BigDecimal libraryFineBalance;
 
 	private String libCreditDebitIndicator;
 
@@ -39,11 +39,6 @@ public class CreditCardPaymentInfo implements Serializable {
 	private boolean canChooseMatric;
 	private boolean canChooseThreeGDataBundle;
 	private BigDecimal applyAmount;
-
-	/**
-	 * Field to indicate whether a TP student can cancel his smartcard request
-	 */
-	private boolean canCancelSmartCard = false;
 
 	private String creditDebitIndicator;
 
@@ -86,12 +81,12 @@ public class CreditCardPaymentInfo implements Serializable {
 		this.balance = balance;
 	}
 
-	public BigDecimal getLibrayFineBalance() {
-		return librayFineBalance;
+	public BigDecimal getLibraryFineBalance() {
+		return libraryFineBalance;
 	}
 
-	public void setLibrayFineBalance(BigDecimal librayFineBalance) {
-		this.librayFineBalance = librayFineBalance;
+	public void setLibraryFineBalance(BigDecimal libraryFineBalance) {
+		this.libraryFineBalance = libraryFineBalance;
 	}
 
 	public String getLibCreditDebitIndicator() {
@@ -252,14 +247,6 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	public void setCanChooseThreeGDataBundle(boolean canChooseThreeGDataBundle) {
 		this.canChooseThreeGDataBundle = canChooseThreeGDataBundle;
-	}
-
-	public void setCanCancelSmartCard(boolean canCancelSmartCard){
-		this.canCancelSmartCard = canCancelSmartCard;
-	}
-
-	public boolean canCancelSmartCard() {
-		return canCancelSmartCard;
 	}
 
 	public String toStringStudent() {
