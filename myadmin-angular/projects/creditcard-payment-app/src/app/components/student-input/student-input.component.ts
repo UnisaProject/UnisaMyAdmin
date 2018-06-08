@@ -27,6 +27,10 @@ export class StudentInputComponent implements OnInit {
               private creditCardFormService: CreditCardFormService,
               private creditCardPaymentService: CreditCardPaymentService) {
 
+    this.initForm();
+  }
+
+  private initForm(){
     this.studentInputForm = this.formBuilder.group({
       studentNumber : [
         null,
@@ -51,8 +55,12 @@ export class StudentInputComponent implements OnInit {
       // Copy the data to the service
       this.creditCardFormService.creditCardPaymentForm = {...creditCardPaymentInfo};
 
-      // Change page to prompt for qualification
-      this.router.navigateByUrl('/qualInput')
+      if(creditCardPaymentInfo.regStatus === "AP"){
+        this.router.navigateByUrl('/applyPayment')
+      }
+      else{
+        this.router.navigateByUrl('/qualInput')
+      }
     }, (error)=>{
       this.blockUI.stop();
     });

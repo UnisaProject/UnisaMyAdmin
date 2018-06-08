@@ -50,15 +50,20 @@ export class NonTpPaymentComponent implements OnInit {
   }
 
   back(){
-
+    this.nonTpForm.reset();
+    this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
   }
 
   close(){
-
+    this.nonTpForm.reset();
+    this.creditCardFormService.creditCardPaymentForm = null;
+    this.router.navigateByUrl("/studentInput")
   }
 
   cancel(){
-
+    this.nonTpForm.reset();
+    this.creditCardFormService.creditCardPaymentForm = null;
+    this.router.navigateByUrl("/studentInput")
   }
 
   payNow(){

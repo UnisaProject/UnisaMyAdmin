@@ -6,7 +6,7 @@
       <p>Required items marked with *</p>
     </div>
   </div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="nonTpForm">
+  <form (ngSubmit)="payNow()" [formGroup]="nonTpForm">
     <div class="row">
       <div class="col">
         <h5>Student Personal Details</h5>
@@ -34,6 +34,7 @@
           class="form-control-plaintext"
           id="studentName"
           name="studentName"
+          autocomplete="name"
           [value]="creditCardPaymentForm?.studentInfo.studentName"
           required >
       </div>
@@ -77,6 +78,7 @@
           class="form-control"
           id="email"
           name="email"
+          autocomplete="email"
           [value]="creditCardPaymentForm?.studentInfo.emailAddress"
           required >
       </div>
@@ -198,9 +200,8 @@
     <div class="mb-3 row">
       <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate payments.</div>
     </div>
-    {{nonTpForm.value | json}}
     <div class="form-group">
-      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid" (click)="payNow()"> Pay Now</button>
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid"> Pay Now</button>
       <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
       <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
       <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>

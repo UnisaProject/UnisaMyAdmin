@@ -5,15 +5,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="cnumber" class="col-sm-4 col-form-label font-weight-bold">Credit card number: *</label>
+    <label for="cardNumber" class="col-sm-4 col-form-label font-weight-bold">Credit card number: *</label>
     <div class="col-sm-4">
       <input
         type="text"
         class="form-control"
-        id="cnumber"
-        name="cnumber"
-        formControlName="cnumber"
-        autocomplete="off">
+        id="cardNumber"
+        name="cardNumber"
+        formControlName="cardNumber"
+        autocomplete="cc-number">
     </div>
   </div>
   <div class="form-group row">
@@ -25,7 +25,7 @@
         id="cardHolder"
         name="cardHolder"
         formControlName="cardHolder"
-        autocomplete="off"
+        autocomplete='cc-name'
         required >
     </div>
   </div>
@@ -41,6 +41,7 @@
           id="expiryMonth"
           name="expiryMonth"
           formControlName="expiryMonth"
+          autocomplete="cc-exp-month"
           required >
           <option value="01">01</option>
           <option value="02">02</option>
@@ -63,6 +64,7 @@
           id="expiryYear"
           name="expiryYear"
           formControlName="expiryYear"
+          autocomplete='cc-exp-year'
           required >
           <option *ngFor="let year of expiryYears" [value]="year">{{year}}</option>
         </select>
@@ -89,15 +91,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="cvvnumber" class="col-sm-4 col-form-label font-weight-bold">CVV security no: *</label>
+    <label for="cvvNo" class="col-sm-4 col-form-label font-weight-bold">CVV security no: *</label>
     <div class="col-sm-4 col-md-2">
       <input
         type="text"
         class="form-control"
-        id="cvvnumber"
-        name="cvvnumber"
-        autocomplete="off"
-        formControlName="cvvnumber"
+        id="cvvNo"
+        name="cvvNo"
+        formControlName="cvvNo"
+        autocomplete='cc-csc'
         required >
     </div>
   </div>
