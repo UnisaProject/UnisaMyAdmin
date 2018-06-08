@@ -11,7 +11,7 @@ export class CreditCardPaymentService {
 
 
   studentInput(studentNumber:string): Observable<CreditCardPaymentInfo> {
-    return this.http.get<CreditCardPaymentInfo>('/myadmin-student-services/rest/studentinput',{
+    return this.http.get<CreditCardPaymentInfo>('/myadmin-student-services/rest/creditcardpayment/studentinput',{
       params : {
         studentNumber: studentNumber
       }
@@ -19,7 +19,7 @@ export class CreditCardPaymentService {
   }
 
   getSmartCardValue(studentNumber: string): Observable<string>{
-    return this.http.get<string>('/myadmin-student-services/rest/smartCardValue',{
+    return this.http.get<string>('/myadmin-student-services/rest/creditcardpayment/smartCardValue',{
       params : {
         studentNumber: studentNumber
       }

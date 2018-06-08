@@ -2,9 +2,10 @@ package za.ac.unisa.myadmin.service.creditcard.payment.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,9 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentService;
+import za.ac.unisa.myadmin.creditcard.payment.NonTpPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.SummaryInfo;
+import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
 
 /**
  * Created by Adrian on 2018-06-04.
@@ -26,27 +29,39 @@ public class CreditCardRestServiceImpl {
 	@Qualifier("CreditCardPaymentService")
 	CreditCardPaymentService creditCardPaymentService;
 
-	@GetMapping(path = {"/studentinput"}, produces = APPLICATION_JSON_VALUE)
+	@GetMapping(path = {"/creditcardpayment/studentinput"}, produces = APPLICATION_JSON_VALUE)
 	public CreditCardPaymentInfo processStudentInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
-		//TODO Controller logic
-		CreditCardPaymentInfo creditCardPaymentInfo = creditCardPaymentService.processStudentInput(studentNumber);
-		if (creditCardPaymentInfo.getRegStatus().equals("AP")) {
-			//request needs to move onto applyPayment route.
-		}
-		return creditCardPaymentInfo;
+		return creditCardPaymentService.processStudentInput(studentNumber);
 	}
 
-	@PostMapping(path = "/applyPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@GetMapping(path = {"/creditcardpayment/qualinput"}, produces = APPLICATION_JSON_VALUE)
+	public CreditCardPaymentInfo processQualInput(@RequestParam(value = "studentNumber", required = true) Integer studentNumber, @RequestParam(value = "qualCode", required = true) String qualCode) throws OperationFailedException {
+		return creditCardPaymentService.processQualInput(studentNumber, qualCode);
+	}
+
+	@GetMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
+	public String getSmartCardValue(@RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
+		return creditCardPaymentService.getSmartCardValue(studentNumber);
+	}
+
+	@PutMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
+	public int updateSmartCardValue(@RequestParam(value = "smartCard", required = true) String smartCard, @RequestParam(value = "studentNumber", required = true) Integer studentNumber) throws OperationFailedException {
+		return creditCardPaymentService.updateSmartCardValue(smartCard, studentNumber);
+	}
+
+	@PostMapping(path = "/creditcardpayment/applynonTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public SummaryInfo processNonTpPayment(@RequestBody NonTpPaymentInfo nonTpPaymentInfo) throws OperationFailedException {
+		return creditCardPaymentService.processNonTpPayment(nonTpPaymentInfo);
+	}
+
+	@PostMapping(path = "/creditcardpayment/applyTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public SummaryInfo processTpPayment(@RequestBody TpPaymentInfo tpPaymentInfo) throws OperationFailedException {
+		return creditCardPaymentService.processTpPayment(tpPaymentInfo);
+	}
+
+	@PostMapping(path = "/creditcardpayment/applyPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public SummaryInfo processApplyPayment(@RequestBody ApplicationPaymentInfo applicationPaymentInfo) throws OperationFailedException {
-		//System.out.println(applicationPaymentInfo.toString());
-		//SummaryInfo response = new SummaryInfo(false, "The application rest service mock");
-		//return response;
 		return creditCardPaymentService.processApplicationPayment(applicationPaymentInfo);
-	}
-
-	@PostMapping(path = "/smartCardValue", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public String getSmartCardValue(@RequestBody ApplicationPaymentInfo applicationPaymentInfo) throws OperationFailedException {
-		return "W"; // TODO implement service
 	}
 
 }
