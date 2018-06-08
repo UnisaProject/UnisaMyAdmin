@@ -19,27 +19,26 @@ export class CreditCardInputComponent implements OnInit {
   creditCardForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,) {
-    this.setupExpiryYears();
-    this.creditCardForm = this.formBuilder.group({
-      libraryFineFeeAmountInput : [0, Validators.required],
-      payMatricFirstAppFee : [false, Validators.required],
-      studyFeeAmountInput : [0, Validators.required],
+    private formBuilder: FormBuilder) {
 
-      // Credit card
-      cnumber : [null, Validators.required],
+    this.setupExpiryYears();
+    this.createForm();
+  }
+
+  ngOnInit() {
+    this.parentForm.addControl("creditCardInfo", this.creditCardForm);
+  }
+
+  private createForm(){
+    this.creditCardForm = this.formBuilder.group({
+      cardNumber : [null, Validators.required],
       cardHolder : [null, Validators.required],
       budgetPeriod : ["0", Validators.required],
-      cvvnumber : [null, Validators.required],
+      cvvNo : [null, Validators.required],
       expiryYear : [this.expiryYears[0], Validators.required],
       expiryMonth : ["01", Validators.required]
     });
   }
-
-  ngOnInit() {
-    this.parentForm.addControl("creditCard", this.creditCardForm);
-  }
-
 
   private setupExpiryYears(){
     const currentYear = new Date().getFullYear();

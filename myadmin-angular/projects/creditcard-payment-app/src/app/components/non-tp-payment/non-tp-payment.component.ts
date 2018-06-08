@@ -33,7 +33,7 @@ export class NonTpPaymentComponent implements OnInit {
       libraryFineFeeAmountInput : [0, Validators.required],
       payMatricFirstAppFee : [false, Validators.required],
       studyFeeAmountInput : [0, Validators.required],
-      ccTotalAmountInput : [0, Validators.required],
+      ccTotalAmountInput : [0, Validators.required]
     });
   }
 
@@ -49,7 +49,19 @@ export class NonTpPaymentComponent implements OnInit {
     }
   }
 
-  onSubmit(){
+  back(){
+
+  }
+
+  close(){
+
+  }
+
+  cancel(){
+
+  }
+
+  payNow(){
 
   }
 

@@ -1,5 +1,6 @@
 import {CreditCardStudentInfo} from "./credit-card-student-info";
 import {QualificationInfo} from "./qualification-info";
+import {CreditCardInfo} from "./credit-card-info";
 
 export interface CreditCardPaymentInfo {
   regStatus?:string;
@@ -31,4 +32,5 @@ export interface CreditCardPaymentInfo {
   creditDebitIndicator?:string;
   studentInfo?:CreditCardStudentInfo;
   qualificationInfo?: QualificationInfo;
+  creditCardInfo?: CreditCardInfo;
 }

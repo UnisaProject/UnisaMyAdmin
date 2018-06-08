@@ -198,11 +198,12 @@
     <div class="mb-3 row">
       <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate payments.</div>
     </div>
-
+    {{nonTpForm.value | json}}
     <div class="form-group">
-      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid"> Continue</button>
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid" (click)="payNow()"> Pay Now</button>
       <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
       <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>
     </div>
   </form>
 </div>
