@@ -30,6 +30,9 @@ export interface CreditCardPaymentInfo {
   canChooseThreeGDataBundle?:boolean;
   applyAmount?:number;
   creditDebitIndicator?:string;
+
+  canCancelSmartCard:boolean;
+
   studentInfo?:CreditCardStudentInfo;
   qualificationInfo?: QualificationInfo;
   creditCardInfo?: CreditCardInfo;

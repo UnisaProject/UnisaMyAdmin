@@ -54,6 +54,7 @@ export class StudentInputComponent implements OnInit {
     this.creditCardPaymentService.studentInput(this.studentInputForm.value.studentNumber).subscribe((creditCardPaymentInfo:CreditCardPaymentInfo)=>{
       // Copy the data to the service
       this.creditCardFormService.creditCardPaymentForm = {...creditCardPaymentInfo};
+      this.creditCardFormService.creditCardPaymentForm.canCancelSmartCard = false; // Default value
 
       if(creditCardPaymentInfo.regStatus === "AP"){
         this.router.navigateByUrl('/applyPayment')

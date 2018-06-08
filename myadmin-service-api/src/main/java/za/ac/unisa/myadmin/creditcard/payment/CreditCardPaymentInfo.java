@@ -40,6 +40,11 @@ public class CreditCardPaymentInfo implements Serializable {
 	private boolean canChooseThreeGDataBundle;
 	private BigDecimal applyAmount;
 
+	/**
+	 * Field to indicate whether a TP student can cancel his smartcard request
+	 */
+	private boolean canCancelSmartCard = false;
+
 	private String creditDebitIndicator;
 
 	private CardStudentInfo studentInfo;
@@ -257,6 +262,14 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	public void setCreditCardInfo(CreditCardInfo creditCardInfo) {
 		this.creditCardInfo = creditCardInfo;
+	}
+
+	public void setCanCancelSmartCard(boolean canCancelSmartCard){
+		this.canCancelSmartCard = canCancelSmartCard;
+	}
+
+	public boolean canCancelSmartCard() {
+		return canCancelSmartCard;
 	}
 
 	public String toStringStudent() {

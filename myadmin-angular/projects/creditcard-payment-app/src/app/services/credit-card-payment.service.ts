@@ -17,4 +17,12 @@ export class CreditCardPaymentService {
       }
     });
   }
+
+  getSmartCardValue(studentNumber: string): Observable<string>{
+    return this.http.get<string>('/myadmin-student-services/rest/smartCardValue',{
+      params : {
+        studentNumber: studentNumber
+      }
+    });
+  }
 }

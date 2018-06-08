@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {CreditCardPaymentForm} from "../../info-objects";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
 
 @Component({
   selector: 'unisa-qual-input',
@@ -23,7 +24,8 @@ export class QualInputComponent implements OnInit {
 
   constructor(private router:Router,
               private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService) {
+              private creditCardFormService: CreditCardFormService,
+              private creditCardPaymentService: CreditCardPaymentService) {
 
     this.qualInputForm = this.formBuilder.group({
       qualCode : [
@@ -53,8 +55,19 @@ export class QualInputComponent implements OnInit {
 
   onSubmit(){
     this.blockUI.start("Loading account...");
-    this.creditCardPaymentForm.qualificationInfo.qualCode = this.qualInputForm.value.qualCode;
-    this.router.navigateByUrl('/nonTpPayment');
+    this.creditCardFormService.creditCardPaymentForm.qualificationInfo.qualCode = this.qualInputForm.value.qualCode;
+
+    if(this.creditCardFormService.creditCardPaymentForm.regStatus === "TN"){
+      this.creditCardPaymentService.getSmartCardValue(this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber).subscribe((smartCardValue)=>{
+        this.creditCardFormService.creditCardPaymentForm.canCancelSmartCard = (smartCardValue === "W");
+        this.router.navigateByUrl('/tpPayment');
+      }, (error) =>{
+        this.blockUI.stop();
+      });
+    }
+    else{
+      this.router.navigateByUrl('/nonTpPayment');
+    }
   }
 
   back(){
