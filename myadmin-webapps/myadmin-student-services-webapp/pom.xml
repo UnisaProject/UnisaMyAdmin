@@ -18,24 +18,10 @@
 		<!--  Unisa myAdmin service -->
 
 		<dependency>
-		<groupId>za.ac.unisa.myadmin.services</groupId>
-		<artifactId>exam-period-service</artifactId>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>exam-services</artifactId>
 		</dependency>
 
-		<dependency>
-		<groupId>za.ac.unisa.myadmin.services</groupId>
-		<artifactId>exam-admission-service</artifactId>
-		</dependency>
-
-		<dependency>
-		<groupId>za.ac.unisa.myadmin.services</groupId>
-		<artifactId>exam-period-date-service</artifactId>
-		</dependency>
-
-		<dependency>
-		<groupId>za.ac.unisa.myadmin.services</groupId>
-		<artifactId>exam-paper-details-service</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>study-quotation-service</artifactId>

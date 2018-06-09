@@ -2,5 +2,9 @@
   "/myadmin-student-services/rest/*": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/myadmin-student-services/examservices/*": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }
