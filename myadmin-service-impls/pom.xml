@@ -20,10 +20,7 @@
 
 	<modules>
 		<module>common-services</module>
-		<module>exam-admission-service</module>
-		<module>exam-paper-details-service</module>
-		<module>exam-period-date-service</module>
-		<module>exam-period-service</module>
+		<module>exam-services</module>
 		<module>study-quotation-service</module>
 		<module>parcel-tracking-service</module>
 		<module>credit-card-payment-service</module>

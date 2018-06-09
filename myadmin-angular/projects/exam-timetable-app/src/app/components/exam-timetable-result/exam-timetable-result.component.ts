@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ExamPeriodInfo, ExamPeriodDateInfo, SearchCriteriaInfo} from '../../info-objects';
-import { ExamPeriodDateService, SearchCriteriaService } from '../../services';
+import {ExamPeriodInfo, ExaminationInfo, SearchCriteriaInfo} from '../../info-objects';
+import { ExaminationService, SearchCriteriaService } from '../../services';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {Router} from "@angular/router";
 
@@ -25,9 +25,9 @@ export class ExamTimetableResultComponent implements OnInit {
   public examPeriod: ExamPeriodInfo;
 
   /**
-   * Exam dates information
+   * Examination periods information
    */
-  public examPeriodDates: ExamPeriodDateInfo[] = [];
+  public examinations: ExaminationInfo[] = [];
 
 
   /**
@@ -38,11 +38,11 @@ export class ExamTimetableResultComponent implements OnInit {
 
   /**
    * Creates a new instance of the <code>ExamTimetableResultComponent</code>
-   * @param {ExamPeriodDateService} examPeriodDateService
+   * @param {ExaminationService} examinationService
    * @param {SearchCriteriaService} searchCriteriaService
    * @param {Router} router
    */
-  constructor(private examPeriodDateService: ExamPeriodDateService,
+  constructor(private examinationService: ExaminationService,
               private searchCriteriaService: SearchCriteriaService,
               private router: Router) { }
 
@@ -60,14 +60,14 @@ export class ExamTimetableResultComponent implements OnInit {
 
     this.today = new Date();
     this.examPeriod = this.searchCriteriaService.searchCriteria.examPeriod;
-    this.getExamPeriodDates(this.searchCriteriaService.searchCriteria);
+    this.getExaminations(this.searchCriteriaService.searchCriteria);
   }
 
-  private getExamPeriodDates(searchCriteria: SearchCriteriaInfo): void {
-    this.examPeriodDateService.getExamPeriodDatesByYearAndExamPeriodCodeAndCourseCodes(searchCriteria.examPeriod.examYear, searchCriteria.examPeriod.code, searchCriteria.courseCodes)
+  private getExaminations(searchCriteria: SearchCriteriaInfo): void {
+    this.examinationService.getExaminationsByYearAndExamPeriodCodeAndCourseCodes(searchCriteria.examPeriod.examYear, searchCriteria.examPeriod.code, searchCriteria.courseCodes)
       .subscribe(
-        (examPeriodDates: ExamPeriodDateInfo[]) => {
-          this.examPeriodDates = examPeriodDates;
+        (examinations: ExaminationInfo[]) => {
+          this.examinations = examinations;
           this.blockUI.stop()
         },
         () => {
