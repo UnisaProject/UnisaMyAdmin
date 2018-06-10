@@ -6,7 +6,7 @@ export interface StudyUnitInfo {
   /**
    * Study unit code.
    */
-  studyUnitcode:string;
+  code:string;
 
   /**
    * Description of the study unit

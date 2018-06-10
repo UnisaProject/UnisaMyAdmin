@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+	<deployment>
+		<dependencies>
+			<module name="allfusion" >
+				<imports>
+					<exclude-set>
+						<path name="com/ca/gen80/wsrt/router"/>
+					</exclude-set>
+				</imports>
+			</module>
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure>

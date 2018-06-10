@@ -21,7 +21,7 @@
 	<modules>
 		<module>common-services</module>
 		<module>exam-services</module>
-		<module>study-quotation-service</module>
+		<module>student-services</module>
 		<module>parcel-tracking-service</module>
 		<module>credit-card-payment-service</module>
 	</modules>

@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {StudyQuotationRequestInfo} from '../../info-objects';
-import { StudyFeeCriteriaService } from '../../services';
+import {StudyFeeQuotationRequestInfo} from '../../info-objects';
+import { RegistrationPeriodService } from '../../services';
 import {atleastOneCourseCode} from './atleast-one.validator';
 
 @Component({
@@ -18,7 +18,7 @@ export class StudyQuotationSearchComponent implements OnInit {
   @BlockUI()
   private blockUI:NgBlockUI;
 
-  constructor(private router:Router, private formBuilder:FormBuilder, private studyFeeCriteriaService: StudyFeeCriteriaService) {
+  constructor(private router:Router, private formBuilder:FormBuilder, private registrationPeriodService: RegistrationPeriodService) {
     this.initForm();
   }
 
@@ -62,11 +62,11 @@ export class StudyQuotationSearchComponent implements OnInit {
   }
 
   private defaultForm(): void{
-    if(this.studyFeeCriteriaService.searchCriteria === null){
+    if(this.registrationPeriodService.searchCriteria === null){
       this.resetForm();
     }
     else{
-      this.studyFeeForm.patchValue(this.studyFeeCriteriaService.searchCriteria)
+      this.studyFeeForm.patchValue(this.registrationPeriodService.searchCriteria)
       this.blockUI.stop()
     }
   }
@@ -84,7 +84,7 @@ export class StudyQuotationSearchComponent implements OnInit {
         ,null,null,null,null,null,null
       ]
     });
-    this.studyFeeCriteriaService.getQuotationYear().subscribe(
+    this.registrationPeriodService.getQuotationYear().subscribe(
       (year) => this.studyFeeForm.patchValue({academicYear : year}),
       error => {() => this.blockUI.stop();
         this.router.navigate(["closed"]);
@@ -95,12 +95,12 @@ export class StudyQuotationSearchComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start("Loading quote...");
-    const criteria: StudyQuotationRequestInfo = {...this.studyFeeForm.value};
+    const criteria: StudyFeeQuotationRequestInfo = {...this.studyFeeForm.value};
 
     // Filter out any blank course codes
     criteria.courseCodes = criteria.courseCodes.filter(c => c !== null && c !== "");
 
-    this.studyFeeCriteriaService.searchCriteria = criteria;
+    this.registrationPeriodService.searchCriteria = criteria;
     this.router.navigate(["result"]);
   }
 

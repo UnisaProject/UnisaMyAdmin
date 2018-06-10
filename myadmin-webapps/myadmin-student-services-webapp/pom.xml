@@ -19,13 +19,9 @@
 
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>exam-services</artifactId>
+			<artifactId>student-services</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>study-quotation-service</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>parcel-tracking-service</artifactId>

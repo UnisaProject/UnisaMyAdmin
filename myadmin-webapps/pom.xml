@@ -18,6 +18,7 @@
 	</parent>
 
 	<modules>
+		<module>myadmin-exam-services-webapp</module>
 		<module>myadmin-student-services-webapp</module>
 	</modules>
 
