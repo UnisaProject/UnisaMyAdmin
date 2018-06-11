@@ -274,18 +274,4 @@ public class TpPaymentInfo implements Serializable {
 	public void setCreditCardTotalAmountInput(BigDecimal creditCardTotalAmountInput) {
 		this.creditCardTotalAmountInput = creditCardTotalAmountInput;
 	}
-
-	public String toStringStudent() {
-
-		StringBuilder result = new StringBuilder();
-		String NEW_LINE = System.getProperty("line.separator");
-
-		result.append(NEW_LINE + "Stud Nr: " + studentInfo.getStudentNumber() + NEW_LINE);
-		result.append("Qual: " + qualificationInfo.getQualCode() + NEW_LINE);
-		result.append("Reg status: " + regStatus + NEW_LINE);
-		result.append("Email: " + studentInfo.getEmailAddress() + NEW_LINE);
-
-		return result.toString();
-	}
-
 }

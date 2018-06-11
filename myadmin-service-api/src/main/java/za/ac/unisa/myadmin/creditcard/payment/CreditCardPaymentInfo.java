@@ -250,7 +250,6 @@ public class CreditCardPaymentInfo implements Serializable {
 	}
 
 	public String toStringStudent() {
-
 		StringBuilder result = new StringBuilder();
 		String NEW_LINE = System.getProperty("line.separator");
 
