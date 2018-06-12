@@ -23,6 +23,7 @@ import za.ac.unisa.myadmin.service.creditcard.payment.validator.ApplicationPayme
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.CardStudentInfoValidator;
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.CreditCardInfoValidator;
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.NonTpPaymentInfoValidator;
+import za.ac.unisa.myadmin.service.creditcard.payment.validator.TpPaymentInfoValidator;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -44,6 +45,10 @@ public class CreditCardRestServiceImpl {
 	@InitBinder("nonTpPaymentInfo")
 	protected void initNonTpBinder(WebDataBinder binder) {
 		binder.setValidator(new NonTpPaymentInfoValidator(new CreditCardInfoValidator(), new CardStudentInfoValidator()));
+	}
+	@InitBinder("tpPaymentInfo")
+	protected void initTpBinder(WebDataBinder binder) {
+		binder.setValidator(new TpPaymentInfoValidator(new CreditCardInfoValidator(), new CardStudentInfoValidator()));
 	}
 
 	@GetMapping(path = {"/creditcardpayment/studentinput"}, produces = APPLICATION_JSON_VALUE)
@@ -72,7 +77,7 @@ public class CreditCardRestServiceImpl {
 	}
 
 	@PostMapping(path = "/creditcardpayment/applyTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public SummaryInfo processTpPayment(@RequestBody TpPaymentInfo tpPaymentInfo) throws OperationFailedException {
+	public SummaryInfo processTpPayment(@Validated @RequestBody TpPaymentInfo tpPaymentInfo) throws OperationFailedException {
 		return creditCardPaymentService.processTpPayment(tpPaymentInfo);
 	}
 

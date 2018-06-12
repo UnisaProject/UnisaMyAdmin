@@ -29,17 +29,21 @@ public class ApplicationPaymentInfoValidator implements Validator {
 	}
 
 	public ApplicationPaymentInfoValidator(Validator creditCardInfoValidator, Validator cardStudentInfoValidator) {
-		if (creditCardInfoValidator == null || cardStudentInfoValidator == null) {
-			throw new IllegalArgumentException("The supplied [Validator] is " +
+		if (creditCardInfoValidator == null) {
+			throw new IllegalArgumentException("The supplied Validator[ " + creditCardInfoValidator + " ] is " +
+				"required and must not be null.");
+		}
+		if (cardStudentInfoValidator == null) {
+			throw new IllegalArgumentException("The supplied Validator[ " + cardStudentInfoValidator + " ] is " +
 				"required and must not be null.");
 		}
 		if (!creditCardInfoValidator.supports(CreditCardInfo.class)) {
 			throw new IllegalArgumentException("The supplied [Validator] must " +
-				"support the validation of [Address] instances.");
+				"support the validation of [CreditCardInfo] instances.");
 		}
 		if (!cardStudentInfoValidator.supports(CardStudentInfo.class)) {
 			throw new IllegalArgumentException("The supplied [Validator] must " +
-				"support the validation of [Address] instances.");
+				"support the validation of [CardStudentInfo] instances.");
 		}
 		this.creditCardInfoValidator = creditCardInfoValidator;
 		this.cardStudentInfoValidator = cardStudentInfoValidator;

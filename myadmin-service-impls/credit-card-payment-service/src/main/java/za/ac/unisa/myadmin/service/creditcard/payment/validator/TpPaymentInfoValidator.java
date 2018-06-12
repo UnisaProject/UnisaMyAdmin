@@ -9,15 +9,15 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import za.ac.unisa.myadmin.creditcard.payment.CardStudentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardInfo;
-import za.ac.unisa.myadmin.creditcard.payment.NonTpPaymentInfo;
+import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
 
 import java.math.BigDecimal;
 
 /**
  * Created by Adrian on 2018-06-11.
  */
-@Component("NonTpPaymentInfoValidator")
-public class NonTpPaymentInfoValidator implements Validator {
+@Component("TpPaymentInfoValidator")
+public class TpPaymentInfoValidator implements Validator {
 
 	@Autowired
 	@Qualifier("creditCardInfoValidator")
@@ -27,10 +27,10 @@ public class NonTpPaymentInfoValidator implements Validator {
 	@Qualifier("cardStudentInfoValidator")
 	Validator cardStudentInfoValidator;
 
-	public NonTpPaymentInfoValidator() {
+	public TpPaymentInfoValidator() {
 	}
 
-	public NonTpPaymentInfoValidator(Validator creditCardInfoValidator, Validator cardStudentInfoValidator) {
+	public TpPaymentInfoValidator(Validator creditCardInfoValidator, Validator cardStudentInfoValidator) {
 		if (creditCardInfoValidator == null) {
 			throw new IllegalArgumentException("The supplied Validator[ " + creditCardInfoValidator + " ] is " +
 				"required and must not be null.");
@@ -53,40 +53,39 @@ public class NonTpPaymentInfoValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return NonTpPaymentInfo.class.equals(aClass);
+		return TpPaymentInfo.class.equals(aClass);
 	}
 
 	@Override
 	public void validate(@Nullable Object o, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "creditCardTotalAmountInput", "creditCardTotalAmountInput.empty");//Invalid total amount being paid.
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studyFeeAmount", "studyFeeAmount.empty");//Invalid total amount being paid.
-		NonTpPaymentInfo nonTPInfo = (NonTpPaymentInfo) o;
+		TpPaymentInfo tpPaymentInfo = (TpPaymentInfo) o;
 		//Total Amounts
 		BigDecimal totalAmount = BigDecimal.ZERO;
-		if (nonTPInfo.isPayLibraryFee()) {
-			totalAmount = totalAmount.add(nonTPInfo.getLibraryFee());
+		//Study fee amount larger than minimum required for registration
+		if (tpPaymentInfo.getMinimumStudyFee().compareTo(BigDecimal.ZERO) > 0) {
+			if (tpPaymentInfo.getStudyFeeAmount().compareTo(tpPaymentInfo.getMinimumStudyFee()) < 0) {
+				//NumberFormat formatter = new DecimalFormat("#0.00");
+				errors.rejectValue("studyFeeAmount", "tpPaymentInfo.studyFeeAmount.amount", new String[]{String.valueOf(tpPaymentInfo.getMinimumStudyFee())}, null);
+				//return "Study fee amount you wish to pay can not be less than R" +tpPaymentInfo.getMinimumStudyFee();
+			}
 		}
-		if (nonTPInfo.isPayMatricFirstAppFee()) {
-			totalAmount = totalAmount.add(nonTPInfo.getMatricFirstAppFee());
-		}
-		if (nonTPInfo.isPayThreeGDataBundleFee()) {
-			totalAmount = totalAmount.add(nonTPInfo.getThreeGDataBundleFee());
-		}
-
 		// Check that fee totals match up
 		if (!errors.hasErrors()) {
-			totalAmount = totalAmount.add(nonTPInfo.getStudyFeeAmount()).add(nonTPInfo.getLibraryFineFee());
+			totalAmount = tpPaymentInfo.getLibraryFeeForStudent().add(tpPaymentInfo.getMatricFeeForStudent()).add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFeeForStudent());
+			//totalAmount = totalAmount.add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFee());
 
-			if (totalAmount.compareTo(nonTPInfo.getCreditCardTotalAmountInput()) != 0) {
-				errors.rejectValue("creditCardTotalAmountInput", "nonTpPaymentInfo.creditCardTotalAmountInput.amount");//Credit card number must consist of 16 digits.
+			if (totalAmount.compareTo(tpPaymentInfo.getCreditCardTotalAmountInput()) != 0) {
+				errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount");
 			}
 		}
 		try {
 			errors.pushNestedPath("creditCardInfo");
-			ValidationUtils.invokeValidator(this.creditCardInfoValidator, nonTPInfo.getCreditCardInfo(), errors);
+			ValidationUtils.invokeValidator(this.creditCardInfoValidator, tpPaymentInfo.getCreditCardInfo(), errors);
 			errors.popNestedPath();
 			errors.pushNestedPath("studentInfo");
-			ValidationUtils.invokeValidator(this.cardStudentInfoValidator, nonTPInfo.getStudentInfo(), errors);
+			ValidationUtils.invokeValidator(this.cardStudentInfoValidator, tpPaymentInfo.getStudentInfo(), errors);
 		} finally {
 			errors.popNestedPath();
 		}
