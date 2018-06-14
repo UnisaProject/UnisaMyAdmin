@@ -12,4 +12,9 @@ export interface ErrorInfo{
    * A numeric code for this error type.
    */
   errorCode: number;
+
+  /**
+   * An array of messages that can be displayed to the user.
+   */
+  errors: string[];
 }

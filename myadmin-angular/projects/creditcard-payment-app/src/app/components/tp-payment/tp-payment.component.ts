@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {CreditCardPaymentForm} from "../../info-objects";
+import {TpPaymentInfo} from "../../info-objects";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
+import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
 
 @Component({
   selector: 'unisa-tp-payment',
@@ -13,7 +14,8 @@ import {Router} from "@angular/router";
 export class TpPaymentComponent implements OnInit {
 
   tpForm: FormGroup;
-  creditCardPaymentForm: CreditCardPaymentForm;
+  //creditCardPaymentForm: CreditCardPaymentForm;
+  tpPaymentInfo: TpPaymentInfo;
 
 
   /**
@@ -24,7 +26,8 @@ export class TpPaymentComponent implements OnInit {
 
   constructor(private router:Router,
               private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService) {
+              private creditCardFormService: CreditCardFormService,
+              private creditCardPaymentService: CreditCardPaymentService) {
     this.initForm();
   }
 
@@ -44,34 +47,54 @@ export class TpPaymentComponent implements OnInit {
 
   ngOnInit() {
     this.blockUI.stop();
-    this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
-    if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentInfo === null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
+    this.tpPaymentInfo = new TpPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
+    if(this.tpPaymentInfo === null ||  this.tpPaymentInfo.studentInfo === null || this.tpPaymentInfo.studentInfo.studentNumber === null){
       this.router.navigateByUrl("/studentInput")
     }
     else {
-      this.tpForm.patchValue({...this.creditCardPaymentForm});
+      this.tpForm.patchValue({...this.tpPaymentInfo});
     }
   }
 
   back(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
+    this.creditCardFormService.tpPaymentInfo.creditCardInfo = null;
+    this.router.navigateByUrl("/qualInput")
   }
 
   close(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
+    this.creditCardFormService.tpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   cancel(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
+    this.creditCardFormService.tpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   payNow(){
+    this.blockUI.start("Processing transaction...");
+    const formValue = this.tpForm.value;
+    //this.applicationPaymentInfo.studentInfo.emailAddress = formValue.email;
+    this.tpPaymentInfo.creditCardInfo = formValue.creditCardInfo;
 
+    // const applicationPaymentInfo: ApplicationPaymentInfo = {
+    //   cardInfo : {...formValue.creditCardInfo},
+    //   applyAmountInput : formValue.applyAmount,
+    //   creditCardTotalAmountInput : formValue.ccTotalAmountInput,
+    //   studentInfo : this.creditCardPaymentForm.studentInfo
+    // };
+
+    this.creditCardPaymentService.processTpPayment(this.tpPaymentInfo).subscribe((summaryInfo)=>{
+      this.blockUI.stop();
+    }, (error)=>{
+      this.blockUI.stop();
+    });
   }
 
 }

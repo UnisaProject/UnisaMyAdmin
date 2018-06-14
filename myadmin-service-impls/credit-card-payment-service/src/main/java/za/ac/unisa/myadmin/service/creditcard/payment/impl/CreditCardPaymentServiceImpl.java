@@ -152,7 +152,8 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			// student nr
 			ccPaymentsProxy.setInWsStudentNr(Integer.parseInt(paymentInfo.getStudentInfo().getStudentNumber()));
 			// email
-			ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			//ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			ccPaymentsProxy.setInWsAddressV2EmailAddress("adrian@opencollab.co.za");
 			// applyForAmount
 			//
 			// credit card nr
@@ -229,7 +230,8 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			// qual
 			ccPaymentsProxy.setInWsQualificationCode(paymentInfo.getQualificationInfo().getQualCode());
 			// email
-			ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			//ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			ccPaymentsProxy.setInWsAddressV2EmailAddress("adrian@opencollab.co.za");
 			// lib card
 			if (paymentInfo.isPayLibraryFee()) {
 				ccPaymentsProxy.setInSmarctcardBundleDocumentTotalAmount(paymentInfo.getLibraryFee().doubleValue());
@@ -334,7 +336,8 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			// qual
 			ccPaymentsProxy.setInWsQualificationCode(paymentInfo.getQualificationInfo().getQualCode());
 			// email
-			ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			//ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
+			ccPaymentsProxy.setInWsAddressV2EmailAddress("adrian@opencollab.co.za");
 			// lib card
 			ccPaymentsProxy.setInSmarctcardBundleDocumentTotalAmount(paymentInfo.getLibraryFeeForStudent() == null ? 0 : paymentInfo.getLibraryFeeForStudent().doubleValue());
 			// MR fee

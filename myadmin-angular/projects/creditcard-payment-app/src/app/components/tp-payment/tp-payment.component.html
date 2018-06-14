@@ -21,7 +21,7 @@
           class="form-control-plaintext"
           id="studentNumber"
           name="studentNumber"
-          [value]="creditCardPaymentForm?.studentInfo.studentNumber"
+          [value]="tpPaymentInfo?.studentInfo.studentNumber"
           required >
       </div>
     </div>
@@ -35,7 +35,7 @@
           id="studentName"
           name="studentName"
           autocomplete="name"
-          [value]="creditCardPaymentForm?.studentInfo.studentName"
+          [value]="tpPaymentInfo?.studentInfo.studentName"
           required >
       </div>
     </div>
@@ -48,7 +48,7 @@
           class="form-control-plaintext"
           id="qualCode"
           name="qualCode"
-          [value]="creditCardPaymentForm?.qualificationInfo.qualCode+' - ' + creditCardPaymentForm?.qualificationInfo.qualDesc"
+          [value]="tpPaymentInfo?.qualificationInfo.qualCode+' - ' + tpPaymentInfo?.qualificationInfo.qualDesc"
           required >
       </div>
     </div>
@@ -61,7 +61,7 @@
           class="form-control-plaintext"
           id="regstatus"
           name="regstatus"
-          [value]="creditCardPaymentForm?.regStatusDescription"
+          [value]="tpPaymentInfo?.regStatusDescription"
           required >
       </div>
     </div>
@@ -79,7 +79,7 @@
           id="email"
           name="email"
           autocomplete="email"
-          [value]="creditCardPaymentForm?.studentInfo.emailAddress"
+          [value]="tpPaymentInfo?.studentInfo.emailAddress"
           required >
       </div>
     </div>
@@ -99,7 +99,7 @@
           class="form-control-plaintext"
           id="balanceAmount"
           name="balanceAmount"
-          [value]="'R' + creditCardPaymentForm?.balance + ' ' + creditCardPaymentForm?.creditDebitIndicator"
+          [value]="'R' + tpPaymentInfo?.balance + ' ' + tpPaymentInfo?.creditDebitIndicator"
           required >
       </div>
     </div>
@@ -112,7 +112,7 @@
           class="form-control-plaintext"
           id="libraryFineFee"
           name="libraryFineFee"
-          [value]="'R' + creditCardPaymentForm?.libraryFineFee + ' ' + creditCardPaymentForm?.libCreditDebitIndicator"
+          [value]="'R' + tpPaymentInfo?.libraryFineFee + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
           required >
       </div>
     </div>
@@ -132,6 +132,7 @@
             class="form-control"
             id="dueImmediately"
             name="dueImmediately"
+            [value]="tpPaymentInfo.dueImmediately"
             formControlName="dueImmediately"
             required="required" >
         </div>
@@ -151,6 +152,7 @@
             class="form-control"
             id="minimumForReg"
             name="minimumForReg"
+            [value]="tpPaymentInfo.minimumForReg"
             formControlName="minimumForReg"
             required="required" >
         </div>
@@ -171,6 +173,7 @@
             class="form-control"
             id="fullAccount"
             name="fullAccount"
+            [value]="tpPaymentInfo.fullAccount"
             formControlName="fullAccount"
             required="required" >
         </div>
@@ -217,6 +220,7 @@
             class="form-control"
             id="studyFeeAmountInput"
             name="studyFeeAmountInput"
+            [value]="tpPaymentInfo.studyFeeAmountInput"
             formControlName="studyFeeAmountInput"
             required="required" >
         </div>

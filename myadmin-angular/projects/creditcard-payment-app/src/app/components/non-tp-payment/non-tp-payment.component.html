@@ -21,7 +21,7 @@
           class="form-control-plaintext"
           id="studentNumber"
           name="studentNumber"
-          [value]="creditCardPaymentForm?.studentInfo.studentNumber"
+          [value]="nonTpPaymentInfo?.studentInfo.studentNumber"
           required >
       </div>
     </div>
@@ -35,7 +35,7 @@
           id="studentName"
           name="studentName"
           autocomplete="name"
-          [value]="creditCardPaymentForm?.studentInfo.studentName"
+          [value]="nonTpPaymentInfo?.studentInfo.studentName"
           required >
       </div>
     </div>
@@ -48,7 +48,7 @@
           class="form-control-plaintext"
           id="qualCode"
           name="qualCode"
-          [value]="creditCardPaymentForm?.qualificationInfo.qualCode+' - ' + creditCardPaymentForm?.qualificationInfo.qualDesc"
+          [value]="nonTpPaymentInfo?.qualificationInfo.qualCode+' - ' + nonTpPaymentInfo?.qualificationInfo.qualDesc"
           required >
       </div>
     </div>
@@ -61,7 +61,7 @@
           class="form-control-plaintext"
           id="regstatus"
           name="regstatus"
-          [value]="creditCardPaymentForm?.regStatusDescription"
+          [value]="nonTpPaymentInfo?.regStatusDescription"
           required >
       </div>
     </div>
@@ -79,7 +79,7 @@
           id="email"
           name="email"
           autocomplete="email"
-          [value]="creditCardPaymentForm?.studentInfo.emailAddress"
+          [value]="nonTpPaymentInfo?.studentInfo.emailAddress"
           required >
       </div>
     </div>
@@ -99,7 +99,7 @@
           class="form-control-plaintext"
           id="balanceAmount"
           name="balanceAmount"
-          [value]="'R' + creditCardPaymentForm?.balance + ' ' + creditCardPaymentForm?.creditDebitIndicator"
+          [value]="'R' + nonTpPaymentInfo?.balance + ' ' + nonTpPaymentInfo?.creditDebitIndicator"
           required >
       </div>
     </div>
@@ -112,7 +112,7 @@
           class="form-control-plaintext"
           id="libraryFineFee"
           name="libraryFineFee"
-          [value]="'R' + creditCardPaymentForm?.libraryFineFee + ' ' + creditCardPaymentForm?.libCreditDebitIndicator"
+          [value]="'R' + nonTpPaymentInfo?.libraryFineFee + ' ' + nonTpPaymentInfo?.libCreditDebitIndicator"
           required >
       </div>
     </div>
@@ -121,12 +121,13 @@
     <!--
       TODO this form still has a lot of unimplemented logic
     -->
+    <!-- TODO LibraryCard Fee -->
     <div class="row">
       <div class="col">
         <h5>Payment Details</h5>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="nonTpPaymentInfo.canChooseMatric">
       <label for="payMatricFirstAppFee" class="col-sm-4 col-form-label font-weight-bold">Matriculation board fee:</label>
       <div class="col-sm-4">
         <div class="form-check form-check-inline">
@@ -135,6 +136,7 @@
             class="form-check-input"
             id="payMatricFirstAppFee"
             name="payMatricFirstAppFee"
+            [value]="nonTpPaymentInfo.payMatricFirstAppFee"
             formControlName="payMatricFirstAppFee">
           <label class="form-check-label" for="payMatricFirstAppFee">2</label>
         </div>
@@ -147,14 +149,15 @@
       <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you wish to pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
+          <!--<div class="input-group-prepend">-->
+            <!--<span class="input-group-text">R</span>-->
+          <!--</div>-->
           <input
             type="text"
             class="form-control"
             id="libraryFineFeeAmountInput"
             name="libraryFineFeeAmountInput"
+            [value]="nonTpPaymentInfo.libraryFineFee | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="libraryFineFeeAmountInput"
             required="required">
         </div>
@@ -164,14 +167,15 @@
       <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
+          <!--<div class="input-group-prepend">-->
+            <!--<span class="input-group-text">R</span>-->
+          <!--</div>-->
           <input
             type="text"
             class="form-control"
             id="studyFeeAmountInput"
             name="studyFeeAmountInput"
+            [value]="nonTpPaymentInfo.studyFeeAmount | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="studyFeeAmountInput"
             required="required" >
         </div>
@@ -183,14 +187,15 @@
       <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
+          <!--<div class="input-group-prepend">-->
+            <!--<span class="input-group-text">R</span>-->
+          <!--</div>-->
           <input
             type="text"
             class="form-control"
             id="ccTotalAmountInput"
             name="ccTotalAmountInput"
+            [value]="nonTpPaymentInfo.creditCardTotalAmountInput | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="ccTotalAmountInput"
             required="required">
         </div>

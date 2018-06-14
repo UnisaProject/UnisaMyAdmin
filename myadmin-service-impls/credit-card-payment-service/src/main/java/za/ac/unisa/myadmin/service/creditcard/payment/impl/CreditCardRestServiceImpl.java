@@ -71,7 +71,7 @@ public class CreditCardRestServiceImpl {
 		return creditCardPaymentService.updateSmartCardValue(smartCard, studentNumber);
 	}
 
-	@PostMapping(path = "/creditcardpayment/applynonTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/creditcardpayment/applyNonTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public SummaryInfo processNonTpPayment(@Validated @RequestBody NonTpPaymentInfo nonTpPaymentInfo) throws OperationFailedException {
 		return creditCardPaymentService.processNonTpPayment(nonTpPaymentInfo);
 	}

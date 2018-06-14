@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {CreditCardPaymentForm} from "../../info-objects";
 import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
@@ -16,7 +15,7 @@ export class ApplyPaymentComponent implements OnInit {
 
   applyForm: FormGroup;
 
-  creditCardPaymentForm: CreditCardPaymentForm;
+  applicationPaymentInfo: ApplicationPaymentInfo;
 
   /**
    * Reference to blockUI
@@ -43,48 +42,50 @@ export class ApplyPaymentComponent implements OnInit {
 
   ngOnInit() {
     this.blockUI.stop();
-    this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
+    this.applicationPaymentInfo = new ApplicationPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
 
-    if(this.creditCardPaymentForm === null ||  this.creditCardPaymentForm.studentInfo === null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
+    if(this.applicationPaymentInfo === null ||  this.applicationPaymentInfo.studentInfo === null || this.applicationPaymentInfo.studentInfo.studentNumber === null){
       this.router.navigateByUrl("/studentInput")
     }
     else {
       this.applyForm.patchValue({
-        email: this.creditCardPaymentForm.studentInfo.emailAddress
+        email: this.applicationPaymentInfo.studentInfo.emailAddress
       });
     }
   }
 
   back(){
     this.applyForm.reset();
-    this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
+    this.creditCardFormService.applicationPaymentInfo.cardInfo = null;
+    this.router.navigateByUrl("/studentInput")
   }
 
   close(){
     this.applyForm.reset();
-    this.creditCardFormService.creditCardPaymentForm = null;
+    this.creditCardFormService.applicationPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   cancel(){
     this.applyForm.reset();
-    this.creditCardFormService.creditCardPaymentForm = null;
+    this.creditCardFormService.applicationPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   payNow(){
     this.blockUI.start("Processing transaction...");
     const formValue = this.applyForm.value;
-    this.creditCardPaymentForm.studentInfo.emailAddress = formValue.email;
+    this.applicationPaymentInfo.studentInfo.emailAddress = formValue.email;
+    this.applicationPaymentInfo.cardInfo = formValue.creditCardInfo;
 
-    const applicationPaymentInfo: ApplicationPaymentInfo = {
-      cardInfo : {...formValue.creditCardInfo},
-      applyAmountInput : formValue.applyAmount,
-      creditCardTotalAmountInput : formValue.ccTotalAmountInput,
-      studentInfo : this.creditCardPaymentForm.studentInfo
-    };
+    // const applicationPaymentInfo: ApplicationPaymentInfo = {
+    //   cardInfo : {...formValue.creditCardInfo},
+    //   applyAmountInput : formValue.applyAmount,
+    //   creditCardTotalAmountInput : formValue.ccTotalAmountInput,
+    //   studentInfo : this.creditCardPaymentForm.studentInfo
+    // };
 
-    this.creditCardPaymentService.processApplicationPayment(applicationPaymentInfo).subscribe((summaryInfo)=>{
+    this.creditCardPaymentService.processApplicationPayment(this.applicationPaymentInfo).subscribe((summaryInfo)=>{
       this.blockUI.stop();
     }, (error)=>{
       this.blockUI.stop();

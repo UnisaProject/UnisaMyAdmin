@@ -6,6 +6,7 @@ export interface CreditCardPaymentInfo {
   regStatus?:string;
   regStatusDescription?:string;
   balance?:number;
+  creditDebitIndicator?:string;
   librayFineBalance?:number;
   libCreditDebitIndicator?:string;
 
@@ -29,7 +30,6 @@ export interface CreditCardPaymentInfo {
   canChooseMatric?:boolean;
   canChooseThreeGDataBundle?:boolean;
   applyAmount?:number;
-  creditDebitIndicator?:string;
 
   canCancelSmartCard:boolean;
 
