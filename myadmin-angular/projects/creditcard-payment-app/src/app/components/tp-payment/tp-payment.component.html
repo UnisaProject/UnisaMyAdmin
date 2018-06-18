@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h5>Credit card payments</h5>
+      <h5>Credit Card Payments</h5>
       <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
       <p>Required items marked with *</p>
     </div>
@@ -92,92 +92,92 @@
     </div>
     <div class="form-group row">
       <label for="balanceAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee balance on this account:</label>
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <input
           type="text"
           readonly
-          class="form-control-plaintext"
+          class="form-control-plaintext text-right"
           id="balanceAmount"
           name="balanceAmount"
-          [value]="'R' + tpPaymentInfo?.balance + ' ' + tpPaymentInfo?.creditDebitIndicator"
+          [value]="(tpPaymentInfo?.balance| currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.creditDebitIndicator"
           required >
       </div>
     </div>
     <div class="form-group row">
       <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library fine balance on this account :</label>
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <input
           type="text"
           readonly
-          class="form-control-plaintext"
+          class="form-control-plaintext text-right"
           id="libraryFineFee"
           name="libraryFineFee"
-          [value]="'R' + tpPaymentInfo?.libraryFineFee + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
+          [value]="(tpPaymentInfo?.libraryFineBalance| currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
           required >
       </div>
     </div>
 
 
-
     <div class="form-group row">
-      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Amount already outstanding on study fee account:</label>
+      <div class="col-sm-4">
+        <label for="studyFeeAmountInput" class="col-form-label font-weight-bold">Amount already
+        outstanding on study fee account:</label>
+        <small class="form-text text-muted">(Amount should be paid in full to receive services)</small>
+      </div>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
           <input
             readonly
             type="text"
-            class="form-control"
+            class="form-control-plaintext text-right"
             id="dueImmediately"
             name="dueImmediately"
-            [value]="tpPaymentInfo.dueImmediately"
+            [value]="tpPaymentInfo?.dueImmediately | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="dueImmediately"
-            required="required" >
+            required="required">
         </div>
-        <div class="form-text">Amount should be paid in full to receive services</div>
+
       </div>
     </div>
     <div class="form-group row">
-      <label for="minimumForReg" class="col-sm-4 col-form-label font-weight-bold">Minimum amount due to enable registration:</label>
+      <div class="col-sm-4">
+      <label for="minimumForReg" class="col-form-label font-weight-bold">Minimum amount due to enable registration:</label>
+        <small class="form-text text-muted">(Includes any outstanding fees and miscellaneous fees such as library access,
+          matriculation, foreign levy, prescribed books etc.)</small>
+        </div>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
           <input
             readonly
             type="text"
-            class="form-control"
+            class="form-control-plaintext text-right"
             id="minimumForReg"
             name="minimumForReg"
-            [value]="tpPaymentInfo.minimumForReg"
+            [value]="tpPaymentInfo.minimumForReg | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="minimumForReg"
             required="required" >
         </div>
-        <div class="form-text">Includes any outstanding fees and miscellaneous fees such as library access,
-          matriculation, foreign levy, prescribed books etc.</div>
+
       </div>
     </div>
     <div class="form-group row">
-      <label for="fullAccount" class="col-sm-4 col-form-label font-weight-bold">Pay this account in full:</label>
+      <div class="col-sm-4">
+      <label for="fullAccount" class="col-form-label font-weight-bold">Pay this account in full:</label>
+        <small class="form-text text-muted">(Includes the outstanding balance and registration fees on the account.)</small>
+        </div>
       <div class="col-sm-4">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
           <input
             readonly
             type="text"
-            class="form-control"
+            class="form-control-plaintext text-right"
             id="fullAccount"
             name="fullAccount"
-            [value]="tpPaymentInfo.fullAccount"
+            [value]="tpPaymentInfo?.fullAccount | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="fullAccount"
             required="required" >
         </div>
-        <div class="form-text">Includes the outstanding balance and registration fees on the account</div>
+
       </div>
     </div>
 
@@ -190,40 +190,76 @@
       </div>
     </div>
 
-    <!-- TODO payThreeGDataBundleFee -->
     <div class="form-group row">
       <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you wish to pay: *</label>
       <div class="col-sm-4">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
+        <!--<div class="input-group mb-3">-->
           <input
             type="text"
-            class="form-control"
+            class="form-control text-right"
             id="libraryFineFeeAmountInput"
             name="libraryFineFeeAmountInput"
+            [value]="tpPaymentInfo?.libraryFineFeeForStudent | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="libraryFineFeeAmountInput"
             required="required">
-        </div>
+        <!--</div>-->
       </div>
     </div>
-    <div class="form-group row" *ngIf="creditCardPaymentForm.min">
-      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to pay: *</label>
+    <div class="form-group row">
       <div class="col-sm-4">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
-          </div>
+        <label for="studyFeeAmountInput" class="col-form-label font-weight-bold">Study fee amount you wish to
+          pay: *</label>
+        <small class="form-text text-muted" *ngIf="tpPaymentInfo?.minimumStudyFee != 0">(Amount can not be less than
+          R{{tpPaymentInfo?.minimumStudyFee}})
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <!--<div class="input-group mb-3">-->
           <input
             type="text"
-            class="form-control"
+            class="form-control text-right"
             id="studyFeeAmountInput"
             name="studyFeeAmountInput"
-            [value]="tpPaymentInfo.studyFeeAmountInput"
+            [value]="tpPaymentInfo?.studyFeeAmount | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="studyFeeAmountInput"
             required="required" >
-        </div>
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+      <label for="libraryFeeForStudent" class="col-form-label font-weight-bold">Access to Unisa campuses:</label>
+      <small class="form-text text-muted">(As requested by you at registration)</small>
+      </div>
+      <div class="col-sm-4">
+        <!--<div class="form-check form-check-inline">-->
+          <input
+            type="text"
+            class="form-control text-right"
+            readonly
+            id="libraryFeeForStudent"
+            name="libraryFeeForStudent"
+            [value]="tpPaymentInfo?.libraryFeeForStudent | currency:'ZAR':'symbol-narrow':'1.2-2'"
+            required="required" >
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="matricFeeForStudent" class="col-form-label font-weight-bold">Matriculation board fee:</label>
+        <small class="form-text text-muted">(Issuing of complete or conditional exemption certificates by the Matriculation Board)</small>
+      </div>
+      <div class="col-sm-4">
+        <!--<div class="form-check form-check-inline">-->
+          <input
+            type="text"
+            class="form-control text-right"
+            readonly
+            id="matricFeeForStudent"
+            name="matricFeeForStudent"
+            [value]="tpPaymentInfo?.matricFeeForStudent | currency:'ZAR':'symbol-narrow':'1.2-2'"
+            required="required" >
+        <!--</div>-->
       </div>
     </div>
 
@@ -237,9 +273,10 @@
           </div>
           <input
             type="text"
-            class="form-control"
+            class="form-control text-right"
             id="ccTotalAmountInput"
             name="ccTotalAmountInput"
+            [value]="tpPaymentInfo?.creditCardTotalAmountInput | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="ccTotalAmountInput"
             required="required">
         </div>

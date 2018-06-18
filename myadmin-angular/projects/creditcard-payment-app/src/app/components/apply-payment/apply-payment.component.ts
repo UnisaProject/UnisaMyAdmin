@@ -56,19 +56,19 @@ export class ApplyPaymentComponent implements OnInit {
 
   back(){
     this.applyForm.reset();
-    this.creditCardFormService.applicationPaymentInfo.cardInfo = null;
+   // this.creditCardFormService.applicationPaymentInfo.cardInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   close(){
     this.applyForm.reset();
-    this.creditCardFormService.applicationPaymentInfo = null;
+   // this.creditCardFormService.applicationPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   cancel(){
     this.applyForm.reset();
-    this.creditCardFormService.applicationPaymentInfo = null;
+    //this.creditCardFormService.applicationPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 

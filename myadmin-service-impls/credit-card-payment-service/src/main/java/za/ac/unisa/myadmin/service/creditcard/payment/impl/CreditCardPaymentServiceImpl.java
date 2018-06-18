@@ -12,6 +12,7 @@ import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentService;
 import za.ac.unisa.myadmin.creditcard.payment.NonTpPaymentInfo;
+import za.ac.unisa.myadmin.creditcard.payment.QualPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.SummaryInfo;
 import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
 import za.ac.unisa.myadmin.service.creditcard.payment.dao.StudentRepository;
@@ -84,7 +85,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	}
 
 	@Override
-	public CreditCardPaymentInfo processQualInput(Integer studentNumber, String qualCode) throws OperationFailedException {
+	public QualPaymentInfo processQualInput(Integer studentNumber, String qualCode) throws OperationFailedException {
 
 		if (studentNumber == null) {
 			throw new OperationFailedException("Student Number required");
@@ -93,7 +94,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			throw new OperationFailedException("Qualification code required");
 		}
 		try {
-			CreditCardPaymentInfo response = new CreditCardPaymentInfo();
+			QualPaymentInfo response = new QualPaymentInfo();
 			Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = new Sfrrf03sMntOnlineCcPayments();
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
@@ -125,7 +126,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 				throw new OperationFailedException(errormsg);
 			}
 			// set response info
-			response = buildInitialInputResponse(ccPaymentsProxy);
+			response = buildQualInputUpdateResponse(ccPaymentsProxy);
 
 			//------------------------------------------------------------------------------
 			LOG.debug("CreditCardPayment: processQualInput(); " + response.toStringStudent());
@@ -206,18 +207,6 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 		try {
 			LOG.debug("CreditCardPayment: processNonTpPayment()");
 			SummaryInfo response = new SummaryInfo();
-
-			// validate input
-			String errMsg = null; // = //validateNonTpPaymentInfo(creditForm, mapping, request, response);
-			if (StringUtils.hasText(errMsg)) {
-				throw new OperationFailedException(errMsg);
-//				messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.coolgenerror", errMsg));
-//				addErrors(request, messages);
-//				request.setAttribute("cnumber", creditForm.getCardNumber());
-//				request.setAttribute("cvvnumber", creditForm.getCvvNo());
-//				return nonTpPaymentInput(mapping, form, request, response);
-			}
-
 			// Process payment
 			final Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = getPaymentProxyInstance();
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
@@ -302,28 +291,8 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			SummaryInfo response = new SummaryInfo();
 			//
 			// student indicated that he/she wants to cancel the library fee
-			if (!paymentInfo.isCancelSmartCard() && paymentInfo.isCanSmartCardCancel()) {
-				paymentInfo.setCancelSmartCard(false);
-				// reset to original amount
-				//paymentInfo.setLibraryFeeForStudent(paymentInfo.getLibraryFeeAmount());
-				// update database field
+			if(paymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
 				this.updateSmartCardValue("W", Integer.valueOf(paymentInfo.getStudentInfo().getStudentNumber()));
-			} else if (paymentInfo.isCancelSmartCard() && paymentInfo.isCanSmartCardCancel()) {
-				paymentInfo.setCancelSmartCard(true);
-				// update database field
-				this.updateSmartCardValue("N", Integer.valueOf(paymentInfo.getStudentInfo().getStudentNumber()));
-			}
-			//------------------
-			// validate input
-			//------------------
-			String errMsg = null; //validateTpPaymentInfo(paymentInfo, mapping, request, response);
-			if (StringUtils.hasText(errMsg)) {
-				throw new OperationFailedException(errMsg);
-				//messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.coolgenerror", errMsg));
-				//addErrors(request, messages);
-				//request.setAttribute("cnumber", creditForm.getCardNumber());
-				//request.setAttribute("cvvnumber", creditForm.getCvvNo());
-				//return nonTpPaymentInput(mapping, form, request, response);
 			}
 			// Process payment
 			final Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = getPaymentProxyInstance();
@@ -388,7 +357,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			//--------------------------------------------------------------------------------
 			LOG.debug("CreditCardPayment: processTpPayment() result for stud: " + paymentInfo.getStudentInfo().getStudentNumber() + "; " + response.getSummaryMessage());
 			//--------------------------------------------------------------------------------
-			
+
 			return response;
 		} catch (PropertyVetoException e) {
 			throw new OperationFailedException(e);
@@ -425,6 +394,35 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			// clear form vars
 			//reset(creditForm);
 		}
+		return response;
+	}
+
+	private QualPaymentInfo buildQualInputUpdateResponse(Sfrrf03sMntOnlineCcPayments ccPaymentsProxy) {
+		final QualPaymentInfo response = new QualPaymentInfo();
+		// set student info
+		response.getStudentInfo().setStudentNumber(String.valueOf(ccPaymentsProxy.getOutWsStudentNr()));
+		response.getStudentInfo().setStudentName(ccPaymentsProxy.getOutNameCsfStringsString40().trim());
+		response.getStudentInfo().setEmailAddress(ccPaymentsProxy.getOutWsAddressV2EmailAddress().trim());
+		response.getQualificationInfo().setQualCode(ccPaymentsProxy.getOutWsQualificationCode());
+		response.getQualificationInfo().setQualDesc(ccPaymentsProxy.getOutWsQualificationEngDescription().trim());
+		// set fees
+		response.setBalance(new BigDecimal(ccPaymentsProxy.getOutDueStudentAccountBalance()));
+		if (response.getBalance().compareTo(BigDecimal.ZERO) != 0) {
+			response.setCreditDebitIndicator(ccPaymentsProxy.getOutDtCrIndCsfStringsString6());
+			// replace minus sign
+			response.setBalance(response.getBalance().abs());
+		}
+		response.setLibraryFineBalance(new BigDecimal(ccPaymentsProxy.getOutLdDueStudentAccountBalance()));
+		if (response.getLibraryFineBalance().compareTo(BigDecimal.ZERO) != 0) {
+			response.setLibCreditDebitIndicator(ccPaymentsProxy.getOutLdDtCrIndCsfStringsString6());
+			// replace minus sign
+			response.setLibraryFineBalance(response.getLibraryFineBalance().abs());
+		}
+		//
+		response.setFullAccount(new BigDecimal(ccPaymentsProxy.getOutDueImmediatelyIefSuppliedAverageCurrency()));
+		response.setDueImmediately(new BigDecimal(ccPaymentsProxy.getOutDueStudentAccountDueImmediately()));
+		response.setMinimumStudyFee(new BigDecimal(ccPaymentsProxy.getOutStudyDueIefSuppliedAverageCurrency()));
+		response.setMinimumForReg(new BigDecimal(ccPaymentsProxy.getOutTempSfCalculatedStudyFeesMinimum()));
 		return response;
 	}
 
@@ -477,14 +475,20 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 		// non-tp: if smartcard balance > 0, don't show
 		if (ccPaymentsProxy.getOutWsSmartCardDataBalance() > 0) {
 			response.setCanChooseLibraryCard(false);
+		} else {
+			response.setCanChooseLibraryCard(true);
 		}
 		// non-tp: if mr balance > min mr fee, don't show
 		if (ccPaymentsProxy.getOutMrStudentAccountBalance() > 0 && ccPaymentsProxy.getOutMrStudentAccountBalance() >= ccPaymentsProxy.getOutMrDueIefSuppliedAverageCurrency()) {
 			response.setCanChooseMatric(false);
+		} else {
+			response.setCanChooseMatric(true);
 		}
 		// non-tp: if 3G DataBundle balance > min 3G DataBundle fee, dont show
 		if (ccPaymentsProxy.getOut3gBundleDocumentTotalAmount() == 0) {
 			response.setCanChooseThreeGDataBundle(false);
+		} else {
+			response.setCanChooseThreeGDataBundle(true);
 		}
 		//student number application fee jul 2010
 		response.setApplyAmount(new BigDecimal(ccPaymentsProxy.getOutSmartcardAndApplCostWsAcademicYearApplicationCost()));

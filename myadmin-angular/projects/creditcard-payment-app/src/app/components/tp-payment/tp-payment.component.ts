@@ -39,6 +39,7 @@ export class TpPaymentComponent implements OnInit {
 
       libraryFineFeeAmountInput : [0, Validators.required],
       payMatricFirstAppFee : [false, Validators.required],
+      cancelSmartCard : [false, Validators.required],
       studyFeeAmountInput : [0, Validators.required],
       ccTotalAmountInput : [0, Validators.required]
     });
@@ -59,21 +60,21 @@ export class TpPaymentComponent implements OnInit {
   back(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
-    this.creditCardFormService.tpPaymentInfo.creditCardInfo = null;
+    //this.creditCardFormService.tpPaymentInfo.creditCardInfo = null;
     this.router.navigateByUrl("/qualInput")
   }
 
   close(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    this.creditCardFormService.tpPaymentInfo = null;
+    //this.creditCardFormService.tpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 
   cancel(){
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    this.creditCardFormService.tpPaymentInfo = null;
+    //this.creditCardFormService.tpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput")
   }
 

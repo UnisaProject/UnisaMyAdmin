@@ -47,10 +47,10 @@ export class NonTpPaymentInfo {
     this.creditCardInfo = options.creditCardInfo;
     this.regStatus = options.regStatus;
     this.regStatusDescription = options.regStatusDescription;
-    this.balance = options.balance;
-    this.creditDebitIndicator = options.creditDebitIndicator;
-    this.libraryFineBalance = options.librayFineBalance;
-    this.libCreditDebitIndicator = options.libCreditDebitIndicator;
+    this.balance = options.balance || 0;
+    this.creditDebitIndicator = options.creditDebitIndicator || '';
+    this.libraryFineBalance = options.libraryFineBalance || 0;
+    this.libCreditDebitIndicator = options.libCreditDebitIndicator || '';
     this.canChooseLibraryCard = options.canChooseLibraryCard;
     this.payLibraryFee = false;
     this.libraryFee = options.libraryFee;

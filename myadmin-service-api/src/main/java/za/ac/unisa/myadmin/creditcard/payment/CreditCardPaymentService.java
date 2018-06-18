@@ -20,7 +20,7 @@ public interface CreditCardPaymentService {
 	 * @return
 	 * @throws OperationFailedException
 	 */
-	CreditCardPaymentInfo processQualInput(Integer studentNumber, String qualCode) throws OperationFailedException;
+	QualPaymentInfo processQualInput(Integer studentNumber, String qualCode) throws OperationFailedException;
 
 	/**
 	 * @param paymentInfo

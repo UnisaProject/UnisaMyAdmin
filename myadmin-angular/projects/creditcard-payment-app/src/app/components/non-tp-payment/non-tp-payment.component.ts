@@ -35,11 +35,12 @@ export class NonTpPaymentComponent implements OnInit {
     this.nonTpForm = this.formBuilder.group({
       libraryFineFeeAmountInput : [0, Validators.required],
       payMatricFirstAppFee : [false, Validators.required],
+      payLibraryFee : [false, Validators.required],
+      payThreeGDataBundleFee : [false, Validators.required],
       studyFeeAmountInput : [0, Validators.required],
       ccTotalAmountInput : [0, Validators.required]
     });
   }
-
 
   ngOnInit() {
     this.blockUI.stop();
@@ -55,21 +56,21 @@ export class NonTpPaymentComponent implements OnInit {
   back(){
     this.nonTpForm.reset();
     this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
-    this.creditCardFormService.nonTpPaymentInfo.creditCardInfo = null;
+    //this.creditCardFormService.nonTpPaymentInfo.creditCardInfo = null;
     this.router.navigateByUrl("/qualInput");
   }
 
   close(){
     this.nonTpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    this.creditCardFormService.nonTpPaymentInfo = null;
+    //this.creditCardFormService.nonTpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput");
   }
 
   cancel(){
     this.nonTpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    this.creditCardFormService.nonTpPaymentInfo = null;
+    //this.creditCardFormService.nonTpPaymentInfo = null;
     this.router.navigateByUrl("/studentInput");
   }
 

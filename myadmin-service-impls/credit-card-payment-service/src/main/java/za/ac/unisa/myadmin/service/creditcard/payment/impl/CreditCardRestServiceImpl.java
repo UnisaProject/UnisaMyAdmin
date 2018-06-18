@@ -2,6 +2,8 @@ package za.ac.unisa.myadmin.service.creditcard.payment.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardPaymentService;
 import za.ac.unisa.myadmin.creditcard.payment.NonTpPaymentInfo;
+import za.ac.unisa.myadmin.creditcard.payment.QualPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.SummaryInfo;
 import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.ApplicationPaymentInfoValidator;
@@ -24,6 +27,8 @@ import za.ac.unisa.myadmin.service.creditcard.payment.validator.CardStudentInfoV
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.CreditCardInfoValidator;
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.NonTpPaymentInfoValidator;
 import za.ac.unisa.myadmin.service.creditcard.payment.validator.TpPaymentInfoValidator;
+
+import javax.ws.rs.core.MediaType;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -57,13 +62,14 @@ public class CreditCardRestServiceImpl {
 	}
 
 	@GetMapping(path = {"/creditcardpayment/qualinput"}, produces = APPLICATION_JSON_VALUE)
-	public CreditCardPaymentInfo processQualInput(@RequestParam(value = "studentNumber") Integer studentNumber, @RequestParam(value = "qualCode") String qualCode) throws OperationFailedException {
+	public QualPaymentInfo processQualInput(@RequestParam(value = "studentNumber") Integer studentNumber, @RequestParam(value = "qualCode") String qualCode) throws OperationFailedException {
 		return creditCardPaymentService.processQualInput(studentNumber, qualCode);
 	}
 
-	@GetMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
+	@GetMapping(path = {"/creditcardpayment/smartCardValue"}, produces = MediaType.TEXT_PLAIN)
 	public String getSmartCardValue(@RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
-		return creditCardPaymentService.getSmartCardValue(studentNumber);
+		return new String("W");
+		//return creditCardPaymentService.getSmartCardValue(studentNumber);
 	}
 
 	@PutMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)

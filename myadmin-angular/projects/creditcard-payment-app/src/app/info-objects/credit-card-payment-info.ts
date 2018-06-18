@@ -7,7 +7,7 @@ export interface CreditCardPaymentInfo {
   regStatusDescription?:string;
   balance?:number;
   creditDebitIndicator?:string;
-  librayFineBalance?:number;
+  libraryFineBalance?:number;
   libCreditDebitIndicator?:string;
 
   // set NON-TP matric +lib fees
@@ -31,7 +31,7 @@ export interface CreditCardPaymentInfo {
   canChooseThreeGDataBundle?:boolean;
   applyAmount?:number;
 
-  canCancelSmartCard:boolean;
+  //canCancelSmartCard:boolean;
 
   studentInfo?:CreditCardStudentInfo;
   qualificationInfo?: QualificationInfo;

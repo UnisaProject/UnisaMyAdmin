@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
-import {CreditCardPaymentForm} from "../../info-objects";
+import {CreditCardPaymentForm, QualPaymentInfo} from "../../info-objects";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {CreditCardPaymentService} from "../../services/credit-card-payment.service";
 
@@ -13,22 +13,22 @@ import {CreditCardPaymentService} from "../../services/credit-card-payment.servi
 })
 export class QualInputComponent implements OnInit {
 
-  creditCardPaymentForm: CreditCardPaymentForm;
-  qualInputForm: FormGroup;
+  creditCardPaymentForm:CreditCardPaymentForm;
+  qualInputForm:FormGroup;
 
   /**
    * Reference to blockUI
    */
   @BlockUI()
-  private blockUI: NgBlockUI;
+  private blockUI:NgBlockUI;
 
   constructor(private router:Router,
-              private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService,
-              private creditCardPaymentService: CreditCardPaymentService) {
+              private formBuilder:FormBuilder,
+              private creditCardFormService:CreditCardFormService,
+              private creditCardPaymentService:CreditCardPaymentService) {
 
     this.qualInputForm = this.formBuilder.group({
-      qualCode : [
+      qualCode: [
         null,
         Validators.compose([
           Validators.required,
@@ -40,42 +40,50 @@ export class QualInputComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit():void {
     this.blockUI.stop();
     this.creditCardPaymentForm = this.creditCardFormService.creditCardPaymentForm;
-    if(this.creditCardPaymentForm === null || this.creditCardPaymentForm.studentInfo == null || this.creditCardPaymentForm.studentInfo.studentNumber === null){
+    if (this.creditCardPaymentForm === null || this.creditCardPaymentForm.studentInfo == null || this.creditCardPaymentForm.studentInfo.studentNumber === null) {
       this.router.navigateByUrl("/studentInput")
     }
     else {
       this.qualInputForm.patchValue({
-        qualCode : this.creditCardPaymentForm.qualificationInfo.qualCode
+        qualCode: this.creditCardPaymentForm.qualificationInfo.qualCode
       });
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     this.blockUI.start("Loading account...");
     this.creditCardFormService.creditCardPaymentForm.qualificationInfo.qualCode = this.qualInputForm.value.qualCode;
+    this.creditCardPaymentService.processQualInput(this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber, this.creditCardFormService.creditCardPaymentForm.qualificationInfo.qualCode).subscribe((qualPaymentInfo:QualPaymentInfo)=> {
+      // Copy the data to the service
+      //this.creditCardFormService.creditCardPaymentForm = {...qualPaymentInfo};
+      this.creditCardFormService.creditCardPaymentForm = Object.assign(
+        this.creditCardFormService.creditCardPaymentForm, qualPaymentInfo);
+      if (this.creditCardFormService.creditCardPaymentForm.regStatus === "TN") {
+       // this.creditCardPaymentService.getSmartCardValue(this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber).subscribe((smartCardValue)=> {
+       //   this.creditCardFormService.creditCardPaymentForm.canCancelSmartCard = (smartCardValue === "W");
+          this.router.navigateByUrl('/tpPayment');
+       // }, (error) => {
+      //    this.blockUI.stop();
+      //  });
+      }
+      else {
+        this.router.navigateByUrl('/nonTpPayment');
+      }
+    }, (error)=> {
+      this.blockUI.stop();
+    });
 
-    if(this.creditCardFormService.creditCardPaymentForm.regStatus === "TN"){
-      this.creditCardPaymentService.getSmartCardValue(this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber).subscribe((smartCardValue)=>{
-        this.creditCardFormService.creditCardPaymentForm.canCancelSmartCard = (smartCardValue === "W");
-        this.router.navigateByUrl('/tpPayment');
-      }, (error) =>{
-        this.blockUI.stop();
-      });
-    }
-    else{
-      this.router.navigateByUrl('/nonTpPayment');
-    }
   }
 
-  back(){
+  back() {
     this.creditCardFormService.creditCardPaymentForm = null;
     this.router.navigateByUrl('/studentInput');
   }
 
-  cancel(){
+  cancel() {
     this.creditCardFormService.creditCardPaymentForm = null;
     this.router.navigateByUrl('/studentInput');
   }

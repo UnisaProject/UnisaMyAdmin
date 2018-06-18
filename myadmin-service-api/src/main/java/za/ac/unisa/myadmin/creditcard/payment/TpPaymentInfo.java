@@ -40,8 +40,8 @@ public class TpPaymentInfo implements Serializable {
 
 	private BigDecimal libraryFeeForStudent;
 	// field to indicate whether a TP student can cancel his smartcard request
-	private boolean canSmartCardCancel = false;
-	private boolean cancelSmartCard = false;
+	//private boolean canSmartCardCancel = false;
+	//private boolean cancelSmartCard = false;
 
 	private BigDecimal matricFeeForStudent;
 
@@ -243,21 +243,21 @@ public class TpPaymentInfo implements Serializable {
 		this.creditCardInfo = creditCardInfo;
 	}
 
-	public boolean isCanSmartCardCancel() {
-		return canSmartCardCancel;
-	}
-
-	public void setCanSmartCardCancel(boolean canSmartCardCancel) {
-		this.canSmartCardCancel = canSmartCardCancel;
-	}
-
-	public boolean isCancelSmartCard() {
-		return cancelSmartCard;
-	}
-
-	public void setCancelSmartCard(boolean cancelSmartCard) {
-		this.cancelSmartCard = cancelSmartCard;
-	}
+//	public boolean isCanSmartCardCancel() {
+//		return canSmartCardCancel;
+//	}
+//
+//	public void setCanSmartCardCancel(boolean canSmartCardCancel) {
+//		this.canSmartCardCancel = canSmartCardCancel;
+//	}
+//
+//	public boolean isCancelSmartCard() {
+//		return cancelSmartCard;
+//	}
+//
+//	public void setCancelSmartCard(boolean cancelSmartCard) {
+//		this.cancelSmartCard = cancelSmartCard;
+//	}
 
 //	public boolean isThreeGDataBundleChoice() {
 //		return threeGDataBundleChoice;

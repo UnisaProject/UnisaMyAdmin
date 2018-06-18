@@ -6,6 +6,7 @@ import {ApplicationPaymentInfo} from "../info-objects/application-payment-info";
 import {SummaryInfo} from "../info-objects/summary-info";
 import {TpPaymentInfo} from "../info-objects/tp-payment-info";
 import {NonTpPaymentInfo} from "../info-objects/non-tp-payment-info";
+import {QualPaymentInfo} from "../info-objects/qual-payment-info";
 
 @Injectable()
 export class CreditCardPaymentService {
@@ -22,8 +23,8 @@ export class CreditCardPaymentService {
     });
   }
 
-  processQualInput(studentNumber:string, qualCode:string): Observable<CreditCardPaymentInfo> {
-    return this.http.get<CreditCardPaymentInfo>('/myadmin-student-services/rest/creditcardpayment/qualinput',{
+  processQualInput(studentNumber:string, qualCode:string): Observable<QualPaymentInfo> {
+    return this.http.get<QualPaymentInfo>('/myadmin-student-services/rest/creditcardpayment/qualinput',{
       params : {
         studentNumber: studentNumber,
         qualCode : qualCode
