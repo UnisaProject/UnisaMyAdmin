@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardFormService} from "../../services/creditcard-form.service";
 import {Router} from "@angular/router";
@@ -13,85 +13,88 @@ import {CreditCardPaymentService} from "../../services/credit-card-payment.servi
 })
 export class NonTpPaymentComponent implements OnInit {
 
-  nonTpForm: FormGroup;
+  nonTpForm:FormGroup;
   //creditCardPaymentForm: CreditCardPaymentForm;
-  nonTpPaymentInfo: NonTpPaymentInfo;
+  nonTpPaymentInfo:NonTpPaymentInfo;
 
 
   /**
    * Reference to blockUI
    */
   @BlockUI()
-  private blockUI: NgBlockUI;
+  private blockUI:NgBlockUI;
 
   constructor(private router:Router,
-              private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService,
-              private creditCardPaymentService: CreditCardPaymentService) {
+              private formBuilder:FormBuilder,
+              private creditCardFormService:CreditCardFormService,
+              private creditCardPaymentService:CreditCardPaymentService) {
     this.initForm();
   }
 
-  private initForm(){
+  private initForm() {
     this.nonTpForm = this.formBuilder.group({
-      libraryFineFeeAmountInput : [0, Validators.required],
-      payMatricFirstAppFee : [false, Validators.required],
-      payLibraryFee : [false, Validators.required],
-      payThreeGDataBundleFee : [false, Validators.required],
-      studyFeeAmountInput : [0, Validators.required],
-      ccTotalAmountInput : [0, Validators.required]
+      email: [null, Validators.email],
+      libraryFineFeeAmountInput: [0, Validators.required],
+      payMatricFirstAppFee: [false, Validators.required],
+      payLibraryFee: [false, Validators.required],
+      payThreeGDataBundleFee: [false, Validators.required],
+      studyFeeAmountInput: [0, Validators.required],
+      ccTotalAmountInput: [0, Validators.required]
     });
   }
 
   ngOnInit() {
     this.blockUI.stop();
-    this.nonTpPaymentInfo = new NonTpPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
-    if(this.nonTpPaymentInfo === null ||  this.nonTpPaymentInfo.studentInfo === null || this.nonTpPaymentInfo.studentInfo.studentNumber === null){
+    if (this.creditCardFormService.creditCardPaymentForm === null || this.creditCardFormService.creditCardPaymentForm.studentInfo === null || this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber === null) {
       this.router.navigateByUrl("/studentInput")
-    }
-    else {
+    } else {
+      this.nonTpPaymentInfo = new NonTpPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
       this.nonTpForm.patchValue({...this.nonTpPaymentInfo});
     }
   }
 
-  back(){
+  back() {
     this.nonTpForm.reset();
     this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
-    //this.creditCardFormService.nonTpPaymentInfo.creditCardInfo = null;
     this.router.navigateByUrl("/qualInput");
   }
 
-  close(){
+  close() {
     this.nonTpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    //this.creditCardFormService.nonTpPaymentInfo = null;
+    //TODO if student must return to sakai portal finance tool
+    //TODO else unisa website
+    this.router.navigateByUrl("/externalRedirect");
+    //this.router.navigateByUrl("/studentInput");
+  }
+
+  cancel() {
+    this.nonTpForm.reset();
+    this.creditCardFormService.creditCardPaymentForm = null;
+    //TODO if student must return to sakai portal finance tool
+    //TODO else below
     this.router.navigateByUrl("/studentInput");
   }
 
-  cancel(){
-    this.nonTpForm.reset();
-    this.creditCardFormService.creditCardPaymentForm = null;
-    //this.creditCardFormService.nonTpPaymentInfo = null;
-    this.router.navigateByUrl("/studentInput");
-  }
-
-  payNow(){
+  payNow() {
     this.blockUI.start("Processing transaction...");
+    //Map Form Model to Data Model
     const formValue = this.nonTpForm.value;
-    //this.applicationPaymentInfo.studentInfo.emailAddress = formValue.email;
-    this.nonTpPaymentInfo.creditCardInfo = formValue.creditCardInfo;
+    this.nonTpPaymentInfo.studentInfo.emailAddress = formValue.email;
 
-    // const applicationPaymentInfo: ApplicationPaymentInfo = {
-    //   cardInfo : {...formValue.creditCardInfo},
-    //   applyAmountInput : formValue.applyAmount,
-    //   creditCardTotalAmountInput : formValue.ccTotalAmountInput,
-    //   studentInfo : this.creditCardPaymentForm.studentInfo
-    // };
+    this.nonTpPaymentInfo.payLibraryFee = formValue.payLibraryFee;
+    this.nonTpPaymentInfo.payMatricFirstAppFee = formValue.payMatricFirstAppFee;
+    this.nonTpPaymentInfo.payThreeGDataBundleFee = formValue.payThreeGDataBundleFee;
+    this.nonTpPaymentInfo.libraryFineFee = formValue.libraryFineFeeAmountInput;
+    this.nonTpPaymentInfo.studyFeeAmount = formValue.studyFeeAmountInput;
+    this.nonTpPaymentInfo.creditCardInfo = {...formValue.creditCardInfo};
+    this.nonTpPaymentInfo.creditCardTotalAmountInput = formValue.ccTotalAmountInput;
 
-    this.creditCardPaymentService.processNonTpPayment(this.nonTpPaymentInfo).subscribe((summaryInfo)=>{
-      this.blockUI.stop();
-    }, (error)=>{
+    this.creditCardPaymentService.processNonTpPayment(this.nonTpPaymentInfo).subscribe((summaryInfo)=> {
+      this.creditCardFormService.summaryInfo = {...summaryInfo};
+      this.router.navigateByUrl('/summary');
+    }, (error)=> {
       this.blockUI.stop();
     });
   }
-
 }

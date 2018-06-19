@@ -7,3 +7,4 @@ export * from './non-tp-payment-info';
 export * from './tp-payment-info';
 export * from './application-payment-info';
 export * from './qual-payment-info';
+export * from './summary-info';

@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import za.ac.unisa.myadmin.creditcard.payment.CardStudentInfo;
+import za.ac.unisa.myadmin.service.rest.impl.utils.RestImplUtils;
 
 import java.util.regex.Pattern;
 
@@ -27,9 +28,15 @@ public class CardStudentInfoValidator implements Validator {
 	public void validate(@Nullable Object o, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentNumber", "studentNumber.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "emailAddress.empty");
+		if(errors.hasErrors()){
+			return;
+		}
 		CardStudentInfo studentInfo = (CardStudentInfo) o;
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		//studentNumber
+		if (!ValidatorUtil.isNumeric(studentInfo.getStudentNumber())) {
+			errors.rejectValue("studentNumber", "studentNumber.numeric");
+		}
 		if (String.valueOf(studentInfo.getStudentNumber()).length() < 7) {
 			errors.rejectValue("studentNumber", "studentNumber.length.less.than");
 		}

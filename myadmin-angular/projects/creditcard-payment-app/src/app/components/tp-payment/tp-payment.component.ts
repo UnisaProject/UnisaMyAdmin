@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {TpPaymentInfo} from "../../info-objects";
@@ -13,87 +13,96 @@ import {CreditCardPaymentService} from "../../services/credit-card-payment.servi
 })
 export class TpPaymentComponent implements OnInit {
 
-  tpForm: FormGroup;
+  tpForm:FormGroup;
   //creditCardPaymentForm: CreditCardPaymentForm;
-  tpPaymentInfo: TpPaymentInfo;
+  tpPaymentInfo:TpPaymentInfo;
 
 
   /**
    * Reference to blockUI
    */
   @BlockUI()
-  private blockUI: NgBlockUI;
+  private blockUI:NgBlockUI;
 
   constructor(private router:Router,
-              private formBuilder: FormBuilder,
-              private creditCardFormService: CreditCardFormService,
-              private creditCardPaymentService: CreditCardPaymentService) {
+              private formBuilder:FormBuilder,
+              private creditCardFormService:CreditCardFormService,
+              private creditCardPaymentService:CreditCardPaymentService) {
     this.initForm();
   }
 
-  private initForm(){
+  private initForm() {
     this.tpForm = this.formBuilder.group({
-      dueImmediately : [0, Validators.required],
-      minimumForReg : [0, Validators.required],
-      fullAccount : [0, Validators.required],
+      email: [null, Validators.email],
+      libraryFineFee: [0, Validators.required],
+      dueImmediately: [0, Validators.required],
+      minimumForReg: [0, Validators.required],
+      fullAccount: [0, Validators.required],
 
-      libraryFineFeeAmountInput : [0, Validators.required],
-      payMatricFirstAppFee : [false, Validators.required],
-      cancelSmartCard : [false, Validators.required],
-      studyFeeAmountInput : [0, Validators.required],
-      ccTotalAmountInput : [0, Validators.required]
+      libraryFineFeeAmountInput: [0, Validators.required],
+      studyFeeAmountInput: [0, Validators.required],
+      libraryFeeForStudent: [0, Validators.required],
+      matricFeeForStudent: [0, Validators.required],
+      ccTotalAmountInput: [0, Validators.required]
     });
   }
 
 
   ngOnInit() {
     this.blockUI.stop();
-    this.tpPaymentInfo = new TpPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
-    if(this.tpPaymentInfo === null ||  this.tpPaymentInfo.studentInfo === null || this.tpPaymentInfo.studentInfo.studentNumber === null){
+    if (this.creditCardFormService.creditCardPaymentForm === null || this.creditCardFormService.creditCardPaymentForm.studentInfo === null || this.creditCardFormService.creditCardPaymentForm.studentInfo.studentNumber === null) {
       this.router.navigateByUrl("/studentInput")
-    }
-    else {
+    } else {
+      this.tpPaymentInfo = new TpPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
       this.tpForm.patchValue({...this.tpPaymentInfo});
     }
   }
 
-  back(){
+  back() {
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm.creditCardInfo = null;
-    //this.creditCardFormService.tpPaymentInfo.creditCardInfo = null;
     this.router.navigateByUrl("/qualInput")
   }
 
-  close(){
+  close() {
     this.tpForm.reset();
     this.creditCardFormService.creditCardPaymentForm = null;
-    //this.creditCardFormService.tpPaymentInfo = null;
+    //TODO if student must return to sakai portal finance tool
+    //TODO else unisa website
+    this.router.navigateByUrl("/externalRedirect");
+    //this.router.navigateByUrl("/studentInput")
+  }
+
+  cancel() {
+    this.tpForm.reset();
+    this.creditCardFormService.creditCardPaymentForm = null;
+    //TODO if student must return to sakai portal finance tool
+    //TODO else below
     this.router.navigateByUrl("/studentInput")
   }
 
-  cancel(){
-    this.tpForm.reset();
-    this.creditCardFormService.creditCardPaymentForm = null;
-    //this.creditCardFormService.tpPaymentInfo = null;
-    this.router.navigateByUrl("/studentInput")
-  }
-
-  payNow(){
+  payNow() {
     this.blockUI.start("Processing transaction...");
     const formValue = this.tpForm.value;
-    //this.applicationPaymentInfo.studentInfo.emailAddress = formValue.email;
+    //Map Form Model to Data Model
+    this.tpPaymentInfo.studentInfo.emailAddress = formValue.email;
+    this.tpPaymentInfo.dueImmediately = formValue.dueImmediately;
+    this.tpPaymentInfo.minimumForReg = formValue.minimumForReg;
+    this.tpPaymentInfo.fullAccount = formValue.fullAccount;
+
+    this.tpPaymentInfo.libraryFineFeeForStudent
+    formValue.libraryFineFeeAmountInput;
+    this.tpPaymentInfo.studyFeeAmount = formValue.studyFeeAmountInput;
+    this.tpPaymentInfo.libraryFeeForStudent = formValue.libraryFeeForStudent;
+    this.tpPaymentInfo.matricFeeForStudent = formValue.matricFeeForStudent;
+
     this.tpPaymentInfo.creditCardInfo = formValue.creditCardInfo;
+    this.tpPaymentInfo.creditCardTotalAmountInput = formValue.ccTotalAmountInput;
 
-    // const applicationPaymentInfo: ApplicationPaymentInfo = {
-    //   cardInfo : {...formValue.creditCardInfo},
-    //   applyAmountInput : formValue.applyAmount,
-    //   creditCardTotalAmountInput : formValue.ccTotalAmountInput,
-    //   studentInfo : this.creditCardPaymentForm.studentInfo
-    // };
-
-    this.creditCardPaymentService.processTpPayment(this.tpPaymentInfo).subscribe((summaryInfo)=>{
-      this.blockUI.stop();
-    }, (error)=>{
+    this.creditCardPaymentService.processTpPayment(this.tpPaymentInfo).subscribe((summaryInfo)=> {
+      this.creditCardFormService.summaryInfo = {...summaryInfo};
+      this.router.navigateByUrl('/summary');
+    }, (error)=> {
       this.blockUI.stop();
     });
   }

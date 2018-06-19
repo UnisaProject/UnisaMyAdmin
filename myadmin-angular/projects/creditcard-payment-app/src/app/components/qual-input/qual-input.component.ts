@@ -80,11 +80,14 @@ export class QualInputComponent implements OnInit {
 
   back() {
     this.creditCardFormService.creditCardPaymentForm = null;
+    //TODO if user not student allow back
     this.router.navigateByUrl('/studentInput');
   }
 
   cancel() {
     this.creditCardFormService.creditCardPaymentForm = null;
+    //TODO if user student must return to sakai portal finance tool
+    //TODO else below
     this.router.navigateByUrl('/studentInput');
   }
 }

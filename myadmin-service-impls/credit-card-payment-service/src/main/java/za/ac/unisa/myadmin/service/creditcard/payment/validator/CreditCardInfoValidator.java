@@ -22,12 +22,21 @@ public class CreditCardInfoValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cardNumber", "cardNumber.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cardHolder", "cardHolder.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cvvNo", "cvvNo.empty");
+		if(errors.hasErrors()){
+			return;
+		}
 		CreditCardInfo creditCardInfo = (CreditCardInfo) obj;
 		//creditCardNumber
+		if(!ValidatorUtil.isNumeric(creditCardInfo.getCardNumber())){
+			errors.rejectValue("cardNumber","cardNumber.numeric");
+		}
 		if (creditCardInfo.getCardNumber().length() != 16) {
 			errors.rejectValue("cardNumber", "cardNumber.length");
 		}
 		//cvvNumber
+		if(!ValidatorUtil.isNumeric(creditCardInfo.getCvvNo())){
+			errors.rejectValue("cvvNo","cvvNo.numeric");
+		}
 		if (creditCardInfo.getCvvNo().length() != 3) {
 			errors.rejectValue("cvvNo", "cvvNo.length");
 		}

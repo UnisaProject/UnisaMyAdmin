@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -12,6 +13,8 @@ import za.ac.unisa.myadmin.creditcard.payment.CreditCardInfo;
 import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Created by Adrian on 2018-06-11.
@@ -63,23 +66,43 @@ public class TpPaymentInfoValidator implements Validator {
 		TpPaymentInfo tpPaymentInfo = (TpPaymentInfo) o;
 		//Total Amounts
 		BigDecimal totalAmount = BigDecimal.ZERO;
+
+		// Check totals
+		String errMessage = ValidatorUtil.validateAmount(String.valueOf(tpPaymentInfo.getStudyFeeAmount()), false);
+		if (StringUtils.hasText(errMessage)) {
+			errors.rejectValue("studyFeeAmount", "tpPaymentInfo.studyFeeAmount.amount", new String[]{errMessage}, null);
+			return;
+		}
+		errMessage = ValidatorUtil.validateAmount(String.valueOf(tpPaymentInfo.getLibraryFineFeeForStudent()), false);
+		if (StringUtils.hasText(errMessage)) {
+			errors.rejectValue("libraryFineFeeForStudent", "tpPaymentInfo.libraryFineFeeForStudent.amount", new String[]{errMessage}, null);
+			return;
+		}
 		//Study fee amount larger than minimum required for registration
 		if (tpPaymentInfo.getMinimumStudyFee().compareTo(BigDecimal.ZERO) > 0) {
 			if (tpPaymentInfo.getStudyFeeAmount().compareTo(tpPaymentInfo.getMinimumStudyFee()) < 0) {
-				//NumberFormat formatter = new DecimalFormat("#0.00");
-				errors.rejectValue("studyFeeAmount", "tpPaymentInfo.studyFeeAmount.amount", new String[]{String.valueOf(tpPaymentInfo.getMinimumStudyFee())}, null);
-				//return "Study fee amount you wish to pay can not be less than R" +tpPaymentInfo.getMinimumStudyFee();
+				NumberFormat formatter = new DecimalFormat("#0.00");
+				errors.rejectValue("studyFeeAmount", "tpPaymentInfo.studyFeeAmount.amount.min", new String[]{String.valueOf(formatter.format(tpPaymentInfo.getMinimumStudyFee()))}, null);
+				return;
 			}
+		}
+		errMessage = ValidatorUtil.validateAmount(String.valueOf(tpPaymentInfo.getCreditCardTotalAmountInput()), true);
+		if (StringUtils.hasText(errMessage)) {
+			errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount.format", new String[]{errMessage}, null);
+			return;
+		}
+		if (errors.hasErrors()) {
+			return;
 		}
 		// Check that fee totals match up
-		if (!errors.hasErrors()) {
-			totalAmount = tpPaymentInfo.getLibraryFeeForStudent().add(tpPaymentInfo.getMatricFeeForStudent()).add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFeeForStudent());
-			//totalAmount = totalAmount.add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFee());
-
-			if (totalAmount.compareTo(tpPaymentInfo.getCreditCardTotalAmountInput()) != 0) {
-				errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount");
-			}
+		totalAmount = tpPaymentInfo.getLibraryFeeForStudent().add(tpPaymentInfo.getMatricFeeForStudent()).add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFeeForStudent());
+		//totalAmount = totalAmount.add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFee());
+		if (totalAmount.compareTo(tpPaymentInfo.getCreditCardTotalAmountInput()) != 0) {
+			String totalErrorMessage = validateSumOfTotals(tpPaymentInfo);
+			errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount",
+				new String[]{errMessage}, null);
 		}
+
 		try {
 			errors.pushNestedPath("creditCardInfo");
 			ValidationUtils.invokeValidator(this.creditCardInfoValidator, tpPaymentInfo.getCreditCardInfo(), errors);
@@ -89,5 +112,44 @@ public class TpPaymentInfoValidator implements Validator {
 		} finally {
 			errors.popNestedPath();
 		}
+	}
+
+	private String validateSumOfTotals(TpPaymentInfo tpPaymentInfo) {
+		if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access, matriculation board , study fees  and library fine.";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access, matriculation board and study fees.";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && +tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access, matriculation board   and library fine.";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0 && +tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access, study fees  and library fine.";
+		} else if (tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0 && +tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation board , study fees  and library fine.";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access  and study fees .";
+		} else if (tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation board   and study fees .";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access  and study fees .";
+		} else if (tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "library fine   and study fees .";
+		} else if (tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && +tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation  and library fine .";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access  and matriculation board  fees .";
+		} else if (tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation board and study fees .";
+		} else if (tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0 && tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation board and library access .";
+		} else if (tpPaymentInfo.getStudyFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+			return "study fees .";
+		} else if (tpPaymentInfo.getLibraryFineFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "Library fine .";
+		} else if (tpPaymentInfo.getMatricFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "matriculation board fee.";
+		} else if (tpPaymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+			return "library access .";
+		}
+		return "";
 	}
 }
