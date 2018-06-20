@@ -96,11 +96,12 @@ public class TpPaymentInfoValidator implements Validator {
 		}
 		// Check that fee totals match up
 		totalAmount = tpPaymentInfo.getLibraryFeeForStudent().add(tpPaymentInfo.getMatricFeeForStudent()).add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFeeForStudent());
-		//totalAmount = totalAmount.add(tpPaymentInfo.getStudyFeeAmount()).add(tpPaymentInfo.getLibraryFineFee());
+
 		if (totalAmount.compareTo(tpPaymentInfo.getCreditCardTotalAmountInput()) != 0) {
 			String totalErrorMessage = validateSumOfTotals(tpPaymentInfo);
-			errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount",
-				new String[]{errMessage}, null);
+			errors.rejectValue("creditCardTotalAmountInput", null, null,"Total amount being paid doesn\'t match total of " + totalErrorMessage);
+			//TODO This does not resolve in messages resource for some reason.
+			//errors.rejectValue("creditCardTotalAmountInput", "tpPaymentInfo.creditCardTotalAmountInput.amount",	new String[]{totalErrorMessage}, null);
 		}
 
 		try {

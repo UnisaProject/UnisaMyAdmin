@@ -34,13 +34,13 @@ export class TpPaymentComponent implements OnInit {
   private initForm() {
     this.tpForm = this.formBuilder.group({
       email: [null, Validators.email],
-      libraryFineFee: [0, Validators.required],
+      libraryFineBalance: [0, Validators.required],
       dueImmediately: [0, Validators.required],
       minimumForReg: [0, Validators.required],
       fullAccount: [0, Validators.required],
 
-      libraryFineFeeAmountInput: [0, Validators.required],
-      studyFeeAmountInput: [0, Validators.required],
+      libraryFineFeeForStudent: [0, Validators.required],
+      studyFeeAmount: [0, Validators.required],
       libraryFeeForStudent: [0, Validators.required],
       matricFeeForStudent: [0, Validators.required],
       ccTotalAmountInput: [0, Validators.required]
@@ -90,17 +90,18 @@ export class TpPaymentComponent implements OnInit {
     this.tpPaymentInfo.minimumForReg = formValue.minimumForReg;
     this.tpPaymentInfo.fullAccount = formValue.fullAccount;
 
-    this.tpPaymentInfo.libraryFineFeeForStudent
-    formValue.libraryFineFeeAmountInput;
-    this.tpPaymentInfo.studyFeeAmount = formValue.studyFeeAmountInput;
+    this.tpPaymentInfo.libraryFineFeeForStudent = formValue.libraryFineFeeForStudent;
+    this.tpPaymentInfo.studyFeeAmount = formValue.studyFeeAmount;
     this.tpPaymentInfo.libraryFeeForStudent = formValue.libraryFeeForStudent;
     this.tpPaymentInfo.matricFeeForStudent = formValue.matricFeeForStudent;
 
-    this.tpPaymentInfo.creditCardInfo = formValue.creditCardInfo;
+    this.tpPaymentInfo.creditCardInfo = {...formValue.creditCardInfo};
     this.tpPaymentInfo.creditCardTotalAmountInput = formValue.ccTotalAmountInput;
 
     this.creditCardPaymentService.processTpPayment(this.tpPaymentInfo).subscribe((summaryInfo)=> {
       this.creditCardFormService.summaryInfo = {...summaryInfo};
+      this.tpForm.reset();
+      this.creditCardFormService.creditCardPaymentForm = null;
       this.router.navigateByUrl('/summary');
     }, (error)=> {
       this.blockUI.stop();

@@ -96,8 +96,10 @@ public class NonTpPaymentInfoValidator implements Validator {
 		totalAmount = totalAmount.add(nonTPInfo.getStudyFeeAmount()).add(nonTPInfo.getLibraryFineFee());
 
 		if (totalAmount.compareTo(nonTPInfo.getCreditCardTotalAmountInput()) != 0) {
-			String totalErrormsg = verifyEnteredvsCalculatedTotals(totalAmount, nonTPInfo);
-			errors.rejectValue("creditCardTotalAmountInput", "nonTpPaymentInfo.creditCardTotalAmountInput.amount", new String[]{totalErrormsg}, null);
+			String totalErrorMsg = verifyEnteredvsCalculatedTotals(totalAmount, nonTPInfo);
+			errors.rejectValue("creditCardTotalAmountInput", null, null, "The value of 'Total amount being paid' doesn't match total of " + totalErrorMsg);
+			//TODO This does not resolve in messages resource for some reason.
+			//errors.rejectValue("creditCardTotalAmountInput", "nonTpPaymentInfo.creditCardTotalAmountInput.amount", new String[]{"Lib"}, totalErrormsg);
 		}
 
 		try {
@@ -149,7 +151,7 @@ public class NonTpPaymentInfoValidator implements Validator {
 		} else {
 			return "";
 		}
-		return errorString;
+		return errorString.trim();
 	}
 
 	private String matricBoardBeingPaid(NonTpPaymentInfo creditForm) {

@@ -5,20 +5,22 @@
     </div>
   </div>
   <br/>
+  <br/>
   <form (ngSubmit)="payNow()" [formGroup]="summaryForm">
-    <div class="form-group row">
-      <label for="summaryMessage" class="col-sm-2 col-form-label font-weight-bold">Summary Message:</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          readonly
-          class="form-control-plaintext"
-          id="summaryMessage"
-          name="summaryMessage"
-          [value]="summaryInfo?.summaryMessage"
-          required >
+
+    <div class="form-group row " *ngIf="!summaryInfo?.errorFlag">
+      <div class="alert alert-success col-sm-8" role="alert">
+        <h6 class="alert-heading">Payment Successful:</h6>
+        <p>{{summaryInfo?.summaryMessage}}</p>
       </div>
     </div>
+    <div class="form-group row" *ngIf="summaryInfo?.errorFlag">
+      <div class="alert alert-danger col-sm-8" role="alert">
+        <h6 class="alert-heading">Payment Error:</h6>
+        <p>{{summaryInfo?.summaryMessage}}</p>
+      </div>
+    </div>
+    <br/>
     <div class="form-group">
       <!--TODO 1st & 2nd option only for non-students-->
       <button type="button" class="btn btn-icon btn-primary" (click)="cancel()"> Make another payment</button>

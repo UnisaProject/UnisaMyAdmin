@@ -31,10 +31,20 @@ export class CreditCardInputComponent implements OnInit {
 
   private createForm(){
     this.creditCardForm = this.formBuilder.group({
-      cardNumber : [null, Validators.required],
+      cardNumber : [null,         Validators.compose([
+        Validators.required,
+        Validators.maxLength(16),
+        Validators.minLength(16),
+        Validators.pattern("([0-9])*")
+      ])],
       cardHolder : [null, Validators.required],
       budgetPeriod : ["0", Validators.required],
-      cvvNo : [null, Validators.required],
+      cvvNo : [null,         Validators.compose([
+        Validators.required,
+        Validators.maxLength(3),
+        Validators.minLength(3),
+        Validators.pattern("([0-9])*")
+      ])],
       expiryYear : [this.expiryYears[0], Validators.required],
       expiryMonth : ["01", Validators.required]
     });

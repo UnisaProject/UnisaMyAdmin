@@ -33,8 +33,7 @@ export class QualInputComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.maxLength(5),
-          Validators.minLength(5),
-          Validators.pattern("([0-9])*")
+          Validators.minLength(5)
         ])
       ]
     });

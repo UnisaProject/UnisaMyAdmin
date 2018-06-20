@@ -34,11 +34,11 @@ export class NonTpPaymentComponent implements OnInit {
   private initForm() {
     this.nonTpForm = this.formBuilder.group({
       email: [null, Validators.email],
-      libraryFineFeeAmountInput: [0, Validators.required],
+      libraryFineFee: [0, Validators.required],
       payMatricFirstAppFee: [false, Validators.required],
       payLibraryFee: [false, Validators.required],
       payThreeGDataBundleFee: [false, Validators.required],
-      studyFeeAmountInput: [0, Validators.required],
+      studyFeeAmount: [0, Validators.required],
       ccTotalAmountInput: [0, Validators.required]
     });
   }
@@ -85,13 +85,15 @@ export class NonTpPaymentComponent implements OnInit {
     this.nonTpPaymentInfo.payLibraryFee = formValue.payLibraryFee;
     this.nonTpPaymentInfo.payMatricFirstAppFee = formValue.payMatricFirstAppFee;
     this.nonTpPaymentInfo.payThreeGDataBundleFee = formValue.payThreeGDataBundleFee;
-    this.nonTpPaymentInfo.libraryFineFee = formValue.libraryFineFeeAmountInput;
-    this.nonTpPaymentInfo.studyFeeAmount = formValue.studyFeeAmountInput;
+    this.nonTpPaymentInfo.libraryFineFee = formValue.libraryFineFee;
+    this.nonTpPaymentInfo.studyFeeAmount = formValue.studyFeeAmount;
     this.nonTpPaymentInfo.creditCardInfo = {...formValue.creditCardInfo};
     this.nonTpPaymentInfo.creditCardTotalAmountInput = formValue.ccTotalAmountInput;
 
     this.creditCardPaymentService.processNonTpPayment(this.nonTpPaymentInfo).subscribe((summaryInfo)=> {
       this.creditCardFormService.summaryInfo = {...summaryInfo};
+      this.nonTpForm.reset();
+      this.creditCardFormService.creditCardPaymentForm = null;
       this.router.navigateByUrl('/summary');
     }, (error)=> {
       this.blockUI.stop();

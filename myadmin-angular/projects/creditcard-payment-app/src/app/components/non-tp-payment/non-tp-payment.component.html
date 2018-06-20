@@ -182,7 +182,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
         wish to pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
@@ -192,16 +192,16 @@
           <input
             type="text"
             class="form-control text-right"
-            id="libraryFineFeeAmountInput"
-            name="libraryFineFeeAmountInput"
+            id="libraryFineFee"
+            name="libraryFineFee"
             [value]="nonTpPaymentInfo.libraryFineFee | number:'1.2-2'"
-            formControlName="libraryFineFeeAmountInput"
+            formControlName="libraryFineFee"
             required="required">
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to
+      <label for="studyFeeAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to
         pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
@@ -211,10 +211,10 @@
           <input
             type="text"
             class="form-control text-right"
-            id="studyFeeAmountInput"
-            name="studyFeeAmountInput"
+            id="studyFeeAmount"
+            name="studyFeeAmount"
             [value]="nonTpPaymentInfo.studyFeeAmount | number:'1.2-2'"
-            formControlName="studyFeeAmountInput"
+            formControlName="studyFeeAmount"
             required="required">
         </div>
       </div>

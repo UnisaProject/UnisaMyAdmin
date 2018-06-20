@@ -48,7 +48,9 @@ export class ApplyPaymentComponent implements OnInit {
     } else {
       this.applicationPaymentInfo = new ApplicationPaymentInfo(this.creditCardFormService.creditCardPaymentForm);
       this.applyForm.patchValue({
-        email: this.applicationPaymentInfo.studentInfo.emailAddress
+        email: this.applicationPaymentInfo.studentInfo.emailAddress,
+        applyAmount: this.applicationPaymentInfo.applyAmountInput,
+        ccTotalAmountInput: this.applicationPaymentInfo.creditCardTotalAmountInput
       });
     }
   }
@@ -82,6 +84,8 @@ export class ApplyPaymentComponent implements OnInit {
 
     this.creditCardPaymentService.processApplicationPayment(this.applicationPaymentInfo).subscribe((summaryInfo)=> {
       this.creditCardFormService.summaryInfo = {...summaryInfo};
+      this.applyForm.reset();
+      this.creditCardFormService.creditCardPaymentForm = null;
       this.router.navigateByUrl('/summary');
     }, (error)=> {
       this.blockUI.stop();

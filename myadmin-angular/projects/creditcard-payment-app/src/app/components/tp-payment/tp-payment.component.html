@@ -111,7 +111,7 @@
 
     <div class="form-group row">
       <div class="col-sm-4">
-        <label for="libraryFineFee" class="col-form-label font-weight-bold">Library fine balance on this
+        <label for="libraryFineBalance" class="col-form-label font-weight-bold">Library fine balance on this
           account
           :</label>
       </div>
@@ -121,10 +121,10 @@
             type="text"
             readonly
             class="form-control-plaintext text-right"
-            id="libraryFineFee"
-            name="libraryFineFee"
+            id="libraryFineBalance"
+            name="libraryFineBalance"
             [value]="(tpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
-            formControlName="libraryFineFee"
+            formControlName="libraryFineBalance"
             required>
         </div>
       </div>
@@ -132,7 +132,7 @@
 
     <div class="form-group row">
       <div class="col-sm-4">
-        <label for="studyFeeAmountInput" class="col-form-label font-weight-bold">Amount already
+        <label for="dueImmediately" class="col-form-label font-weight-bold">Amount already
           outstanding on study fee account:</label>
         <small class="form-text text-muted">(Amount should be paid in full to receive services)</small>
       </div>
@@ -207,7 +207,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
+      <label for="libraryFineFeeForStudent" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
         wish to pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
@@ -217,20 +217,20 @@
           <input
             type="text"
             class="form-control text-right"
-            id="libraryFineFeeAmountInput"
-            name="libraryFineFeeAmountInput"
+            id="libraryFineFeeForStudent"
+            name="libraryFineFeeForStudent"
             [value]="tpPaymentInfo?.libraryFineFeeForStudent | number:'1.2-2'"
-            formControlName="libraryFineFeeAmountInput"
+            formControlName="libraryFineFeeForStudent"
             required="required">
         </div>
       </div>
     </div>
     <div class="form-group row">
       <div class="col-sm-4">
-        <label for="studyFeeAmountInput" class="col-form-label font-weight-bold">Study fee amount you wish to
+        <label for="studyFeeAmount" class="col-form-label font-weight-bold">Study fee amount you wish to
           pay: *</label>
         <small class="form-text text-muted" *ngIf="tpPaymentInfo?.minimumStudyFee != 0">(Amount can not be less than
-          R{{tpPaymentInfo?.minimumStudyFee}})
+          R{{tpPaymentInfo?.minimumStudyFee | number:'1.2-2'}})
         </small>
       </div>
       <div class="col-sm-4">
@@ -241,10 +241,10 @@
           <input
             type="text"
             class="form-control text-right"
-            id="studyFeeAmountInput"
-            name="studyFeeAmountInput"
+            id="studyFeeAmount"
+            name="studyFeeAmount"
             [value]="tpPaymentInfo?.studyFeeAmount | number:'1.2-2'"
-            formControlName="studyFeeAmountInput"
+            formControlName="studyFeeAmount"
             required="required">
         </div>
       </div>

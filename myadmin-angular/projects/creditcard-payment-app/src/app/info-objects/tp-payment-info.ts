@@ -55,7 +55,7 @@ export class TpPaymentInfo {
     this.dueImmediately = options.dueImmediately;
     this.minimumForReg = options.minimumForReg;
     this.fullAccount = options.fullAccount;
-    this.libraryFineFeeForStudent = options.libraryFineFeeForStudent;
+    this.libraryFineFeeForStudent = 0;
     this.minimumStudyFee = options.minimumStudyFee;
     this.studyFeeAmount = 0;
     this.libraryFeeForStudent = options.libraryFeeForStudent;

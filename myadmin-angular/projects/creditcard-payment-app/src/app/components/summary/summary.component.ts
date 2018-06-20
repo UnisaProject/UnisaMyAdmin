@@ -34,7 +34,7 @@ export class SummaryComponent implements OnInit {
 
   ngOnInit() {
     this.blockUI.stop();
-    if (this.creditCardFormService.summaryInfo === null || this.creditCardFormService.summaryInfo.summaryMessage === null || this.creditCardFormService.summaryInfo.errorFlag === true) {
+    if (this.creditCardFormService.summaryInfo === null || this.creditCardFormService.summaryInfo.summaryMessage === null) {
       this.router.navigateByUrl("/studentInput")
     }
     else {

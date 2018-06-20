@@ -60,7 +60,7 @@ export class NonTpPaymentInfo {
     this.canChooseThreeGDataBundle = options.canChooseThreeGDataBundle;
     this.payThreeGDataBundleFee = false;
     this.threeGDataBundleFee = options.threeGDataBundleFee;
-    this.libraryFineFee = options.libraryFineFee;
+    this.libraryFineFee = 0;
     this.studyFeeAmount = 0;
     this.creditCardTotalAmountInput = 0;
   }
