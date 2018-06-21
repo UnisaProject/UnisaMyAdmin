@@ -11,17 +11,17 @@ export class ExamPeriodService {
   }
 
   getExamPeriod(code: number): Observable<ExamPeriodInfo> {
-    return this.http.get<ExamPeriodInfo>(`/myadmin-student-services/examservice/examperiods/${code}`);
+    return this.http.get<ExamPeriodInfo>(`/myadmin-exam-services/examservices/examperiods/${code}`);
   }
 
   getExamPeriods(): Observable<ExamPeriodInfo[]> {
-    return this.http.get<ExamPeriodInfo[]>('/myadmin-student-services/examservice/examperiods' );
+    return this.http.get<ExamPeriodInfo[]>('/myadmin-exam-services/examservices/examperiods' );
   }
 
   getExamPeriodByCodes(codes: number[]): Observable<ExamPeriodInfo[]> {
     const params = new HttpParams().set('codes', codes.join(','));
 
-    return this.http.get<ExamPeriodInfo[]>('/myadmin-student-services/examservice/examperiods', { params });
+    return this.http.get<ExamPeriodInfo[]>('/myadmin-exam-services/examservices/examperiods', { params });
   }
 
 }
