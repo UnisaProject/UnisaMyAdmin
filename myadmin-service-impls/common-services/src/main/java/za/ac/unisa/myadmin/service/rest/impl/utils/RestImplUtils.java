@@ -49,11 +49,10 @@ public class RestImplUtils {
 	 * @param httpServletRequest
 	 *            the http servlet request object
 	 * @return true only if all the allowedParams were found, false otherwise
-	 * @throws allowedParams
-	 *             when allowedParams were found with additional parameters
+	 * @throws InvalidParameterException when allowedParams were found with additional parameters
 	 */
 	public static boolean validateParameters(Set<String> allowedParams, HttpServletRequest httpServletRequest)
-			throws InvalidParameterException {
+		throws InvalidParameterException {
 		for (String param : allowedParams) {
 			if (!httpServletRequest.getParameterMap().containsKey(param)) {
 				return false;
@@ -64,7 +63,7 @@ public class RestImplUtils {
 		remainingParams.removeAll(allowedParams);
 		if (!remainingParams.isEmpty()) {
 			throw new InvalidParameterException("Not allowed to specify additional parameters (" + remainingParams
-					+ ") when specifying parameters (" + allowedParams);
+				+ ") when specifying parameters (" + allowedParams);
 		}
 
 		return true;

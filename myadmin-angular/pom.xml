@@ -126,6 +126,18 @@
 							<arguments>build creditcard-payment-app</arguments>
 						</configuration>
 					</execution>
+
+					<!-- Build credit card payment -->
+					<execution>
+						<id>yarn build temp-study-material-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build temp-study-material-app</arguments>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>

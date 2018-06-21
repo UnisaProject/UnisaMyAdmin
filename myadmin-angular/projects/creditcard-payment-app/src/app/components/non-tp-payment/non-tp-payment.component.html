@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h5>Credit card payments</h5>
+      <h5>Credit Card Payments</h5>
       <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
       <p>Required items marked with *</p>
     </div>
@@ -21,8 +21,8 @@
           class="form-control-plaintext"
           id="studentNumber"
           name="studentNumber"
-          [value]="creditCardPaymentForm?.studentInfo.studentNumber"
-          required >
+          [value]="nonTpPaymentInfo?.studentInfo.studentNumber"
+          required>
       </div>
     </div>
     <div class="form-group row">
@@ -35,8 +35,8 @@
           id="studentName"
           name="studentName"
           autocomplete="name"
-          [value]="creditCardPaymentForm?.studentInfo.studentName"
-          required >
+          [value]="nonTpPaymentInfo?.studentInfo.studentName"
+          required>
       </div>
     </div>
     <div class="form-group row">
@@ -48,8 +48,8 @@
           class="form-control-plaintext"
           id="qualCode"
           name="qualCode"
-          [value]="creditCardPaymentForm?.qualificationInfo.qualCode+' - ' + creditCardPaymentForm?.qualificationInfo.qualDesc"
-          required >
+          [value]="nonTpPaymentInfo?.qualificationInfo.qualCode+' - ' + nonTpPaymentInfo?.qualificationInfo.qualDesc"
+          required>
       </div>
     </div>
     <div class="form-group row">
@@ -61,13 +61,13 @@
           class="form-control-plaintext"
           id="regstatus"
           name="regstatus"
-          [value]="creditCardPaymentForm?.regStatusDescription"
-          required >
+          [value]="nonTpPaymentInfo?.regStatusDescription"
+          required>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <p>Payment receipts will be sent to this e-mail address</p>
+        <p>Payment receipts will be sent to this e-mail address.</p>
       </div>
     </div>
     <div class="form-group row">
@@ -79,8 +79,9 @@
           id="email"
           name="email"
           autocomplete="email"
-          [value]="creditCardPaymentForm?.studentInfo.emailAddress"
-          required >
+          [value]="nonTpPaymentInfo?.studentInfo.emailAddress"
+          formControlName="email"
+          required>
       </div>
     </div>
 
@@ -91,29 +92,31 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="balanceAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee balance on this account:</label>
-      <div class="col-sm-8">
+      <label for="balanceAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee balance on this
+        account:</label>
+      <div class="col-sm-4">
         <input
           type="text"
           readonly
-          class="form-control-plaintext"
+          class="form-control-plaintext text-right"
           id="balanceAmount"
           name="balanceAmount"
-          [value]="'R' + creditCardPaymentForm?.balance + ' ' + creditCardPaymentForm?.creditDebitIndicator"
-          required >
+          [value]="(nonTpPaymentInfo?.balance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.creditDebitIndicator"
+          required>
       </div>
     </div>
     <div class="form-group row">
-      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library fine balance on this account :</label>
-      <div class="col-sm-8">
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library fine balance on this account
+        :</label>
+      <div class="col-sm-4">
         <input
           type="text"
           readonly
-          class="form-control-plaintext"
+          class="form-control-plaintext text-right"
           id="libraryFineFee"
           name="libraryFineFee"
-          [value]="'R' + creditCardPaymentForm?.libraryFineFee + ' ' + creditCardPaymentForm?.libCreditDebitIndicator"
-          required >
+          [value]="(nonTpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.libCreditDebitIndicator"
+          required>
       </div>
     </div>
 
@@ -121,66 +124,106 @@
     <!--
       TODO this form still has a lot of unimplemented logic
     -->
+    <!-- TODO LibraryCard Fee -->
     <div class="row">
       <div class="col">
         <h5>Payment Details</h5>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="payMatricFirstAppFee" class="col-sm-4 col-form-label font-weight-bold">Matriculation board fee:</label>
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseLibraryCard">
+      <label for="payLibraryFee" class="col-sm-4 col-form-label font-weight-bold">Access to Unisa campuses:</label>
+      <div class="col-sm-4 text-right">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input text-right"
+            id="payLibraryFee"
+            name="payLibraryFee"
+            [value]="nonTpPaymentInfo?.payLibraryFee"
+            formControlName="payLibraryFee">
+          <label class="form-check-label text-right" for="payLibraryFee">{{nonTpPaymentInfo?.libraryFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseMatric">
+      <label for="payMatricFirstAppFee" class="col-sm-4 col-form-label font-weight-bold">Matriculation board
+        fee:</label>
+      <div class="col-sm-4 text-right">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input text-right"
+            id="payMatricFirstAppFee"
+            name="payMatricFirstAppFee"
+            [value]="nonTpPaymentInfo?.payMatricFirstAppFee"
+            formControlName="payMatricFirstAppFee">
+          <label class="form-check-label text-right" for="payMatricFirstAppFee">{{nonTpPaymentInfo?.matricFirstAppFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseThreeGDataBundle">
+      <label for="payThreeGDataBundleFee" class="col-sm-4 col-form-label font-weight-bold">3G Data bundle:</label>
       <div class="col-sm-4">
         <div class="form-check form-check-inline">
           <input
             type="checkbox"
             class="form-check-input"
-            id="payMatricFirstAppFee"
-            name="payMatricFirstAppFee"
-            formControlName="payMatricFirstAppFee">
-          <label class="form-check-label" for="payMatricFirstAppFee">2</label>
+            id="payThreeGDataBundleFee"
+            name="payThreeGDataBundleFee"
+            [value]="nonTpPaymentInfo?.payThreeGDataBundleFee"
+            formControlName="payThreeGDataBundleFee">
+          <label class="form-check-label" for="payThreeGDataBundleFee">{{nonTpPaymentInfo?.threeGDataBundleFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
         </div>
-
-
       </div>
     </div>
-    <!-- TODO payThreeGDataBundleFee -->
+
     <div class="form-group row">
-      <label for="libraryFineFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you wish to pay: *</label>
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
+        wish to pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
+          <span class="input-group-text">R</span>
           </div>
           <input
             type="text"
-            class="form-control"
-            id="libraryFineFeeAmountInput"
-            name="libraryFineFeeAmountInput"
-            formControlName="libraryFineFeeAmountInput"
+            class="form-control text-right"
+            id="libraryFineFee"
+            name="libraryFineFee"
+            [value]="nonTpPaymentInfo.libraryFineFee | number:'1.2-2'"
+            formControlName="libraryFineFee"
             required="required">
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="studyFeeAmountInput" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to pay: *</label>
+      <label for="studyFeeAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to
+        pay: *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">R</span>
+          <span class="input-group-text">R</span>
           </div>
           <input
             type="text"
-            class="form-control"
-            id="studyFeeAmountInput"
-            name="studyFeeAmountInput"
-            formControlName="studyFeeAmountInput"
-            required="required" >
+            class="form-control text-right"
+            id="studyFeeAmount"
+            name="studyFeeAmount"
+            [value]="nonTpPaymentInfo.studyFeeAmount | number:'1.2-2'"
+            formControlName="studyFeeAmount"
+            required="required">
         </div>
       </div>
     </div>
 
-  <unisa-credit-card-input [form]="nonTpForm"></unisa-credit-card-input>
+    <unisa-credit-card-input [form]="nonTpForm"></unisa-credit-card-input>
     <div class="form-group row">
-      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid: *</label>
+      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid:
+        *</label>
       <div class="col-sm-4">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
@@ -188,9 +231,10 @@
           </div>
           <input
             type="text"
-            class="form-control"
+            class="form-control text-right"
             id="ccTotalAmountInput"
             name="ccTotalAmountInput"
+            [value]="nonTpPaymentInfo.creditCardTotalAmountInput | number:'1.2-2'"
             formControlName="ccTotalAmountInput"
             required="required">
         </div>
@@ -198,7 +242,9 @@
     </div>
 
     <div class="mb-3 row">
-      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate payments.</div>
+      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate
+        payments.
+      </div>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid"> Pay Now</button>

@@ -1,14 +1,21 @@
 import {CreditCardStudentInfo} from "./credit-card-student-info";
 import {CreditCardInfo} from "./credit-card-info";
+import {CreditCardPaymentInfo} from "./credit-card-payment-info";
 
-export interface ApplicationPaymentInfo {
+export class ApplicationPaymentInfo {
 
-  studentInfo: CreditCardStudentInfo;
+  studentInfo:CreditCardStudentInfo;
 
-  applyAmountInput: number;
+  applyAmountInput:number;
 
-  creditCardTotalAmountInput: number;
+  creditCardTotalAmountInput:number;
 
-  cardInfo: CreditCardInfo;
+  cardInfo:CreditCardInfo;
 
+  constructor(options:CreditCardPaymentInfo) {
+    this.studentInfo = options.studentInfo;
+    this.cardInfo = options.creditCardInfo;
+    this.applyAmountInput = options.applyAmount;
+    this.creditCardTotalAmountInput = options.applyAmount;
+  }
 }

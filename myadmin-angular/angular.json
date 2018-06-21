@@ -499,6 +499,125 @@
           }
         }
       }
+    },
+    "temp-study-material-app": {
+      "root": "projects/temp-study-material-app/",
+      "sourceRoot": "projects/temp-study-material-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/temp-study-material-app",
+            "index": "projects/temp-study-material-app/src/index.html",
+            "main": "projects/temp-study-material-app/src/main.ts",
+            "polyfills": "projects/temp-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/temp-study-material-app/tsconfig.app.json",
+            "assets": [
+              "projects/temp-study-material-app/src/favicon.ico",
+              "projects/temp-study-material-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/temp-study-material-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/temp-study-material-app/src/environments/environment.ts",
+                  "with": "projects/temp-study-material-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "temp-study-material-app:build",
+            "baseHref": "/tpstudymaterial/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "temp-study-material-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "temp-study-material-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/temp-study-material-app/src/test.ts",
+            "polyfills": "projects/temp-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/temp-study-material-app/tsconfig.spec.json",
+            "karmaConfig": "projects/temp-study-material-app/karma.conf.js",
+            "styles": [
+              "projects/temp-study-material-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/temp-study-material-app/src/favicon.ico",
+              "projects/temp-study-material-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/temp-study-material-app/tsconfig.app.json",
+              "projects/temp-study-material-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "myadmin-lib"
