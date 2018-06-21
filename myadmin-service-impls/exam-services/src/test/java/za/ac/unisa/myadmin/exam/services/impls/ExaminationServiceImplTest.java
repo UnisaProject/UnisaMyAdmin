@@ -21,11 +21,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import za.ac.unisa.myadmin.TestApplication;
-import za.ac.unisa.myadmin.exam.service.repositories.ExaminationRepository;
 import za.ac.unisa.myadmin.exam.services.ExaminationService;
 import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
 import za.ac.unisa.myadmin.exam.services.impls.ExaminationServiceImpl;
 import za.ac.unisa.myadmin.exam.services.models.ExaminationEntity;
+import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
 
 /**
  * ExamPeriodDateServiceImpl Tester.

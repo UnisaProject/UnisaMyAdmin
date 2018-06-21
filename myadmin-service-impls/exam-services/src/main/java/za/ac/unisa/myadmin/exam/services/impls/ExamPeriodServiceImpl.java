@@ -11,10 +11,10 @@ import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.exam.service.repositories.ExamPeriodRepository;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
 import za.ac.unisa.myadmin.exam.services.models.ExamPeriodEntity;
+import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
 
 @Service("ExamPeriodService")
 public class ExamPeriodServiceImpl implements ExamPeriodService {

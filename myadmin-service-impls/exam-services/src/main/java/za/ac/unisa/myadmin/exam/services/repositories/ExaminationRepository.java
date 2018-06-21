@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.exam.service.repositories;
+package za.ac.unisa.myadmin.exam.services.repositories;
 
 import java.util.List;
 

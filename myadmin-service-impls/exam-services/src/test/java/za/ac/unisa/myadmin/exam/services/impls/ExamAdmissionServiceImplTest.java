@@ -12,9 +12,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import za.ac.unisa.myadmin.TestApplication;
-import za.ac.unisa.myadmin.exam.service.repositories.ExamAdmissionRepository;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.impls.ExamAdmissionServiceImpl;
+import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
 
 /**
  * ExamAdmissionServiceImpl Tester.

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.exam.service.repositories.ExamAdmissionRepository;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
+import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
 
 @Service("ExamAdmissionService")
 public class ExamAdmissionServiceImpl implements ExamAdmissionService {
