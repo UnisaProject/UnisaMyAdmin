@@ -7,7 +7,7 @@ import {ClarityModule} from '@clr/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExamTimetableSearchComponent } from './components/exam-timetable-search/exam-timetable-search.component';
-import { ExamAdmissionService, ExamPeriodService, ExamPeriodDateService, SearchCriteriaService} from './services';
+import { ExamAdmissionService, ExamPeriodService, ExaminationService, SearchCriteriaService} from './services';
 import { ExamTimetableResultComponent } from './components/exam-timetable-result/exam-timetable-result.component';
 import { BlockUIModule} from "ng-block-ui";
 
@@ -43,7 +43,7 @@ export const HttpInterceptorProviders = [
   providers: [
     ExamAdmissionService,
     ExamPeriodService,
-    ExamPeriodDateService,
+    ExaminationService,
     SearchCriteriaService,
     HttpInterceptorProviders,
   ],

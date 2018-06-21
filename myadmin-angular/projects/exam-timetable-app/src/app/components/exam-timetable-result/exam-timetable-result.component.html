@@ -30,12 +30,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let examPeriodDate of examPeriodDates">
-        <td>{{ examPeriodDate.courseCode }}</td>
-        <td>{{ examPeriodDate.paperNumber }}</td>
-        <td>{{ examPeriodDate.examDate | date: 'yyyy-MM-dd' }}</td>
-        <td>{{ examPeriodDate.examTime | date: 'HH:mm' }}</td>
-        <td>{{ examPeriodDate.durationHours }} hour(s)</td>
+      <tr *ngFor="let examination of examinations">
+        <td>{{ examination.courseCode }}</td>
+        <td>{{ examination.paperNumber }}</td>
+        <td>{{ examination.examDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ examination.examTime | date: 'HH:mm' }}</td>
+        <td>{{ examination.durationHours }} hour(s)</td>
       </tr>
     </tbody>
   </table>
