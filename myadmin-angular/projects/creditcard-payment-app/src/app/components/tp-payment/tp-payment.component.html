@@ -22,7 +22,7 @@
           id="studentNumber"
           name="studentNumber"
           [value]="tpPaymentInfo?.studentInfo.studentNumber"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -36,7 +36,7 @@
           name="studentName"
           autocomplete="name"
           [value]="tpPaymentInfo?.studentInfo.studentName"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -49,7 +49,7 @@
           id="qualCode"
           name="qualCode"
           [value]="tpPaymentInfo?.qualificationInfo.qualCode+' - ' + tpPaymentInfo?.qualificationInfo.qualDesc"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -62,7 +62,7 @@
           id="regstatus"
           name="regstatus"
           [value]="tpPaymentInfo?.regStatusDescription"
-          required>
+          >
       </div>
     </div>
     <div class="row">
@@ -104,7 +104,7 @@
             id="balanceAmount"
             name="balanceAmount"
             [value]="(tpPaymentInfo?.balance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.creditDebitIndicator"
-            required>
+            >
         </div>
       </div>
     </div>
@@ -125,7 +125,7 @@
             name="libraryFineBalance"
             [value]="(tpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
             formControlName="libraryFineBalance"
-            required>
+            >
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@
             name="dueImmediately"
             [value]="tpPaymentInfo?.dueImmediately | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="dueImmediately"
-            required="required">
+            >
         </div>
 
       </div>
@@ -170,7 +170,7 @@
             name="minimumForReg"
             [value]="tpPaymentInfo.minimumForReg | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="minimumForReg"
-            required="required">
+            >
         </div>
 
       </div>
@@ -191,7 +191,7 @@
             name="fullAccount"
             [value]="tpPaymentInfo?.fullAccount | currency:'ZAR':'symbol-narrow':'1.2-2'"
             formControlName="fullAccount"
-            required="required">
+            >
         </div>
 
       </div>
@@ -219,7 +219,7 @@
             class="form-control text-right"
             id="libraryFineFeeForStudent"
             name="libraryFineFeeForStudent"
-            [value]="tpPaymentInfo?.libraryFineFeeForStudent | number:'1.2-2'"
+            unisa-currency-formatter
             formControlName="libraryFineFeeForStudent"
             required="required">
         </div>
@@ -243,7 +243,7 @@
             class="form-control text-right"
             id="studyFeeAmount"
             name="studyFeeAmount"
-            [value]="tpPaymentInfo?.studyFeeAmount | number:'1.2-2'"
+            unisa-currency-formatter
             formControlName="studyFeeAmount"
             required="required">
         </div>
@@ -267,7 +267,7 @@
             name="libraryFeeForStudent"
             [value]="tpPaymentInfo?.libraryFeeForStudent | number:'1.2-2'"
             formControlName="libraryFeeForStudent"
-            required="required">
+           >
         </div>
       </div>
     </div>
@@ -290,7 +290,7 @@
           id="matricFeeForStudent"
           name="matricFeeForStudent"
           [value]="tpPaymentInfo?.matricFeeForStudent | number:'1.2-2'"
-          required="required">
+         >
         </div>
       </div>
     </div>
@@ -309,7 +309,7 @@
             class="form-control text-right"
             id="ccTotalAmountInput"
             name="ccTotalAmountInput"
-            [value]="tpPaymentInfo?.creditCardTotalAmountInput | number:'1.2-2'"
+            myCurrencyFormatter
             formControlName="ccTotalAmountInput"
             required="required">
         </div>

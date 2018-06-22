@@ -12,7 +12,7 @@ import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
 import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
-
+import { CurrencyPipe } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { QualInputComponent } from './components/qual-input/qual-input.component';
 import { StudentInputComponent } from './components/student-input/student-input.component';
@@ -23,6 +23,7 @@ import { TpPaymentComponent } from './components/tp-payment/tp-payment.component
 import { CreditCardFormService } from "./services/creditcard-form.service";
 import { CreditCardPaymentService } from "./services/credit-card-payment.service";
 import { CreditCardInputComponent } from './components/credit-card-input/credit-card-input.component';
+import { CurrencyFormatterDirective } from './directives/currency-formatter.directive';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -39,6 +40,7 @@ export const HttpInterceptorProviders = [
     NonTpPaymentComponent,
     TpPaymentComponent,
     CreditCardInputComponent,
+    CurrencyFormatterDirective,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ export const HttpInterceptorProviders = [
   providers: [
     HttpInterceptorProviders,
     CreditCardFormService,
+    CurrencyPipe,
     CreditCardPaymentService
   ],
   bootstrap: [AppComponent]

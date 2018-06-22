@@ -22,7 +22,7 @@
           id="studentNumber"
           name="studentNumber"
           [value]="nonTpPaymentInfo?.studentInfo.studentNumber"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -36,7 +36,7 @@
           name="studentName"
           autocomplete="name"
           [value]="nonTpPaymentInfo?.studentInfo.studentName"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -49,7 +49,7 @@
           id="qualCode"
           name="qualCode"
           [value]="nonTpPaymentInfo?.qualificationInfo.qualCode+' - ' + nonTpPaymentInfo?.qualificationInfo.qualDesc"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -62,7 +62,7 @@
           id="regstatus"
           name="regstatus"
           [value]="nonTpPaymentInfo?.regStatusDescription"
-          required>
+          >
       </div>
     </div>
     <div class="row">
@@ -102,7 +102,7 @@
           id="balanceAmount"
           name="balanceAmount"
           [value]="(nonTpPaymentInfo?.balance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.creditDebitIndicator"
-          required>
+          >
       </div>
     </div>
     <div class="form-group row">
@@ -116,7 +116,7 @@
           id="libraryFineFee"
           name="libraryFineFee"
           [value]="(nonTpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.libCreditDebitIndicator"
-          required>
+          >
       </div>
     </div>
 
@@ -194,8 +194,8 @@
             class="form-control text-right"
             id="libraryFineFee"
             name="libraryFineFee"
-            [value]="nonTpPaymentInfo.libraryFineFee | number:'1.2-2'"
             formControlName="libraryFineFee"
+            unisa-currency-formatter
             required="required">
         </div>
       </div>
@@ -213,14 +213,14 @@
             class="form-control text-right"
             id="studyFeeAmount"
             name="studyFeeAmount"
-            [value]="nonTpPaymentInfo.studyFeeAmount | number:'1.2-2'"
+            unisa-currency-formatter
             formControlName="studyFeeAmount"
             required="required">
         </div>
       </div>
     </div>
 
-    <unisa-credit-card-input [form]="nonTpForm"></unisa-credit-card-input>
+    <unisa-credit-card-input [form]="nonTpForm" novalidate></unisa-credit-card-input>
     <div class="form-group row">
       <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid:
         *</label>
@@ -234,7 +234,7 @@
             class="form-control text-right"
             id="ccTotalAmountInput"
             name="ccTotalAmountInput"
-            [value]="nonTpPaymentInfo.creditCardTotalAmountInput | number:'1.2-2'"
+            unisa-currency-formatter
             formControlName="ccTotalAmountInput"
             required="required">
         </div>
