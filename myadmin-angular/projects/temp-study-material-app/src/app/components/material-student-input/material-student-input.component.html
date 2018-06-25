@@ -1,3 +1,57 @@
-<p>
-  material-student-input works!
-</p>
+<div class="container">
+  <div class="row">
+    <h5>View Unisa Official Study Material</h5>
+    </div>
+  <div class="row">
+    <p>Required items marked with a *.</p>
+    <p><b>What is the status of my application for registration?</b><br>
+      Use the <b>Registration Status tool</b> (for web applications for registration only) to determine the status of your application.
+      For module additions requested after initial registration,
+      login to <b>myUnisa > My Admin</b> and view <b>Edit Registration.</b>
+    </p>
+  </div>
+  <div class="row">
+    <p><b>IMPORTANT:</b></p>
+    <p>1. If your modules, including additions, have been <span style="color:red">registered</span>, you should login to myUnisa and navigate to your module sites to view official study materials.</p>
+    <p>2. Study materials for <span style="color:red">Unisa short courses</span> cannot be viewed here.</p>
+    <p>3. Only some study material files available at this time will be displayed. More options may be available in myUnisa.</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="studentInputForm">
+    <div class="row">
+      <h5>Please enter your details.</h5>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-3 col-form-label font-weight-bold">Student Number *</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="studentNumber" formControlName="studentNumber" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="studentSurname" class="col-sm-3 col-form-label font-weight-bold">Surname *</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="studentSurname" formControlName="studentSurname" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="studentNames" class="col-sm-3 col-form-label font-weight-bold">Full names *</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="studentNames" formControlName="studentNames" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="studentDOB" class="col-sm-3 col-form-label font-weight-bold">Date of Birth *</label>
+      <div class="col-sm-4">
+        <input type="date" class="form-control" id="studentDOB" formControlName="studentDOB" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="studentInputForm.invalid"> Continue</button>
+    </div>
+  </form>
+  <br/>
+</div>
