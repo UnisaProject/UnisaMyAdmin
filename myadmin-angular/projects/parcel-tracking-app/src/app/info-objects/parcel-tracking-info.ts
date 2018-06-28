@@ -1,4 +1,5 @@
-import {StudentInfo, TrackAndTraceRecordInfo} from './';
+import {TrackAndTraceRecordInfo} from './';
+import {StudentInfo} from "myadmin-lib";
 
 export interface ParcelTrackingInfo {
   

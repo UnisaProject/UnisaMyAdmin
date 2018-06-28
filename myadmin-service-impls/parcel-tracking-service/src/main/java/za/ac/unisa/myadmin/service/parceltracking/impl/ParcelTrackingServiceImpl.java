@@ -6,13 +6,12 @@ import org.springframework.util.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.parceltracking.ParcelTrackingInfo;
 import za.ac.unisa.myadmin.parceltracking.ParcelTrackingService;
-import za.ac.unisa.myadmin.parceltracking.StudentInfo;
 import za.ac.unisa.myadmin.parceltracking.TrackAndTraceRecordInfo;
+import za.ac.unisa.myadmin.student.services.StudentServiceConstants;
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +23,14 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service("ParcelTrackingService")
 public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 
+
+	private final String TRACKING_CODE_C = "C";
+	private final String TRACKING_CODE_RA = "RA";
+	private final String TRACKING_CODE_S = "S";
+	private final String TRACKING_CODE_PARCEL_POSTED = "PARCEL POSTED";
+	private final String TRACKING_AGENT_SAPO = "SAPO Safemail";
+	private final String TRACKING_AGENT_TRACKING = "Track n Trace";
+
 	/**
 	 * Get an instance of the despatch proxy
 	 *
@@ -33,11 +40,11 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 	private Smsij01sMntGenDespatchInfo getProxyInstance() throws PropertyVetoException {
 		Smsij01sMntGenDespatchInfo despatchProxy = new Smsij01sMntGenDespatchInfo();
 		despatchProxy.clear();
-		despatchProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-		despatchProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-		despatchProxy.setInCsfClientServerCommunicationsAction("D");
-		despatchProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-		despatchProxy.setInSecurityWsPrinterCode("MYUNISA");
+		despatchProxy.setInCsfClientServerCommunicationsClientVersionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+		despatchProxy.setInCsfClientServerCommunicationsClientRevisionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+		despatchProxy.setInCsfClientServerCommunicationsAction(StudentServiceConstants.PARCEL_TRACKING_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
+		despatchProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+		despatchProxy.setInSecurityWsPrinterCode(StudentServiceConstants.PARCEL_TRACKING_PROXY_SECURITY_PRINTER_CODE);
 		return despatchProxy;
 	}
 
@@ -72,7 +79,7 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 			throw new OperationFailedException(errorMessage);
 		}
 		StudentInfo student = new StudentInfo();
-		student.setStudentNumber(String.valueOf(despatchProxy.getOutStudentAnnualRecordMkStudentNr()));
+		student.setStudentNumber(despatchProxy.getOutStudentAnnualRecordMkStudentNr());
 		student.setStudentName((String.valueOf(despatchProxy.getOutWsStudentMkTitle()) + " " + String.valueOf(despatchProxy.getOutWsStudentFirstNames() + " " + String.valueOf(despatchProxy.getOutWsStudentSurname()))));
 		parcelTrackingInfo.setStudentInfo(student);
 
@@ -110,19 +117,19 @@ public class ParcelTrackingServiceImpl implements ParcelTrackingService {
 				if (currentYear == year || ((currentYear - 1) == year && month > 10)) {
 					//set date in array list
 					TrackAndTraceRecordInfo trackAndTraceRecord = new TrackAndTraceRecordInfo();
-					if (despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1).equals("C") ||
-						despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 2).equals("RA") ||
-						despatchProxy.getOutGWsTrackAndTraceNumber(i).equalsIgnoreCase("PARCEL POSTED") ||
+					if (despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1).equals(TRACKING_CODE_C) ||
+						despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 2).equals(TRACKING_CODE_RA) ||
+						despatchProxy.getOutGWsTrackAndTraceNumber(i).equalsIgnoreCase(TRACKING_CODE_PARCEL_POSTED) ||
 						isInteger(despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1))) {
-						trackAndTraceRecord.setTrackTraceAgent("SAPO Safemail");
+						trackAndTraceRecord.setTrackTraceAgent(TRACKING_AGENT_SAPO);
 						trackAndTraceRecord.setTrackTraceNumber(despatchProxy.getOutGWsTrackAndTraceNumber(i));
-						if (!despatchProxy.getOutGWsTrackAndTraceNumber(i).equalsIgnoreCase("PARCEL POSTED")) {
+						if (!despatchProxy.getOutGWsTrackAndTraceNumber(i).equalsIgnoreCase(TRACKING_CODE_PARCEL_POSTED)) {
 							trackAndTraceRecord.setTrackTraceNumber(despatchProxy.getOutGWsTrackAndTraceNumber(i));
 						}
 
 					} else {
-						if (!despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1).equals("S")) {
-							trackAndTraceRecord.setTrackTraceAgent("Track n Trace");
+						if (!despatchProxy.getOutGWsTrackAndTraceNumber(i).substring(0, 1).equals(TRACKING_CODE_S)) {
+							trackAndTraceRecord.setTrackTraceAgent(TRACKING_AGENT_TRACKING);
 							trackAndTraceRecord.setTrackTraceNumber(despatchProxy.getOutGWsTrackAndTraceNumber(i));
 							trackAndTraceRecord.setTrackTraceDate(year + "-" + tempmonth + "-" + tempday);
 						}

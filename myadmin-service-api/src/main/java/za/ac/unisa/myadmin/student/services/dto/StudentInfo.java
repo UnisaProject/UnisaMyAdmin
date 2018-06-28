@@ -1,17 +1,40 @@
-package za.ac.unisa.myadmin.creditcard.payment;
-
-import za.ac.unisa.myadmin.parceltracking.StudentInfo;
+package za.ac.unisa.myadmin.student.services.dto;
 
 import java.io.Serializable;
 
-public class CardStudentInfo extends StudentInfo {
+/**
+ * Created by Adrian on 2018-06-26.
+ */
+public class StudentInfo implements Serializable {
 
-	private static final long serialVersionUID = 9156385677947304227L;
+	private Integer studentNumber;
+
+	private String studentName;
+
 	private String title;
+
 	private String initials;
+
 	private String emailAddress;
 
-	public CardStudentInfo() {
+	public StudentInfo() {
+	}
+
+
+	public Integer getStudentNumber() {
+		return studentNumber;
+	}
+
+	public void setStudentNumber(Integer studentNumber) {
+		this.studentNumber = studentNumber;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
 	public String getTitle() {
@@ -41,11 +64,12 @@ public class CardStudentInfo extends StudentInfo {
 	@Override
 	public String toString() {
 		return "CardStudentInfo{" +
-			"studentNumber='" + getStudentNumber() + '\'' +
-			", studentName='" + getStudentName() + '\'' +
+			"studentNumber='" + studentNumber + '\'' +
+			", studentName='" + studentName + '\'' +
 			", title='" + title + '\'' +
 			", initials='" + initials + '\'' +
 			", emailAddress='" + emailAddress + '\'' +
 			'}';
 	}
+
 }

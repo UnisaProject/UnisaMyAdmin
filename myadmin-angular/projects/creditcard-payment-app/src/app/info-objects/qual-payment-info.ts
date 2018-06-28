@@ -1,5 +1,5 @@
 import {QualificationInfo} from "./qualification-info";
-import {CreditCardStudentInfo} from "./credit-card-student-info";
+import {StudentInfo} from "myadmin-lib";
 
 export interface QualPaymentInfo {
 
@@ -14,8 +14,8 @@ export interface QualPaymentInfo {
   minimumStudyFee:number;
   minimumForReg:number;
 
-  studentInfo:CreditCardStudentInfo;
+  studentInfo:StudentInfo;
 
   qualificationInfo:QualificationInfo;
-  
+
 }

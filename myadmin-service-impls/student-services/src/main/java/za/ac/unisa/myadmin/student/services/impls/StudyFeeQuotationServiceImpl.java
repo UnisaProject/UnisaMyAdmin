@@ -90,15 +90,15 @@ public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 		Srrqn01sQuoteStudyFees studyFeeQuotationProxy = new Srrqn01sQuoteStudyFees();
 		studyFeeQuotationProxy.clear();
 		studyFeeQuotationProxy.setInWsUserNumber(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_USER_NUMBER);
-		studyFeeQuotationProxy.setInWsWorkstationCode(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_WORKSTATION_CODE);
+		studyFeeQuotationProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientVersionNumber(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientRevisionNumber(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsAction(
 				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
 		studyFeeQuotationProxy.setInStudentAnnualRecordMkStudentNr(
 				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_ANNUAL_RECORD_MK_STUDENT_NBR);
 		studyFeeQuotationProxy.setInWsStudentSurname(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_SURNAME);

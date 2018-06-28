@@ -3,7 +3,8 @@
  */
 
 export {ErrorInfo} from './lib/info-objects/error-info';
-export { DescriptionInfo} from './lib/info-objects/description-info';
+export {DescriptionInfo} from './lib/info-objects/description-info';
+export {StudentInfo} from './lib/info-objects/student-info';
 export {DescriptionPipe} from './lib/pipes/description.pipe';
 export {ShortDescriptionPipe} from './lib/pipes/short-description.pipe';
 export {OrderByPipe} from './lib/pipes/orderby.pipe';

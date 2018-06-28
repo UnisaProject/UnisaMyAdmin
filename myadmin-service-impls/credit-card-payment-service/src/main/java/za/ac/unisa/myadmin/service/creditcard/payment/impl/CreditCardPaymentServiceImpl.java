@@ -15,7 +15,8 @@ import za.ac.unisa.myadmin.creditcard.payment.NonTpPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.QualPaymentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.SummaryInfo;
 import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
-import za.ac.unisa.myadmin.service.creditcard.payment.dao.StudentRepository;
+import za.ac.unisa.myadmin.student.services.StudentServiceConstants;
+import za.ac.unisa.myadmin.student.services.student.StudentService;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -32,8 +33,18 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	 * A reference to a logger.
 	 */
 	private static final Logger LOG = LoggerFactory.getLogger(CreditCardPaymentServiceImpl.class);
+
+	private final String REG_STATUS_CODE_REGISTERED = "RG";
+	private final String REG_STATUS_DESCRIPTION_REGISTERED = "Registered";
+	private final String REG_STATUS_CODE_PENDING = "TN";
+	private final String REG_STATUS_DESCRIPTION_PENDING = "Registration Pending";
+	private final String REG_STATUS_CODE_CANCELLED = "CA";
+	private final String REG_STATUS_DESCRIPTION_CANCELLED = "Registration cancelled";
+
+	private final String REG_STATUS_DESCRIPTION_UNREGISTERED = "Not Registered";
+
 	@Autowired
-	private StudentRepository studentRepository;
+	private StudentService studentService;
 
 	@Override
 	public CreditCardPaymentInfo processStudentInput(Integer userId) throws OperationFailedException {
@@ -47,12 +58,12 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
 			ccPaymentsProxy.addExceptionListener(exceptionListener);
 			ccPaymentsProxy.clear();
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-			ccPaymentsProxy.setInCsfClientServerCommunicationsAction("DS");
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-			ccPaymentsProxy.setInSecurityWsUserNumber(99998);
-			ccPaymentsProxy.setInWsWorkstationCode("internet");
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsAction(StudentServiceConstants.CREDIT_CARD_PAYMENT_STUDENT_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+			ccPaymentsProxy.setInSecurityWsUserNumber(StudentServiceConstants.CREDIT_CARD_PAYMENT_PROXY_USER_NUMBER);
+			ccPaymentsProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
 			ccPaymentsProxy.setInWsStudentNr(userId);
 
 			ccPaymentsProxy.execute();
@@ -100,12 +111,12 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
 			ccPaymentsProxy.addExceptionListener(exceptionListener);
 			ccPaymentsProxy.clear();
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-			ccPaymentsProxy.setInCsfClientServerCommunicationsAction("GD");
-			ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-			ccPaymentsProxy.setInSecurityWsUserNumber(99998);
-			ccPaymentsProxy.setInWsWorkstationCode("internet");
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsAction(StudentServiceConstants.CREDIT_CARD_PAYMENT_QUAL_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
+			ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+			ccPaymentsProxy.setInSecurityWsUserNumber(StudentServiceConstants.CREDIT_CARD_PAYMENT_PROXY_USER_NUMBER);
+			ccPaymentsProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
 			ccPaymentsProxy.setInWsStudentNr(studentNumber);
 			ccPaymentsProxy.setInWsQualificationCode(qualCode);
 
@@ -151,7 +162,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			ccPaymentsProxy.addExceptionListener(exceptionListener);
 
 			// student nr
-			ccPaymentsProxy.setInWsStudentNr(Integer.parseInt(paymentInfo.getStudentInfo().getStudentNumber()));
+			ccPaymentsProxy.setInWsStudentNr(paymentInfo.getStudentInfo().getStudentNumber());
 			// email
 			//ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
 			ccPaymentsProxy.setInWsAddressV2EmailAddress("adrian@opencollab.co.za");
@@ -212,10 +223,9 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
 			ccPaymentsProxy.addExceptionListener(exceptionListener);
-
-			ccPaymentsProxy.setInWsWorkstationCode("internet");
+			ccPaymentsProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
 			// student nr
-			ccPaymentsProxy.setInWsStudentNr(Integer.parseInt(paymentInfo.getStudentInfo().getStudentNumber()));
+			ccPaymentsProxy.setInWsStudentNr(paymentInfo.getStudentInfo().getStudentNumber());
 			// qual
 			ccPaymentsProxy.setInWsQualificationCode(paymentInfo.getQualificationInfo().getQualCode());
 			// email
@@ -291,17 +301,17 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 			SummaryInfo response = new SummaryInfo();
 			//
 			// student indicated that he/she wants to cancel the library fee
-			if(paymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
-				this.updateSmartCardValue("W", Integer.valueOf(paymentInfo.getStudentInfo().getStudentNumber()));
+			if (paymentInfo.getLibraryFeeForStudent().compareTo(BigDecimal.ZERO) > 0) {
+				studentService.updateSmartCardValue("W", Integer.valueOf(paymentInfo.getStudentInfo().getStudentNumber()));
 			}
 			// Process payment
 			final Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = getPaymentProxyInstance();
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference.set(new OperationFailedException(e.getActionCommand()));
 			ccPaymentsProxy.addExceptionListener(exceptionListener);
-			ccPaymentsProxy.setInWsWorkstationCode("internet");
+			ccPaymentsProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
 			// student nr
-			ccPaymentsProxy.setInWsStudentNr(Integer.parseInt(paymentInfo.getStudentInfo().getStudentNumber()));
+			ccPaymentsProxy.setInWsStudentNr(paymentInfo.getStudentInfo().getStudentNumber());
 			// qual
 			ccPaymentsProxy.setInWsQualificationCode(paymentInfo.getQualificationInfo().getQualCode());
 			// email
@@ -364,16 +374,6 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 		}
 	}
 
-	@Override
-	public String getSmartCardValue(Integer userId) throws OperationFailedException {
-		return studentRepository.getSmartCardIssuedByStudentNumber(userId);
-	}
-
-	@Override
-	@Transactional
-	public int updateSmartCardValue(String smartCard, Integer studentNumber) {
-		return studentRepository.updatesmartCardIssuedByStudentNumber(smartCard, studentNumber);
-	}
 
 	private SummaryInfo buildPaymentResponse(Sfrrf03sMntOnlineCcPayments ccPaymentsProxy) throws OperationFailedException {
 		final SummaryInfo response = new SummaryInfo();
@@ -400,7 +400,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	private QualPaymentInfo buildQualInputUpdateResponse(Sfrrf03sMntOnlineCcPayments ccPaymentsProxy) {
 		final QualPaymentInfo response = new QualPaymentInfo();
 		// set student info
-		response.getStudentInfo().setStudentNumber(String.valueOf(ccPaymentsProxy.getOutWsStudentNr()));
+		response.getStudentInfo().setStudentNumber(ccPaymentsProxy.getOutWsStudentNr());
 		response.getStudentInfo().setStudentName(ccPaymentsProxy.getOutNameCsfStringsString40().trim());
 		response.getStudentInfo().setEmailAddress(ccPaymentsProxy.getOutWsAddressV2EmailAddress().trim());
 		response.getQualificationInfo().setQualCode(ccPaymentsProxy.getOutWsQualificationCode());
@@ -429,20 +429,20 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	private CreditCardPaymentInfo buildInitialInputResponse(Sfrrf03sMntOnlineCcPayments ccPaymentsProxy) {
 		final CreditCardPaymentInfo response = new CreditCardPaymentInfo();
 		// set student info
-		response.getStudentInfo().setStudentNumber(String.valueOf(ccPaymentsProxy.getOutWsStudentNr()));
+		response.getStudentInfo().setStudentNumber(ccPaymentsProxy.getOutWsStudentNr());
 		response.getStudentInfo().setStudentName(ccPaymentsProxy.getOutNameCsfStringsString40().trim());
 		response.getQualificationInfo().setQualCode(ccPaymentsProxy.getOutWsQualificationCode());
 		response.getQualificationInfo().setQualDesc(ccPaymentsProxy.getOutWsQualificationEngDescription().trim());
 		response.getStudentInfo().setEmailAddress(ccPaymentsProxy.getOutWsAddressV2EmailAddress().trim());
 		response.setRegStatus(ccPaymentsProxy.getOutWsStudentAnnualRecordStatusCode());
-		if ("RG".equalsIgnoreCase(response.getRegStatus())) {
-			response.setRegStatusDescription("Registered");
-		} else if ("TN".equalsIgnoreCase(response.getRegStatus())) {
-			response.setRegStatusDescription("Registration Pending");
-		} else if ("CA".equalsIgnoreCase(response.getRegStatus())) {
-			response.setRegStatusDescription("Registration cancelled");
+		if (REG_STATUS_CODE_REGISTERED.equalsIgnoreCase(response.getRegStatus())) {
+			response.setRegStatusDescription(REG_STATUS_DESCRIPTION_REGISTERED);
+		} else if (REG_STATUS_CODE_PENDING.equalsIgnoreCase(response.getRegStatus())) {
+			response.setRegStatusDescription(REG_STATUS_DESCRIPTION_PENDING);
+		} else if (REG_STATUS_CODE_CANCELLED.equalsIgnoreCase(response.getRegStatus())) {
+			response.setRegStatusDescription(REG_STATUS_DESCRIPTION_CANCELLED);
 		} else {
-			response.setRegStatusDescription("Not Registered");
+			response.setRegStatusDescription(REG_STATUS_DESCRIPTION_UNREGISTERED);
 		}
 		// set fees
 		response.setBalance(new BigDecimal(ccPaymentsProxy.getOutDueStudentAccountBalance()));
@@ -499,11 +499,11 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	private Sfrrf03sMntOnlineCcPayments getPaymentProxyInstance() throws PropertyVetoException {
 		Sfrrf03sMntOnlineCcPayments ccPaymentsProxy = new Sfrrf03sMntOnlineCcPayments();
 		ccPaymentsProxy.clear();
-		ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-		ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-		ccPaymentsProxy.setInCsfClientServerCommunicationsAction("A");
-		ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-		ccPaymentsProxy.setInSecurityWsUserNumber(99998);
+		ccPaymentsProxy.setInCsfClientServerCommunicationsClientVersionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+		ccPaymentsProxy.setInCsfClientServerCommunicationsClientRevisionNumber(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+		ccPaymentsProxy.setInCsfClientServerCommunicationsAction(StudentServiceConstants.CREDIT_CARD_PAYMENT_PAYMENT_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
+		ccPaymentsProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+		ccPaymentsProxy.setInSecurityWsUserNumber(StudentServiceConstants.CREDIT_CARD_PAYMENT_PROXY_USER_NUMBER);
 		return ccPaymentsProxy;
 	}
 }

@@ -48,13 +48,13 @@ public interface CreditCardPaymentService {
 	 * @return
 	 * @throws OperationFailedException
 	 */
-	String getSmartCardValue(Integer userId) throws OperationFailedException;
+	//String getSmartCardValue(Integer userId) throws OperationFailedException;
 
 	/**
 	 * @param smartCard
 	 * @param studentNumber
 	 * @return
 	 */
-	int updateSmartCardValue(String smartCard, Integer studentNumber);
+	//int updateSmartCardValue(String smartCard, Integer studentNumber);
 
 }

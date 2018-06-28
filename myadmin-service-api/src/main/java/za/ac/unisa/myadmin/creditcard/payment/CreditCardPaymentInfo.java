@@ -1,5 +1,7 @@
 package za.ac.unisa.myadmin.creditcard.payment;
 
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -42,17 +44,17 @@ public class CreditCardPaymentInfo implements Serializable {
 
 	private String creditDebitIndicator;
 
-	private CardStudentInfo studentInfo;
+	private StudentInfo studentInfo;
 
 	private QualificationInfo qualificationInfo;
 
 
 	public CreditCardPaymentInfo() {
-		this.studentInfo = new CardStudentInfo();
+		this.studentInfo = new StudentInfo();
 		this.qualificationInfo = new QualificationInfo();
 	}
 
-	public CreditCardPaymentInfo(CardStudentInfo studentInfo, QualificationInfo qualificationInfo) {
+	public CreditCardPaymentInfo(StudentInfo studentInfo, QualificationInfo qualificationInfo) {
 		this.studentInfo = studentInfo;
 		this.qualificationInfo = qualificationInfo;
 	}
@@ -137,11 +139,11 @@ public class CreditCardPaymentInfo implements Serializable {
 		this.creditDebitIndicator = creditDebitIndicator;
 	}
 
-	public CardStudentInfo getStudentInfo() {
+	public StudentInfo getStudentInfo() {
 		return studentInfo;
 	}
 
-	public void setStudentInfo(CardStudentInfo studentInfo) {
+	public void setStudentInfo(StudentInfo studentInfo) {
 		this.studentInfo = studentInfo;
 	}
 

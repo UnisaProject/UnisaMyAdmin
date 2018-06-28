@@ -1,11 +1,11 @@
 import {QualificationInfo} from "./qualification-info";
 import {CreditCardInfo} from "./credit-card-info";
 import {CreditCardPaymentInfo} from "./credit-card-payment-info";
-import {CreditCardStudentInfo} from "./credit-card-student-info";
+import {StudentInfo} from "myadmin-lib";
 
 export class NonTpPaymentInfo {
 
-  studentInfo:CreditCardStudentInfo;
+  studentInfo:StudentInfo;
 
   qualificationInfo:QualificationInfo;
 

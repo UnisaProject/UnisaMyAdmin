@@ -15,36 +15,19 @@ export class CreditCardPaymentService {
   }
 
 
-  processStudentInput(studentNumber:string): Observable<CreditCardPaymentInfo> {
+  processStudentInput(studentNumber: number): Observable<CreditCardPaymentInfo> {
     return this.http.get<CreditCardPaymentInfo>('/myadmin-student-services/rest/creditcardpayment/studentinput',{
       params : {
-        studentNumber: studentNumber
+        studentNumber: <string><any>studentNumber
       }
     });
   }
 
-  processQualInput(studentNumber:string, qualCode:string): Observable<QualPaymentInfo> {
+  processQualInput(studentNumber: number, qualCode:string): Observable<QualPaymentInfo> {
     return this.http.get<QualPaymentInfo>('/myadmin-student-services/rest/creditcardpayment/qualinput',{
       params : {
-        studentNumber: studentNumber,
+        studentNumber: <string><any>studentNumber,
         qualCode : qualCode
-      }
-    });
-  }
-
-  updateSmartCardValue(smartCard: string, studentNumber: string): Observable<string>{
-    return this.http.put<string>('/myadmin-student-services/rest/creditcardpayment/smartCardValue',null,{
-      params : {
-        smartCard: smartCard,
-        studentNumber: studentNumber,
-      }
-    });
-  }
-
-  getSmartCardValue(studentNumber: string): Observable<string>{
-    return this.http.get<string>('/myadmin-student-services/rest/creditcardpayment/smartCardValue',{
-      params : {
-        studentNumber: studentNumber
       }
     });
   }

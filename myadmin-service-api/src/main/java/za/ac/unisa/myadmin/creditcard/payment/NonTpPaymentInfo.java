@@ -1,5 +1,7 @@
 package za.ac.unisa.myadmin.creditcard.payment;
 
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -10,7 +12,7 @@ public class NonTpPaymentInfo implements Serializable {
 
 	private static final long serialVersionUID = -1411828481195058901L;
 
-	private CardStudentInfo studentInfo;
+	private StudentInfo studentInfo;
 
 	private QualificationInfo qualificationInfo;
 
@@ -47,12 +49,12 @@ public class NonTpPaymentInfo implements Serializable {
 	private BigDecimal creditCardTotalAmountInput;
 
 	public NonTpPaymentInfo() {
-		this.studentInfo = new CardStudentInfo();
+		this.studentInfo = new StudentInfo();
 		this.qualificationInfo = new QualificationInfo();
 		this.creditCardInfo = new CreditCardInfo();
 	}
 
-	public NonTpPaymentInfo(CardStudentInfo studentInfo, QualificationInfo qualificationInfo) {
+	public NonTpPaymentInfo(StudentInfo studentInfo, QualificationInfo qualificationInfo) {
 		this.studentInfo = studentInfo;
 		this.qualificationInfo = qualificationInfo;
 	}
@@ -137,11 +139,11 @@ public class NonTpPaymentInfo implements Serializable {
 		this.creditDebitIndicator = creditDebitIndicator;
 	}
 
-	public CardStudentInfo getStudentInfo() {
+	public StudentInfo getStudentInfo() {
 		return studentInfo;
 	}
 
-	public void setStudentInfo(CardStudentInfo studentInfo) {
+	public void setStudentInfo(StudentInfo studentInfo) {
 		this.studentInfo = studentInfo;
 	}
 
@@ -216,30 +218,6 @@ public class NonTpPaymentInfo implements Serializable {
 	public void setPayThreeGDataBundleFee(boolean payThreeGDataBundleFee) {
 		this.payThreeGDataBundleFee = payThreeGDataBundleFee;
 	}
-
-	//	public String getPayLibraryFee() {
-//		return payLibraryFee;
-//	}
-//
-//	public void setPayLibraryFee(String payLibraryFee) {
-//		this.payLibraryFee = payLibraryFee;
-//	}
-//
-//	public String getPayMatricFirstAppFee() {
-//		return payMatricFirstAppFee;
-//	}
-//
-//	public void setPayMatricFirstAppFee(String payMatricFirstAppFee) {
-//		this.payMatricFirstAppFee = payMatricFirstAppFee;
-//	}
-//
-//	public String getPayThreeGDataBundleFee() {
-//		return payThreeGDataBundleFee;
-//	}
-//
-//	public void setPayThreeGDataBundleFee(String payThreeGDataBundleFee) {
-//		this.payThreeGDataBundleFee = payThreeGDataBundleFee;
-//	}
 
 	public BigDecimal getStudyFeeAmount() {
 		return studyFeeAmount;

@@ -8,9 +8,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import za.ac.unisa.myadmin.creditcard.payment.CardStudentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardInfo;
 import za.ac.unisa.myadmin.creditcard.payment.TpPaymentInfo;
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -46,7 +46,7 @@ public class TpPaymentInfoValidator implements Validator {
 			throw new IllegalArgumentException("The supplied [creditCardInfoValidator] must " +
 				"support the validation of [CreditCardInfo] instances.");
 		}
-		if (!cardStudentInfoValidator.supports(CardStudentInfo.class)) {
+		if (!cardStudentInfoValidator.supports(StudentInfo.class)) {
 			throw new IllegalArgumentException("The supplied [cardStudentInfoValidator] must " +
 				"support the validation of [CardStudentInfo] instances.");
 		}

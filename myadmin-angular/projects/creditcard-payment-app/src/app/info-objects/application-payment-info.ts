@@ -1,10 +1,9 @@
-import {CreditCardStudentInfo} from "./credit-card-student-info";
 import {CreditCardInfo} from "./credit-card-info";
 import {CreditCardPaymentInfo} from "./credit-card-payment-info";
-
+import {StudentInfo} from "myadmin-lib";
 export class ApplicationPaymentInfo {
 
-  studentInfo:CreditCardStudentInfo;
+  studentInfo:StudentInfo;
 
   applyAmountInput:number;
 

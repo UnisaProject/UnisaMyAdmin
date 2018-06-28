@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import za.ac.unisa.myadmin.creditcard.payment.CardStudentInfo;
-import za.ac.unisa.myadmin.service.rest.impl.utils.RestImplUtils;
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +20,7 @@ public class CardStudentInfoValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return CardStudentInfo.class.equals(aClass);
+		return StudentInfo.class.equals(aClass);
 	}
 
 	@Override
@@ -31,10 +30,10 @@ public class CardStudentInfoValidator implements Validator {
 		if(errors.hasErrors()){
 			return;
 		}
-		CardStudentInfo studentInfo = (CardStudentInfo) o;
+		StudentInfo studentInfo = (StudentInfo) o;
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		//studentNumber
-		if (!ValidatorUtil.isNumeric(studentInfo.getStudentNumber())) {
+		if (!ValidatorUtil.isNumeric(String.valueOf(studentInfo.getStudentNumber()))) {
 			errors.rejectValue("studentNumber", "studentNumber.numeric");
 		}
 		if (String.valueOf(studentInfo.getStudentNumber()).length() < 7) {

@@ -1,4 +1,4 @@
-import {CreditCardStudentInfo} from "./credit-card-student-info";
+import {StudentInfo} from "myadmin-lib";
 import {QualificationInfo} from "./qualification-info";
 import {CreditCardInfo} from "./credit-card-info";
 
@@ -33,7 +33,7 @@ export interface CreditCardPaymentInfo {
 
   //canCancelSmartCard:boolean;
 
-  studentInfo?:CreditCardStudentInfo;
+  studentInfo?:StudentInfo;
   qualificationInfo?: QualificationInfo;
   creditCardInfo?: CreditCardInfo;
 }

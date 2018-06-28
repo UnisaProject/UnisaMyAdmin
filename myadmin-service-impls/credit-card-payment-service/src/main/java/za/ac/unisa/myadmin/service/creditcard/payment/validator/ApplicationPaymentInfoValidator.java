@@ -8,8 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
-import za.ac.unisa.myadmin.creditcard.payment.CardStudentInfo;
 import za.ac.unisa.myadmin.creditcard.payment.CreditCardInfo;
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 
 /**
  * Created by Adrian on 2018-06-11.
@@ -41,9 +41,9 @@ public class ApplicationPaymentInfoValidator implements Validator {
 			throw new IllegalArgumentException("The supplied [Validator] must " +
 				"support the validation of [CreditCardInfo] instances.");
 		}
-		if (!cardStudentInfoValidator.supports(CardStudentInfo.class)) {
+		if (!cardStudentInfoValidator.supports(StudentInfo.class)) {
 			throw new IllegalArgumentException("The supplied [Validator] must " +
-				"support the validation of [CardStudentInfo] instances.");
+				"support the validation of [StudentInfo] instances.");
 		}
 		this.creditCardInfoValidator = creditCardInfoValidator;
 		this.cardStudentInfoValidator = cardStudentInfoValidator;

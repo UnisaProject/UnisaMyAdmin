@@ -66,17 +66,6 @@ public class CreditCardRestServiceImpl {
 		return creditCardPaymentService.processQualInput(studentNumber, qualCode);
 	}
 
-	@GetMapping(path = {"/creditcardpayment/smartCardValue"}, produces = MediaType.TEXT_PLAIN)
-	public String getSmartCardValue(@RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
-		return new String("W");
-		//return creditCardPaymentService.getSmartCardValue(studentNumber);
-	}
-
-	@PutMapping(path = {"/creditcardpayment/smartCardValue"}, produces = APPLICATION_JSON_VALUE)
-	public int updateSmartCardValue(@RequestParam(value = "smartCard") String smartCard, @RequestParam(value = "studentNumber") Integer studentNumber) throws OperationFailedException {
-		return creditCardPaymentService.updateSmartCardValue(smartCard, studentNumber);
-	}
-
 	@PostMapping(path = "/creditcardpayment/applyNonTPPayment", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public SummaryInfo processNonTpPayment(@Validated @RequestBody NonTpPaymentInfo nonTpPaymentInfo) throws OperationFailedException {
 		return creditCardPaymentService.processNonTpPayment(nonTpPaymentInfo);

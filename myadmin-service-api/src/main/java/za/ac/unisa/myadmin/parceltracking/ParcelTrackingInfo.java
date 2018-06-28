@@ -1,5 +1,7 @@
 package za.ac.unisa.myadmin.parceltracking;
 
+import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
+
 import java.io.Serializable;
 import java.util.List;
 
