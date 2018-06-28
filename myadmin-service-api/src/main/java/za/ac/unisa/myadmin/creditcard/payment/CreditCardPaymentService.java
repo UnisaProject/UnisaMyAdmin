@@ -43,18 +43,4 @@ public interface CreditCardPaymentService {
 	 */
 	SummaryInfo processTpPayment(TpPaymentInfo paymentInfo) throws OperationFailedException;
 
-	/**
-	 * @param userId
-	 * @return
-	 * @throws OperationFailedException
-	 */
-	//String getSmartCardValue(Integer userId) throws OperationFailedException;
-
-	/**
-	 * @param smartCard
-	 * @param studentNumber
-	 * @return
-	 */
-	//int updateSmartCardValue(String smartCard, Integer studentNumber);
-
 }
