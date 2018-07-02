@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BlockUI, NgBlockUI} from 'ng-block-ui';
+import {StudentInfo} from 'myadmin-lib';
+import {StudyMaterialFormService} from '../../services';
 
 @Component({
   selector: 'unisa-material-student-input',
@@ -19,6 +21,7 @@ export class MaterialStudentInputComponent implements OnInit {
   private blockUI: NgBlockUI;
 
   constructor(private router:Router,
+              private studyMaterialFormService:StudyMaterialFormService,
               private formBuilder: FormBuilder) {
     this.initForm();
   }
@@ -34,9 +37,9 @@ export class MaterialStudentInputComponent implements OnInit {
           Validators.pattern("([0-9])*")
         ])
       ],
-      studentSurname: [null,  Validators.required],
-      studentNames: [null,  Validators.required],
-      studentDOB: [null,  Validators.required],
+      surname: [null,  Validators.required],
+      firstNames: [null,  Validators.required],
+      dateOfBirth: [null,  Validators.required],
     });
   }
 
@@ -45,6 +48,7 @@ export class MaterialStudentInputComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start("Loading courses...");
+    this.studyMaterialFormService.studentInfo = {...this.studentInputForm.value};
     this.router.navigate(["courses"]);
   }
 

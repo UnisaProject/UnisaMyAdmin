@@ -3,14 +3,20 @@
  */
 export interface StudentInfo {
 
-  studentNumber: number;
+  studentNumber:number;
+  
+  studentName:string;
 
-  studentName: string;
+  surname:string;
 
-  title: string;
+  firstNames:string;
 
-  initials: string;
+  dateOfBirth:Date;
 
-  emailAddress: string;
+  title:string;
+
+  initials:string;
+
+  emailAddress:string;
 
 }
