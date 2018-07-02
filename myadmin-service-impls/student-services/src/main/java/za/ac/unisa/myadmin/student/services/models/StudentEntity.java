@@ -244,6 +244,8 @@ public class StudentEntity implements Serializable {
 		info.setStudentNumber(this.studentNumber);
 		String fullName = (this.surname.isEmpty() ? "" : this.surname) + ", " + (this.firstNames.isEmpty() ? "" : this.firstNames);
 		info.setStudentName(fullName);
+		info.setSurname(this.surname);
+		info.setFirstNames(this.firstNames);
 		info.setInitials(this.initials);
 		info.setTitle(this.title);
 		//No email address in table

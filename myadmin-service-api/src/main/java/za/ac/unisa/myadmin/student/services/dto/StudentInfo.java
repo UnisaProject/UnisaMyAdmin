@@ -1,15 +1,24 @@
 package za.ac.unisa.myadmin.student.services.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Adrian on 2018-06-26.
  */
 public class StudentInfo implements Serializable {
 
+	private static final long serialVersionUID = 1058017142460191890L;
+
 	private Integer studentNumber;
 
 	private String studentName;
+
+	private String surname;
+
+	private String firstNames;
+
+	private Date dateOfBirth;
 
 	private String title;
 
@@ -19,7 +28,6 @@ public class StudentInfo implements Serializable {
 
 	public StudentInfo() {
 	}
-
 
 	public Integer getStudentNumber() {
 		return studentNumber;
@@ -35,6 +43,30 @@ public class StudentInfo implements Serializable {
 
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getFirstNames() {
+		return firstNames;
+	}
+
+	public void setFirstNames(String firstNames) {
+		this.firstNames = firstNames;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getTitle() {
