@@ -59,4 +59,7 @@ public interface RegistrationPeriodRepository extends JpaRepository<Registration
 	public List<RegistrationPeriodEntity> findByAcademicYearAndSemesterPeriodAndTypeAndEffectiveDateAfterAndExpirationDateBefore(
 			Integer year, Integer semester, String type, Date effectiveDate, Date expirationDate);
 
+	public List<RegistrationPeriodEntity> findByAcademicYearAndSemesterPeriodAndTypeAndExpirationDateBefore(
+		Integer year, Integer semester, String type, Date expirationDate);
+
 }

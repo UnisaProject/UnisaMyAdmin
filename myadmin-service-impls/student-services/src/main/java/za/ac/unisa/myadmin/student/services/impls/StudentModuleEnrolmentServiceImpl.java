@@ -11,6 +11,7 @@ import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.student.services.StudentServiceConstants;
+import za.ac.unisa.myadmin.student.services.dto.RegistrationPeriodInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentAnnualInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentModuleEnrolmentInfo;
@@ -23,8 +24,6 @@ import za.ac.unisa.myadmin.student.services.student.StudentModuleEnrolmentServic
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -45,6 +44,8 @@ import java.util.stream.Stream;
 public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolmentService {
 
 	public static final Set<String> TEMP_STUDENT_STATUS_CODES = Stream.of("TN", "RG").collect(Collectors.toSet());
+	public static final String NO_STUDY_MATERIAL_ISSUED_STATUS = "NOSTMISS";
+
 	private static final Logger LOG = LoggerFactory.getLogger(StudentModuleEnrolmentServiceImpl.class);
 	@Autowired
 	private StudentModuleEnrolmentRepository moduleEnrolmentRepository;
@@ -91,9 +92,9 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 	}
 
 	@Override
-	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterAndStatusIn(Integer studentNumber, Integer year, Integer semester, List<String> statusCodesList) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(Integer studentNumber, Integer year, List<Integer> semesterList, List<String> statusCodesList) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		try {
-			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYearAndSemesterPeriodAndStatusCodeIn(studentNumber, year, semester, statusCodesList)
+			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYearAndSemesterPeriodInAndStatusCodeIn(studentNumber, year, semesterList, statusCodesList)
 				.stream()
 				.map(entity -> entity.toDto())
 				.collect(Collectors.toList());
@@ -124,14 +125,27 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 		//Skip just get it if exists...
 		//StudentModuleEnrolmentInfo moduleEnrolmentInfo = this.getStudentModuleEnrolmentByStudentNumberAndAcademicYear(student.getStudentNumber(), studentAnnualInfo.getAcademicYear()).get(0);
 
-		//registrationPeriodService.getEffectiveRegistrationPeriodsByYearAndSemesterAndTypeOnDate();
+
 		List<String> statusCodes = new ArrayList<>();
 		Collections.addAll(statusCodes, "TN", "RG");
-		List<StudentModuleEnrolmentInfo> returnStudentModuleEnrolments = this.getStudentModuleEnrolmentByStudentNumberAndAcademicYear(student.getStudentNumber(), studentAnnualInfo.getAcademicYear());
-
-		return returnStudentModuleEnrolments.stream()
-			.filter(returnStudentModuleEnrolment -> TEMP_STUDENT_STATUS_CODES.contains(returnStudentModuleEnrolment.getStatusCode()))
-			.collect(Collectors.toList());
+		List<Integer> semesterList = new ArrayList<>();
+		Collections.addAll(semesterList, 0, 1, 6);
+		List<StudentModuleEnrolmentInfo> returnNonSecondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, statusCodes);
+		List<StudentModuleEnrolmentInfo> returnAllStudentModuleEnrolments = new ArrayList<>();//this.getStudentModuleEnrolmentByStudentNumberAndAcademicYear(student.getStudentNumber(), studentAnnualInfo.getAcademicYear());
+		returnAllStudentModuleEnrolments.addAll(returnNonSecondSemesterStudentModules);
+		semesterList.clear();
+		Collections.addAll(semesterList, 2);
+		List<StudentModuleEnrolmentInfo> returnSecondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, statusCodes);
+		List<RegistrationPeriodInfo> registrationPeriodInfoList = registrationPeriodService.getRegistrationPeriodsByYearAndSemesterAndTypeAfterExpirationDate(studentAnnualInfo.getAcademicYear(),
+			2, NO_STUDY_MATERIAL_ISSUED_STATUS, new Date());
+		for (StudentModuleEnrolmentInfo moduleEnrolmentInfo : returnSecondSemesterStudentModules) {
+			//returnAllStudentModuleEnrolments.addAll(registrationPeriodInfoList.stream().filter(periodInfo -> moduleEnrolmentInfo.getAcademicYear().equals(periodInfo.getAcademicYear()) && moduleEnrolmentInfo.getSemesterPeriod().equals(periodInfo.getSemester())).map(periodInfo -> moduleEnrolmentInfo).collect(Collectors.toList()));
+			for (RegistrationPeriodInfo periodInfo : registrationPeriodInfoList) {
+				if (moduleEnrolmentInfo.getAcademicYear().equals(periodInfo.getAcademicYear()) && moduleEnrolmentInfo.getSemesterPeriod().equals(periodInfo.getSemester()))
+					returnAllStudentModuleEnrolments.add(moduleEnrolmentInfo);
+			}
+		}
+		return returnAllStudentModuleEnrolments;
 	}
 
 	/**
@@ -176,8 +190,6 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 			//Trim leading and trailing whitespace
 			proxySurname = StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentSurname());
 			proxyFirstNames = StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentFirstNames());
-			DateFormat strDate = new SimpleDateFormat("yyyy-MM-dd");
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			try {
 				proxyDateOfBirth = studentContactDetailProxy.getOutWsStudentBirthDate().getTime();
 			} catch (NullPointerException e) {
@@ -212,6 +224,7 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 				isValid = false;
 				throw new OperationFailedException("Please enter year for date of birth");
 			}
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date1 = student.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalDate date2 = proxyDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			if (date1.format(formatter).compareTo(date2.format(formatter)) != 0) {

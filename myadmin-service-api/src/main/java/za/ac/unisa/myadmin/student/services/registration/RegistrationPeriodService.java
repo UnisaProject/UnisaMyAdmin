@@ -59,4 +59,8 @@ public interface RegistrationPeriodService {
 			Integer semester, String type, Date date)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException;
 
+	public List<RegistrationPeriodInfo> getRegistrationPeriodsByYearAndSemesterAndTypeAfterExpirationDate(Integer year,
+			Integer semester, String type, Date date)
+			throws MissingParameterException, InvalidParameterException, OperationFailedException;
+
 }

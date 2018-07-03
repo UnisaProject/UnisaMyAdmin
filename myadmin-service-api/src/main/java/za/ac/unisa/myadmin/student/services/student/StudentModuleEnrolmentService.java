@@ -23,7 +23,7 @@ public interface StudentModuleEnrolmentService {
 	public List<StudentModuleEnrolmentInfo> getStudentModuleEnrolmentByStudentNumberAndAcademicYear(Integer studentNumber, Integer academicYear)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException;
 
-	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterAndStatusIn(Integer studentNumber, Integer year, Integer semester, List<String> statusCodesList)
+	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(Integer studentNumber, Integer year, List<Integer> semesterList, List<String> statusCodesList)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException;
 
 	public List<StudentModuleEnrolmentInfo> getStudentModuleEnrolments(StudentInfo student) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;

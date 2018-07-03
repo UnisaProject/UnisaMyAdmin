@@ -223,6 +223,21 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 			throw new OperationFailedException(e);
 		}
 	}
+	@Override
+	public List<RegistrationPeriodInfo> getRegistrationPeriodsByYearAndSemesterAndTypeAfterExpirationDate(Integer year,
+			Integer semester, String type, Date date)
+			throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return registrationPeriodRepository
+					.findByAcademicYearAndSemesterPeriodAndTypeAndExpirationDateBefore(year,
+							semester, type, date)
+					.stream()
+					.map(entity -> entity.toDto())
+					.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
 
 	// *********************************
 

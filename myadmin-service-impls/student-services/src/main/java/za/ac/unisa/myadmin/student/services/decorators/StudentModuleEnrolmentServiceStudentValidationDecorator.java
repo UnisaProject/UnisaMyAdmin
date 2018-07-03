@@ -47,8 +47,8 @@ public class StudentModuleEnrolmentServiceStudentValidationDecorator implements 
 	}
 
 	@Override
-	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterAndStatusIn(Integer studentNumber, Integer year, Integer semester, List<String> statusList) throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		return moduleEnrolmentService.getModuleEnrolmentsByNumberAndYearAndSemesterAndStatusIn(studentNumber, year, semester, statusList);
+	public List<StudentModuleEnrolmentInfo> getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(Integer studentNumber, Integer year, List<Integer> semesterList, List<String> statusList) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		return moduleEnrolmentService.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(studentNumber, year, semesterList, statusList);
 	}
 
 
