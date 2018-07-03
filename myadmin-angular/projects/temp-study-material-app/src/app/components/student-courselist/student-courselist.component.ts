@@ -36,17 +36,24 @@ export class StudentCourselistComponent implements OnInit {
     }
     this.today = new Date();
     this.studentInfo = this.studyMaterialFormService.studentInfo;
-    this.getStudentModuleList(this.studyMaterialFormService.studentInfo);
+    if(this.studyMaterialFormService.studentModuleEnrolmentList === null) {
+      this.getStudentModuleList(this.studyMaterialFormService.studentInfo);
+    }else{
+      this.studentModules = this.studyMaterialFormService.studentModuleEnrolmentList;
+      this.blockUI.stop();
+    }
   }
 
   private getStudentModuleList(searchCriteria: StudentInfo): void {
     this.studyMaterialService.requestStudentModuleEnrolments(searchCriteria)
       .subscribe(
-        (examinations: StudentModuleEnrolmentInfo[]) => {
-          this.studentModules = examinations;
+        (moduleEnrolments: StudentModuleEnrolmentInfo[]) => {
+          this.studentModules = moduleEnrolments;
+          this.studyMaterialFormService.studentModuleEnrolmentList = moduleEnrolments
           this.blockUI.stop()
         },
         () => {
+          this.router.navigate(["search"]);
           this.blockUI.stop()
         }
       );

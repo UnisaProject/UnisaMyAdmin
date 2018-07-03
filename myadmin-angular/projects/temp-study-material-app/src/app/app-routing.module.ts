@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/search', pathMatch: 'full'},
   { path: 'search', component: MaterialStudentInputComponent},
   { path: 'courses', component: StudentCourselistComponent},
-  { path: 'viewCourse', component: ViewCourseMaterialComponent},
+  { path: 'viewCourse/:moduleCode/:academicYear/:semesterCode', component: ViewCourseMaterialComponent},
 ];
 
 @NgModule({

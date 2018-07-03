@@ -28,7 +28,7 @@
     <tbody>
     <tr *ngFor="let studentModule of studentModules">
       <td>{{ studentModule.studyUnitCode }}-{{ studentModule.academicYear }}-{{ studentModule.semesterPeriodCode }}</td>
-      <td>View materials</td>
+      <td><a routerLink="/viewCourse/{{ studentModule.studyUnitCode }}/{{ studentModule.academicYear }}/{{ studentModule.semesterPeriodCode }}">View materials</a></td>
     </tr>
     </tbody>
   </table>
