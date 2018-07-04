@@ -10,5 +10,9 @@
 				</imports>
 			</module>
 		</dependencies>
+		<exclusions>
+			<module name="org.jboss.resteasy.resteasy-jaxrs"/>
+			<module name="org.jboss.resteasy.resteasy-jaxb-provider"/>
+		</exclusions>
 	</deployment>
 </jboss-deployment-structure>

@@ -6,7 +6,7 @@
 //
 
 
-package za.ac.unisa.myadmin.student.services.dto;
+package za.ac.unisa.myadmin.student.services.jaxb.studymaterial;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,14 +14,14 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for scmCourseInfoDTO complex type.
+ * <p>Java class for studyMaterialResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="scmCourseInfoDTO">
+ * &lt;complexType name="studyMaterialResponse">
  *   &lt;complexContent>
- *     &lt;extension base="{}moduleInfoDTO">
+ *     &lt;extension base="{}studyMaterialDTO">
  *       &lt;sequence>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "scmCourseInfoDTO")
-public class ScmCourseInfoDTO
-    extends ModuleInfoDTO
+@XmlType(name = "studyMaterialResponse")
+public class StudyMaterialResponse
+    extends StudyMaterialDTO
 {
 
 

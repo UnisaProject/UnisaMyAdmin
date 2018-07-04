@@ -6,28 +6,27 @@
 //
 
 
-package za.ac.unisa.myadmin.student.services.dto;
+package za.ac.unisa.myadmin.student.services.jaxb.studymaterial;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for studyMaterialDTO complex type.
+ * <p>Java class for moduleResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="studyMaterialDTO">
+ * &lt;complexType name="moduleResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Resource" type="{}resourceDTO" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="ModuleInfo" type="{}moduleInfoDTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,44 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "studyMaterialDTO", propOrder = {
-    "resource"
+@XmlType(name = "moduleResponse", propOrder = {
+    "moduleInfo"
 })
-@XmlSeeAlso({
-    StudyMaterialResponse.class
-})
-public class StudyMaterialDTO {
+public class ModuleResponse {
 
-    @XmlElement(name = "Resource")
-    protected List<ResourceDTO> resource;
+    @XmlElement(name = "ModuleInfo")
+    protected List<ModuleInfoDTO> moduleInfo;
 
     /**
-     * Gets the value of the resource property.
+     * Gets the value of the moduleInfo property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the resource property.
+     * This is why there is not a <CODE>set</CODE> method for the moduleInfo property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getResource().add(newItem);
+     *    getModuleInfo().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ResourceDTO }
+     * {@link ModuleInfoDTO }
      * 
      * 
      */
-    public List<ResourceDTO> getResource() {
-        if (resource == null) {
-            resource = new ArrayList<ResourceDTO>();
+    public List<ModuleInfoDTO> getModuleInfo() {
+        if (moduleInfo == null) {
+            moduleInfo = new ArrayList<ModuleInfoDTO>();
         }
-        return this.resource;
+        return this.moduleInfo;
     }
 
 }

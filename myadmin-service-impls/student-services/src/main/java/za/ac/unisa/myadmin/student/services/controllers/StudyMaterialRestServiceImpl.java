@@ -16,6 +16,7 @@ import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentModuleEnrolmentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudyMaterialDetailInfo;
 import za.ac.unisa.myadmin.student.services.impls.SCMClientRestServiceImpl;
+import za.ac.unisa.myadmin.student.services.impls.SCMWebService;
 import za.ac.unisa.myadmin.student.services.student.StudentModuleEnrolmentService;
 
 import java.util.List;
@@ -27,21 +28,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping({"/studentservices"})
 public class StudyMaterialRestServiceImpl {
 
-	//	@Qualifier("StudentModuleEnrolmentService")
 	@Autowired
 	@Qualifier("StudentModuleEnrolmentServiceStudentValidationDecorator")
 	private StudentModuleEnrolmentService moduleEnrolmentService;
+
 	@Autowired
 	@Qualifier("SCMClientRestService")
 	private SCMClientRestServiceImpl scmClientRestService;
+
+	@Autowired
+	@Qualifier("SCMWebService")
+	private SCMWebService scmClientService;
 
 	@PostMapping(path = "/studymaterial/courselist", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public List<StudentModuleEnrolmentInfo> requestStudentModuleEnrolments(@RequestBody StudentInfo student) throws OperationFailedException, MissingParameterException, InvalidParameterException, DoesNotExistException {
 		return moduleEnrolmentService.requestStudentModuleEnrolments(student);
 	}
 
-	@GetMapping(path = "/studymaterial/viewMaterial")
+	@GetMapping(path = "/studymaterial/viewmaterial", produces = APPLICATION_JSON_VALUE)
 	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(@RequestParam(value = "moduleCode") String moduleCode, @RequestParam(value = "academicYear") Integer academicYear, @RequestParam(value = "semesterCode") String semesterCode) throws Exception {
-		return scmClientRestService.getStudyMaterialList(moduleCode, academicYear, semesterCode);
+		return scmClientService.getStudyMaterialList(moduleCode, academicYear, semesterCode);
 	}
 }

@@ -6,7 +6,7 @@
 //
 
 
-package za.ac.unisa.myadmin.student.services.dto;
+package za.ac.unisa.myadmin.student.services.jaxb.studymaterial;
 
 import java.util.Date;
 

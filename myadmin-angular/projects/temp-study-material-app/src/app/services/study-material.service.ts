@@ -15,7 +15,7 @@ export class StudyMaterialService {
   }
 
   requestModuleStudyMaterials(moduleCode:string, academicYear:number, semesterCode:string): Observable<StudyMaterialDetailInfo[]> {
-    return this.http.get<StudyMaterialDetailInfo[]>('/myadmin-student-services/studentservices/studymaterial/viewMaterial', {
+    return this.http.get<StudyMaterialDetailInfo[]>('/myadmin-student-services/studentservices/studymaterial/viewmaterial', {
       params : {
         moduleCode: moduleCode,
         academicYear: <string><any>academicYear,

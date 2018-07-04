@@ -6,7 +6,7 @@
 //
 
 
-package za.ac.unisa.myadmin.student.services.dto;
+package za.ac.unisa.myadmin.student.services.jaxb.studymaterial;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

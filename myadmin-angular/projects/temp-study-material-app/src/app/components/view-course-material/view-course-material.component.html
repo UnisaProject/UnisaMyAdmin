@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h5>Study Materials for {{moduleCode}}-{{academicYear}}-{{semesterCode}} for Student: {{studentInfo?.studentNumber}} </h5>
+      <h5>Study Materials for {{moduleCode}}-{{academicYear}}-{{semesterCode}} for Student:
+        {{studentInfo?.studentNumber}} </h5>
       <br/>
       <p>To download a study material file to your PC, click on the description to open the document in your browser.
         Once the file has opened in a new window, use the Save a Copy option of your Adobe Reader to save the file to
@@ -19,12 +20,11 @@
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let studentModule of studentModules">-->
-      <!--<td>{{ studentModule.studyUnitCode }}-{{ studentModule.academicYear }}-{{ studentModule.semesterPeriodCode }}</td>-->
-      <!--<td><a-->
-        <!--routerLink="/viewCourse/{{ studentModule.studyUnitCode }}/{{ studentModule.academicYear }}/{{ studentModule.semesterPeriodCode }}">View-->
-        <!--materials</a></td>-->
-    <!--</tr>-->
+    <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
+      <td>{{ studyMaterial?.discription }}</td>
+      <td>{{studyMaterial?.filesize}}</td>
+      <td>{{studyMaterial?.implementationDate}}</td>
+    </tr>
     </tbody>
   </table>
   <div class="row mb-3">

@@ -2,32 +2,59 @@ package za.ac.unisa.myadmin.student.services.impls;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import za.ac.unisa.myadmin.student.services.dto.ModuleInfoRequest;
-import za.ac.unisa.myadmin.student.services.dto.ResourceDTO;
+import za.ac.unisa.myadmin.student.services.jaxb.studymaterial.ModuleInfoRequest;
+import za.ac.unisa.myadmin.student.services.jaxb.studymaterial.ResourceDTO;
 import za.ac.unisa.myadmin.student.services.dto.StudyMaterialDetailInfo;
-import za.ac.unisa.myadmin.student.services.dto.StudyMaterialResponse;
+import za.ac.unisa.myadmin.student.services.jaxb.studymaterial.StudyMaterialResponse;
 
+import javax.ws.rs.client.Entity;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
+import java.security.GeneralSecurityException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-//import test.jaxrs2.StudyMaterialCodesConverter;
+/**
+ * Initial attempts to use spring
+ * as restclient implementation.
+ * NOT WORKING.Bad Request error.
+ *
+ */
 @Service("SCMClientRestService")
 public class SCMClientRestServiceImpl {
 
 	private static Log logger = LogFactory.getLog(SCMClientRestServiceImpl.class);
-	//private EmailService emailService;
+	private final String uri = "https://appsdev.int.unisa.ac.za/sharedservices/courseMaterial";
 
 	public List<StudyMaterialDetailInfo> getStudyMaterialList(String course, Integer academicYear, String semester) throws Exception {
-		final String uri = "http://appsdev.int.unisa.ac.za/sharedservices/courseMaterial";
+
 		if (semester.equals("S1")) {
 			semester = "1";
 		} else if (semester.equals("S2")) {
@@ -45,10 +72,74 @@ public class SCMClientRestServiceImpl {
 
 		StudyMaterialResponse responseString = null;
 		//Response response = null;
+//		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+		//
+//		SSLContextBuilder builder = new SSLContextBuilder();
+//		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+//		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+//			builder.build());
+//		CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(
+//			sslsf).build();
+//
+//		HttpPost httpPost = new HttpPost("https://some-server");
+//		CloseableHttpResponse response = httpclient.execute(httpPost);
+//		try {
+//			System.out.println(response.getStatusLine());
+//			HttpEntity entity = response.getEntity();
+//			EntityUtils.consume(entity);
+//		}
+//		finally {
+//			response.close();
+//		}
+		//
 
-		//try {
-		RestTemplate restTemplate = new RestTemplate();
-		responseString = restTemplate.postForObject(uri, request, StudyMaterialResponse.class);
+//		HttpComponentsClientHttpRequestFactory requestingFactory
+//			= new HttpComponentsClientHttpRequestFactory();
+//		DefaultHttpClient httpClients
+//			= (DefaultHttpClient) requestingFactory.getHttpClient();
+//		TrustStrategy acceptingTrustStrategy = (cert, authType) -> true
+//		SSLSocketFactory sf = new SSLSocketFactory(
+//			acceptingTrustStrategy, ALLOW_ALL_HOSTNAME_VERIFIER);
+//		httpClients.getConnectionManager().getSchemeRegistry()
+//			.register(new Scheme("https", 443, sf));
+//
+//		String urlOverHttps
+//			= "https://localhost:8443/spring-security-rest-basic-auth/api/bars/1";
+//		ResponseEntity<String> responseing = new RestTemplate(requestingFactory).
+//			exchange(uri, HttpMethod.POST, null, String.class);
+
+
+		//
+		//
+		CloseableHttpClient httpClient
+			= HttpClients.custom()
+			.setSSLHostnameVerifier(new NoopHostnameVerifier())
+			.build();
+		HttpComponentsClientHttpRequestFactory requestFactory
+			= new HttpComponentsClientHttpRequestFactory();
+		//requestFactory.setHttpClient(httpClient);
+		requestFactory.setHttpClient(createAllTrustingClient());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType((MediaType.APPLICATION_XML));
+//		HttpEntity<Foo> entity = new HttpEntity<Foo>(resource, headers);
+//		headers.setContentType(MediaType.APPLICATION_XML);
+		HttpEntity<ModuleInfoRequest> entity = new HttpEntity<ModuleInfoRequest>(request, headers);
+
+		Entity tt = Entity.entity(request, javax.ws.rs.core.MediaType.APPLICATION_XML);
+//		ResponseEntity<String> response
+//			= new RestTemplate(requestFactory).exchange(
+//			urlOverHttps, HttpMethod.GET, null, String.class);
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+		restTemplate.setMessageConverters(getMessageConverters());
+		responseString = restTemplate.postForObject(uri, tt, StudyMaterialResponse.class);
+		//
+		//
+
+//		RestTemplate restTemplate = new RestTemplate();
+//
+		//restTemplate.setRequestFactory(requestFactory);
+		//responseString = restTemplate.postForObject(uri, request, StudyMaterialResponse.class);
 //			String serverpath = ServerConfigurationService.getServerUrl();
 //			ResteasyClient client = new ResteasyClientBuilder().build();
 //
@@ -136,6 +227,13 @@ public class SCMClientRestServiceImpl {
 		return studyMaterialDTOList;
 	}
 
+	private List<HttpMessageConverter<?>> getMessageConverters() {
+		List<HttpMessageConverter<?>> converters =
+			new ArrayList<HttpMessageConverter<?>>();
+		converters.add(new MappingJackson2HttpMessageConverter());
+		converters.add(new Jaxb2RootElementHttpMessageConverter());
+		return converters;
+	}
 
 	public void sendEmailToFixFiles(String dept, String course, String shortDesrciption, String barcode) throws Exception {
 
@@ -281,32 +379,32 @@ public class SCMClientRestServiceImpl {
 		return s[0];
 	}
 
-//	private static DefaultHttpClient createAllTrustingClient()
-//		throws GeneralSecurityException {
-//
-//		SchemeRegistry registry = new SchemeRegistry();
-//
-//		registry.register(new Scheme("http", 80, PlainSocketFactory
-//			.getSocketFactory()));
-//
-//		TrustStrategy trustStrategy = new TrustStrategy() {
-//			public boolean isTrusted(X509Certificate[] chain, String authType)
-//				throws CertificateException {
-//				return true;
-//			}
-//		};
-//		SSLSocketFactory factory = new SSLSocketFactory(trustStrategy,
-//			SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-//		registry.register(new Scheme("https", 443, factory));
-//
-//		ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(
-//			registry);
-//		mgr.setMaxTotal(1000);
-//		mgr.setDefaultMaxPerRoute(1000);
-//
-//		DefaultHttpClient client = new DefaultHttpClient(mgr,
-//			new DefaultHttpClient().getParams());
-//		return client;
-//	}
+	private static DefaultHttpClient createAllTrustingClient()
+		throws GeneralSecurityException {
+
+		SchemeRegistry registry = new SchemeRegistry();
+
+		registry.register(new Scheme("http", 80, PlainSocketFactory
+			.getSocketFactory()));
+
+		TrustStrategy trustStrategy = new TrustStrategy() {
+			public boolean isTrusted(X509Certificate[] chain, String authType)
+				throws CertificateException {
+				return true;
+			}
+		};
+		SSLSocketFactory factory = new SSLSocketFactory(trustStrategy,
+			SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		registry.register(new Scheme("https", 443, factory));
+
+		ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(
+			registry);
+		mgr.setMaxTotal(1000);
+		mgr.setDefaultMaxPerRoute(1000);
+
+		DefaultHttpClient client = new DefaultHttpClient(mgr,
+			new DefaultHttpClient().getParams());
+		return client;
+	}
 
 }
