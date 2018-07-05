@@ -3,18 +3,17 @@ package za.ac.unisa.myadmin.student.services.impls;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import za.ac.unisa.myadmin.student.services.dto.StudyMaterialDetailInfo;
 import za.ac.unisa.myadmin.student.services.jaxb.studymaterial.ModuleInfoRequest;
 import za.ac.unisa.myadmin.student.services.jaxb.studymaterial.ResourceDTO;
@@ -24,7 +23,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
@@ -52,24 +50,24 @@ public class SCMWebService {
 
 //private EmailService emailService;
 
-	public List<StudyMaterialDetailInfo> getStudyMaterialList(String course, Integer academicYear, String semister) throws Exception {
+	public List<StudyMaterialDetailInfo> getStudyMaterialList(String course, Integer academicYear, String semester) throws Exception {
 
-		if (semister.equals("S1")) {
-			semister = "1";
-		} else if (semister.equals("S2")) {
-			semister = "2";
-		} else if (semister.equals("Y1")) {
-			semister = "0";
-		} else if (semister.equals("Y2")) {
-			semister = "6";
+		if (semester.equals("S1")) {
+			semester = "1";
+		} else if (semester.equals("S2")) {
+			semester = "2";
+		} else if (semester.equals("Y1")) {
+			semester = "0";
+		} else if (semester.equals("Y2")) {
+			semester = "6";
 		}
 
 		ModuleInfoRequest request = new ModuleInfoRequest();
 		request.setAcademicYear(academicYear);
 		request.setModuleCode(course);
-		request.setSemesterPeriod(Integer.parseInt(semister));
+		request.setSemesterPeriod(Integer.parseInt(semester));
 
-		StudyMaterialResponse repsonseString = null;
+		StudyMaterialResponse responseEntity = null;
 		Response response = null;
 
 		try {
@@ -78,7 +76,7 @@ public class SCMWebService {
 			ResteasyClient client = new ResteasyClientBuilder().build();
 
 			//if (serverpath.contains("myqa") || serverpath.contains("localhost") || serverpath.contains("mydev")) {
-
+			//TODO This is only for pre prod env.
 			ApacheHttpClient4Engine engine = new ApacheHttpClient4Engine(createAllTrustingClient());
 			client = new ResteasyClientBuilder().httpEngine(engine).build();
 			//ResteasyWebTarget target = client.target("http://lmkn-ealb01sv.int.unisa.ac.za/sharedservices/courseMaterial");
@@ -87,7 +85,7 @@ public class SCMWebService {
 			//client = new ResteasyClientBuilder().build();
 			ResteasyWebTarget target = client.target(uri);
 			response = target.request().post(Entity.entity(request, MediaType.APPLICATION_XML));
-			repsonseString = response.readEntity(StudyMaterialResponse.class);
+			responseEntity = response.readEntity(StudyMaterialResponse.class);
 
 		} catch (Exception e) {
 
@@ -108,15 +106,15 @@ public class SCMWebService {
 				response.close();
 			}
 		}
-		Collections.sort(repsonseString.getResource());
+		Collections.sort(responseEntity.getResource());
 
 		List<StudyMaterialDetailInfo> studyMaterialDTOList = new ArrayList<StudyMaterialDetailInfo>();
 
-		for (ResourceDTO resourceDTO : repsonseString.getResource()) {
+		for (ResourceDTO resourceDTO : responseEntity.getResource()) {
 			StudyMaterialDetailInfo studymaterialDetails = new StudyMaterialDetailInfo();
 			studymaterialDetails.setCourseCode(resourceDTO.getModule());
 			studymaterialDetails.setAcademicYear(resourceDTO.getYear());
-			studymaterialDetails.setSemister(resourceDTO.getPeriod());
+			studymaterialDetails.setSemester(resourceDTO.getPeriod());
 			studymaterialDetails.setShortDescription(resourceDTO.getShortDescription());
 			studymaterialDetails.setFilesize(resourceDTO.getFileSize());
 
@@ -127,7 +125,7 @@ public class SCMWebService {
 				String itemDisplayName = setItemDisplayName(resourceDTO.getDocumentType(), resourceDTO.getUnitNumber(),
 					getlanguage(resourceDTO.getShortDescription()), studymaterialDetails.getCourseCode());
 
-				studymaterialDetails.setDiscription(itemDisplayName);
+				studymaterialDetails.setDescription(itemDisplayName);
 
 				studymaterialDetails.setImplementationDate(getDBDateFormat(toDate(resourceDTO.getDateAvailable())));
 				StudyMaterialCodesConverter codesConverter = new StudyMaterialCodesConverter();
@@ -140,7 +138,7 @@ public class SCMWebService {
 				if (resourceDTO.getFileSize().equalsIgnoreCase("unavailable")) {
 					//send an email to fix the files
 
-					//sendEmailToFixFiles(course,academicYear,semister);
+					//sendEmailToFixFiles(course,academicYear,semester);
 					//sendEmailToFixFiles(resourceDTO.getDept(), course, resourceDTO.getShortDescription(), resourceDTO.getBarcode());
 
 				} else if (isDateBeforeSysDate(toDate(resourceDTO.getDateAvailable()))) {
@@ -304,31 +302,33 @@ public class SCMWebService {
 		return s[0];
 	}
 
-	private static DefaultHttpClient createAllTrustingClient() throws GeneralSecurityException {
-
-		SchemeRegistry registry = new SchemeRegistry();
-
-		registry.register(new Scheme("http", 80, PlainSocketFactory
-			.getSocketFactory()));
-
-		TrustStrategy trustStrategy = new TrustStrategy() {
-			public boolean isTrusted(X509Certificate[] chain, String authType)
-				throws CertificateException {
-				return true;
-			}
-		};
-		SSLSocketFactory factory = new SSLSocketFactory(trustStrategy,
-			SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-		registry.register(new Scheme("https", 443, factory));
-
-		ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(
-			registry);
-		mgr.setMaxTotal(1000);
-		mgr.setDefaultMaxPerRoute(1000);
-
-		DefaultHttpClient client = new DefaultHttpClient(mgr,
-			new DefaultHttpClient().getParams());
-		return client;
+	/**
+	 * Required in order to skip certificate validation
+	 * @return
+	 * @throws RestClientException
+	 */
+	private static HttpClient createAllTrustingClient() throws RestClientException {
+		HttpClient httpclient = null;
+		try {
+			SSLContextBuilder builder = new SSLContextBuilder();
+			builder.loadTrustMaterial(new TrustStrategy() {
+				@Override
+				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+					return true;
+				}
+			});
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+				builder.build());
+			httpclient = HttpClients
+				.custom()
+				.setSSLSocketFactory(sslsf)
+				.setMaxConnTotal(1000)
+				.setMaxConnPerRoute(1000)
+				.build();
+		} catch (Exception e) {
+			throw new RestClientException("Cannot create all SSL certificates trusting client", e);
+		}
+		return httpclient;
 	}
 
 }

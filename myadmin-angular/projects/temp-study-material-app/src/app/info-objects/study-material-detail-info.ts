@@ -2,8 +2,8 @@ export interface StudyMaterialDetailInfo {
 
   courseCode : string;
   academicYear : string;
-  semister : string;
-  discription : string;
+  semester : string;
+  description : string;
   implementationDate : string;
   webId : string;
   path : string;

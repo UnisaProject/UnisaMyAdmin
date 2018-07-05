@@ -35,12 +35,9 @@ export class ViewCourseMaterialComponent implements OnInit {
       this.academicYear = +params['academicYear']; // (+) converts string 'id' to a number
       this.moduleCode = params['moduleCode'];
       this.semesterCode = params['semesterCode'];
-
-      // In a real app: dispatch action to load the details here.
     });
     this.studentInfo = this.studyMaterialFormService.studentInfo;
     this.getModuleStudyMaterialList();
-    // this.route.params.subscribe(p => this.setParameters(p && p['id']));
   }
 
   private getModuleStudyMaterialList(): void {
@@ -49,11 +46,11 @@ export class ViewCourseMaterialComponent implements OnInit {
       .subscribe(
         (moduleMaterials: StudyMaterialDetailInfo[]) => {
           this.moduleStudyMaterialList = moduleMaterials;
-          this.blockUI.stop()
+          this.blockUI.stop();
         },
         () => {
-          this.router.navigate(["search"]);
-          this.blockUI.stop()
+          // this.router.navigate(["search"]);
+          this.blockUI.stop();
         }
       );
 

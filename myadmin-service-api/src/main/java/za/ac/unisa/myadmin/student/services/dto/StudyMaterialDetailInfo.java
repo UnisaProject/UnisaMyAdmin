@@ -5,15 +5,25 @@ import java.io.Serializable;
 public class StudyMaterialDetailInfo implements Serializable {
 
 	private static final long serialVersionUID = -4211012322752781937L;
+
 	private String courseCode;
+
 	private String academicYear;
-	private String semister;
-	private String discription;
+
+	private String semester;
+
+	private String description;
+
 	private String implementationDate;
+
 	private String webId;
+
 	private String path;
+
 	private String filesize;
+
 	private boolean blockedStatus = false;
+
 	private String shortDescription;
 
 	public StudyMaterialDetailInfo() {
@@ -35,20 +45,20 @@ public class StudyMaterialDetailInfo implements Serializable {
 		this.academicYear = academicYear;
 	}
 
-	public String getSemister() {
-		return semister;
+	public String getSemester() {
+		return semester;
 	}
 
-	public void setSemister(String semister) {
-		this.semister = semister;
+	public void setSemester(String semester) {
+		this.semester = semester;
 	}
 
-	public String getDiscription() {
-		return discription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDiscription(String discription) {
-		this.discription = discription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getImplementationDate() {

@@ -45,7 +45,15 @@
     <div class="form-group row">
       <label for="dateOfBirth" class="col-sm-3 col-form-label font-weight-bold">Date of Birth *</label>
       <div class="col-sm-4">
-        <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth" required>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd"
+                 name="dateOfBirth" formControlName="dateOfBirth" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+              <clr-icon shape="calendar"></clr-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <br/>

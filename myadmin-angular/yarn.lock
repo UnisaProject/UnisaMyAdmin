@@ -198,6 +198,10 @@
   version "0.11.20"
   resolved "https://registry.yarnpkg.com/@clr/ui/-/ui-0.11.20.tgz#b43e2968e513646ed51ad35d84cbc0bbea8707fc"
 
+"@ng-bootstrap/ng-bootstrap@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-2.2.0.tgz#acd514e878a1412f39d50eff691095ecc0882bf3"
+
 "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"

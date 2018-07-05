@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
-      <td>{{ studyMaterial?.discription }}</td>
+      <td>{{studyMaterial?.description}}</td>
       <td>{{studyMaterial?.filesize}}</td>
       <td>{{studyMaterial?.implementationDate}}</td>
     </tr>
@@ -29,8 +29,8 @@
   </table>
   <div class="row mb-3">
     <div class="col">
-      <a class="btn btn-secondary" routerLink="/search">Close</a>
-      <a class="btn btn-primary ml-2" routerLink="/courses">Back to Modules</a>
+      <a class="btn btn-secondary" routerLink="/search">Cancel</a>
+      <a class="btn btn-primary ml-2" routerLink="/courses">Back</a>
     </div>
   </div>
 </div>

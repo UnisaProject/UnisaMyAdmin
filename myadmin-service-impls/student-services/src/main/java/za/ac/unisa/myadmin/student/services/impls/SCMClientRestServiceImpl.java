@@ -182,7 +182,7 @@ public class SCMClientRestServiceImpl {
 			StudyMaterialDetailInfo studymaterialDetails = new StudyMaterialDetailInfo();
 			studymaterialDetails.setCourseCode(resourceDTO.getModule());
 			studymaterialDetails.setAcademicYear(resourceDTO.getYear());
-			studymaterialDetails.setSemister(resourceDTO.getPeriod());
+			studymaterialDetails.setSemester(resourceDTO.getPeriod());
 			studymaterialDetails.setShortDescription(resourceDTO.getShortDescription());
 			studymaterialDetails.setFilesize(resourceDTO.getFileSize());
 
@@ -193,7 +193,7 @@ public class SCMClientRestServiceImpl {
 				String itemDisplayName = setItemDisplayName(resourceDTO.getDocumentType(), resourceDTO.getUnitNumber(),
 					getlanguage(resourceDTO.getShortDescription()), studymaterialDetails.getCourseCode());
 
-				studymaterialDetails.setDiscription(itemDisplayName);
+				studymaterialDetails.setDescription(itemDisplayName);
 
 				studymaterialDetails.setImplementationDate(getDBDateFormat(toDate(resourceDTO.getDateAvailable())));
 				StudyMaterialCodesConverter codesConverter = new StudyMaterialCodesConverter();
@@ -206,7 +206,7 @@ public class SCMClientRestServiceImpl {
 				if (resourceDTO.getFileSize().equalsIgnoreCase("unavailable")) {
 					//send an email to fix the files
 
-					//sendEmailToFixFiles(course,academicYear,semister);
+					//sendEmailToFixFiles(course,academicYear,semester);
 					sendEmailToFixFiles(resourceDTO.getDept(), course, resourceDTO.getShortDescription(), resourceDTO.getBarcode());
 
 				} else if (isDateBeforeSysDate(toDate(resourceDTO.getDateAvailable()))) {
