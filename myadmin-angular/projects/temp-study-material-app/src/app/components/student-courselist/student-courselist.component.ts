@@ -18,7 +18,7 @@ export class StudentCourselistComponent implements OnInit {
 
   public studentInfo: StudentInfo;
 
-  public studentModules: StudentModuleEnrolmentInfo[] = [];
+  public studentModules: StudentModuleEnrolmentInfo[];
 
   @BlockUI()
   private blockUI: NgBlockUI;
@@ -28,35 +28,23 @@ export class StudentCourselistComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.blockUI.start();
+    this.blockUI.stop();
     // If there is no search criteria navigate back to the search screen
-    if(this.studyMaterialFormService.studentInfo === null){
+    if(this.studyMaterialFormService.studentInfo === null || this.studyMaterialFormService.studentModuleEnrolmentList === null){
       this.router.navigate(["search"]);
       return;
     }
     this.today = new Date();
     this.studentInfo = this.studyMaterialFormService.studentInfo;
-    if(this.studyMaterialFormService.studentModuleEnrolmentList === null) {
-      this.getStudentModuleList(this.studyMaterialFormService.studentInfo);
-    }else{
-      this.studentModules = this.studyMaterialFormService.studentModuleEnrolmentList;
-      this.blockUI.stop();
-    }
+    this.studentModules = [...this.studyMaterialFormService.studentModuleEnrolmentList];
+
   }
 
-  private getStudentModuleList(searchCriteria: StudentInfo): void {
-    this.studyMaterialService.requestStudentModuleEnrolments(searchCriteria)
-      .subscribe(
-        (moduleEnrolments: StudentModuleEnrolmentInfo[]) => {
-          this.studentModules = moduleEnrolments;
-          this.studyMaterialFormService.studentModuleEnrolmentList = moduleEnrolments
-          this.blockUI.stop()
-        },
-        () => {
-          this.router.navigate(["search"]);
-          this.blockUI.stop()
-        }
-      );
+  cancel() {
+    this.studyMaterialFormService.studentModuleEnrolmentList = null;
+    this.studyMaterialFormService.studentInfo = null;
+    this.studyMaterialFormService.studentModuleMaterialList = null;
+    this.router.navigateByUrl('/search');
   }
 
 }

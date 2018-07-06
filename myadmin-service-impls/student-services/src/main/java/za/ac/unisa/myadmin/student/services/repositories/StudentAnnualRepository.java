@@ -10,16 +10,16 @@ import java.util.Optional;
 
 
 /**
- * Created by dev on 2018-06-06.
+ * Created by Adrian on 2018-06-06.
  */
 @Repository
 public interface StudentAnnualRepository extends JpaRepository<StudentAnnualEntity, StudentAnnualEntityId> {
 
-	public Optional<StudentAnnualEntity> findByStudentNumberAndAcademicYearAndAcademicPeriod(Integer studentNumber, Integer academicYear, Integer academicPeriod);
-
 	public List<StudentAnnualEntity> findByStudentNumber(Integer studentNumber);
 
 	public List<StudentAnnualEntity> findByStudentNumberOrderByAcademicYearDesc(Integer studentNumber);
+
+	public Optional<StudentAnnualEntity> findTopByStudentNumberOrderByAcademicYearDesc(Integer studentNumber);
 
 	public List<StudentAnnualEntity> findByStudentNumberAndAcademicYear(Integer studentNumber, Integer academicYear);
 

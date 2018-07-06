@@ -75,7 +75,7 @@ public class StudentEntity implements Serializable {
 	private String initials;
 
 	@Column(name = "IDENTITY_NR")
-	private String identityNr;
+	private String identityNumber;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "BIRTH_DATE")
@@ -301,12 +301,12 @@ public class StudentEntity implements Serializable {
 		this.initials = initials;
 	}
 
-	public String getIdentityNr() {
-		return identityNr;
+	public String getIdentityNumber() {
+		return identityNumber;
 	}
 
-	public void setIdentityNr(String identityNr) {
-		this.identityNr = identityNr;
+	public void setIdentityNumber(String identityNumber) {
+		this.identityNumber = identityNumber;
 	}
 
 	public Date getBirthDate() {

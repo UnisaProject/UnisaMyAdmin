@@ -28,13 +28,13 @@
     <tbody>
     <tr *ngFor="let studentModule of studentModules">
       <td>{{ studentModule.studyUnitCode }}-{{ studentModule.academicYear }}-{{ studentModule.semesterPeriodCode }}</td>
-      <td><a routerLink="/viewCourse/{{ studentModule.studyUnitCode }}/{{ studentModule.academicYear }}/{{ studentModule.semesterPeriodCode }}">View materials</a></td>
+      <td><a
+        routerLink="/viewCourse/{{ studentModule.studyUnitCode }}/{{ studentModule.academicYear }}/{{ studentModule.semesterPeriodCode }}">View
+        materials</a></td>
     </tr>
     </tbody>
   </table>
-  <div class="row mb-3">
-    <div class="col">
-      <a class="btn btn-primary" routerLink="/search">Cancel</a>
-    </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-icon btn-primary" (click)="cancel()"> Cancel</button>
   </div>
 </div>

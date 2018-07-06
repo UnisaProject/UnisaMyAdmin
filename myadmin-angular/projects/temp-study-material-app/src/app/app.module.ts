@@ -33,7 +33,7 @@ import '@clr/icons/shapes/all-shapes';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ClarityModule
+    ClarityModule,
     MyadminLibModule,
     HttpClientModule,
     FormsModule,

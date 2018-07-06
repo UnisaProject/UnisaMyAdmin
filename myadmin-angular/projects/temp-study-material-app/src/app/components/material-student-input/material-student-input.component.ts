@@ -3,7 +3,8 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {StudentInfo} from 'myadmin-lib';
-import {StudyMaterialFormService} from '../../services';
+import {StudyMaterialFormService, StudyMaterialService} from '../../services';
+import {StudentModuleEnrolmentInfo} from '../../info-objects';
 
 @Component({
   selector: 'unisa-material-student-input',
@@ -22,6 +23,7 @@ export class MaterialStudentInputComponent implements OnInit {
 
   constructor(private router:Router,
               private studyMaterialFormService:StudyMaterialFormService,
+              private studyMaterialService:StudyMaterialService,
               private formBuilder: FormBuilder) {
     this.initForm();
   }
@@ -47,9 +49,15 @@ export class MaterialStudentInputComponent implements OnInit {
   }
 
   onSubmit() {
-    this.blockUI.start("Loading courses...");
     this.studyMaterialFormService.studentInfo = {...this.studentInputForm.value};
-    this.router.navigate(["courses"]);
+    this.blockUI.start("Loading courses...");
+    this.studyMaterialService.requestStudentModuleEnrolments(this.studyMaterialFormService.studentInfo).subscribe((moduleEnrolments:StudentModuleEnrolmentInfo[])=>{
+      // Copy the data to the service
+     this.studyMaterialFormService.studentModuleEnrolmentList = [...moduleEnrolments];
+     this.router.navigateByUrl('/courses');
+    }, (error)=>{
+      this.blockUI.stop();
+    });
   }
 
 }

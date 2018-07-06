@@ -29,11 +29,10 @@ public class StudentAnnualServiceImpl implements StudentAnnualService {
 	public StudentAnnualInfo getStudentAnnualByStudentNumberAndYearAndPeriod(Integer studentNumber, Integer academicYear, Integer academicPeriod) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		StudentAnnualEntityId studentAnnualEntityId = new StudentAnnualEntityId(studentNumber, academicYear, academicPeriod);
 		Optional<StudentAnnualEntity> entity = studentAnnualRepository.findById(studentAnnualEntityId);
-		//Optional<StudentAnnualEntity> entity = studentAnnualRepository.findByStudentNumberAndAcademicYearAndAcademicPeriod(studentNumber, academicYear, academicPeriod);
 		if (entity.isPresent()) {
 			return entity.get().toDto();
 		} else {
-			throw new DoesNotExistException(Integer.toString(studentNumber));
+			throw new DoesNotExistException("Student " + studentNumber + " not found for academic year " + academicYear + " and period " + academicPeriod);
 		}
 	}
 
@@ -60,6 +59,17 @@ public class StudentAnnualServiceImpl implements StudentAnnualService {
 			throw new OperationFailedException(e);
 		}
 	}
+
+	@Override
+	public StudentAnnualInfo getLatestStudentAnnualRecord(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		Optional<StudentAnnualEntity> entity = studentAnnualRepository.findTopByStudentNumberOrderByAcademicYearDesc(studentNumber);
+		if (entity.isPresent()) {
+			return entity.get().toDto();
+		} else {
+			return null;
+		}
+	}
+
 
 	@Override
 	public List<StudentAnnualInfo> getStudentAnnualByStudentNumberAndYear(Integer studentNumber, Integer academicYear) throws MissingParameterException, InvalidParameterException, OperationFailedException {

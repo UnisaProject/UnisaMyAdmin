@@ -2,6 +2,10 @@ package za.ac.unisa.myadmin.student.services.impls;
 
 import java.io.File;
 
+/**
+ * Comes direclty from unisa
+ * sourcecode.
+ */
 public class StudyMaterialLocation {
 
 	public static String getFilepath(String module, String documentType, String fileName) throws Exception {

@@ -18,8 +18,5 @@ public interface StudentModuleEnrolmentRepository extends JpaRepository<StudentM
 
 	public List<StudentModuleEnrolmentEntity> findByStudentNumberAndAcademicYear(Integer studentNumber, Integer academicYear);
 
-	public List<StudentModuleEnrolmentEntity> findByStudentNumberAndAcademicYearAndSemesterPeriodAndStatusCodeIn(Integer studentNumber, Integer year, Integer semester, List<String> statusList);
-
 	public List<StudentModuleEnrolmentEntity> findByStudentNumberAndAcademicYearAndSemesterPeriodInAndStatusCodeIn(Integer studentNumber, Integer year, List<Integer> semesterList, List<String> statusList);
-
 }

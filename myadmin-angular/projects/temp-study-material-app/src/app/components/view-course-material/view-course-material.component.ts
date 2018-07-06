@@ -4,7 +4,7 @@ import {StudyMaterialFormService, StudyMaterialService} from "../../services/";
 import {StudyMaterialDetailInfo} from "../../info-objects/";
 import {ActivatedRoute, Router} from "@angular/router";
 import "rxjs/add/operator/map";
-import {StudentInfo} from 'myadmin-lib';
+import {StudentInfo} from "myadmin-lib";
 
 @Component({
   selector: 'unisa-view-course-material',
@@ -16,8 +16,8 @@ export class ViewCourseMaterialComponent implements OnInit {
   @BlockUI()
   private blockUI:NgBlockUI;
 
-  public studentInfo: StudentInfo;
-  public moduleStudyMaterialList: StudyMaterialDetailInfo[] = [];
+  public studentInfo:StudentInfo;
+  public moduleStudyMaterialList:StudyMaterialDetailInfo[] = [];
 
   academicYear:number;
   moduleCode:string;
@@ -40,11 +40,11 @@ export class ViewCourseMaterialComponent implements OnInit {
     this.getModuleStudyMaterialList();
   }
 
-  private getModuleStudyMaterialList(): void {
+  private getModuleStudyMaterialList():void {
     this.blockUI.start("Loading study material...");
     this.studyMaterialService.requestModuleStudyMaterials(this.moduleCode, this.academicYear, this.semesterCode)
       .subscribe(
-        (moduleMaterials: StudyMaterialDetailInfo[]) => {
+        (moduleMaterials:StudyMaterialDetailInfo[]) => {
           this.moduleStudyMaterialList = moduleMaterials;
           this.blockUI.stop();
         },
@@ -58,6 +58,20 @@ export class ViewCourseMaterialComponent implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  back() {
+    this.studyMaterialFormService.studentModuleMaterialList = null;
+    this.studyMaterialFormService.selectedModule = null;
+    this.router.navigateByUrl('/courses');
+  }
+
+  cancel() {
+    this.studyMaterialFormService.studentModuleEnrolmentList = null;
+    this.studyMaterialFormService.studentInfo = null;
+    this.studyMaterialFormService.selectedModule = null;
+    this.studyMaterialFormService.studentModuleMaterialList = null;
+    this.router.navigateByUrl('/search');
   }
 
 }

@@ -22,6 +22,9 @@ public interface StudentAnnualService {
 	public List<StudentAnnualInfo> getStudentAnnualByStudentNumberOrderByYearDesc(Integer studentNumber)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException;
 
+	public StudentAnnualInfo getLatestStudentAnnualRecord(Integer studentNumber)
+		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+
 	public List<StudentAnnualInfo> getStudentAnnualByStudentNumberAndYear(Integer studentNumber, Integer academicYear)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException;
 }

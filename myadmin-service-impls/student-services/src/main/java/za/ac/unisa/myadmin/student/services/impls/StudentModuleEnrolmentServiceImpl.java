@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,7 +42,7 @@ import java.util.stream.Stream;
 @Service("StudentModuleEnrolmentService")
 public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolmentService {
 
-	public static final Set<String> TEMP_STUDENT_STATUS_CODES = Stream.of("TN", "RG").collect(Collectors.toSet());
+	public static final List<String> TEMP_STUDENT_STATUS_CODES = Stream.of("TN", "RG").collect(Collectors.toList());
 	public static final String NO_STUDY_MATERIAL_ISSUED_STATUS = "NOSTMISS";
 
 	private static final Logger LOG = LoggerFactory.getLogger(StudentModuleEnrolmentServiceImpl.class);
@@ -114,36 +113,24 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 		//This proxy could probably go into the Validation decorator.
 		validateStudentWithStudentContactDetailProxy(student);
 
-		//Get Student Latest academicYear
-		//try{
-		StudentAnnualInfo studentAnnualInfo = studentAnnualService.getStudentAnnualByStudentNumberOrderByYearDesc(student.getStudentNumber()).get(0);
-//		}catch(OperationFailedException e){
-//			LOG.debug(this + ": " + student.getStudentNumber() + " not having last academic year");
-//			throw new OperationFailedException("Cannot determine current/last academic year for student " + student.getStudentNumber() + ".Please check the student number and try again.");
-//		}
-		//Get Student RegistrationStatus
-		//Skip just get it if exists...
-		//StudentModuleEnrolmentInfo moduleEnrolmentInfo = this.getStudentModuleEnrolmentByStudentNumberAndAcademicYear(student.getStudentNumber(), studentAnnualInfo.getAcademicYear()).get(0);
+		StudentAnnualInfo studentAnnualInfo = studentAnnualService.getLatestStudentAnnualRecord(student.getStudentNumber());
+		if (studentAnnualInfo == null) {
+			throw new OperationFailedException("Cannot determine current/last academic year for student " + student.getStudentNumber() + ".Please check the student number and try again.");
+		}
 
-
-		List<String> statusCodes = new ArrayList<>();
-		Collections.addAll(statusCodes, "TN", "RG");
 		List<Integer> semesterList = new ArrayList<>();
 		Collections.addAll(semesterList, 0, 1, 6);
-		List<StudentModuleEnrolmentInfo> returnNonSecondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, statusCodes);
-		List<StudentModuleEnrolmentInfo> returnAllStudentModuleEnrolments = new ArrayList<>();//this.getStudentModuleEnrolmentByStudentNumberAndAcademicYear(student.getStudentNumber(), studentAnnualInfo.getAcademicYear());
-		returnAllStudentModuleEnrolments.addAll(returnNonSecondSemesterStudentModules);
+		List<StudentModuleEnrolmentInfo> returnAllStudentModuleEnrolments = new ArrayList<>();
+		List<StudentModuleEnrolmentInfo> nonSecondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, TEMP_STUDENT_STATUS_CODES);
+
+		returnAllStudentModuleEnrolments.addAll(nonSecondSemesterStudentModules);
 		semesterList.clear();
 		Collections.addAll(semesterList, 2);
-		List<StudentModuleEnrolmentInfo> returnSecondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, statusCodes);
+		List<StudentModuleEnrolmentInfo> secondSemesterStudentModules = this.getModuleEnrolmentsByNumberAndYearAndSemesterInAndStatusIn(student.getStudentNumber(), studentAnnualInfo.getAcademicYear(), semesterList, TEMP_STUDENT_STATUS_CODES);
 		List<RegistrationPeriodInfo> registrationPeriodInfoList = registrationPeriodService.getRegistrationPeriodsByYearAndSemesterAndTypeAfterExpirationDate(studentAnnualInfo.getAcademicYear(),
 			2, NO_STUDY_MATERIAL_ISSUED_STATUS, new Date());
-		for (StudentModuleEnrolmentInfo moduleEnrolmentInfo : returnSecondSemesterStudentModules) {
-			//returnAllStudentModuleEnrolments.addAll(registrationPeriodInfoList.stream().filter(periodInfo -> moduleEnrolmentInfo.getAcademicYear().equals(periodInfo.getAcademicYear()) && moduleEnrolmentInfo.getSemesterPeriod().equals(periodInfo.getSemester())).map(periodInfo -> moduleEnrolmentInfo).collect(Collectors.toList()));
-			for (RegistrationPeriodInfo periodInfo : registrationPeriodInfoList) {
-				if (moduleEnrolmentInfo.getAcademicYear().equals(periodInfo.getAcademicYear()) && moduleEnrolmentInfo.getSemesterPeriod().equals(periodInfo.getSemester()))
-					returnAllStudentModuleEnrolments.add(moduleEnrolmentInfo);
-			}
+		for (StudentModuleEnrolmentInfo moduleEnrolmentInfo : secondSemesterStudentModules) {
+			returnAllStudentModuleEnrolments.addAll(registrationPeriodInfoList.stream().filter(periodInfo -> moduleEnrolmentInfo.getAcademicYear().equals(periodInfo.getAcademicYear()) && moduleEnrolmentInfo.getSemesterPeriod().equals(periodInfo.getSemester())).map(periodInfo -> moduleEnrolmentInfo).collect(Collectors.toList()));
 		}
 		return returnAllStudentModuleEnrolments;
 	}
@@ -169,9 +156,9 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 		try {
 			boolean isValid = true;
 			StudentInfo proxyStudent = new StudentInfo();
-			String proxySurname = "";
-			String proxyFirstNames = "";
-			Date proxyDateOfBirth = null;
+			//String proxySurname = "";
+			//String proxyFirstNames = "";
+			//Date proxyDateOfBirth = null;
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference
 				.set(new OperationFailedException(e.getActionCommand()));
@@ -184,56 +171,47 @@ public class StudentModuleEnrolmentServiceImpl implements StudentModuleEnrolment
 			String errorMsg = studentContactDetailProxy.getOutCsfStringsString500();
 
 			if (StringUtils.hasText(errorMsg)) {
-				isValid = false;
 				throw new OperationFailedException(errorMsg);
 			}
 			//Trim leading and trailing whitespace
-			proxySurname = StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentSurname());
-			proxyFirstNames = StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentFirstNames());
+			proxyStudent.setSurname(StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentSurname()));
+			proxyStudent.setFirstNames(StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentFirstNames()));
 			try {
-				proxyDateOfBirth = studentContactDetailProxy.getOutWsStudentBirthDate().getTime();
+				proxyStudent.setDateOfBirth(studentContactDetailProxy.getOutWsStudentBirthDate().getTime());
 			} catch (NullPointerException e) {
 
 			}
-			//tpStudyMaterialForm.setDateOfBirth(tpStudyMaterialForm.getBirthYear() + "-" + tpStudyMaterialForm.getBirthMonth() + "-" + tpStudyMaterialForm.getBirthDay());
 
 			if (student.getSurname().length() <= 0) {
-				isValid = false;
 				throw new OperationFailedException("Please enter the surname");
 			}
 
-			if (!student.getSurname().equalsIgnoreCase(proxySurname)) {
+			if (!student.getSurname().equalsIgnoreCase(proxyStudent.getSurname())) {
 				LOG.debug(this + ": " + student.getStudentNumber() + " surname");
-				isValid = false;
 				throw new OperationFailedException("The surname you entered does not correspond with our records. Please check and try again." +
-					" If you are convinced you have entered the correct information, please contact the <A HREF=\"mailto:myUnisaHelp@unisa.ac.za\">myUnisaHelp@unisa.ac.za</A> to have your student records checked.");
+					" If you are convinced you have entered the correct information, please contact the myUnisaHelp@unisa.ac.za to have your student records checked.");
 			}
 
 			if (student.getFirstNames().length() <= 0) {
-				isValid = false;
 				throw new OperationFailedException("Please enter full names");
 			}
-			if (!student.getFirstNames().equalsIgnoreCase(proxyFirstNames)) {
+			if (!student.getFirstNames().equalsIgnoreCase(proxyStudent.getFirstNames())) {
 				LOG.debug(this + ": " + student.getStudentNumber() + " fullnames");
-				isValid = false;
 				throw new OperationFailedException("The full names you entered do not correspond with our records. Please check and try again." +
-					" If you are convinced you have entered the correct information, please contact the <A HREF=\"mailto:myUnisaHelp@unisa.ac.za\">myUnisaHelp@unisa.ac.za</A> to have your student records checked.");
+					" If you are convinced you have entered the correct information, please contact the myUnisaHelp@unisa.ac.za to have your student records checked.");
 			}
 
 			if (student.getDateOfBirth() == null) {
-				isValid = false;
 				throw new OperationFailedException("Please enter year for date of birth");
 			}
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date1 = student.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			LocalDate date2 = proxyDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate date2 = proxyStudent.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			if (date1.format(formatter).compareTo(date2.format(formatter)) != 0) {
 				LOG.debug(this + ": " + student.getStudentNumber() + " dateofbirth");
-				isValid = false;
 				throw new OperationFailedException("The date of birth you entered does not correspond with our records. Please check and try again." +
-					" If you are convinced you have entered the correct information, please contact the <A HREF=\"mailto:myUnisaHelp@unisa.ac.za\">myUnisaHelp@unisa.ac.za</A> to have your student records checked.");
+					" If you are convinced you have entered the correct information, please contact the myUnisaHelp@unisa.ac.za to have your student records checked.");
 			}
-			//return;
 		} catch (PropertyVetoException e) {
 			throw new OperationFailedException(e);
 		}
