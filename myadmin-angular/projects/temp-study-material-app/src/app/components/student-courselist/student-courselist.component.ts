@@ -18,7 +18,7 @@ export class StudentCourselistComponent implements OnInit {
 
   public studentInfo: StudentInfo;
 
-  public studentModules: StudentModuleEnrolmentInfo[];
+  public studentModules: StudentModuleEnrolmentInfo[] = [];
 
   @BlockUI()
   private blockUI: NgBlockUI;
@@ -38,6 +38,10 @@ export class StudentCourselistComponent implements OnInit {
     this.studentInfo = this.studyMaterialFormService.studentInfo;
     this.studentModules = [...this.studyMaterialFormService.studentModuleEnrolmentList];
 
+  }
+
+  viewMaterial(studentModule: StudentModuleEnrolmentInfo) {
+    this.router.navigate(['/viewCourse', studentModule.studyUnitCode, studentModule.academicYear, studentModule.semesterPeriod]);
   }
 
   cancel() {
