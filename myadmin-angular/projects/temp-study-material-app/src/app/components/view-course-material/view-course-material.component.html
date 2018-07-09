@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
-      <td>{{studyMaterial?.description}}</td>
+      <td><a [routerLink]="" (click)="downloadMaterial(studyMaterial)">{{studyMaterial?.description}}</a></td>
       <td>{{studyMaterial?.filesize}}</td>
       <td>{{studyMaterial?.implementationDate}}</td>
     </tr>

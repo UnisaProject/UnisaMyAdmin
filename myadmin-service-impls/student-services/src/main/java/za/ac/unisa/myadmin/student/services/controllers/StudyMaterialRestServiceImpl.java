@@ -1,7 +1,10 @@
 package za.ac.unisa.myadmin.student.services.controllers;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +20,11 @@ import za.ac.unisa.myadmin.student.services.dto.StudentModuleEnrolmentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudyMaterialDetailInfo;
 import za.ac.unisa.myadmin.student.services.impls.SCMClientRestServiceImpl;
 import za.ac.unisa.myadmin.student.services.impls.SCMWebService;
+import za.ac.unisa.myadmin.student.services.impls.StudyMaterialLocation;
 import za.ac.unisa.myadmin.student.services.student.StudentModuleEnrolmentService;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -48,5 +54,28 @@ public class StudyMaterialRestServiceImpl {
 	@GetMapping(path = "/studymaterial/viewmaterial", produces = APPLICATION_JSON_VALUE)
 	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(@RequestParam(value = "moduleCode") String moduleCode, @RequestParam(value = "academicYear") Integer academicYear, @RequestParam(value = "semesterCode") String semesterCode) throws Exception {
 		return scmClientService.getStudyMaterialList(moduleCode, academicYear, semesterCode);
+	}
+
+	@PostMapping(path = "/studymaterial/download")
+	public ResponseEntity<?> generateActivatedMaterialsPDFReport(@RequestBody StudyMaterialDetailInfo materialInfo) throws Exception {
+		String itemshortdesc = materialInfo.getShortDescription();
+		String filename = scmClientService.getfileName(itemshortdesc);
+		String type = scmClientService.getType(itemshortdesc);
+		if (type != null) {
+			type = StudyMaterialLocation.getStudyMaterialTypeDirectoryName(type);
+		}
+		String modCode = materialInfo.getCourseCode();
+		String filePath = StudyMaterialLocation.getMaterialFilePath(modCode, type, filename);
+		InputStream in = new FileInputStream(filePath);
+		byte[] array = IOUtils.toByteArray(in);
+
+		String CONTENT_DESPOSITION = "Content-Disposition";
+		String CONTENT_ATTACHEMENT = "attachment; filename=\"" + filename + "\"";
+		return ResponseEntity.ok()
+			.header(CONTENT_DESPOSITION, CONTENT_ATTACHEMENT)
+			.header("Cache-Control", "private")
+			.header("Pragma", "cache")
+			.contentType(
+				MediaType.parseMediaType("application/pdf")).body(array);
 	}
 }

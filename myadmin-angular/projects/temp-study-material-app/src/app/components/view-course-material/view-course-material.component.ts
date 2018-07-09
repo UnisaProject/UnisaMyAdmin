@@ -53,7 +53,23 @@ export class ViewCourseMaterialComponent implements OnInit {
           this.blockUI.stop();
         }
       );
+  }
 
+  downloadMaterial(moduleMaterial:StudyMaterialDetailInfo) {
+    this.blockUI.start("Downloading study material...");
+    this.studyMaterialService.downloadMaterial(moduleMaterial)
+      .subscribe(
+        (data) => {
+          var type = 'application/pdf';
+          var blob = new Blob([data], {type: type});
+          var fileURL = window.URL.createObjectURL(blob);
+          window.open(fileURL, '_blank', '');
+          this.blockUI.stop();
+        },
+        () => {
+          this.blockUI.stop();
+        }
+      );
   }
 
   ngOnDestroy() {

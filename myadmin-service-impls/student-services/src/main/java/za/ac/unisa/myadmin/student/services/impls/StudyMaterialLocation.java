@@ -3,16 +3,23 @@ package za.ac.unisa.myadmin.student.services.impls;
 import java.io.File;
 
 /**
- * Comes direclty from unisa
+ * Comes directly from unisa
  * sourcecode.
  */
 public class StudyMaterialLocation {
 
-	public static String getFilepath(String module, String documentType, String fileName) throws Exception {
+	public static String getMaterialFilePath(String module, String documentType, String fileName) throws Exception {
 
 		String filefullPath = "";
 		boolean collectionExistFlag = isCollectionStudyMaterial(documentType, module, fileName);
 
+		filefullPath = getFilePath(module, documentType, fileName, collectionExistFlag);
+
+		return filefullPath;
+	}
+
+	private static String getFilePath(String module, String documentType, String fileName, boolean collectionExistFlag) {
+		String filefullPath;
 		if (collectionExistFlag) {
 			filefullPath = getUploadDirPathForCollection(documentType, module);
 			filefullPath = filefullPath + fileName;
@@ -20,17 +27,16 @@ public class StudyMaterialLocation {
 			filefullPath = getUploadDirPathForSingle(documentType, module);
 			filefullPath = filefullPath + fileName;
 		}
-
 		return filefullPath;
 	}
 
 	public static String getUploadDirPathForCollection(String type, String module) {
-		return  "c://collect/" + module + "/" + type + "/";
+		return "c://collect/" + module + "/" + type + "/";
 		//return ServerConfig.studyMaterialPath + "collect/" + module + "/" + type + "/";
 	}
 
 	public static String getUploadDirPathForSingle(String type, String module) {
-		return  "c://" + module + "/" + type + "/";
+		return "c://" + module + "/" + type + "/";
 		//return ServerConfig.studyMaterialPath + module + "/" + type + "/";
 	}
 
@@ -46,12 +52,12 @@ public class StudyMaterialLocation {
 		String dirType = null;
 
 		if ((annType.equalsIgnoreCase("TL"))
-				|| (annType.equalsIgnoreCase("TW"))
-				|| (annType.equalsIgnoreCase("TP"))) {
+			|| (annType.equalsIgnoreCase("TW"))
+			|| (annType.equalsIgnoreCase("TP"))) {
 			dirType = "tl";
 		} else if ((annType.equalsIgnoreCase("GD"))
-				|| (annType.equalsIgnoreCase("SW"))
-				|| (annType.equalsIgnoreCase("SP"))) {
+			|| (annType.equalsIgnoreCase("SW"))
+			|| (annType.equalsIgnoreCase("SP"))) {
 			dirType = "sg";
 		} else if (annType.equalsIgnoreCase("MA")) {
 			dirType = "ma";

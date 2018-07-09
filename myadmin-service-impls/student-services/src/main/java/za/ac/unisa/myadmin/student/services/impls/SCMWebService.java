@@ -293,8 +293,16 @@ public class SCMWebService {
 		String period = s[4];
 		String lang = s[5];
 		String filename = nr + "_" + yr + "_" + period + "_" + lang.toLowerCase() + ".pdf";
-
 		return filename;
+	}
+
+	public static String getType(String itemShortDesdc) {
+		String s[] = itemShortDesdc.split("_");
+//		if (ServerConfig.isTestEnvironment()) {
+			return s[2].toUpperCase();
+//		} else {
+//			return s[2];
+//		}
 	}
 
 	public static String getModule(String itemShortDesdc) {
