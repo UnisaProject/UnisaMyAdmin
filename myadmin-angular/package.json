@@ -34,6 +34,7 @@
     "ng-block-ui": "^1.0.4",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.2.0",
+    "text-encoding": "^0.6.4",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

@@ -26,16 +26,6 @@ export class StudyMaterialService {
   }
 
   downloadMaterial(moduleMaterial:StudyMaterialDetailInfo):Observable<any> {
-    const options:{
-      headers?:HttpHeaders,
-      observe?:'body',
-      params?:HttpParams,
-      reportProgress?:boolean,
-      responseType:'arraybuffer',
-      withCredentials?:boolean
-    } = {
-      responseType: 'arraybuffer'
-    };
-    return this.http.post<any>('/myadmin-student-services/studentservices/studymaterial/download', moduleMaterial, options);
+    return this.http.post('/myadmin-student-services/studentservices/studymaterial/download', moduleMaterial, {responseType: 'arraybuffer'});
   }
 }

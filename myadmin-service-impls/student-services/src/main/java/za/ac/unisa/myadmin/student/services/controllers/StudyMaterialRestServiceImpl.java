@@ -57,25 +57,27 @@ public class StudyMaterialRestServiceImpl {
 	}
 
 	@PostMapping(path = "/studymaterial/download")
-	public ResponseEntity<?> generateActivatedMaterialsPDFReport(@RequestBody StudyMaterialDetailInfo materialInfo) throws Exception {
-		String itemshortdesc = materialInfo.getShortDescription();
-		String filename = scmClientService.getfileName(itemshortdesc);
-		String type = scmClientService.getType(itemshortdesc);
+	public ResponseEntity<?> generateActivatedMaterialsPDFReport(@RequestBody StudyMaterialDetailInfo materialInfo) throws OperationFailedException {
+		String filename = scmClientService.getfileName(materialInfo.getShortDescription());
+		String type = scmClientService.getType(materialInfo.getShortDescription());
 		if (type != null) {
 			type = StudyMaterialLocation.getStudyMaterialTypeDirectoryName(type);
 		}
-		String modCode = materialInfo.getCourseCode();
-		String filePath = StudyMaterialLocation.getMaterialFilePath(modCode, type, filename);
-		InputStream in = new FileInputStream(filePath);
-		byte[] array = IOUtils.toByteArray(in);
+		try {
+			String filePath = StudyMaterialLocation.getMaterialFilePath(materialInfo.getCourseCode(), type, filename);
+			InputStream in = new FileInputStream(filePath);
+			byte[] array = IOUtils.toByteArray(in);
 
-		String CONTENT_DESPOSITION = "Content-Disposition";
-		String CONTENT_ATTACHEMENT = "attachment; filename=\"" + filename + "\"";
-		return ResponseEntity.ok()
-			.header(CONTENT_DESPOSITION, CONTENT_ATTACHEMENT)
-			.header("Cache-Control", "private")
-			.header("Pragma", "cache")
-			.contentType(
-				MediaType.parseMediaType("application/pdf")).body(array);
+			String CONTENT_DESPOSITION = "Content-Disposition";
+			String CONTENT_ATTACHEMENT = "attachment; filename=\"" + filename + "\"";
+			return ResponseEntity.ok()
+				.header(CONTENT_DESPOSITION, CONTENT_ATTACHEMENT)
+				.header("Cache-Control", "private")
+				.header("Pragma", "cache")
+				.contentType(
+					MediaType.parseMediaType("application/pdf")).body(array);
+		} catch (Exception ex) {
+			throw new OperationFailedException("Error downloading file from server.");
+		}
 	}
 }

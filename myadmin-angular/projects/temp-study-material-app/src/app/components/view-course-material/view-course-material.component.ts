@@ -61,10 +61,18 @@ export class ViewCourseMaterialComponent implements OnInit {
       .subscribe(
         (data) => {
           var type = 'application/pdf';
-          var blob = new Blob([data], {type: type});
-          var fileURL = window.URL.createObjectURL(blob);
-          window.open(fileURL, '_blank', '');
+          const blob = new Blob([data], { type });
+          const url = window.URL.createObjectURL(blob);
+          // create hidden dom element (so it works in all browsers)
+          const a = document.createElement('a');
+          a.setAttribute('style', 'display:none;');
+          document.body.appendChild(a);
+          // create file, attach to hidden element and open hidden element
+          a.href = url;
+          a.download = moduleMaterial.shortDescription+'.pdf';
+          a.click();
           this.blockUI.stop();
+          return url;
         },
         () => {
           this.blockUI.stop();
