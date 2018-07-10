@@ -6,7 +6,7 @@
   </div>
   <br/>
   <br/>
-  <form (ngSubmit)="payNow()" [formGroup]="summaryForm">
+  <form [formGroup]="summaryForm">
 
     <div class="form-group row " *ngIf="!summaryInfo?.errorFlag">
       <div class="alert alert-success col-sm-8" role="alert">
