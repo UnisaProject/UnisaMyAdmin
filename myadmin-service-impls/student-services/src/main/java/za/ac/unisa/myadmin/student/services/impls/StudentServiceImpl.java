@@ -12,7 +12,10 @@ import za.ac.unisa.myadmin.student.services.models.StudentEntity;
 import za.ac.unisa.myadmin.student.services.repositories.StudentRepository;
 import za.ac.unisa.myadmin.student.services.student.StudentService;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Adrian on 2018-06-26.
@@ -42,5 +45,101 @@ public class StudentServiceImpl implements StudentService {
 	@Transactional
 	public int updateSmartCardValue(String smartCard, Integer studentNumber) {
 		return studentRepository.updatesmartCardIssuedByStudentNumber(smartCard, studentNumber);
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsBySurname(String surname) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findBySurnameIgnoreCase(surname)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsByFirstNames(String firstNames) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findByFirstNamesIgnoreCase(firstNames)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsBySurnameAndFirstNames(String surname, String firstNames) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findBySurnameAndFirstNamesAllIgnoreCase(surname, firstNames)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDate(String surname, String firstNames, Date dateOfBirth) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findBySurnameAndFirstNamesAndBirthDateAllIgnoreCase(surname, firstNames, dateOfBirth)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsByIdNumber(String identityNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findByIdentityNumberIgnoreCase(identityNumber)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(String surname, String firstNames, Date dateOfBirth, String identityNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findBySurnameAndFirstNamesAndBirthDateAndIdentityNumberAllIgnoreCase(surname, firstNames, dateOfBirth, identityNumber)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsByPassportNumber(String passportNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findByPassportNumberIgnoreCase(passportNumber)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
+	}
+
+	@Override
+	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(String surname, String firstNames, Date dateOfBirth, String passportNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		try {
+			return studentRepository.findBySurnameAndFirstNamesAndBirthDateAndPassportNumberAllIgnoreCase(surname, firstNames, dateOfBirth, passportNumber)
+				.stream()
+				.map(entity -> entity.toDto())
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new OperationFailedException(e);
+		}
 	}
 }

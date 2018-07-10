@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by dev on 2018-06-06.
+ * Created by Adrian on 2018-06-06.
  */
 @Repository
 public interface StudentRepository extends JpaRepository<StudentEntity, Integer> {
@@ -22,11 +22,15 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Integer>
 
 	public List<StudentEntity> findBySurnameAndFirstNamesAllIgnoreCase(String surname, String firstNames);
 
+	public List<StudentEntity> findByIdentityNumberIgnoreCase(String identityNumber);
+
+	public List<StudentEntity> findByPassportNumberIgnoreCase(String passportNumber);
+
 	public List<StudentEntity> findBySurnameAndFirstNamesAndBirthDateAllIgnoreCase(String surname, String firstNames, Date dateOfBirth);
 
-	public List<StudentEntity> findByIdentityNumber(String identityNumber);
+	public List<StudentEntity> findBySurnameAndFirstNamesAndBirthDateAndIdentityNumberAllIgnoreCase(String surname, String firstNames, Date dateOfBirth, String identityNumber);
 
-	public List<StudentEntity> findByPassportNumber(String passportNumber);
+	public List<StudentEntity> findBySurnameAndFirstNamesAndBirthDateAndPassportNumberAllIgnoreCase(String surname, String firstNames, Date dateOfBirth, String passportNumber);
 
 	@Query("SELECT se.smartCardIssued FROM StudentEntity se where se.studentNumber = :studentNumber")
 	public String getSmartCardIssuedByStudentNumber(@Param("studentNumber") Integer studentNumber);

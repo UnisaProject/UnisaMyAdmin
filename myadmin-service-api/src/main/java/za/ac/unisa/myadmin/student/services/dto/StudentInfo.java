@@ -8,8 +8,7 @@ import java.util.Date;
  */
 public class StudentInfo implements Serializable {
 
-	private static final long serialVersionUID = 1058017142460191890L;
-
+	private static final long serialVersionUID = 7114849708840316512L;
 	private Integer studentNumber;
 
 	private String studentName;
@@ -25,6 +24,10 @@ public class StudentInfo implements Serializable {
 	private String initials;
 
 	private String emailAddress;
+
+	private String identityNumber;
+
+	private String passportNumber;
 
 	public StudentInfo() {
 	}
@@ -91,6 +94,22 @@ public class StudentInfo implements Serializable {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public String getIdentityNumber() {
+		return identityNumber;
+	}
+
+	public void setIdentityNumber(String identityNumber) {
+		this.identityNumber = identityNumber;
+	}
+
+	public String getPassportNumber() {
+		return passportNumber;
+	}
+
+	public void setPassportNumber(String passportNumber) {
+		this.passportNumber = passportNumber;
 	}
 
 	@Override

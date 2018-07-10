@@ -248,6 +248,11 @@ public class StudentEntity implements Serializable {
 		info.setFirstNames(this.firstNames);
 		info.setInitials(this.initials);
 		info.setTitle(this.title);
+		if (this.birthDate != null) {
+			info.setDateOfBirth(this.birthDate);
+		}
+		info.setIdentityNumber(this.identityNumber);
+		info.setPassportNumber(this.passportNumber);
 		//No email address in table
 		//info.setEmailAddress(this.email);
 		return info;
