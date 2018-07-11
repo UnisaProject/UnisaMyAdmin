@@ -22,27 +22,27 @@ public interface StudentService {
 	public int updateSmartCardValue(String smartCard, Integer studentNumber);
 
 	public List<StudentInfo> getStudentsBySurname(String surname)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsByFirstNames(String firstNames)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsBySurnameAndFirstNames(String surname, String firstNames)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDate(String surname, String firstNames, Date dateOfBirth)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsByIdNumber(String identityNumber)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(String surname, String firstNames, Date dateOfBirth, String identityNumber)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsByPassportNumber(String passportNumber)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(String surname, String firstNames, Date dateOfBirth, String passportNumber)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException;
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 }

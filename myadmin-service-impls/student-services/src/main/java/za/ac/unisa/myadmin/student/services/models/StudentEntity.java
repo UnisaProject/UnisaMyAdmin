@@ -249,7 +249,7 @@ public class StudentEntity implements Serializable {
 		info.setInitials(this.initials);
 		info.setTitle(this.title);
 		if (this.birthDate != null) {
-			info.setDateOfBirth(this.birthDate);
+			info.setDateOfBirth(new Date(this.birthDate.getTime()));
 		}
 		info.setIdentityNumber(this.identityNumber);
 		info.setPassportNumber(this.passportNumber);

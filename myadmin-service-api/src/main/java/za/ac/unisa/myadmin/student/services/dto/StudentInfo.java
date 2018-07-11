@@ -114,7 +114,7 @@ public class StudentInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CardStudentInfo{" +
+		return "StudentInfo{" +
 			"studentNumber='" + studentNumber + '\'' +
 			", studentName='" + studentName + '\'' +
 			", title='" + title + '\'' +
