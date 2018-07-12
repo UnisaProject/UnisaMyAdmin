@@ -29,13 +29,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class StudentRestServiceImpl {
 
 	@Autowired
-	@Qualifier("StudentService")
+	@Qualifier("StudentServiceComplianceDecorator")
 	private StudentService studentService;
 
 
 	@GetMapping(path = {"/students"}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public List<StudentInfo> searchStudents(@RequestParam(value = "surname", required = false) String surname,
-											@RequestParam(value = "firstNames", required = false) String firstNames,
+											@RequestParam(value = "firstName", required = false) String firstName,
 											@RequestParam(value = "dateOfBirth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirth,
 											@RequestParam(value = "identityNumber", required = false) String identityNumber,
 											@RequestParam(value = "passportNumber", required = false) String passportNumber,
@@ -44,35 +44,35 @@ public class StudentRestServiceImpl {
 		Set<String> allowedParameters = new HashSet<>();
 		allowedParameters.clear();
 		allowedParameters.add("surname");
-		allowedParameters.add("firstNames");
+		allowedParameters.add("firstName");
 		allowedParameters.add("dateOfBirth");
 		allowedParameters.add("identityNumber");
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(surname, firstNames,
+			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(surname, firstName,
 				dateOfBirth, identityNumber);
 		}
 		allowedParameters.clear();
 		allowedParameters.add("surname");
-		allowedParameters.add("firstNames");
+		allowedParameters.add("firstName");
 		allowedParameters.add("dateOfBirth");
 		allowedParameters.add("passportNumber");
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstNames,
+			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstName,
 				dateOfBirth, passportNumber);
 		}
 		allowedParameters.clear();
 		allowedParameters.add("surname");
-		allowedParameters.add("firstNames");
+		allowedParameters.add("firstName");
 		allowedParameters.add("dateOfBirth");
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDate(surname, firstNames,
+			return studentService.getStudentsBySurnameAndFirstNamesAndBirthDate(surname, firstName,
 				dateOfBirth);
 		}
 		allowedParameters.clear();
 		allowedParameters.add("surname");
-		allowedParameters.add("firstNames");
+		allowedParameters.add("firstName");
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return studentService.getStudentsBySurnameAndFirstNames(surname, firstNames);
+			return studentService.getStudentsBySurnameAndFirstNames(surname, firstName);
 		}
 		allowedParameters.clear();
 		allowedParameters.add("surname");
@@ -80,9 +80,9 @@ public class StudentRestServiceImpl {
 			return studentService.getStudentsBySurname(surname);
 		}
 		allowedParameters.clear();
-		allowedParameters.add("firstNames");
+		allowedParameters.add("firstName");
 		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return studentService.getStudentsByFirstNames(firstNames);
+			return studentService.getStudentsByFirstNames(firstName);
 		}
 		throw new MissingParameterException();
 	}
