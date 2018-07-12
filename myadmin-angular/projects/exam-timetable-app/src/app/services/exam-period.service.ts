@@ -10,16 +10,15 @@ export class ExamPeriodService {
   constructor(private http: HttpClient) {
   }
 
-  getExamPeriod(code: number): Observable<ExamPeriodInfo> {
-    return this.http.get<ExamPeriodInfo>(`/myadmin-exam-services/services/rest/examperiodservice/examperiods/${code}`);
-  }
-
   getExamPeriods(): Observable<ExamPeriodInfo[]> {
     return this.http.get<ExamPeriodInfo[]>('/myadmin-exam-services/services/rest/examperiodservice/examperiods' );
   }
 
   getExamPeriodByCodes(codes: number[]): Observable<ExamPeriodInfo[]> {
-    const params = new HttpParams().set('code', codes.join(','));
+    let params = new HttpParams();
+    codes.forEach(function (value) {
+      params = params.append('code', <string><any>value);
+    });
 
     return this.http.get<ExamPeriodInfo[]>('/myadmin-exam-services/services/rest/examperiodservice/examperiods', { params });
   }
