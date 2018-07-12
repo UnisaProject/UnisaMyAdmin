@@ -4,85 +4,69 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import javax.ws.rs.core.UriInfo;
 
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.exam.services.ExaminationService;
+import za.ac.unisa.myadmin.exam.rest.services.ExaminationRestService;
 import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
+import za.ac.unisa.myadmin.service.base.decorators.ExaminationServiceDecorator;
 import za.ac.unisa.myadmin.service.rest.impl.utils.RestImplUtils;
 
-@RestController
-@RequestMapping({ "/examservices" })
-public class ExaminationRestServiceImpl {
+public class ExaminationRestServiceImpl extends ExaminationServiceDecorator implements ExaminationRestService {
 
-	@Autowired
-	@Qualifier("ExaminationServiceComplianceDecorator")
-	private ExaminationService examinationService;
-
-	@GetMapping(path = { "/examinations" })
-	public List<ExaminationInfo> searchForExaminations(
-			@RequestParam(value = "year", required = false) Integer year,
-			@RequestParam(value = "examPeriodCode", required = false) Integer examPeriodCode,
-			@RequestParam(value = "courseCodes", required = false) List<String> courseCodes,
-			HttpServletRequest httpServletRequest)
-			throws MissingParameterException, InvalidParameterException, OperationFailedException {
+	@Override
+	public List<ExaminationInfo> searchForExaminations(Integer year, Integer examPeriodCode, List<String> courseCodes,
+			UriInfo uriInfo) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		Set<String> allowedParameters = new HashSet<>();
 
 		allowedParameters.clear();
 		allowedParameters.add("year");
 		allowedParameters.add("examPeriodCode");
-		allowedParameters.add("courseCodes");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByYearAndExamPeriodCodeAndCourseCodes(year, examPeriodCode,
+		allowedParameters.add("courseCode");
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByYearAndExamPeriodCodeAndCourseCodes(year, examPeriodCode,
 					courseCodes);
 		}
 
 		allowedParameters.clear();
 		allowedParameters.add("examPeriodCode");
-		allowedParameters.add("courseCodes");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByExamPeriodCodeAndCourseCodes(examPeriodCode, courseCodes);
+		allowedParameters.add("courseCode");
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByExamPeriodCodeAndCourseCodes(examPeriodCode, courseCodes);
 		}
 
 		allowedParameters.clear();
 		allowedParameters.add("year");
-		allowedParameters.add("courseCodes");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByYearAndCourseCodes(year, courseCodes);
+		allowedParameters.add("courseCode");
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByYearAndCourseCodes(year, courseCodes);
 		}
 
 		allowedParameters.clear();
 		allowedParameters.add("year");
 		allowedParameters.add("examPeriodCode");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByYearAndExamPeriodCode(year, examPeriodCode);
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByYearAndExamPeriodCode(year, examPeriodCode);
 		}
 
 		allowedParameters.clear();
 		allowedParameters.add("year");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByYear(year);
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByYear(year);
 		}
 
 		allowedParameters.clear();
 		allowedParameters.add("examPeriodCode");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByExamPeriodCode(examPeriodCode);
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByExamPeriodCode(examPeriodCode);
 		}
 
 		allowedParameters.clear();
-		allowedParameters.add("courseCodes");
-		if (RestImplUtils.validateParameters(allowedParameters, httpServletRequest.getParameterMap())) {
-			return examinationService.getExaminationsByCourseCodes(courseCodes);
+		allowedParameters.add("courseCode");
+		if (RestImplUtils.validateParameters(allowedParameters, uriInfo)) {
+			return getNextDecorator().getExaminationsByCourseCodes(courseCodes);
 		}
 
 		throw new MissingParameterException();

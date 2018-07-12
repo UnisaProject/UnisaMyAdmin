@@ -3,17 +3,13 @@ package za.ac.unisa.myadmin.exam.services.decorators;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
 import za.ac.unisa.myadmin.exam.services.ExamServiceConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
+import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
 
 /**
  * This decorator will exclude old and obsolete data records. It should be used
@@ -29,34 +25,25 @@ import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
  * @author Jannie
  *
  */
-@Service("ExamPeriodServiceExclusionDecorator")
-public class ExamPeriodServiceExclusionDecorator implements ExamPeriodService {
-
-	@Autowired
-	@Qualifier("ExamPeriodServiceVirtualDecorator")
-	private ExamPeriodService examPeriodService;
-
-	@Override
-	public ExamPeriodInfo getExamPeriod(Integer code) throws DoesNotExistException, MissingParameterException,
-			InvalidParameterException, OperationFailedException {
-		return examPeriodService.getExamPeriod(code);
-	}
+public class ExamPeriodServiceExclusionDecorator extends ExamPeriodServiceDecorator implements ExamPeriodService {
 
 	@Override
 	public List<ExamPeriodInfo> getExamPeriods() throws OperationFailedException {
-		List<ExamPeriodInfo> examPeriods = examPeriodService.getExamPeriods();
+		List<ExamPeriodInfo> examPeriods = getNextDecorator().getExamPeriods();
 
-		return examPeriods.stream()
-				.filter(examPeriod -> !ExamServiceConstants.EXAM_PERIOD_OBSOLETE_CODES.contains(examPeriod.getCode()))
-				.collect(Collectors.toList());
+		return filterObsoleteCodes(examPeriods);
 
 	}
 
 	@Override
 	public List<ExamPeriodInfo> getExamPeriodsByCodes(List<Integer> codes)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		List<ExamPeriodInfo> examPeriods = examPeriodService.getExamPeriodsByCodes(codes);
+		List<ExamPeriodInfo> examPeriods = getNextDecorator().getExamPeriodsByCodes(codes);
 
+		return filterObsoleteCodes(examPeriods);
+	}
+
+	private List<ExamPeriodInfo> filterObsoleteCodes(List<ExamPeriodInfo> examPeriods) {
 		return examPeriods.stream()
 				.filter(examPeriod -> !ExamServiceConstants.EXAM_PERIOD_OBSOLETE_CODES.contains(examPeriod.getCode()))
 				.collect(Collectors.toList());

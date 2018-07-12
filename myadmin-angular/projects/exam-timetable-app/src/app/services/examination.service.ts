@@ -11,25 +11,25 @@ export class ExaminationService {
   }
 
   getExaminations(): Observable<ExaminationInfo[]> {
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations');
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations');
   }
 
   getExaminationsByYear(year: number): Observable<ExaminationInfo[]> {
     const params = new HttpParams().set('year', <string><any>year);
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByExamPeriodCode(examPeriodCode: number): Observable<ExaminationInfo[]> {
     const params = new HttpParams().set('examPeriodCode', <string><any>examPeriodCode);
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByCourseCodes(courseCodes: string[]): Observable<ExaminationInfo[]> {
-    const params = new HttpParams().set('courseCodes', courseCodes.join(','));
+    const params = new HttpParams().set('courseCode', courseCodes.join(','));
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByYearAndExamPeriodCode(year: number, examPeriodCode: number): Observable<ExaminationInfo[]> {
@@ -37,32 +37,32 @@ export class ExaminationService {
       .set('year', <string><any>year)
       .set('examPeriodCode', <string><any>examPeriodCode);
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByYearAndCourseCodes(year: number, courseCodes: string[]): Observable<ExaminationInfo[]> {
     const params = new HttpParams()
       .set('year', <string><any>year)
-      .set('courseCodes', courseCodes.join(','));
+      .set('courseCode', courseCodes.join(','));
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByExamPeriodCodeAndCourseCodes(examPeriodCode: number, courseCodes: string[]): Observable<ExaminationInfo[]> {
     const params = new HttpParams()
       .set('examPeriodCode', <string><any>examPeriodCode)
-      .set('courseCodes', courseCodes.join(','));
+      .set('courseCode', courseCodes.join(','));
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
   getExaminationsByYearAndExamPeriodCodeAndCourseCodes(year: number, examPeriodCode: number, courseCodes: string[]): Observable<ExaminationInfo[]> {
     const params = new HttpParams()
       .set('year', <string><any>year)
       .set('examPeriodCode', <string><any>examPeriodCode)
-      .set('courseCodes', courseCodes.join(','));
+      .set('courseCode', courseCodes.join(','));
 
-    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/examservices/examinations', { params });
+    return this.http.get<ExaminationInfo[]>('/myadmin-exam-services/services/rest/examinationservice/examinations', { params });
   }
 
 }

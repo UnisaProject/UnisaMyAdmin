@@ -3,15 +3,12 @@ package za.ac.unisa.myadmin.exam.services.decorators;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamPaperService;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPaperInfo;
+import za.ac.unisa.myadmin.service.base.decorators.ExamPaperServiceDecorator;
 
 /**
  * This decorator ensures that the method request parameters comply to the
@@ -22,37 +19,34 @@ import za.ac.unisa.myadmin.exam.services.dto.ExamPaperInfo;
  * @author Jannie
  *
  */
-@Service("ExamPaperServiceComplianceDecorator")
-public class ExamPaperServiceComplianceDecorator implements ExamPaperService {
-
-	@Autowired
-	@Qualifier("ExamPaperService")
-	private ExamPaperService examPaperService;
+public class ExamPaperServiceComplianceDecorator extends ExamPaperServiceDecorator implements ExamPaperService {
 
 	@Override
 	public List<ExamPaperInfo> getExamPapersByYear(Integer year)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		return examPaperService.getExamPapersByYear(year);
+		return getNextDecorator().getExamPapersByYear(year);
 	}
 
 	@Override
 	public List<ExamPaperInfo> getExamPapersByCourseCodes(List<String> courseCodes)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		courseCodes = courseCodes.stream()
-				.map(String::toUpperCase)
-				.collect(Collectors.toList());
+		List<String> upperCaseCourseCodes = convertCodesToUpperCase(courseCodes);
 
-		return examPaperService.getExamPapersByCourseCodes(courseCodes);
+		return getNextDecorator().getExamPapersByCourseCodes(upperCaseCourseCodes);
 	}
 
 	@Override
 	public List<ExamPaperInfo> getExamPapersByYearAndCourseCodes(Integer year, List<String> courseCodes)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		courseCodes = courseCodes.stream()
+		List<String> upperCaseCourseCodes = convertCodesToUpperCase(courseCodes);
+
+		return getNextDecorator().getExamPapersByYearAndCourseCodes(year, upperCaseCourseCodes);
+	}
+
+	private List<String> convertCodesToUpperCase(List<String> courseCodes) {
+		return courseCodes.stream()
 				.map(String::toUpperCase)
 				.collect(Collectors.toList());
-
-		return examPaperService.getExamPapersByYearAndCourseCodes(year, courseCodes);
 	}
 
 }

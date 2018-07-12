@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -16,11 +13,13 @@ import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
 import za.ac.unisa.myadmin.exam.services.models.ExamPeriodEntity;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
 
-@Service("ExamPeriodService")
 public class ExamPeriodServiceImpl implements ExamPeriodService {
 
-	@Autowired
 	private ExamPeriodRepository examPeriodRepository;
+
+	public void setExamPeriodRepository(ExamPeriodRepository examPeriodRepository) {
+		this.examPeriodRepository = examPeriodRepository;
+	}
 
 	@Override
 	public ExamPeriodInfo getExamPeriod(Integer code) throws DoesNotExistException, MissingParameterException,
