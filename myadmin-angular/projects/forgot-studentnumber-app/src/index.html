@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Forgot Student Number</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style type="text/css">
+    body,
+    html {
+      height: 100%;
+    }
+    .app-loading {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .app-loading .spinner {
+      height: 100px;
+      width: 100px;
+      animation: rotate 2s linear infinite;
+      transform-origin: center center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .app-loading .spinner .path {
+      stroke-dasharray: 1, 00;
+      stroke-dashoffset: 0;
+      animation: dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke: #aaa;
+    }
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+      }
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+      }
+    }
+  </style>
+</head>
+<body>
+<unisa-root>
+  <!-- loading layout replaced by app after startup -->
+  <div class="app-loading">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABZklEQVQ4y+2SPUtbYRiGr+d9T46mQS1EMhQSSgVxEdf+Agcp0kkLXdwE6U/IL9CxgejQqZMIorR0cBDxaxEppWghFQQ7xYaiPUnOyTkn79OloOCkrrl+wPXc3PcDPXrcGwEIK6UBhLdGmAsSbzyI7ZOoaxPfuFoxF+4qnDiVr8ApEAFdIM2+u9A7wvb70oCxbLmUl2d7CUcXgxy0Cxx3hzk1+fPEPl3jRWFJ1xdbfMzlO02N1REKpGKI+hZupKtDw6PSqZZeNX/rp51KSNq5uaT/4//x+vneX0iLcVAe6zQ2Y7G12euGuyUZAaaBN8CM1MvF5cMP0Xzc0iuEBhACDrBARlA/oy7TNP6zlvGNwaEI+TT86eHaDuqe6sZ0cFUF8GrbcRoFOmUsP4A2kNzq1yjipWLMZSaX/Tw4OnHuD71uGX8yEfPcIV/+2r59xCranQH25VGTTsyPAFngF99Wrns/3uOB/ANEGY7LoZb8mwAAAABJRU5ErkJggg==" alt="Unisa Logo">
+    <svg class="spinner" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+  </div>
+</unisa-root>
+</body>
+</html>

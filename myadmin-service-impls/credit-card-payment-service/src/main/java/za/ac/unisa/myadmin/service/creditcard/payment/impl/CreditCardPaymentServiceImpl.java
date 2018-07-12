@@ -4,8 +4,8 @@ import Sfrrf03h.Abean.Sfrrf03sMntOnlineCcPayments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.creditcard.payment.ApplicationPaymentInfo;
@@ -44,6 +44,7 @@ public class CreditCardPaymentServiceImpl implements CreditCardPaymentService {
 	private final String REG_STATUS_DESCRIPTION_UNREGISTERED = "Not Registered";
 
 	@Autowired
+	@Qualifier("StudentService")
 	private StudentService studentService;
 
 	@Override

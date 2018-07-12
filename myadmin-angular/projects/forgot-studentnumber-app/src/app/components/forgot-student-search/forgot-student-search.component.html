@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <h5>Search for your student number</h5>
+  </div>
+  <div class="row">
+    <p>Please enter all of the following personal details.</p>
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="studentInputForm">
+    <div class="form-group row">
+      <label for="surname" class="col-sm-3 col-form-label font-weight-bold">Surname *</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="surname" formControlName="surname" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="firstNames" class="col-sm-3 col-form-label font-weight-bold">Full names *</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="firstNames" formControlName="firstNames" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="dateOfBirth" class="col-sm-3 col-form-label font-weight-bold">Date of Birth *</label>
+      <div class="col-sm-2">
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd"
+                 name="dateOfBirth" formControlName="dateOfBirth" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+              <clr-icon shape="calendar"></clr-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="form-check col-sm-3">
+        <label class="form-check-label font-weight-bold">
+          <input type="radio" class="form-check-input" name="optradio" value="option1" checked>ID Number
+        </label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="identityNumber" formControlName="identityNumber" required>
+      </div>
+    </div>
+    <div class="row">
+      <p>OR</p>
+    </div>
+    <div class="form-group row">
+      <div class="form-check col-sm-3">
+        <label class="form-check-label font-weight-bold">
+          <input type="radio" class="form-check-input" name="optradio" value="option2">Passport
+        </label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="passportNumber" formControlName="passportNumber" required>
+      </div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="studentInputForm.invalid"> Submit</button>
+    </div>
+  </form>
+  <br/>
+</div>
