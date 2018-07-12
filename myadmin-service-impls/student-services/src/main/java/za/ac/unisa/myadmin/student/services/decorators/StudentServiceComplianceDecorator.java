@@ -44,7 +44,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsBySurname(String surname) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
-			throw new OperationFailedException("Please enter a valid surname.");
+			throw new MissingParameterException("Please enter a valid surname.");
 		}
 		return studentService.getStudentsBySurname(surname);
 	}
@@ -52,7 +52,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsByFirstNames(String firstNames) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(firstNames)) {
-			throw new OperationFailedException("Please enter a valid first name(s).");
+			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
 		return studentService.getStudentsByFirstNames(firstNames);
 	}
@@ -60,10 +60,10 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsBySurnameAndFirstNames(String surname, String firstNames) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
-			throw new OperationFailedException("Please enter a valid surname.");
+			throw new MissingParameterException("Please enter a valid surname.");
 		}
 		if (!StringUtils.hasText(firstNames)) {
-			throw new OperationFailedException("Please enter a valid first name(s).");
+			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
 		return studentService.getStudentsBySurnameAndFirstNames(surname, firstNames);
 	}
@@ -71,13 +71,13 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDate(String surname, String firstNames, Date dateOfBirth) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
-			throw new OperationFailedException("Please enter a valid surname.");
+			throw new MissingParameterException("Please enter a valid surname.");
 		}
 		if (!StringUtils.hasText(firstNames)) {
-			throw new OperationFailedException("Please enter a valid first name(s).");
+			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
 		if (dateOfBirth == null) {
-			throw new OperationFailedException("Please enter a valid date of birth.");
+			throw new MissingParameterException("Please enter a valid date of birth.");
 		}
 		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDate(surname, firstNames, dateOfBirth);
 	}
@@ -85,7 +85,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsByIdNumber(String identityNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(identityNumber)) {
-			throw new OperationFailedException("Please enter a valid Identity Number.");
+			throw new MissingParameterException("Please enter a valid Identity Number.");
 		}
 		return studentService.getStudentsByIdNumber(identityNumber);
 	}
@@ -93,16 +93,16 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(String surname, String firstNames, Date dateOfBirth, String identityNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
-			throw new OperationFailedException("Please enter a valid surname.");
+			throw new MissingParameterException("Please enter a valid surname.");
 		}
 		if (!StringUtils.hasText(firstNames)) {
-			throw new OperationFailedException("Please enter a valid first name(s).");
+			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
 		if (dateOfBirth == null) {
-			throw new OperationFailedException("Please enter a valid date of birth.");
+			throw new MissingParameterException("Please enter a valid date of birth.");
 		}
 		if (!StringUtils.hasText(identityNumber)) {
-			throw new OperationFailedException("Please enter a valid Identity Number.");
+			throw new MissingParameterException("Please enter a valid Identity Number.");
 		}
 		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(surname, firstNames, dateOfBirth, identityNumber);
 	}
@@ -118,16 +118,16 @@ public class StudentServiceComplianceDecorator implements StudentService {
 	@Override
 	public List<StudentInfo> getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(String surname, String firstNames, Date dateOfBirth, String passportNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
-			throw new OperationFailedException("Please enter a valid surname.");
+			throw new MissingParameterException("Please enter a valid surname.");
 		}
 		if (!StringUtils.hasText(firstNames)) {
-			throw new OperationFailedException("Please enter a valid first name(s).");
+			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
 		if (dateOfBirth == null) {
-			throw new OperationFailedException("Please enter a valid date of birth.");
+			throw new MissingParameterException("Please enter a valid date of birth.");
 		}
 		if (!StringUtils.hasText(passportNumber)) {
-			throw new OperationFailedException("Please enter a valid Identity Number.");
+			throw new MissingParameterException("Please enter a valid Identity Number.");
 		}
 		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstNames, dateOfBirth, passportNumber);
 	}
