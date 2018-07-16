@@ -34,7 +34,7 @@ export class StudentService {
       .set('surname', <string><any>surname)
       .set('firstName', <string><any>firstName)
       .set('dateOfBirth', <string><any>dateOfBirth);
-    //TODO from angular client dateformat was not working sending string.
+
     return this.http.get<StudentInfo[]>('/myadmin-student-services/studentservices/students', {params});
   }
 
@@ -44,7 +44,7 @@ export class StudentService {
       .set('firstName', <string><any>firstName)
       .set('dateOfBirth', <string><any>dateOfBirth)
       .set('identityNumber', <string><any>identityNumber);
-//TODO from angular client dateformat was not working sending string.
+
     return this.http.get<StudentInfo[]>('/myadmin-student-services/studentservices/students', {params});
   }
 
@@ -53,8 +53,8 @@ export class StudentService {
       .set('surname', <string><any>surname)
       .set('firstName', <string><any>firstName)
       .set('dateOfBirth', <string><any>dateOfBirth)
-      .set('passport', <string><any>passport);
-//TODO from angular client dateformat was not working sending string.
+      .set('passportNumber', <string><any>passport);
+
     return this.http.get<StudentInfo[]>('/myadmin-student-services/studentservices/students', {params});
   }
 

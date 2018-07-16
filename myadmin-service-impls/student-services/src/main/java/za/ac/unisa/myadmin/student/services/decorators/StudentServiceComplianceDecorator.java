@@ -127,7 +127,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 			throw new MissingParameterException("Please enter a valid date of birth.");
 		}
 		if (!StringUtils.hasText(passportNumber)) {
-			throw new MissingParameterException("Please enter a valid Identity Number.");
+			throw new MissingParameterException("Please enter a valid Passport Number.");
 		}
 		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstNames, dateOfBirth, passportNumber);
 	}
