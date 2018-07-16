@@ -32,4 +32,9 @@ export class ForgotStudentResultComponent implements OnInit {
     this.blockUI.stop();
   }
 
+  back() {
+    this.searchCriteriaService.studentInfo === null;
+    this.router.navigateByUrl("/search");
+  }
+
 }

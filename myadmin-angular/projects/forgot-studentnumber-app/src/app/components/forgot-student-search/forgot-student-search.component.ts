@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
-import { DatePipe } from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {ToasterNotificationService, StudentInfo} from "myadmin-lib";
 import {SearchCriteriaService, StudentService} from "../../services";
@@ -27,7 +27,7 @@ export class ForgotStudentSearchComponent implements OnInit {
               private formBuilder:FormBuilder,
               private searchCriteriaService:SearchCriteriaService,
               private studentService:StudentService,
-              private datePipe: DatePipe,
+              private datePipe:DatePipe,
               private toaster:ToasterNotificationService) {
     this.initForm();
   }
@@ -70,81 +70,50 @@ export class ForgotStudentSearchComponent implements OnInit {
     return <FormControl>this.studentInputForm.controls['passportNumber'];
   }
 
+
+  private studentCall(students:StudentInfo[]):any {
+    if (students.length > 1) {
+      this.toaster.error('Validation Error', 'There is more than one student number that complies with the information submitted. Please contact study-info@unisa.ac.za for assistance.');
+      this.blockUI.stop();
+      return;
+    }
+    if (students.length == 0) {
+      this.toaster.error('Validation Error', 'Student number not found. Check that your details have been entered correctly. If correct, please contact study-info@unisa.ac.za for assistance.');
+      this.blockUI.stop();
+      return;
+    }
+    this.searchCriteriaService.studentInfo = {...students[0]};
+    this.router.navigateByUrl('/result')
+  }
+
   onSubmit() {
-    if(this.validateForm()){
+    if (this.validateForm()) {
       this.blockUI.stop();
       return;
     }
     this.studentInfo = {...this.studentInputForm.value};
 
-    const dateString =this.datePipe.transform(this.studentInfo.dateOfBirth, 'yyyy-MM-dd',null,null);
+    const dateString = this.datePipe.transform(this.studentInfo.dateOfBirth, 'yyyy-MM-dd', null, null);
 
     this.blockUI.start("Loading information...");
     if (this.identityNumber.value) {
       this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndIdNumber(this.studentInfo.surname, this.studentInfo.firstNames, dateString, this.studentInfo.identityNumber)
-        .subscribe((students:StudentInfo[])=> {
-          // Copy the data to the service
-          if (students.length > 1) {
-            this.toaster.error('Validation Error', 'There is more than one student number that complies with the information submitted. Please contact study-info@unisa.ac.za for assistance.');
-            this.blockUI.stop();
-            return;
-          }
-          if (students.length == 0) {
-            this.toaster.error('Validation Error', 'Student number not found. Check that your details have been entered correctly. If correct, please contact study-info@unisa.ac.za for assistance.');
-            this.blockUI.stop();
-            return;
-          }
-          //this.studentInfo = {...students[0]};
-          this.searchCriteriaService.studentInfo={...students[0]};
-          this.router.navigateByUrl('/result');
-        }, ()=> {
-          this.blockUI.stop();
-        });
+        .subscribe(students => this.studentCall(students),
+          () => this.blockUI.stop());
     } else if (this.passportNumber.value) {
       this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndPassportNumber(this.studentInfo.surname, this.studentInfo.firstNames, dateString, this.studentInfo.passportNumber)
-        .subscribe((students:StudentInfo[])=> {
-          // Copy the data to the service
-          if (students.length > 1) {
-            this.toaster.error('Unexpected Error', 'There is more than one student number that complies with the information submitted. Please contact study-info@unisa.ac.za for assistance.');
-            return;
-          }
-          if (students.length == 0) {
-            this.toaster.error('Validation Error', 'Student number not found. Check that your details have been entered correctly. If correct, please contact study-info@unisa.ac.za for assistance.');
-            this.blockUI.stop();
-            return;
-          }
-          //this.studentInfo = {...students[0]};
-          this.searchCriteriaService.studentInfo={...students[0]};
-          this.router.navigateByUrl('/result');
-        }, ()=> {
-          this.blockUI.stop();
-        });
+        .subscribe(students => this.studentCall(students),
+          () => this.blockUI.stop());
     }
     else {
       this.studentService.getStudentsBySurnameAndFirstnameAndBirthDate(this.studentInfo.surname, this.studentInfo.firstNames, dateString)
-        .subscribe((students:StudentInfo[])=> {
-          // Copy the data to the service
-          if (students.length > 1) {
-            this.toaster.error('Validation Error', 'There is more than one student number that complies with the information submitted. Please contact study-info@unisa.ac.za for assistance.');
-            this.blockUI.stop();
-            return;
-          }
-          if (students.length == 0) {
-            this.toaster.error('Validation Error', 'Student number not found. Check that your details have been entered correctly. If correct, please contact study-info@unisa.ac.za for assistance.');
-            this.blockUI.stop();
-            return;
-          }
-          //this.studentInfo = {...students[0]};
-          this.searchCriteriaService.studentInfo={...students[0]};
-          this.router.navigateByUrl('/result');
-        }, ()=> {
-          this.blockUI.stop();
-        });
+        .subscribe(students => this.studentCall(students),
+          () => this.blockUI.stop());
     }
   }
 
   private validateForm():boolean {
-  if (this.searchOption.value) {
+    if (this.searchOption.value) {
       if (this.searchOption.value === 'idNumber' && !this.identityNumber.value) {
         this.toaster.error('Validation Error', 'You have selected to search by ID number. Please enter your ID number.');
         return true;
