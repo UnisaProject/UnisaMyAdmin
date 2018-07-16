@@ -127,7 +127,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build credit card payment -->
+					<!-- Build temporary study material -->
 					<execution>
 						<id>yarn build temp-study-material-app</id>
 						<goals>
@@ -136,6 +136,18 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<arguments>build temp-study-material-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build forgot studentnumber -->
+					<execution>
+						<id>yarn build forgot-studentnumber-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build forgot-studentnumber-app</arguments>
 						</configuration>
 					</execution>
 				</executions>
