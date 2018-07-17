@@ -2,7 +2,6 @@ package za.ac.unisa.myadmin.student.services.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,13 +15,13 @@ import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 import za.ac.unisa.myadmin.student.services.student.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 
 @RestController
 @RequestMapping({"/studentservices"})
@@ -32,15 +31,24 @@ public class StudentRestServiceImpl {
 	@Qualifier("StudentServiceComplianceDecorator")
 	private StudentService studentService;
 
-
-	@GetMapping(path = {"/students"}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@GetMapping(path = {"/students"})
 	public List<StudentInfo> searchStudents(@RequestParam(value = "surname", required = false) String surname,
 											@RequestParam(value = "firstName", required = false) String firstName,
-											@RequestParam(value = "dateOfBirth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirth,
+											@RequestParam(value = "dateOfBirth", required = false) String dateOfBirthString,
 											@RequestParam(value = "identityNumber", required = false) String identityNumber,
 											@RequestParam(value = "passportNumber", required = false) String passportNumber,
 											HttpServletRequest httpServletRequest)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		//TODO from angular client dateformat annotation was not working.
+		Date dateOfBirth = null;
+		if (dateOfBirthString != null) {
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				dateOfBirth = format.parse(dateOfBirthString);
+			} catch (ParseException e) {
+				throw new InvalidParameterException("Date of Birth format invalid.");
+			}
+		}
 		Set<String> allowedParameters = new HashSet<>();
 		allowedParameters.clear();
 		allowedParameters.add("surname");

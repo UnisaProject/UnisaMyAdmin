@@ -7,25 +7,25 @@
   </div>
   <form (ngSubmit)="onSubmit()" [formGroup]="studentInputForm">
     <div class="form-group row">
-      <label for="surname" class="col-sm-3 col-form-label font-weight-bold">Surname *</label>
+      <label for="surname" class="col-sm-3 col-form-label font-weight-bold">Surname: *</label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="surname" formControlName="surname" required>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="firstNames" class="col-sm-3 col-form-label font-weight-bold">Full names *</label>
+      <label for="firstNames" class="col-sm-3 col-form-label font-weight-bold">Full names: *</label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="firstNames" formControlName="firstNames" required>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="dateOfBirth" class="col-sm-3 col-form-label font-weight-bold">Date of Birth *</label>
+      <label for="dateOfBirth" class="col-sm-3 col-form-label font-weight-bold">Date of Birth: *</label>
       <div class="col-sm-2">
         <div class="input-group">
           <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd"
-                 name="dateOfBirth" formControlName="dateOfBirth" ngbDatepicker #d2="ngbDatepicker">
+                 name="dateOfBirth" formControlName="dateOfBirth" ngbDatepicker #d2="ngbDatepicker" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
               <clr-icon shape="calendar"></clr-icon>
@@ -37,11 +37,11 @@
     <div class="form-group row">
       <div class="form-check col-sm-3">
         <label class="form-check-label font-weight-bold">
-          <input type="radio" class="form-check-input" name="optradio" value="option1" checked>ID Number
+          <input type="radio" class="form-check-input" name="searchOption"  formControlName="searchOption" value="idNumber" checked>ID Number:
         </label>
       </div>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="identityNumber" formControlName="identityNumber" required>
+        <input type="text" class="form-control" id="identityNumber" formControlName="identityNumber">
       </div>
     </div>
     <div class="row">
@@ -50,11 +50,11 @@
     <div class="form-group row">
       <div class="form-check col-sm-3">
         <label class="form-check-label font-weight-bold">
-          <input type="radio" class="form-check-input" name="optradio" value="option2">Passport
+          <input type="radio" class="form-check-input" name="searchOption"  formControlName="searchOption" value="passport">Foreign ID/Passport:
         </label>
       </div>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="passportNumber" formControlName="passportNumber" required>
+        <input type="text" class="form-control" id="passportNumber" formControlName="passportNumber">
       </div>
     </div>
     <br/>

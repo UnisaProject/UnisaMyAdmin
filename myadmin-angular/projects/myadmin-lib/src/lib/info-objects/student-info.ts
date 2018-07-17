@@ -4,7 +4,7 @@
 export interface StudentInfo {
 
   studentNumber:number;
-  
+
   studentName:string;
 
   surname:string;
@@ -12,6 +12,10 @@ export interface StudentInfo {
   firstNames:string;
 
   dateOfBirth:Date;
+
+  identityNumber:string;
+
+  passportNumber:string;
 
   title:string;
 
