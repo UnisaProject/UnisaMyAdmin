@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
@@ -14,8 +14,6 @@ import {SearchCriteriaService, StudentService} from "../../services";
 export class ForgotStudentSearchComponent implements OnInit {
 
   studentInputForm:FormGroup;
-
-  studentInfo:StudentInfo;
 
   /**
    * Reference to blockUI
@@ -46,31 +44,6 @@ export class ForgotStudentSearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  get surname():FormControl {
-    return <FormControl>this.studentInputForm.controls['surname'];
-  }
-
-  get firstNames():FormControl {
-    return <FormControl>this.studentInputForm.controls['firstNames'];
-  }
-
-  get dateOfBirth():FormControl {
-    return <FormControl>this.studentInputForm.controls['dateOfBirth'];
-  }
-
-  get searchOption():FormControl {
-    return <FormControl>this.studentInputForm.controls['searchOption'];
-  }
-
-  get identityNumber():FormControl {
-    return <FormControl>this.studentInputForm.controls['identityNumber'];
-  }
-
-  get passportNumber():FormControl {
-    return <FormControl>this.studentInputForm.controls['passportNumber'];
-  }
-
-
   private studentCall(students:StudentInfo[]):any {
     if (students.length > 1) {
       this.toaster.error('Validation Error', 'There is more than one student number that complies with the information submitted. Please contact study-info@unisa.ac.za for assistance.');
@@ -87,38 +60,38 @@ export class ForgotStudentSearchComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.validateForm()) {
+    const formValue: any = this.studentInputForm.value;
+    if (this.validateForm(formValue)) {
       this.blockUI.stop();
       return;
     }
-    this.studentInfo = {...this.studentInputForm.value};
 
-    const dateString = this.datePipe.transform(this.studentInfo.dateOfBirth, 'yyyy-MM-dd', null, null);
+    const dateString = this.datePipe.transform(formValue.dateOfBirth, 'yyyy-MM-dd', null, null);
 
     this.blockUI.start("Loading information...");
-    if (this.identityNumber.value) {
-      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndIdNumber(this.studentInfo.surname, this.studentInfo.firstNames, dateString, this.studentInfo.identityNumber)
+    if (formValue.identityNumber) {
+      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndIdNumber(formValue.surname, formValue.firstNames, dateString, formValue.identityNumber)
         .subscribe(students => this.studentCall(students),
           () => this.blockUI.stop());
-    } else if (this.passportNumber.value) {
-      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndPassportNumber(this.studentInfo.surname, this.studentInfo.firstNames, dateString, this.studentInfo.passportNumber)
+    } else if (formValue.passportNumber) {
+      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDateAndPassportNumber(formValue.surname, formValue.firstNames, dateString, formValue.passportNumber)
         .subscribe(students => this.studentCall(students),
           () => this.blockUI.stop());
     }
     else {
-      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDate(this.studentInfo.surname, this.studentInfo.firstNames, dateString)
+      this.studentService.getStudentsBySurnameAndFirstnameAndBirthDate(formValue.surname, formValue.firstNames, dateString)
         .subscribe(students => this.studentCall(students),
           () => this.blockUI.stop());
     }
   }
 
-  private validateForm():boolean {
-    if (this.searchOption.value) {
-      if (this.searchOption.value === 'idNumber' && !this.identityNumber.value) {
+  private validateForm(formValue:any):boolean {
+    if (formValue.searchOption) {
+      if (formValue.searchOption === 'idNumber' && !formValue.identityNumber) {
         this.toaster.error('Validation Error', 'You have selected to search by ID number. Please enter your ID number.');
         return true;
       }
-      else if (this.searchOption.value === 'passport' && !this.passportNumber.value) {
+      else if (formValue.searchOption === 'passport' && !formValue.passportNumber) {
         this.toaster.error('Validation Error', 'You have selected to search by passport. Please enter your passport number.');
         return true;
       } else {
