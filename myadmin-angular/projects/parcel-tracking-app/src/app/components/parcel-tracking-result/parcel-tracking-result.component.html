@@ -51,8 +51,8 @@
 
     </div>
   </div>
-  <div *ngIf="parcelTrackingInfo?.traceRecordInfoList">
-    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+  <div *ngIf="packageInfo?.trackings">
+    <form #resultForm="ngForm" *ngIf="!packageInfo?.studentuser">
       <div class="form-group row">
         <div class="col-sm-2">
           <p class="font-weight-bold">Student number</p>
@@ -62,7 +62,7 @@
                  [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
         </div>
       </div>
-      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="row" *ngIf="!packageInfo?.studentuser">
         <div class="col-sm-1">
           <button class="btn btn-primary"
                   (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
@@ -74,7 +74,7 @@
       </div>
     </form>
     <hr>
-    <h5>Student {{parcelTrackingInfo?.studentInfo.studentNumber}} : {{parcelTrackingInfo?.studentInfo.studentName}}
+    <h5>Student {{packageInfo?.studentInfo.studentNumber}} : {{packageInfo?.studentInfo.studentName}}
     </h5>
     <br/>
     <h6>SA Post Office Parcels, open the link below and enter in the tracking number listed below.<br><a
@@ -90,7 +90,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let traceRecordInfo of parcelTrackingInfo?.traceRecordInfoList">
+        <tr *ngFor="let traceRecordInfo of packageInfo?.trackings">
           <td>{{ traceRecordInfo.trackTraceDate }}</td>
           <td>{{ traceRecordInfo.trackTraceAgent }}</td>
           <td>{{ traceRecordInfo.trackTraceNumber}}</td>
@@ -99,8 +99,8 @@
       </table>
     </div>
   </div>
-  <div *ngIf="!parcelTrackingInfo?.traceRecordInfoList">
-    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+  <div *ngIf="!packageInfo?.trackings">
+    <form #resultForm="ngForm" *ngIf="!packageInfo?.studentuser">
       <div class="form-group row">
         <div class="col-sm-2">
           <p class="font-weight-bold">Student number</p>
@@ -110,7 +110,7 @@
                  [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
         </div>
       </div>
-      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="row" *ngIf="!packageInfo?.studentuser">
         <div class="col-sm-1">
           <button class="btn btn-primary"
                   (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display

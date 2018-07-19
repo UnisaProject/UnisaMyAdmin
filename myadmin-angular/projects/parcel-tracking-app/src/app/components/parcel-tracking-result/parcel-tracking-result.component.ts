@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {ParcelTrackingService} from '../../services/parcel-tracking.service';
+import {TrackingService} from '../../services/tracking.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import {ParcelTrackingInfo} from '../../info-objects';
+import {PackageInfo} from '../../info-objects';
 
 @Component({
   selector: 'unisa-parcel-tracking-result',
@@ -12,7 +12,7 @@ import {ParcelTrackingInfo} from '../../info-objects';
 })
 export class ParcelTrackingResultComponent implements OnInit {
 
-  public parcelTrackingInfo:ParcelTrackingInfo;
+  public packageInfo:PackageInfo;
 
   public studentNumber:number;
 
@@ -23,7 +23,7 @@ export class ParcelTrackingResultComponent implements OnInit {
 
   constructor(private route:ActivatedRoute,
               private router:Router,
-              private parcelTrackingService:ParcelTrackingService) {
+              private trackingService:TrackingService) {
     this.blockUI.start("Parcel Tracking...");
   }
 
@@ -34,9 +34,9 @@ export class ParcelTrackingResultComponent implements OnInit {
   private getStudentParcelTracking(userId:number): void{
     this.blockUI.start("Parcel Tracking...");
     this.studentNumber = userId;
-    this.parcelTrackingService.trackStudentParcel(this.studentNumber)
-      .subscribe((parcelTrackingInfo:ParcelTrackingInfo) => {
-        this.parcelTrackingInfo = parcelTrackingInfo;
+    this.trackingService.trackPackageByStudent(this.studentNumber)
+      .subscribe((packageInfo:PackageInfo) => {
+        this.packageInfo = packageInfo;
         this.blockUI.stop();
       },
         response => {

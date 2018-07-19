@@ -1,2 +1,2 @@
-export * from './track-and-trace-record-info';
-export * from './parcel-tracking-info';
+export * from './tracking-info';
+export * from './package-info';

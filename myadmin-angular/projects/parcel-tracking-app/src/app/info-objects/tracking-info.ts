@@ -1,4 +1,4 @@
-export interface TrackAndTraceRecordInfo {
+export interface TrackingInfo {
   
   trackTraceDate:string;
 

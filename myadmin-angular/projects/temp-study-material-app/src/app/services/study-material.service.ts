@@ -12,11 +12,11 @@ export class StudyMaterialService {
   }
 
   requestStudentModuleEnrolments(studentInfo:StudentInfo):Observable<StudentModuleEnrolmentInfo[]> {
-    return this.http.post<StudentModuleEnrolmentInfo[]>('/myadmin-student-services/studentservices/studymaterial/courselist', studentInfo);
+    return this.http.post<StudentModuleEnrolmentInfo[]>('/myadmin-student-services/services/rest/studymaterialservice/studymaterial/courselist', studentInfo);
   }
 
   requestModuleStudyMaterials(moduleCode:string, academicYear:number, semesterCode:string):Observable<StudyMaterialDetailInfo[]> {
-    return this.http.get<StudyMaterialDetailInfo[]>('/myadmin-student-services/studentservices/studymaterial/viewmaterial', {
+    return this.http.get<StudyMaterialDetailInfo[]>('/myadmin-student-services/services/rest/studymaterialservice/studymaterial/viewmaterial', {
       params: {
         moduleCode: moduleCode,
         academicYear: <string><any>academicYear,
@@ -26,6 +26,6 @@ export class StudyMaterialService {
   }
 
   downloadMaterial(moduleMaterial:StudyMaterialDetailInfo):Observable<any> {
-    return this.http.post('/myadmin-student-services/studentservices/studymaterial/download', moduleMaterial, {responseType: 'arraybuffer'});
+    return this.http.post('/myadmin-student-services/services/rest/studymaterialservice/studymaterial/download', moduleMaterial, {responseType: 'arraybuffer'});
   }
 }
