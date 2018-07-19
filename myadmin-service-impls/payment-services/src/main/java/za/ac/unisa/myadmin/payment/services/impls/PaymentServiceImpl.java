@@ -169,8 +169,7 @@ public class PaymentServiceImpl implements PaymentService {
 			// student nr
 			ccPaymentsProxy.setInWsStudentNr(paymentInfo.getStudentInfo().getStudentNumber());
 			// email
-			//ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
-			ccPaymentsProxy.setInWsAddressV2EmailAddress("adrian@opencollab.co.za");
+			ccPaymentsProxy.setInWsAddressV2EmailAddress(paymentInfo.getStudentInfo().getEmailAddress());
 			// applyForAmount
 			//
 			// credit card nr

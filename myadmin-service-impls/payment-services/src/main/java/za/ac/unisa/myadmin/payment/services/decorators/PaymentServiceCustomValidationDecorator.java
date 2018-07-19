@@ -58,7 +58,7 @@ public class PaymentServiceCustomValidationDecorator extends PaymentServiceDecor
 		if (amount.signum() == -1) {
 			throw new InvalidParameterException(fieldName + " amount you wish to pay is invalid.");
 		}
-		if (amount.scale() != 2) {
+		if (amount.compareTo(BigDecimal.ZERO) != 0 && amount.scale() != 2) {
 			throw new InvalidParameterException(fieldName + " amount you wish to pay is invalid.");
 		}
 		if (amount.stripTrailingZeros().precision() > 9) {
