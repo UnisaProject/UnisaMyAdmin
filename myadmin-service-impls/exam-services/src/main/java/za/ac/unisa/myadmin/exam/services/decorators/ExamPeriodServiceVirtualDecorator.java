@@ -15,14 +15,14 @@ import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
 import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
-import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
+import za.ac.unisa.myadmin.services.base.decorators.ExamPeriodServiceDecorator;
 
 /**
  * This decorator creates virtual data ExamPeriods from actual ExamPeriods. Each
  * virtual ExamPeriod includes the exam year and examination timetable type by
  * getting the ExamAdmission record.
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
 public class ExamPeriodServiceVirtualDecorator extends ExamPeriodServiceDecorator implements ExamPeriodService {

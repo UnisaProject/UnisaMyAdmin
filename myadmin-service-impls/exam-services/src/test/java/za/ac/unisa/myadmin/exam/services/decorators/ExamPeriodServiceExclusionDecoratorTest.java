@@ -23,8 +23,8 @@ import za.ac.unisa.myadmin.TestApplication;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
 import za.ac.unisa.myadmin.exam.services.decorators.ExamPeriodServiceExclusionDecorator;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
-import za.ac.unisa.myadmin.exam.services.models.ExamAdmissionEntity;
-import za.ac.unisa.myadmin.exam.services.models.ExamPeriodEntity;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntity;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamPeriodEntity;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
 

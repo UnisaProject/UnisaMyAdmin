@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import za.ac.unisa.myadmin.exam.services.models.ExamAdmissionEntity;
-import za.ac.unisa.myadmin.exam.services.models.ExamAdmissionEntityId;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntity;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntityId;
 
 public interface ExamAdmissionRepository extends JpaRepository<ExamAdmissionEntity, ExamAdmissionEntityId> {
 

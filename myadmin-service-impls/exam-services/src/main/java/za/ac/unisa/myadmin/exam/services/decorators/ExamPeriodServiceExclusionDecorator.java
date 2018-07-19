@@ -9,7 +9,7 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
 import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
-import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
+import za.ac.unisa.myadmin.services.base.decorators.ExamPeriodServiceDecorator;
 
 /**
  * This decorator will exclude old and obsolete data records. It should be used
@@ -22,7 +22,7 @@ import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
  * that we add a field on the table to indicate if the period is still in use or
  * not (IN_USE_FLAG)."
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
 public class ExamPeriodServiceExclusionDecorator extends ExamPeriodServiceDecorator implements ExamPeriodService {

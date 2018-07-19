@@ -8,7 +8,7 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExaminationService;
 import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
-import za.ac.unisa.myadmin.service.base.decorators.ExaminationServiceDecorator;
+import za.ac.unisa.myadmin.services.base.decorators.ExaminationServiceDecorator;
 
 /**
  * This decorator ensures that the method request parameters comply to the
@@ -16,7 +16,7 @@ import za.ac.unisa.myadmin.service.base.decorators.ExaminationServiceDecorator;
  * codes to be all in upper case, so this decorator will change those values to
  * be all upper case.
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
 public class ExaminationServiceComplianceDecorator extends ExaminationServiceDecorator implements ExaminationService {

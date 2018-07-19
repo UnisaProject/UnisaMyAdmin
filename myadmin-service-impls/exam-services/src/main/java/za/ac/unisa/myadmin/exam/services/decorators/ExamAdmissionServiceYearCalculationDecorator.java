@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
-import za.ac.unisa.myadmin.service.base.decorators.ExamAdmissionServiceDecorator;
+import za.ac.unisa.myadmin.services.base.decorators.ExamAdmissionServiceDecorator;
 
 /**
  * This decorator calculate the current, previous and next year values and
- * filter out the ExamAdmission records where the year value not equals any of
+ * filters out the ExamAdmission records where the year value not equals any of
  * the calculated years.
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
 public class ExamAdmissionServiceYearCalculationDecorator extends ExamAdmissionServiceDecorator

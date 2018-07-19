@@ -6,10 +6,9 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import za.ac.unisa.myadmin.student.services.dto.StudyFeeQuotationInfo;
-import za.ac.unisa.myadmin.student.services.dto.StudyFeeQuotationRequestInfo;
-import za.ac.unisa.myadmin.student.services.dto.StudyUnitInfo;
-import za.ac.unisa.myadmin.student.services.impls.StudyFeeQuotationServiceImpl;
+import za.ac.unisa.myadmin.fees.services.dto.StudyFeeQuotationInfo;
+import za.ac.unisa.myadmin.fees.services.dto.StudyFeeQuotationRequestInfo;
+import za.ac.unisa.myadmin.fees.services.dto.StudyUnitInfo;
 
 @Ignore
 public class StudyFeeQuotationServiceImplTest {
@@ -30,7 +29,7 @@ public class StudyFeeQuotationServiceImplTest {
     @Test
 	public void testGetQuotation() throws Exception {
 		StudyFeeQuotationServiceImpl studyFeeQuotationService = new StudyFeeQuotationServiceImpl();
-		StudyFeeQuotationInfo quotation = studyFeeQuotationService.requestQuote(createRequest());
+		StudyFeeQuotationInfo quotation = studyFeeQuotationService.submitStudyFeeQuotationRequest(createRequest());
         printQuotation(quotation);
     }
 

@@ -1,29 +1,29 @@
 package za.ac.unisa.myadmin.student.services.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
-import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
-import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
-import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.student.services.dto.StudentAnnualInfo;
-import za.ac.unisa.myadmin.student.services.models.StudentAnnualEntity;
-import za.ac.unisa.myadmin.student.services.models.StudentAnnualEntityId;
-import za.ac.unisa.myadmin.student.services.repositories.StudentAnnualRepository;
-import za.ac.unisa.myadmin.student.services.student.StudentAnnualService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
+import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
+import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.student.services.StudentAnnualService;
+import za.ac.unisa.myadmin.student.services.dto.StudentAnnualInfo;
+import za.ac.unisa.myadmin.student.services.jpa.models.StudentAnnualEntity;
+import za.ac.unisa.myadmin.student.services.jpa.models.StudentAnnualEntityId;
+import za.ac.unisa.myadmin.student.services.repositories.StudentAnnualRepository;
+
 /**
  * Created by Adrian on 2018-07-02.
  */
-@Service("StudentAnnualService")
 public class StudentAnnualServiceImpl implements StudentAnnualService {
 
-	@Autowired
 	private StudentAnnualRepository studentAnnualRepository;
+
+	public void setStudentAnnualRepository(StudentAnnualRepository studentAnnualRepository) {
+		this.studentAnnualRepository = studentAnnualRepository;
+	}
 
 	@Override
 	public StudentAnnualInfo getStudentAnnualByStudentNumberAndYearAndPeriod(Integer studentNumber, Integer academicYear, Integer academicPeriod) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
