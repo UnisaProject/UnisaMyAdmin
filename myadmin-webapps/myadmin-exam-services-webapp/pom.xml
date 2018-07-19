@@ -21,6 +21,12 @@
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>exam-services</artifactId>
 		</dependency>
+		
+		<!-- To use advanced features like monitoring & tracing to your application out of the box -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -40,6 +46,25 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Generate application build information containing the coordinates, 
+					name and version of the project in a META-INF/build-info.properties file 
+					for Spring Actuator -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<!-- Additional info accessed via the /env Actuator endpoint -->
+							<additionalProperties>
+								<encoding.source>${project.build.sourceEncoding}</encoding.source>
+								<encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+								<java.version>${java.version}</java.version>
+								<time>${mavenBuildTimestamp}</time>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

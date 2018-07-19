@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>za.ac.unisa.myadmin.webapps</groupId>
-	<artifactId>myadmin-student-services-webapp</artifactId>
+	<artifactId>myadmin-payment-services-webapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -18,11 +18,11 @@
 		<!--  Unisa myAdmin service -->
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>student-services</artifactId>
+			<artifactId>payment-services</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>integration-services</artifactId>
+			<artifactId>student-services</artifactId>
 		</dependency>
 		
 		<!-- To use advanced features like monitoring & tracing to your application out of the box -->
@@ -35,7 +35,7 @@
 	<build>
 		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
     		 This value must be the same as the server.servlet.context-path defined inside the Spring Boot application properties. -->
-		<finalName>myadmin-student-services</finalName>
+		<finalName>myadmin-payment-services</finalName>
 
 		<resources>
 			<resource>
