@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.service.base.decorators;
+package za.ac.unisa.myadmin.services.base.decorators;
 
 import java.util.List;
 

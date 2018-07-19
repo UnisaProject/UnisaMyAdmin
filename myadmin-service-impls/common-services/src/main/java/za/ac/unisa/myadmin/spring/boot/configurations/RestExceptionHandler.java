@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.server.configurations;
+package za.ac.unisa.myadmin.spring.boot.configurations;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -10,6 +10,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import za.ac.unisa.myadmin.common.dto.ErrorInfo;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -19,10 +20,10 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
  * exceptions are translated to rest response statuses with the actual exception
  * stacktrace messages placed on the response headers.
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
-public class ExceptionHandler implements ExceptionMapper<Exception> {
+public class RestExceptionHandler implements ExceptionMapper<Exception> {
 
     private static final Map<String, Response.Status> MAP = new LinkedHashMap<String, Response.Status>();
 
@@ -59,12 +60,15 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
         String stackTrace = baos.toString();
         if (stackTrace.length() > 6000) {
             stackTrace = stackTrace.substring(0, 6000);
-        }        
-        return Response
+		}
+
+		ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), status.getStatusCode());
+
+		return Response.ok(errorInfo)
                 .status(status)
                 .header("message", exception.getMessage())
                 .header("class", exception.getClass().getSimpleName())
-                .header("stacktrace", stackTrace).build();
+				.header("stacktrace", stackTrace).build();
 	}
 
 }

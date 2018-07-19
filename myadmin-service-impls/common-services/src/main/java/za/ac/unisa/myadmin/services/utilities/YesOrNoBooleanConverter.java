@@ -1,7 +1,14 @@
-package za.ac.unisa.myadmin.service.sql.converter;
+package za.ac.unisa.myadmin.services.utilities;
 
 import javax.persistence.AttributeConverter;
 
+/**
+ * A class that implements AttributeConverter to convert an entity boolean
+ * attribute value into the database column CHAR representation and back again
+ * 
+ * @author Jannie Louwrens
+ *
+ */
 public class YesOrNoBooleanConverter implements AttributeConverter<Boolean, String> {
 
 	@Override

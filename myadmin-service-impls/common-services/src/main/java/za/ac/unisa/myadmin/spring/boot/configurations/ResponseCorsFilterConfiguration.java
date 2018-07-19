@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.server.configurations;
+package za.ac.unisa.myadmin.spring.boot.configurations;
 
 import java.util.Arrays;
 import java.util.Collections;

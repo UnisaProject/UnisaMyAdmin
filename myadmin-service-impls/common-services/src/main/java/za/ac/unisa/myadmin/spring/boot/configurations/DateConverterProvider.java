@@ -1,4 +1,4 @@
-package za.ac.unisa.myadmin.server.configurations;
+package za.ac.unisa.myadmin.spring.boot.configurations;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -15,7 +15,7 @@ import javax.ws.rs.ext.ParamConverterProvider;
 /**
  * Custom CXF Parameter Converter for Date
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
 public class DateConverterProvider implements ParamConverterProvider {
