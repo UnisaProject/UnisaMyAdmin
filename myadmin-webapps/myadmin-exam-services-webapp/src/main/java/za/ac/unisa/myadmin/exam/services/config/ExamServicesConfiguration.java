@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.ExamPaperService;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.ExamServiceConstants;
+import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.ExaminationService;
 import za.ac.unisa.myadmin.exam.services.controllers.ExamAdmissionRestServiceImpl;
 import za.ac.unisa.myadmin.exam.services.controllers.ExamPaperRestServiceImpl;
@@ -38,7 +38,7 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		ExamAdmissionRestServiceImpl restServiceImpl = new ExamAdmissionRestServiceImpl();
 		restServiceImpl.setNextDecorator(getExamAdmissionServiceImpl());
 
-		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServiceConstants.EXAM_ADMISSION_SERVICE_NAME);
+		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAM_ADMISSION_SERVICE_NAME);
 	}
 
 	@Bean(name = "examAdmissionServiceImpl")
@@ -57,7 +57,7 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		ExaminationRestServiceImpl restServiceImpl = new ExaminationRestServiceImpl();
 		restServiceImpl.setNextDecorator(getExaminationServiceImpl());
 
-		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServiceConstants.EXAMINATION_SERVICE_NAME);
+		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAMINATION_SERVICE_NAME);
 	}
 
 	@Bean(name = "examinationServiceImpl")
@@ -76,7 +76,7 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		ExamPaperRestServiceImpl restServiceImpl = new ExamPaperRestServiceImpl();
 		restServiceImpl.setNextDecorator(getExamPaperServiceImpl());
 
-		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServiceConstants.EXAM_PAPER_SERVICE_NAME);
+		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAM_PAPER_SERVICE_NAME);
 	}
 
 	@Bean(name = "examPaperServiceImpl")
@@ -95,7 +95,7 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		ExamPeriodRestServiceImpl restServiceImpl = new ExamPeriodRestServiceImpl();
 		restServiceImpl.setNextDecorator(getExamPeriodServiceImpl());
 
-		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServiceConstants.EXAM_PERIOD_SERVICE_NAME);
+		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAM_PERIOD_SERVICE_NAME);
 	}
 
 	@Bean(name = "examPeriodServiceImpl")

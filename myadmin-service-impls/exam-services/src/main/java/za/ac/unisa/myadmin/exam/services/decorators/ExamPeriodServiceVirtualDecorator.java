@@ -12,7 +12,7 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.ExamServiceConstants;
+import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
 import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
@@ -84,12 +84,12 @@ public class ExamPeriodServiceVirtualDecorator extends ExamPeriodServiceDecorato
 
 	private String calculateExamType(Integer year, Integer examPeriodCode)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		String examType = ExamServiceConstants.EXAM_TYPE_PROVISIONAL;
+		String examType = ExamServicesConstants.EXAM_TYPE_PROVISIONAL;
 
 		List<ExamAdmissionInfo> examAdmissions = getExamAdmissionService()
 				.getExamAdmissionsByYearAndExamPeriodCode(year, examPeriodCode);
 		if (!examAdmissions.isEmpty() && examAdmissions.get(0).isAdmissionDone()) {
-			examType = ExamServiceConstants.EXAM_TYPE_FINAL;
+			examType = ExamServicesConstants.EXAM_TYPE_FINAL;
 		}
 
 		return examType;

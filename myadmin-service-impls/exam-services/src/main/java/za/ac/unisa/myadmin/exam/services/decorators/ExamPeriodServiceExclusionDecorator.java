@@ -7,7 +7,7 @@ import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.ExamServiceConstants;
+import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
 import za.ac.unisa.myadmin.service.base.decorators.ExamPeriodServiceDecorator;
 
@@ -45,7 +45,7 @@ public class ExamPeriodServiceExclusionDecorator extends ExamPeriodServiceDecora
 
 	private List<ExamPeriodInfo> filterObsoleteCodes(List<ExamPeriodInfo> examPeriods) {
 		return examPeriods.stream()
-				.filter(examPeriod -> !ExamServiceConstants.EXAM_PERIOD_OBSOLETE_CODES.contains(examPeriod.getCode()))
+				.filter(examPeriod -> !ExamServicesConstants.EXAM_PERIOD_OBSOLETE_CODES.contains(examPeriod.getCode()))
 				.collect(Collectors.toList());
 	}
 
