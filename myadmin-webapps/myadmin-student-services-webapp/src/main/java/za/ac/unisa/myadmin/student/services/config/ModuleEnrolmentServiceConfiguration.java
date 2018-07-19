@@ -2,6 +2,7 @@ package za.ac.unisa.myadmin.student.services.config;
 
 import org.apache.cxf.endpoint.Server;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import za.ac.unisa.myadmin.module.services.ModuleEnrolmentService;
 import za.ac.unisa.myadmin.registration.services.RegistrationPeriodService;
@@ -12,6 +13,7 @@ import za.ac.unisa.myadmin.student.services.repositories.ModuleEnrolmentReposito
 import za.ac.unisa.myadmin.student.services.rest.impls.StudyMaterialRestServiceImpl;
 import za.ac.unisa.myadmin.studymaterial.integration.services.StudyMaterialWebServiceimpl;
 
+@Configuration
 public class ModuleEnrolmentServiceConfiguration extends AbstractServiceConfiguration {
 
 	@Bean(name = "moduleEnrolmentServiceImpl")
