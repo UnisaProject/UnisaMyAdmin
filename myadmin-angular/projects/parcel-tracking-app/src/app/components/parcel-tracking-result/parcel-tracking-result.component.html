@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5>Parcel Tracking</h5>
+      <br/>
+      <p>Please note that items sent by normal mail, including international airmail, such as official correspondence
+        and single page tutorial letters are not considered parcels and will not be listed here.
+        <br/>
+        <br/>
+        The contact details for postal agents are as follows:<br/><br/>&bull;&nbsp;&nbsp;&nbsp;
+        <b>SA Post Office </b>at the following number:<b> 0860-111-502 </b> (toll-free from South Africa only).
+        <br/>
+        <br/>
+        The contact details for courier agents are as follows:<br><br>
+        All study material for the international students is sent via <b>UPS</b> Courier Services.
+        <br>
+        Please use the link:
+        <br/>
+        <a href="https://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1" target="_blank">http://www.ups.com/WebTracking/track?loc=en_ZA&WT.svl=PNRO_L1</a>
+
+        <br/>
+
+        Step 1 - Click on the 'Tracking' tab and then click on 'Track by Reference' on the Tracking page.
+        <br>
+        Step 2 - Indicate your shipment type as 'Package'.
+        <br>
+        Step 3 - Select your shipment date range and type your Student Number in the Shipment Reference.<br>
+        Step 4 - Click on the 'Track' button to complete the process.
+        <br><br>
+        For domestic students who are registered for modules from the following colleges:
+        <br>
+        CEMS - College of Economic and Management Sciences,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- College of Accounting Sciences,<br>
+        CEDU - College of Education,<br>
+        CLAW - College of Law
+        <br>
+        the study material is sent via <b>Katlego Global Logistics</b> Courier Services.
+        <br>
+        Please use the link:<br> <a href="http://www.katlegoint.co.za"
+                                   target="_blank">www.katlegoint.co.za</a>
+        <br><br>
+        For domestic students who are registered for modules from the following colleges:
+        <br>
+        CSET&nbsp;&nbsp;- College of Science, Engineering and Technology,<br>
+        CHS &nbsp;&nbsp;- College of Human Sciences,<br>
+        CAES - College of Agriculture and Environmental Sciences<br>
+        the study material is sent via <b>Skynet</b> Courier Services.<br>
+        Please use the link:<br> <a href="https://comsec01.crossroads.co.za/unisa/" target="_blank">https://comsec01.crossroads.co.za/unisa/</a>
+        <br><br>
+      </p>
+
+    </div>
+  </div>
+  <div *ngIf="parcelTrackingInfo?.traceRecordInfoList">
+    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Student number</p>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*"
+                 [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
+        </div>
+      </div>
+      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+        <div class="col-sm-1">
+          <button class="btn btn-primary"
+                  (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-secondary" routerLink="/search">New Student</a>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <h5>Student {{parcelTrackingInfo?.studentInfo.studentNumber}} : {{parcelTrackingInfo?.studentInfo.studentName}}
+    </h5>
+    <br/>
+    <h6>SA Post Office Parcels, open the link below and enter in the tracking number listed below.<br><a
+      href="https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html" target="_blank">https://www.postoffice.co.za/ContactUs/trackandtracedomestic.html</a>
+    </h6>
+    <div class="table-responsive-sm col-sm-8">
+      <table class="table table-sm table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">Date Processed</th>
+          <th scope="col">Agent</th>
+          <th scope="col">Tracking Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let traceRecordInfo of parcelTrackingInfo?.traceRecordInfoList">
+          <td>{{ traceRecordInfo.trackTraceDate }}</td>
+          <td>{{ traceRecordInfo.trackTraceAgent }}</td>
+          <td>{{ traceRecordInfo.trackTraceNumber}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="!parcelTrackingInfo?.traceRecordInfoList">
+    <form #resultForm="ngForm" *ngIf="!parcelTrackingInfo?.studentuser">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Student number</p>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="studentNumber" name="studentNumber" pattern="([0-9])*"
+                 [(ngModel)]="studentNumber" minlength="7" maxlength="8" required>
+        </div>
+      </div>
+      <div class="row" *ngIf="!parcelTrackingInfo?.studentuser">
+        <div class="col-sm-1">
+          <button class="btn btn-primary"
+                  (click)="getStudentParcelTracking(studentNumber)" [disabled]="resultForm.form.invalid">Display
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-secondary" routerLink="/search">New Student</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br/><br/>
+</div>

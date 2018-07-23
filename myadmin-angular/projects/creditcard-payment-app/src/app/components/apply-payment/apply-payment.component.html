@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit card payments</h5>
+      <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
+      <p>Required items marked with *</p>
+    </div>
+  </div>
+  <form (ngSubmit)="payNow()" [formGroup]="applyForm">
+    <div class="row">
+      <div class="col">
+        <h5>Applicant Personal Details</h5>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <label for="studentNumber" class="col-sm-4 col-form-label font-weight-bold">Application reference number</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            readonly
+            class="form-control-plaintext"
+            id="studentNumber"
+            name="studentNumber"
+            [value]="applicationPaymentInfo?.studentInfo.studentNumber"
+            required>
+        </div>
+      </div>
+      <div class="row">
+        <label for="studentName" class="col-sm-4 col-form-label font-weight-bold">Name</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            readonly
+            class="form-control-plaintext"
+            id="studentName"
+            name="studentName"
+            autocomplete="name"
+            [value]="applicationPaymentInfo?.studentInfo.studentName"
+            required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Payment receipts will be sent to this e-mail address</p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-4 col-form-label font-weight-bold">E-mail address: *</label>
+      <div class="col-sm-4">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          autocomplete="email"
+          formControlName="email"
+          [value]="applicationPaymentInfo?.studentInfo.emailAddress"
+          required>
+      </div>
+    </div>
+
+
+    <!--
+      TODO this form still has a lot of unimplemented logic
+    -->
+    <div class="row">
+      <div class="col">
+        <h5>Payment Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="applyAmount" class="col-sm-4 col-form-label font-weight-bold">Application fee:</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="applyAmount"
+            name="applyAmount"
+            readonly
+            formControlName="applyAmount"
+            [value]="applicationPaymentInfo?.applyAmountInput | number:'1.2-2'"
+          >
+        </div>
+      </div>
+    </div>
+
+    <unisa-credit-card-input [form]="applyForm"></unisa-credit-card-input>
+    <div class="form-group row">
+      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid:*</label>
+
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            readonly
+            type="text"
+            class="form-control text-right"
+            id="ccTotalAmountInput"
+            name="ccTotalAmountInput"
+            formControlName="ccTotalAmountInput"
+            [value]="applicationPaymentInfo?.creditCardTotalAmountInput | number:'1.2-2'"
+            required="required">
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate
+        payments.
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="applyForm.invalid"> Pay Now</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>
+    </div>
+  </form>
+</div>

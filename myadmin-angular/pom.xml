@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>za.ac.unisa.myadmin.ui</groupId>
+	<artifactId>myadmin-angular</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Unisa myAdmin Angular UI</name>
+	<description>Unisa myAdmin Angular Frontends</description>
+
+	<parent>
+		<groupId>za.ac.unisa.myadmin</groupId>
+		<artifactId>unisa-myadmin</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<frontend.maven.plugin.version>1.6</frontend.maven.plugin.version>
+		<node.version>v8.10.0</node.version>
+		<yarn.version>v1.7.0</yarn.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<descriptorSourceDirectory>assembly</descriptorSourceDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-archive</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend.maven.plugin.version}</version>
+				<configuration>
+					<nodeVersion>${node.version}</nodeVersion>
+					<yarnVersion>${yarn.version}</yarnVersion>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and yarn</id>
+						<goals>
+							<goal>install-node-and-yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>yarn install</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build library -->
+					<execution>
+						<id>yarn build myadmin-lib</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod myadmin-lib</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build exam timetable -->
+					<execution>
+						<id>yarn build exam-timetable-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod exam-timetable-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build exam study quotation -->
+					<execution>
+						<id>yarn build study-quotation-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod study-quotation-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build parcel tracking -->
+					<execution>
+						<id>yarn build parcel-tracking-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build parcel-tracking-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build credit card payment -->
+					<execution>
+						<id>yarn build creditcard-payment-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build creditcard-payment-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build temporary study material -->
+					<execution>
+						<id>yarn build temp-study-material-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build temp-study-material-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build forgot studentnumber -->
+					<execution>
+						<id>yarn build forgot-studentnumber-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build forgot-studentnumber-app</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

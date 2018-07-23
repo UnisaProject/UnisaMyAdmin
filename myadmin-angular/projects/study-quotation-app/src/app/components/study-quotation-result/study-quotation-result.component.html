@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <h5>Student Fees Quotation</h5>
+  </div>
+  <div class="row">
+    <p>Ensure that you have entered valid UNISA module codes to generate study fees quotation.</p>
+  </div>
+  <div class="alert alert-danger text-center" role="alert" *ngIf="errorMessage">
+    <strong>Error: </strong>{{errorMessage}}
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="font-weight-bold">Academic Year</p>
+    </div>
+    <div class="col-sm-6">{{ studyQuotationInfo?.academicYear }}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="font-weight-bold">Qualification Code</p>
+    </div>
+    <div *ngIf="studyQuotationInfo?.qualification == '02011'" class="col-sm-6">Undergraduate : {{studyQuotationInfo?.qualificationCode}}</div>
+    <div *ngIf="studyQuotationInfo?.qualification != '02011'" class="col-sm-6">Postgraduate : {{studyQuotationInfo?.qualificationCode}}</div>
+  </div>
+  <h4>Study Fees</h4>
+<div class="table-responsive-sm">
+  <table class="table table-sm table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Module Code</th>
+      <th scope="col" colspan="2">Description</th>
+      <th scope="col" class="text-right">Fee</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let studyUnitInfo of studyQuotationInfo?.studyUnitInfos">
+      <td>{{ studyUnitInfo.studyUnitcode }}</td>
+      <td colspan="2">{{ studyUnitInfo.description }}</td>
+      <td class="text-right" >{{ studyUnitInfo.fee | number:'1.2-4'}}</td>
+    </tr>
+    <tr><td colspan="4"> <br></td></tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Prescribed Books</th>
+      <td class="text-right" *ngIf="studyQuotationInfo?.prescribedBooks != 0">{{studyQuotationInfo?.prescribedBooks | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.prescribedBooks == 0">N/A</td>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Levy for Foreign Countries</th>
+      <td class="text-right" *ngIf="studyQuotationInfo?.foreignLevy != 0">{{studyQuotationInfo?.foreignLevy | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.foreignLevy == 0">N/A</td>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Library Access Card</th>
+      <td class="text-right" *ngIf="studyQuotationInfo?.libraryCardCost != 0">{{studyQuotationInfo?.libraryCardCost | number:'1.2-4'}}</td><td class="text-right" *ngIf="studyQuotationInfo?.libraryCardCost == 0">N/A</td>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row" colspan="2">Matriculation Exemption Fee</th>
+      <td *ngIf="studyQuotationInfo?.matricExemptionCost != 0" class="text-right">{{studyQuotationInfo?.matricExemptionCost | number:'1.2-4'}}</td> <td class="text-right" *ngIf="studyQuotationInfo?.matricExemptionCost == 0">N/A</td>
+    </tr>
+    <tr><td colspan="4"> <br></td></tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row" class="text-right">Total</th>
+      <th class="text-right">R {{studyQuotationInfo?.totalFee | number:'1.2-4'}}</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row" class="text-right">Payment due with Registration</th>
+      <th class="text-right">R {{studyQuotationInfo?.paymentDue | number:'1.2-4'}}</th>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="row">
+    <p>NB. Please note that this 'Study Fees Quotation' calculates the appropriate monies in respect of study fees and postage fees only. It does not take the balance on your student account into consideration.</p>
+  </div>
+  <div class="row">
+    <p>NB: The Matriculation exemption fee forms part of the minimum amount payable on registration. If you indicated 'No' at 'Do you need to apply for matriculation exemption?' and it is determined on registration that you should have applied, you will be required to pay the appropriate amount before your application for registration can be processed.</p>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <a class="btn btn-primary" routerLink="/search">Back</a>
+    </div>
+  </div>
+</div>

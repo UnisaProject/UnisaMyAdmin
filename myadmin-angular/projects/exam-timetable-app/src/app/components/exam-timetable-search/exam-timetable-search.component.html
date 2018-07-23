@@ -1,0 +1,46 @@
+<div class="container">
+<div class="row">
+  <div class="col-12">
+    <h5>Unisa Examination Timetable</h5>
+    <p>Enter the required module codes into the request form below and select "Display" to view the timetable. Invalid codes will be ignored.</p>
+  </div>
+</div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+    <div class="form-group row  ml-2">
+      <label for="listdate" class="col-sm-2 col-form-label font-weight-bold">List Date</label>
+      <div class="col-sm-4">
+        <p class="form-control-plaintext" id="listdate">{{ today | date: 'yyyy-MM-dd HH:mm' }}</p>
+      </div>
+    </div>
+    <div class="form-group row  ml-2">
+      <label for="examinationperiod" class="col-sm-2 col-form-label font-weight-bold">Examination Period</label>
+      <div class="col-sm-3">
+          <select
+            class="form-control"
+            id="examinationperiod"
+            name="examinationperiod"
+            formControlName="examPeriod"
+            required
+            [compareWith]="compareExamPeriod">
+              <option *ngFor="let examPeriod of examPeriods" [ngValue]="examPeriod">
+                {{ examPeriod.descriptionInfo | description:'en_ZA' }} {{ examPeriod.examYear }}
+              </option>
+            </select>
+      </div>
+    </div>
+    <div class="form-group  ml-4">
+      <label class="form-check-label font-weight-bold">Enter Module Codes <span class="badge badge-primary">E.g DSC4825</span></label>
+      <div class="form-row" formArrayName="courseCodes">
+        <div class="form-row" *ngFor="let row of [0,5]">
+          <div class="col-sm mt-3" *ngFor="let col of [0,1,2,3,4]">
+            <input type="text" class="form-control" name="courseCode" [formControlName]="col + row" maxlength="7" placeholder="DSC4825">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="searchForm.invalid"><clr-icon shape="calendar"> </clr-icon> Display</button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">Clear</button>
+    </div>
+  </form>
+</div>

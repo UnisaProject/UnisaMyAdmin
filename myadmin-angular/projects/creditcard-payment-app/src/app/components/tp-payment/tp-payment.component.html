@@ -1,0 +1,331 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit Card Payments</h5>
+      <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
+      <p>Required items marked with *</p>
+    </div>
+  </div>
+  <form (ngSubmit)="payNow()" [formGroup]="tpForm">
+    <div class="row">
+      <div class="col">
+        <h5>Student Personal Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentNumber"
+          name="studentNumber"
+          [value]="tpPaymentInfo?.studentInfo.studentNumber"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentName" class="col-sm-2 col-form-label font-weight-bold">Name</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentName"
+          name="studentName"
+          autocomplete="name"
+          [value]="tpPaymentInfo?.studentInfo.studentName"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="qualCode" class="col-sm-2 col-form-label font-weight-bold">Qualification Code</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="qualCode"
+          name="qualCode"
+          [value]="tpPaymentInfo?.qualificationInfo.qualCode+' - ' + tpPaymentInfo?.qualificationInfo.qualDesc"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="regstatus" class="col-sm-2 col-form-label font-weight-bold">Registration status</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="regstatus"
+          name="regstatus"
+          [value]="tpPaymentInfo?.regStatusDescription"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Payment receipts will be sent to this e-mail address</p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label font-weight-bold">E-mail address: *</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          name="email"
+          autocomplete="email"
+          formControlName="email"
+          [value]="tpPaymentInfo?.studentInfo.emailAddress"
+          required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h5>Current Student Account Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="balanceAmount" class="col-form-label font-weight-bold">Study fee balance on this
+          account:</label>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            readonly
+            class="form-control-plaintext text-right"
+            id="balanceAmount"
+            name="balanceAmount"
+            [value]="(tpPaymentInfo?.balance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.creditDebitIndicator"
+            >
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="libraryFineBalance" class="col-form-label font-weight-bold">Library fine balance on this
+          account
+          :</label>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            readonly
+            class="form-control-plaintext text-right"
+            id="libraryFineBalance"
+            name="libraryFineBalance"
+            [value]="(tpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + tpPaymentInfo?.libCreditDebitIndicator"
+            formControlName="libraryFineBalance"
+            >
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="dueImmediately" class="col-form-label font-weight-bold">Amount already
+          outstanding on study fee account:</label>
+        <small class="form-text text-muted">(Amount should be paid in full to receive services)</small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <input
+            readonly
+            type="text"
+            class="form-control-plaintext text-right"
+            id="dueImmediately"
+            name="dueImmediately"
+            [value]="tpPaymentInfo?.dueImmediately | currency:'ZAR':'symbol-narrow':'1.2-2'"
+            formControlName="dueImmediately"
+            >
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="minimumForReg" class="col-form-label font-weight-bold">Minimum amount due to enable
+          registration:</label>
+        <small class="form-text text-muted">(Includes any outstanding fees and miscellaneous fees such as library
+          access,
+          matriculation, foreign levy, prescribed books etc.)
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <input
+            readonly
+            type="text"
+            class="form-control-plaintext text-right"
+            id="minimumForReg"
+            name="minimumForReg"
+            [value]="tpPaymentInfo.minimumForReg | currency:'ZAR':'symbol-narrow':'1.2-2'"
+            formControlName="minimumForReg"
+            >
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="fullAccount" class="col-form-label font-weight-bold">Pay this account in full:</label>
+        <small class="form-text text-muted">(Includes the outstanding balance and registration fees on the account.)
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <input
+            readonly
+            type="text"
+            class="form-control-plaintext text-right"
+            id="fullAccount"
+            name="fullAccount"
+            [value]="tpPaymentInfo?.fullAccount | currency:'ZAR':'symbol-narrow':'1.2-2'"
+            formControlName="fullAccount"
+            >
+        </div>
+
+      </div>
+    </div>
+
+    <!--
+      TODO this form still has a lot of unimplemented logic
+    -->
+    <div class="row">
+      <div class="col">
+        <h5>Payment Details</h5>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="libraryFineFeeForStudent" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
+        wish to pay: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="libraryFineFeeForStudent"
+            name="libraryFineFeeForStudent"
+            unisa-currency-formatter
+            formControlName="libraryFineFeeForStudent"
+            required="required">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="studyFeeAmount" class="col-form-label font-weight-bold">Study fee amount you wish to
+          pay: *</label>
+        <small class="form-text text-muted" *ngIf="tpPaymentInfo?.minimumStudyFee != 0">(Amount can not be less than
+          R{{tpPaymentInfo?.minimumStudyFee | number:'1.2-2'}})
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="studyFeeAmount"
+            name="studyFeeAmount"
+            unisa-currency-formatter
+            formControlName="studyFeeAmount"
+            required="required">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="libraryFeeForStudent" class="col-form-label font-weight-bold">Access to Unisa campuses:</label>
+        <small class="form-text text-muted">(As requested by you at registration)</small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            readonly
+            id="libraryFeeForStudent"
+            name="libraryFeeForStudent"
+            [value]="tpPaymentInfo?.libraryFeeForStudent | number:'1.2-2'"
+            formControlName="libraryFeeForStudent"
+           >
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label for="matricFeeForStudent" class="col-form-label font-weight-bold">Matriculation board fee:</label>
+        <small class="form-text text-muted">(Issuing of complete or conditional exemption certificates by the
+          Matriculation Board)
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+        <input
+          type="text"
+          class="form-control text-right"
+          readonly
+          id="matricFeeForStudent"
+          name="matricFeeForStudent"
+          [value]="tpPaymentInfo?.matricFeeForStudent | number:'1.2-2'"
+         >
+        </div>
+      </div>
+    </div>
+
+    <unisa-credit-card-input [form]="tpForm"></unisa-credit-card-input>
+    <div class="form-group row">
+      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid:
+        *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="ccTotalAmountInput"
+            name="ccTotalAmountInput"
+            unisa-currency-formatter
+            formControlName="ccTotalAmountInput"
+            required="required">
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate
+        payments.
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="tpForm.invalid"> Pay Now</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>
+    </div>
+  </form>
+</div>

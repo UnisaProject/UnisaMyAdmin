@@ -1,0 +1,47 @@
+<div class="container">
+<div class="row">
+  <div class="col-12">
+  <h5>Unisa Examination Timetable for {{ examPeriod ? (examPeriod.descriptionInfo | description:'en_ZA') : '' }} {{ examPeriod?.examYear }}</h5>
+  <p>To print this web page, right-click with your mouse on this section of the screen and then click the
+    "Print..." option OR click with your mouse on this section of the screen and then go to File, select Print.</p>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2">
+    <p class="font-weight-bold">List Date</p>
+  </div>
+  <div class="col-sm-6">{{ today | date: 'yyyy-MM-dd HH:mm' }}</div>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <p class="font-weight-bold">Status</p>
+  </div>
+  <div class="col-sm-6">{{ examPeriod?.examType }}</div>
+</div>
+  <table class="table table-sm table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Module Code</th>
+        <th scope="col">Paper No</th>
+        <th scope="col">Examination Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let examination of examinations">
+        <td>{{ examination.courseCode }}</td>
+        <td>{{ examination.paperNumber }}</td>
+        <td>{{ examination.examDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ examination.examTime | date: 'HH:mm' }}</td>
+        <td>{{ examination.durationHours }} hour(s)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row mb-3">
+    <div class="col">
+      <a class="btn btn-primary" routerLink="/search">Back</a>
+    </div>
+  </div>
+</div>

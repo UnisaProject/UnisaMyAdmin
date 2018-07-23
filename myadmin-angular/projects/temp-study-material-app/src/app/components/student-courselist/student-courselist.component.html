@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5>Temporary Registered Module(s) for Student: {{studentInfo?.studentNumber}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="font-weight-bold">List Date</p>
+    </div>
+    <div class="col-sm-6">{{ today | date: 'yyyy-MM-dd HH:mm' }}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h5>The following modules are available:</h5>
+      <br/>
+      <p>Material for semester 2 can only be viewed during semester 2 tuition period.</p>
+    </div>
+  </div>
+  <table class="table table-sm table-striped table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Module Code</th>
+      <th scope="col">View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let studentModule of studentModules">
+      <td>{{ studentModule.studyUnitCode }}-{{ studentModule.academicYear }}-{{ studentModule.semesterPeriodCode }}</td>
+      <td><a [routerLink]="" (click)="viewMaterial(studentModule)">View materials</a></td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="form-group">
+    <button type="button" class="btn btn-icon btn-primary" (click)="cancel()"> Cancel</button>
+  </div>
+</div>

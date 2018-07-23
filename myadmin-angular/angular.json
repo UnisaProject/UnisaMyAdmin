@@ -1,0 +1,743 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "exam-timetable-app": {
+      "root": "projects/exam-timetable-app/",
+      "sourceRoot": "projects/exam-timetable-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/exam-timetable-app",
+            "index": "projects/exam-timetable-app/src/index.html",
+            "main": "projects/exam-timetable-app/src/main.ts",
+            "polyfills": "projects/exam-timetable-app/src/polyfills.ts",
+            "tsConfig": "projects/exam-timetable-app/tsconfig.app.json",
+            "assets": [
+              "projects/exam-timetable-app/src/favicon.ico",
+              "projects/exam-timetable-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/exam-timetable-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/exam-timetable-app/src/environments/environment.ts",
+                  "with": "projects/exam-timetable-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "exam-timetable-app:build",
+            "baseHref": "/examtimetable/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "exam-timetable-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "exam-timetable-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/exam-timetable-app/src/test.ts",
+            "polyfills": "projects/exam-timetable-app/src/polyfills.ts",
+            "tsConfig": "projects/exam-timetable-app/tsconfig.spec.json",
+            "karmaConfig": "projects/exam-timetable-app/karma.conf.js",
+            "styles": [
+              "projects/exam-timetable-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/exam-timetable-app/src/favicon.ico",
+              "projects/exam-timetable-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/exam-timetable-app/tsconfig.app.json",
+              "projects/exam-timetable-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "myadmin-lib": {
+      "root": "projects/myadmin-lib",
+      "sourceRoot": "projects/myadmin-lib/src",
+      "projectType": "library",
+      "prefix": "unisa",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/myadmin-lib/tsconfig.lib.json",
+            "project": "projects/myadmin-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/myadmin-lib/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/myadmin-lib/src/test.ts",
+            "tsConfig": "projects/myadmin-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/myadmin-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/myadmin-lib/tsconfig.lib.json",
+              "projects/myadmin-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "study-quotation-app": {
+      "root": "projects/study-quotation-app/",
+      "sourceRoot": "projects/study-quotation-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/study-quotation-app",
+            "index": "projects/study-quotation-app/src/index.html",
+            "main": "projects/study-quotation-app/src/main.ts",
+            "polyfills": "projects/study-quotation-app/src/polyfills.ts",
+            "tsConfig": "projects/study-quotation-app/tsconfig.app.json",
+            "assets": [
+              "projects/study-quotation-app/src/favicon.ico",
+              "projects/study-quotation-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/study-quotation-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/study-quotation-app/src/environments/environment.ts",
+                  "with": "projects/study-quotation-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "study-quotation-app:build",
+            "baseHref": "/studyquotation/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "study-quotation-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "study-quotation-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/study-quotation-app/src/test.ts",
+            "polyfills": "projects/study-quotation-app/src/polyfills.ts",
+            "tsConfig": "projects/study-quotation-app/tsconfig.spec.json",
+            "karmaConfig": "projects/study-quotation-app/karma.conf.js",
+            "styles": [
+              "projects/study-quotation-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/study-quotation-app/src/favicon.ico",
+              "projects/study-quotation-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/study-quotation-app/tsconfig.app.json",
+              "projects/study-quotation-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "parcel-tracking-app": {
+      "root": "projects/parcel-tracking-app/",
+      "sourceRoot": "projects/parcel-tracking-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/parcel-tracking-app",
+            "index": "projects/parcel-tracking-app/src/index.html",
+            "main": "projects/parcel-tracking-app/src/main.ts",
+            "polyfills": "projects/parcel-tracking-app/src/polyfills.ts",
+            "tsConfig": "projects/parcel-tracking-app/tsconfig.app.json",
+            "assets": [
+              "projects/parcel-tracking-app/src/favicon.ico",
+              "projects/parcel-tracking-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/parcel-tracking-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/parcel-tracking-app/src/environments/environment.ts",
+                  "with": "projects/parcel-tracking-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "parcel-tracking-app:build",
+            "baseHref": "/parceltracking/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "parcel-tracking-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "parcel-tracking-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/parcel-tracking-app/src/test.ts",
+            "polyfills": "projects/parcel-tracking-app/src/polyfills.ts",
+            "tsConfig": "projects/parcel-tracking-app/tsconfig.spec.json",
+            "karmaConfig": "projects/parcel-tracking-app/karma.conf.js",
+            "styles": [
+              "projects/parcel-tracking-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/parcel-tracking-app/src/favicon.ico",
+              "projects/parcel-tracking-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/parcel-tracking-app/tsconfig.app.json",
+              "projects/parcel-tracking-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "creditcard-payment-app": {
+      "root": "projects/creditcard-payment-app/",
+      "sourceRoot": "projects/creditcard-payment-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/creditcard-payment-app",
+            "index": "projects/creditcard-payment-app/src/index.html",
+            "main": "projects/creditcard-payment-app/src/main.ts",
+            "polyfills": "projects/creditcard-payment-app/src/polyfills.ts",
+            "tsConfig": "projects/creditcard-payment-app/tsconfig.app.json",
+            "assets": [
+              "projects/creditcard-payment-app/src/favicon.ico",
+              "projects/creditcard-payment-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/creditcard-payment-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/creditcard-payment-app/src/environments/environment.ts",
+                  "with": "projects/creditcard-payment-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "creditcard-payment-app:build",
+            "baseHref": "/creditcardpayment/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "creditcard-payment-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "creditcard-payment-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/creditcard-payment-app/src/test.ts",
+            "polyfills": "projects/creditcard-payment-app/src/polyfills.ts",
+            "tsConfig": "projects/creditcard-payment-app/tsconfig.spec.json",
+            "karmaConfig": "projects/creditcard-payment-app/karma.conf.js",
+            "styles": [
+              "projects/creditcard-payment-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/creditcard-payment-app/src/favicon.ico",
+              "projects/creditcard-payment-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/creditcard-payment-app/tsconfig.app.json",
+              "projects/creditcard-payment-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "temp-study-material-app": {
+      "root": "projects/temp-study-material-app/",
+      "sourceRoot": "projects/temp-study-material-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/temp-study-material-app",
+            "index": "projects/temp-study-material-app/src/index.html",
+            "main": "projects/temp-study-material-app/src/main.ts",
+            "polyfills": "projects/temp-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/temp-study-material-app/tsconfig.app.json",
+            "assets": [
+              "projects/temp-study-material-app/src/favicon.ico",
+              "projects/temp-study-material-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/temp-study-material-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/temp-study-material-app/src/environments/environment.ts",
+                  "with": "projects/temp-study-material-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "temp-study-material-app:build",
+            "baseHref": "/tpstudymaterial/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "temp-study-material-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "temp-study-material-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/temp-study-material-app/src/test.ts",
+            "polyfills": "projects/temp-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/temp-study-material-app/tsconfig.spec.json",
+            "karmaConfig": "projects/temp-study-material-app/karma.conf.js",
+            "styles": [
+              "projects/temp-study-material-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/temp-study-material-app/src/favicon.ico",
+              "projects/temp-study-material-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/temp-study-material-app/tsconfig.app.json",
+              "projects/temp-study-material-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "forgot-studentnumber-app": {
+      "root": "projects/forgot-studentnumber-app/",
+      "sourceRoot": "projects/forgot-studentnumber-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/forgot-studentnumber-app",
+            "index": "projects/forgot-studentnumber-app/src/index.html",
+            "main": "projects/forgot-studentnumber-app/src/main.ts",
+            "polyfills": "projects/forgot-studentnumber-app/src/polyfills.ts",
+            "tsConfig": "projects/forgot-studentnumber-app/tsconfig.app.json",
+            "assets": [
+              "projects/forgot-studentnumber-app/src/favicon.ico",
+              "projects/forgot-studentnumber-app/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "projects/forgot-studentnumber-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/forgot-studentnumber-app/src/environments/environment.ts",
+                  "with": "projects/forgot-studentnumber-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "forgot-studentnumber-app:build",
+            "baseHref": "/forgotstudentnumber/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "forgot-studentnumber-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "forgot-studentnumber-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/forgot-studentnumber-app/src/test.ts",
+            "polyfills": "projects/forgot-studentnumber-app/src/polyfills.ts",
+            "tsConfig": "projects/forgot-studentnumber-app/tsconfig.spec.json",
+            "karmaConfig": "projects/forgot-studentnumber-app/karma.conf.js",
+            "styles": [
+              "projects/forgot-studentnumber-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/forgot-studentnumber-app/src/favicon.ico",
+              "projects/forgot-studentnumber-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/forgot-studentnumber-app/tsconfig.app.json",
+              "projects/forgot-studentnumber-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "myadmin-lib"
+}

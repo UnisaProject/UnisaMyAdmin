@@ -1,0 +1,256 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Credit Card Payments</h5>
+      <p>Complete the personal, payment and credit card details below and choose Pay now.</p>
+      <p>Required items marked with *</p>
+    </div>
+  </div>
+  <form (ngSubmit)="payNow()" [formGroup]="nonTpForm">
+    <div class="row">
+      <div class="col">
+        <h5>Student Personal Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentNumber"
+          name="studentNumber"
+          [value]="nonTpPaymentInfo?.studentInfo.studentNumber"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentName" class="col-sm-2 col-form-label font-weight-bold">Name</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="studentName"
+          name="studentName"
+          autocomplete="name"
+          [value]="nonTpPaymentInfo?.studentInfo.studentName"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="qualCode" class="col-sm-2 col-form-label font-weight-bold">Qualification Code</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="qualCode"
+          name="qualCode"
+          [value]="nonTpPaymentInfo?.qualificationInfo.qualCode+' - ' + nonTpPaymentInfo?.qualificationInfo.qualDesc"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="regstatus" class="col-sm-2 col-form-label font-weight-bold">Registration status</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="regstatus"
+          name="regstatus"
+          [value]="nonTpPaymentInfo?.regStatusDescription"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Payment receipts will be sent to this e-mail address.</p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label font-weight-bold">E-mail address: *</label>
+      <div class="col-sm-4">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          autocomplete="email"
+          [value]="nonTpPaymentInfo?.studentInfo.emailAddress"
+          formControlName="email"
+          required>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <h5>Current Student Account Details</h5>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="balanceAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee balance on this
+        account:</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext text-right"
+          id="balanceAmount"
+          name="balanceAmount"
+          [value]="(nonTpPaymentInfo?.balance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.creditDebitIndicator"
+          >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library fine balance on this account
+        :</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext text-right"
+          id="libraryFineFee"
+          name="libraryFineFee"
+          [value]="(nonTpPaymentInfo?.libraryFineBalance | currency:'ZAR':'symbol-narrow':'1.2-2') + ' ' + nonTpPaymentInfo?.libCreditDebitIndicator"
+          >
+      </div>
+    </div>
+
+
+    <!--
+      TODO this form still has a lot of unimplemented logic
+    -->
+    <!-- TODO LibraryCard Fee -->
+    <div class="row">
+      <div class="col">
+        <h5>Payment Details</h5>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseLibraryCard">
+      <label for="payLibraryFee" class="col-sm-4 col-form-label font-weight-bold">Access to Unisa campuses:</label>
+      <div class="col-sm-4 text-right">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input text-right"
+            id="payLibraryFee"
+            name="payLibraryFee"
+            [value]="nonTpPaymentInfo?.payLibraryFee"
+            formControlName="payLibraryFee">
+          <label class="form-check-label text-right" for="payLibraryFee">{{nonTpPaymentInfo?.libraryFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseMatric">
+      <label for="payMatricFirstAppFee" class="col-sm-4 col-form-label font-weight-bold">Matriculation board
+        fee:</label>
+      <div class="col-sm-4 text-right">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input text-right"
+            id="payMatricFirstAppFee"
+            name="payMatricFirstAppFee"
+            [value]="nonTpPaymentInfo?.payMatricFirstAppFee"
+            formControlName="payMatricFirstAppFee">
+          <label class="form-check-label text-right" for="payMatricFirstAppFee">{{nonTpPaymentInfo?.matricFirstAppFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="nonTpPaymentInfo?.canChooseThreeGDataBundle">
+      <label for="payThreeGDataBundleFee" class="col-sm-4 col-form-label font-weight-bold">3G Data bundle:</label>
+      <div class="col-sm-4">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="payThreeGDataBundleFee"
+            name="payThreeGDataBundleFee"
+            [value]="nonTpPaymentInfo?.payThreeGDataBundleFee"
+            formControlName="payThreeGDataBundleFee">
+          <label class="form-check-label" for="payThreeGDataBundleFee">{{nonTpPaymentInfo?.threeGDataBundleFee |
+            currency:'ZAR':'symbol-narrow':'1.2-2'}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="libraryFineFee" class="col-sm-4 col-form-label font-weight-bold">Library Fine Amount you
+        wish to pay: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+          <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="libraryFineFee"
+            name="libraryFineFee"
+            formControlName="libraryFineFee"
+            unisa-currency-formatter
+            required="required">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studyFeeAmount" class="col-sm-4 col-form-label font-weight-bold">Study fee amount you wish to
+        pay: *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+          <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="studyFeeAmount"
+            name="studyFeeAmount"
+            unisa-currency-formatter
+            formControlName="studyFeeAmount"
+            required="required">
+        </div>
+      </div>
+    </div>
+
+    <unisa-credit-card-input [form]="nonTpForm" novalidate></unisa-credit-card-input>
+    <div class="form-group row">
+      <label for="ccTotalAmountInput" class="col-sm-4 col-form-label font-weight-bold">Total amount being paid:
+        *</label>
+      <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">R</span>
+          </div>
+          <input
+            type="text"
+            class="form-control text-right"
+            id="ccTotalAmountInput"
+            name="ccTotalAmountInput"
+            unisa-currency-formatter
+            formControlName="ccTotalAmountInput"
+            required="required">
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col text-danger">Please do not click 'Pay now' more than once. It could result in duplicate
+        payments.
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="nonTpForm.invalid"> Pay Now</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="back()"> Back</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="cancel()"> Cancel</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="close()"> Close Payment Page</button>
+    </div>
+  </form>
+</div>
