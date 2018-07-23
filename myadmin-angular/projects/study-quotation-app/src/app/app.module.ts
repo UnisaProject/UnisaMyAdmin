@@ -9,8 +9,7 @@ import {ClarityModule} from '@clr/angular';
 import {AppComponent} from './app.component';
 import {StudyQuotationSearchComponent} from './components/study-quotation-search/study-quotation-search.component';
 import {StudyQuotationResultComponent} from './components/study-quotation-result/study-quotation-result.component';
-import {RegistrationPeriodService, StudyFeeQuotationService} from './services';
-import { StudyQuotationClosedComponent } from './components/study-quotation-closed/study-quotation-closed.component';
+import {StudyFeeQuotationService} from './services';
 import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -30,8 +29,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   declarations: [
     AppComponent,
     StudyQuotationSearchComponent,
-    StudyQuotationResultComponent,
-    StudyQuotationClosedComponent
+    StudyQuotationResultComponent
   ],
   imports: [
     AppRoutingModule,
@@ -45,7 +43,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BlockUIModule.forRoot()
   ],
   providers: [
-    RegistrationPeriodService,
     StudyFeeQuotationService,
     HttpInterceptorProviders
   ],

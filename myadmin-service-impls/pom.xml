@@ -21,8 +21,9 @@
 	<modules>
 		<module>common-services</module>
 		<module>exam-services</module>
+		<module>integration-services</module>
 		<module>student-services</module>
-		<module>parcel-tracking-service</module>
-		<module>credit-card-payment-service</module>
+		<module>payment-services</module>
+		<module>tracking-services</module>
 	</modules>
 </project>

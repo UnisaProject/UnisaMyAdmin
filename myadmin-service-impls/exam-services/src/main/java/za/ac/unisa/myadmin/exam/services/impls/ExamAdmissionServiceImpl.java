@@ -3,9 +3,6 @@ package za.ac.unisa.myadmin.exam.services.impls;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
@@ -13,11 +10,13 @@ import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
 
-@Service("ExamAdmissionService")
 public class ExamAdmissionServiceImpl implements ExamAdmissionService {
 
-	@Autowired
 	private ExamAdmissionRepository examAdmissionRepository;
+
+	public void setExamAdmissionRepository(ExamAdmissionRepository examAdmissionRepository) {
+		this.examAdmissionRepository = examAdmissionRepository;
+	}
 
 	@Override
 	public List<ExamAdmissionInfo> getExamAdmissions() throws OperationFailedException {

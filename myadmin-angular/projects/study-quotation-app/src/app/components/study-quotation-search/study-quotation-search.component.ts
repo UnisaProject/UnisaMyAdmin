@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {StudyFeeQuotationRequestInfo} from '../../info-objects';
-import { RegistrationPeriodService } from '../../services';
+import { StudyFeeQuotationService } from '../../services';
 import {atleastOneCourseCode} from './atleast-one.validator';
 
 @Component({
@@ -18,7 +18,9 @@ export class StudyQuotationSearchComponent implements OnInit {
   @BlockUI()
   private blockUI:NgBlockUI;
 
-  constructor(private router:Router, private formBuilder:FormBuilder, private registrationPeriodService: RegistrationPeriodService) {
+  constructor(private router:Router, 
+              private formBuilder:FormBuilder,
+              private studyFeeQuotationService: StudyFeeQuotationService) {
     this.initForm();
   }
 
@@ -62,17 +64,19 @@ export class StudyQuotationSearchComponent implements OnInit {
   }
 
   private defaultForm(): void{
-    if(this.registrationPeriodService.searchCriteria === null){
+    if(this.studyFeeQuotationService.searchCriteria === null){
       this.resetForm();
     }
     else{
-      this.studyFeeForm.patchValue(this.registrationPeriodService.searchCriteria)
-      this.blockUI.stop()
+      this.studyFeeForm.patchValue(this.studyFeeQuotationService.searchCriteria)
     }
+    this.blockUI.stop()
   }
 
   resetForm(): void{
+    let currentYear = new Date().getFullYear();
     this.studyFeeForm.patchValue({
+      academicYear : currentYear,
       countryCode : "1015",
       qualification: "99999",
       qualificationCode: null,
@@ -84,13 +88,6 @@ export class StudyQuotationSearchComponent implements OnInit {
         ,null,null,null,null,null,null
       ]
     });
-    this.registrationPeriodService.getQuotationYear().subscribe(
-      (year) => this.studyFeeForm.patchValue({academicYear : year}),
-      error => {() => this.blockUI.stop();
-        this.router.navigate(["closed"]);
-      },
-      ()=> this.blockUI.stop()
-    );
   }
 
   onSubmit() {
@@ -100,7 +97,7 @@ export class StudyQuotationSearchComponent implements OnInit {
     // Filter out any blank course codes
     criteria.courseCodes = criteria.courseCodes.filter(c => c !== null && c !== "");
 
-    this.registrationPeriodService.searchCriteria = criteria;
+    this.studyFeeQuotationService.searchCriteria = criteria;
     this.router.navigate(["result"]);
   }
 

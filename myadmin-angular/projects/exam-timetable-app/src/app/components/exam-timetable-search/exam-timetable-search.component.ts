@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ExamAdmissionService, ExamPeriodService } from '../../services';
+import { ExamPeriodService } from '../../services';
 import { ExamPeriodInfo } from '../../info-objects';
 import { SearchCriteriaService } from '../../services';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -51,14 +51,12 @@ export class ExamTimetableSearchComponent implements OnInit {
   /**
    * Creates a new instance of this ExamTimetableSearchComponent
    * @param {Router} router
-   * @param {ExamAdmissionService} examAdmissionService
    * @param {ExamPeriodService} examPeriodService
    * @param {SearchCriteriaService} searchCriteriaService
    * @param {FormBuilder} formBuilder
    * @param orderByPipe
    */
   constructor(private router: Router,
-              private examAdmissionService: ExamAdmissionService,
               private examPeriodService: ExamPeriodService,
               private searchCriteriaService: SearchCriteriaService,
               private formBuilder: FormBuilder,

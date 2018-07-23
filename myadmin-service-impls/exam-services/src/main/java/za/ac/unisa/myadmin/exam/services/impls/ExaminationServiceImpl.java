@@ -3,9 +3,6 @@ package za.ac.unisa.myadmin.exam.services.impls;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
@@ -13,11 +10,13 @@ import za.ac.unisa.myadmin.exam.services.ExaminationService;
 import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
 import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
 
-@Service("ExaminationService")
 public class ExaminationServiceImpl implements ExaminationService {
 
-	@Autowired
 	private ExaminationRepository examinationRepository;
+
+	public void setExaminationRepository(ExaminationRepository examinationRepository) {
+		this.examinationRepository = examinationRepository;
+	}
 
 	@Override
 	public List<ExaminationInfo> getExaminationsByYear(Integer year)

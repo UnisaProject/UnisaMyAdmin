@@ -3,12 +3,10 @@ package za.ac.unisa.myadmin.exam.services.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import za.ac.unisa.myadmin.exam.services.models.ExamAdmissionEntity;
-import za.ac.unisa.myadmin.exam.services.models.ExamAdmissionEntityId;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntity;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntityId;
 
-@Repository
 public interface ExamAdmissionRepository extends JpaRepository<ExamAdmissionEntity, ExamAdmissionEntityId> {
 
 	public List<ExamAdmissionEntity> findByYear(Integer year);

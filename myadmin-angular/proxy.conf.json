@@ -1,13 +1,17 @@
 {
-  "/myadmin-student-services/rest/*": {
+  "/myadmin-exam-services/services/rest/*": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/myadmin-exam-services/examservices/*": {
+  "/myadmin-student-services/services/rest/*": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/myadmin-student-services/studentservices/*": {
+  "/myadmin-payment-services/services/rest/*": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/myadmin-tracking-services/services/rest/*": {
     "target": "http://localhost:8080",
     "secure": false
   }

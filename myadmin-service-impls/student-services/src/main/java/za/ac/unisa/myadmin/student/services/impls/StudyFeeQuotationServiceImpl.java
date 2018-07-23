@@ -6,24 +6,23 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
 import Srrqn01h.Abean.Srrqn01sQuoteStudyFees;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
-import za.ac.unisa.myadmin.student.services.StudentServiceConstants;
-import za.ac.unisa.myadmin.student.services.dto.StudyFeeQuotationInfo;
-import za.ac.unisa.myadmin.student.services.dto.StudyFeeQuotationRequestInfo;
-import za.ac.unisa.myadmin.student.services.dto.StudyUnitInfo;
-import za.ac.unisa.myadmin.student.services.fees.StudyFeeQuotationService;
+import za.ac.unisa.myadmin.common.services.CommonServicesConstants;
+import za.ac.unisa.myadmin.fees.services.FeesServicesConstants;
+import za.ac.unisa.myadmin.fees.services.StudyFeeQuotationService;
+import za.ac.unisa.myadmin.fees.services.dto.StudyFeeQuotationInfo;
+import za.ac.unisa.myadmin.fees.services.dto.StudyFeeQuotationRequestInfo;
+import za.ac.unisa.myadmin.fees.services.dto.StudyUnitInfo;
 
-@Service("StudyFeeQuotationService")
 public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 
 	private final String POSTGRAD = "99999";
 
-	public StudyFeeQuotationInfo requestQuote(StudyFeeQuotationRequestInfo studyFeeQuotationRequest)
+	public StudyFeeQuotationInfo submitStudyFeeQuotationRequest(StudyFeeQuotationRequestInfo studyFeeQuotationRequest)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		// If both the qualification and qualification code is unset
 		if ((POSTGRAD.equalsIgnoreCase(studyFeeQuotationRequest.getQualification()))
@@ -39,7 +38,8 @@ public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 			// Get a reference to the proxy
 			final Srrqn01sQuoteStudyFees studyFeeQuotationProxy = constructStudyFeeQuotationProxy();
 			studyFeeQuotationProxy.addExceptionListener(exceptionListener);
-			studyFeeQuotationProxy.setInStudentAnnualRecordMkAcademicYear(studyFeeQuotationRequest.getAcademicYear().shortValue());
+			studyFeeQuotationProxy
+					.setInStudentAnnualRecordMkAcademicYear(studyFeeQuotationRequest.getAcademicYear().shortValue());
 
 			// If the qualification is unset, but the qualification code is set
 			if ((POSTGRAD.equalsIgnoreCase(studyFeeQuotationRequest.getQualification()))
@@ -55,7 +55,8 @@ public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 
 			studyFeeQuotationProxy.setInWsCountryCode(studyFeeQuotationRequest.getCountryCode());
 			studyFeeQuotationProxy.setInSmartcardIefSuppliedFlag(studyFeeQuotationRequest.isLibraryCard() ? "Y" : "N");
-			studyFeeQuotationProxy.setInMatrExemptionIefSuppliedFlag(studyFeeQuotationRequest.isMatricExemption() ? "Y" : "N");
+			studyFeeQuotationProxy
+					.setInMatrExemptionIefSuppliedFlag(studyFeeQuotationRequest.isMatricExemption() ? "Y" : "N");
 
 			List<String> studyCodes = studyFeeQuotationRequest.getCourseCodes();
 			for (int idx = 0; idx < studyCodes.size(); idx++) {
@@ -89,40 +90,49 @@ public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 	private Srrqn01sQuoteStudyFees constructStudyFeeQuotationProxy() throws PropertyVetoException {
 		Srrqn01sQuoteStudyFees studyFeeQuotationProxy = new Srrqn01sQuoteStudyFees();
 		studyFeeQuotationProxy.clear();
-		studyFeeQuotationProxy.setInWsUserNumber(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_USER_NUMBER);
-		studyFeeQuotationProxy.setInWsWorkstationCode(StudentServiceConstants.PROXY_WORKSTATION_CODE);
+		studyFeeQuotationProxy.setInWsUserNumber(FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_USER_NUMBER);
+		studyFeeQuotationProxy.setInWsWorkstationCode(CommonServicesConstants.PROXY_WORKSTATION_CODE);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientVersionNumber(
-				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+				CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientRevisionNumber(
-				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+				CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsAction(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
+				FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_CLIENT_SERVER_COMMUNICATIONS_ACTION);
 		studyFeeQuotationProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(
-				StudentServiceConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+				CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
 		studyFeeQuotationProxy.setInStudentAnnualRecordMkStudentNr(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_ANNUAL_RECORD_MK_STUDENT_NBR);
-		studyFeeQuotationProxy.setInWsStudentSurname(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_SURNAME);
-		studyFeeQuotationProxy.setInWsStudentInitials(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_INITIALS);
+				FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_ANNUAL_RECORD_MK_STUDENT_NBR);
+		studyFeeQuotationProxy.setInWsStudentSurname(FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_SURNAME);
+		studyFeeQuotationProxy.setInWsStudentInitials(FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_INITIALS);
 		studyFeeQuotationProxy.setInWsStudentMkCorrespondenceLanguage(
-				StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_MK_CORRESPONDENCE_LANGUAGE);
-		studyFeeQuotationProxy.setInWsAddressPostalCode(StudentServiceConstants.STUDY_QUOTE_FEE_PROXY_ADDRESS_POSTAL_CODE);
+				FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_STUDENT_MK_CORRESPONDENCE_LANGUAGE);
+		studyFeeQuotationProxy
+				.setInWsAddressPostalCode(FeesServicesConstants.STUDY_QUOTE_FEE_PROXY_ADDRESS_POSTAL_CODE);
 		return studyFeeQuotationProxy;
 	}
 
 	/**
-	 * Build a study quotation using the input request, and the response from the proxy execution.
+	 * Build a study quotation using the input request, and the response from the
+	 * proxy execution.
 	 *
-	 * @param studyFeeQuotationProxy The <code>Srrqn01sQuoteStudyFees</code> proxy that was used to execute the request
-	 * @param studyFeeQuotationRequest       The <code>StudyQuotationRequestInfo</code> request used to request the quotation.
+	 * @param studyFeeQuotationProxy
+	 *            The <code>Srrqn01sQuoteStudyFees</code> proxy that was used to
+	 *            execute the request
+	 * @param studyFeeQuotationRequest
+	 *            The <code>StudyQuotationRequestInfo</code> request used to request
+	 *            the quotation.
 	 * @return A <code>StudyQuotationInfo</code> object.
 	 * @throws OperationFailedException
+	 * @throws InvalidParameterException
 	 */
-	private StudyFeeQuotationInfo assembleStudentQuotationResponse(Srrqn01sQuoteStudyFees studyFeeQuotationProxy, StudyFeeQuotationRequestInfo studyFeeQuotationRequest) throws OperationFailedException {
+	private StudyFeeQuotationInfo assembleStudentQuotationResponse(Srrqn01sQuoteStudyFees studyFeeQuotationProxy,
+			StudyFeeQuotationRequestInfo studyFeeQuotationRequest)
+			throws OperationFailedException, InvalidParameterException {
 		final StudyFeeQuotationInfo responseQuotation = new StudyFeeQuotationInfo(studyFeeQuotationRequest);
 
 		String message = studyFeeQuotationProxy.getOutCsfStringsString500();
 		if (StringUtils.isNotBlank(message) && !"Error reading study unit cost information".equalsIgnoreCase(message)) {
-			throw new OperationFailedException(message);
+			throw new InvalidParameterException(message);
 		} else if (StringUtils.isNotBlank(message)) {
 			responseQuotation.setMessage(message);
 		}

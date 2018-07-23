@@ -24,7 +24,7 @@ import za.ac.unisa.myadmin.TestApplication;
 import za.ac.unisa.myadmin.exam.services.ExaminationService;
 import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
 import za.ac.unisa.myadmin.exam.services.impls.ExaminationServiceImpl;
-import za.ac.unisa.myadmin.exam.services.models.ExaminationEntity;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExaminationEntity;
 import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
 
 /**

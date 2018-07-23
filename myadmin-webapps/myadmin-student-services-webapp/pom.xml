@@ -16,26 +16,25 @@
 
 	<dependencies>
 		<!--  Unisa myAdmin service -->
-
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
 			<artifactId>student-services</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>parcel-tracking-service</artifactId>
+			<artifactId>integration-services</artifactId>
 		</dependency>
+		
+		<!-- To use advanced features like monitoring & tracing to your application out of the box -->
 		<dependency>
-			<groupId>za.ac.unisa.myadmin.services</groupId>
-			<artifactId>credit-card-payment-service</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
-    		 This value must be the same as the server.context-path defined inside the Spring Boot application properties. -->
+    		 This value must be the same as the server.servlet.context-path defined inside the Spring Boot application properties. -->
 		<finalName>myadmin-student-services</finalName>
 
 		<resources>
@@ -50,6 +49,25 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Generate application build information containing the coordinates, 
+					name and version of the project in a META-INF/build-info.properties file 
+					for Spring Actuator -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<!-- Additional info accessed via the /env Actuator endpoint -->
+							<additionalProperties>
+								<encoding.source>${project.build.sourceEncoding}</encoding.source>
+								<encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+								<java.version>${java.version}</java.version>
+								<time>${mavenBuildTimestamp}</time>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

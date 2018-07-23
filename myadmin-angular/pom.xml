@@ -79,7 +79,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build exam timetable -->
+					<!-- Build exam timetable app -->
 					<execution>
 						<id>yarn build exam-timetable-app</id>
 						<goals>
@@ -91,7 +91,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build exam study quotation -->
+					<!-- Build exam study quotation app -->
 					<execution>
 						<id>yarn build study-quotation-app</id>
 						<goals>
@@ -103,7 +103,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build parcel tracking -->
+					<!-- Build parcel tracking app -->
 					<execution>
 						<id>yarn build parcel-tracking-app</id>
 						<goals>
@@ -115,7 +115,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build credit card payment -->
+					<!-- Build credit card payment app -->
 					<execution>
 						<id>yarn build creditcard-payment-app</id>
 						<goals>
@@ -127,7 +127,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build temporary study material -->
+					<!-- Build temporary study material app -->
 					<execution>
 						<id>yarn build temp-study-material-app</id>
 						<goals>
@@ -139,7 +139,7 @@
 						</configuration>
 					</execution>
 
-					<!-- Build forgot studentnumber -->
+					<!-- Build forgot studentnumber app -->
 					<execution>
 						<id>yarn build forgot-studentnumber-app</id>
 						<goals>

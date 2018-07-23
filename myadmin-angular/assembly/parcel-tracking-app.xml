@@ -8,7 +8,7 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>dist/study-quotation-app</directory>
+			<directory>dist/parcel-tracking-app</directory>
 			<outputDirectory>./</outputDirectory>
 		</fileSet>
 	</fileSets>

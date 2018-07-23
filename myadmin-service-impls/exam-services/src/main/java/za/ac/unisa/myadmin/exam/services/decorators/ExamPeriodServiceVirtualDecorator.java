@@ -7,43 +7,34 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
 import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.ExamServiceConstants;
+import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
 import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
+import za.ac.unisa.myadmin.services.base.decorators.ExamPeriodServiceDecorator;
 
 /**
  * This decorator creates virtual data ExamPeriods from actual ExamPeriods. Each
  * virtual ExamPeriod includes the exam year and examination timetable type by
  * getting the ExamAdmission record.
  * 
- * @author Jannie
+ * @author Jannie Louwrens
  *
  */
-@Service("ExamPeriodServiceVirtualDecorator")
-public class ExamPeriodServiceVirtualDecorator implements ExamPeriodService {
+public class ExamPeriodServiceVirtualDecorator extends ExamPeriodServiceDecorator implements ExamPeriodService {
 
-	@Autowired
-	@Qualifier("ExamPeriodService")
-	private ExamPeriodService examPeriodService;
-
-	@Autowired
-	@Qualifier("ExamAdmissionService")
 	private ExamAdmissionService examAdmissionService;
 
-	@Override
-	public ExamPeriodInfo getExamPeriod(Integer code) throws DoesNotExistException, MissingParameterException,
-			InvalidParameterException, OperationFailedException {
-		return examPeriodService.getExamPeriod(code);
+	public ExamAdmissionService getExamAdmissionService() {
+		return examAdmissionService;
+	}
+
+	public void setExamAdmissionService(ExamAdmissionService examAdmissionService) {
+		this.examAdmissionService = examAdmissionService;
 	}
 
 	@Override
@@ -51,7 +42,7 @@ public class ExamPeriodServiceVirtualDecorator implements ExamPeriodService {
 		List<ExamPeriodInfo> virtuals = new ArrayList<>();
 
 		Set<Integer> years = calculateCurrentYears();
-		List<ExamPeriodInfo> examPeriods = examPeriodService.getExamPeriods();
+		List<ExamPeriodInfo> examPeriods = getNextDecorator().getExamPeriods();
 		for (ExamPeriodInfo examPeriod : examPeriods) {
 			try {
 				virtuals.addAll(createVirtualExamPeriod(examPeriod, years));
@@ -69,7 +60,7 @@ public class ExamPeriodServiceVirtualDecorator implements ExamPeriodService {
 		List<ExamPeriodInfo> virtuals = new ArrayList<>();
 
 		Set<Integer> years = calculateCurrentYears();
-		List<ExamPeriodInfo> examPeriods = examPeriodService.getExamPeriodsByCodes(codes);
+		List<ExamPeriodInfo> examPeriods = getNextDecorator().getExamPeriodsByCodes(codes);
 		for (ExamPeriodInfo examPeriod : examPeriods) {
 			virtuals.addAll(createVirtualExamPeriod(examPeriod, years));
 		}
@@ -93,12 +84,12 @@ public class ExamPeriodServiceVirtualDecorator implements ExamPeriodService {
 
 	private String calculateExamType(Integer year, Integer examPeriodCode)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		String examType = ExamServiceConstants.EXAM_TYPE_PROVISIONAL;
+		String examType = ExamServicesConstants.EXAM_TYPE_PROVISIONAL;
 
-		List<ExamAdmissionInfo> examAdmissions = examAdmissionService.getExamAdmissionsByYearAndExamPeriodCode(year,
-				examPeriodCode);
+		List<ExamAdmissionInfo> examAdmissions = getExamAdmissionService()
+				.getExamAdmissionsByYearAndExamPeriodCode(year, examPeriodCode);
 		if (!examAdmissions.isEmpty() && examAdmissions.get(0).isAdmissionDone()) {
-			examType = ExamServiceConstants.EXAM_TYPE_FINAL;
+			examType = ExamServicesConstants.EXAM_TYPE_FINAL;
 		}
 
 		return examType;

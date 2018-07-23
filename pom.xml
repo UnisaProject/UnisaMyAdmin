@@ -16,28 +16,32 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.1.RELEASE</version>
+		<version>2.0.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
-		<!--  3rd party libraries -->
-		<apache.commons.lang3>3.7</apache.commons.lang3>
+		<!-- Build properties -->
 		<java.version>1.8</java.version> <!-- Default java version is 1.6 configured in the spring starter parent project -->
-		<javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
-		<jboss.as.maven.plugin.version>7.9.Final</jboss.as.maven.plugin.version>
-		<jboss.spec.javaee.version>1.0.3.Final</jboss.spec.javaee.version>
-		<junit.version>4.12</junit.version>
 		<mavenBuildTimestamp>${maven.build.timestamp}</mavenBuildTimestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<wildfly.maven.plugin.version>1.2.1.Final</wildfly.maven.plugin.version>
+
+		<!--  3rd party libraries -->
+		<apache.commons.lang3>3.7</apache.commons.lang3>
+		<apache.cxf.version>3.2.5</apache.cxf.version>
+		<jackson.jaxrs.json.provider>2.9.6</jackson.jaxrs.json.provider>
+		<jboss.spec.javaee.version>1.0.3.Final</jboss.spec.javaee.version>
+		<junit.version>4.12</junit.version>
+		<resteasy.jaxrs.version>3.0.24.Final</resteasy.jaxrs.version>
 
 		<!-- Plugin version -->
+		<jboss.as.maven.plugin.version>7.9.Final</jboss.as.maven.plugin.version>
 		<plugin.enforcer.version>1.4.1</plugin.enforcer.version>
+		<wildfly.maven.plugin.version>1.2.1.Final</wildfly.maven.plugin.version>
 	</properties>
 
 	<modules>
@@ -143,6 +147,7 @@
 			</dependency>
 
 			<!-- Internal dependencies -->
+			
 			<dependency>
 				<groupId>za.ac.unisa.myadmin.services.api</groupId>
 				<artifactId>service-api</artifactId>
@@ -169,15 +174,31 @@
 
 			<dependency>
 				<groupId>za.ac.unisa.myadmin.services</groupId>
-				<artifactId>parcel-tracking-service</artifactId>
+				<artifactId>integration-services</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>tracking-services</artifactId>
 				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
-				<groupId>javax.ws.rs</groupId>
-				<artifactId>javax.ws.rs-api</artifactId>
-				<version>${javax.ws.rs-api.version}</version>
+				<groupId>za.ac.unisa.myadmin.services</groupId>
+				<artifactId>payment-services</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
+
+			<!-- Unisa coolgen proxy -->
+			
+			<dependency>
+				<groupId>org.sakaiproject</groupId>
+				<artifactId>unisa-javaproxies</artifactId>
+				<version>10.5</version>
+			</dependency>
+
+			<!-- 3rd party libraries -->
 
 			<dependency>
 				<groupId>org.eclipse.persistence</groupId>
@@ -186,15 +207,41 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.sakaiproject</groupId>
-				<artifactId>unisa-javaproxies</artifactId>
-				<version>10.5</version>
-			</dependency>
-
-			<dependency>
 			    <groupId>org.apache.commons</groupId>
 			    <artifactId>commons-lang3</artifactId>
 			    <version>${apache.commons.lang3}</version>
+			</dependency>
+			
+			<!-- fixes ERROR JAXRSUtils:1793 - No message body writer has been found for class... -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${jackson.jaxrs.json.provider}</version>
+			</dependency>
+			
+			<!-- Registers CXFServlet with a  "/services/*" URL pattern for serving CXF JAX-WS endpoints -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+				<version>${apache.cxf.version}</version>
+			</dependency>
+			<!-- autoconfigures the CXF servlet based on configuration properties found in a properties file -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+				<version>${apache.cxf.version}</version>
+			</dependency>
+			<!-- allows the WADL to be auto-generated at runtime -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-rs-service-description</artifactId>
+				<version>${apache.cxf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>${resteasy.jaxrs.version}</version>
 			</dependency>
 		</dependencies>
 
@@ -206,13 +253,6 @@
 			<groupId>org.jboss.spec.javax.servlet</groupId>
 			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- Embedded database for local development environment -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>

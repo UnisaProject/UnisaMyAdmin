@@ -6,23 +6,12 @@ import {StudyFeeQuotationRequestInfo, StudyFeeQuotationInfo} from '../info-objec
 @Injectable()
 export class StudyFeeQuotationService {
 
+  searchCriteria: StudyFeeQuotationRequestInfo = null;
+
   constructor(private http:HttpClient) {  }
 
-  calculateStudyQuotation(studyQuotationInfo:StudyFeeQuotationRequestInfo):Observable<StudyFeeQuotationInfo> {
-    const params = new HttpParams()
-      .set('academicYear', <string><any>studyQuotationInfo.academicYear)
-      .set('countryCode', <string><any>studyQuotationInfo.countryCode)
-      .set('qualificationType', <string><any>studyQuotationInfo.qualification)
-      .set('qualificationCode', <string><any>studyQuotationInfo.qualificationCode)
-      .set('libraryCard', <string><any>studyQuotationInfo.libraryCard)
-      .set('matricExemption', <string><any>studyQuotationInfo.matricExemption)
-      .set('courseCodes', studyQuotationInfo.courseCodes.join(','));
-
-    return this.http.get<StudyFeeQuotationInfo>('/myadmin-student-services/rest/studyfeequotation/calculateQuotation', {params});
-  }
-
-  requestStudyFeeQuotation(studyFeeQuotationInfo: StudyFeeQuotationRequestInfo):Observable<StudyFeeQuotationInfo> {
-    return this.http.post<StudyFeeQuotationInfo>('/myadmin-student-services/studentservices/studyfeequotation', studyFeeQuotationInfo);
+  submitStudyFeeQuotationRequest(studyFeeQuotationInfo: StudyFeeQuotationRequestInfo):Observable<StudyFeeQuotationInfo> {
+    return this.http.post<StudyFeeQuotationInfo>('/myadmin-student-services/services/rest/studyfeequotationservice/quotationrequest/submission', studyFeeQuotationInfo);
   }
   
 }

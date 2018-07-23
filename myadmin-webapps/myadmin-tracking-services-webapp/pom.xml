@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>za.ac.unisa.myadmin.webapps</groupId>
+	<artifactId>myadmin-tracking-services-webapp</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>za.ac.unisa.myadmin.webapps</groupId>
+		<artifactId>myadmin-webapps</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<!--  Unisa myAdmin service -->
+		<dependency>
+			<groupId>za.ac.unisa.myadmin.services</groupId>
+			<artifactId>tracking-services</artifactId>
+		</dependency>
+		
+		<!-- To use advanced features like monitoring & tracing to your application out of the box -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Set the name of the WAR, used as the context root when the app is deployed to Jboss/Wildfly.
+    		 This value must be the same as the server.servlet.context-path defined inside the Spring Boot application properties. -->
+		<finalName>myadmin-tracking-services</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<!-- It is used to create executable JAR of the application. -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Generate application build information containing the coordinates, 
+					name and version of the project in a META-INF/build-info.properties file 
+					for Spring Actuator -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<!-- Additional info accessed via the /env Actuator endpoint -->
+							<additionalProperties>
+								<encoding.source>${project.build.sourceEncoding}</encoding.source>
+								<encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+								<java.version>${java.version}</java.version>
+								<time>${mavenBuildTimestamp}</time>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

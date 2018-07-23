@@ -3,6 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "myadmin-lib": {
+      "root": "projects/myadmin-lib",
+      "sourceRoot": "projects/myadmin-lib/src",
+      "projectType": "library",
+      "prefix": "unisa",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/myadmin-lib/tsconfig.lib.json",
+            "project": "projects/myadmin-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/myadmin-lib/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/myadmin-lib/src/test.ts",
+            "tsConfig": "projects/myadmin-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/myadmin-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/myadmin-lib/tsconfig.lib.json",
+              "projects/myadmin-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "exam-timetable-app": {
       "root": "projects/exam-timetable-app/",
       "sourceRoot": "projects/exam-timetable-app/src",
@@ -95,46 +135,6 @@
             "tsConfig": [
               "projects/exam-timetable-app/tsconfig.app.json",
               "projects/exam-timetable-app/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "myadmin-lib": {
-      "root": "projects/myadmin-lib",
-      "sourceRoot": "projects/myadmin-lib/src",
-      "projectType": "library",
-      "prefix": "unisa",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/myadmin-lib/tsconfig.lib.json",
-            "project": "projects/myadmin-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/myadmin-lib/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/myadmin-lib/src/test.ts",
-            "tsConfig": "projects/myadmin-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/myadmin-lib/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/myadmin-lib/tsconfig.lib.json",
-              "projects/myadmin-lib/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

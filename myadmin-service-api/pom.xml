@@ -17,5 +17,20 @@
 
 	<name>Unisa myAdmin Service Contracts API</name>
 	<description>Unisa myAdmin Service Contracts API</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-service-description</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>

@@ -1,52 +1,31 @@
 package za.ac.unisa.myadmin.student.services.decorators;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.util.StringUtils;
+
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.services.base.decorators.StudentServiceDecorator;
+import za.ac.unisa.myadmin.student.services.StudentService;
 import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
-import za.ac.unisa.myadmin.student.services.student.StudentService;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * This decorator validates requiredness.
  *
  * Created by Adrian on 2018-07-11.
  */
-@Service("StudentServiceComplianceDecorator")
-public class StudentServiceComplianceDecorator implements StudentService {
-
-	@Autowired
-	@Qualifier("StudentService")
-	private StudentService studentService;
-
-	@Override
-	public StudentInfo getStudentByNumber(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return studentService.getStudentByNumber(studentNumber);
-	}
-
-	@Override
-	public String getSmartCardValue(Integer userId) throws OperationFailedException {
-		return studentService.getSmartCardValue(userId);
-	}
-
-	@Override
-	public int updateSmartCardValue(String smartCard, Integer studentNumber) {
-		return studentService.updateSmartCardValue(smartCard, studentNumber);
-	}
+public class StudentServiceComplianceDecorator extends StudentServiceDecorator implements StudentService {
 
 	@Override
 	public List<StudentInfo> getStudentsBySurname(String surname) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (!StringUtils.hasText(surname)) {
 			throw new MissingParameterException("Please enter a valid surname.");
 		}
-		return studentService.getStudentsBySurname(surname);
+		return getNextDecorator().getStudentsBySurname(surname);
 	}
 
 	@Override
@@ -54,7 +33,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(firstNames)) {
 			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
-		return studentService.getStudentsByFirstNames(firstNames);
+		return getNextDecorator().getStudentsByFirstNames(firstNames);
 	}
 
 	@Override
@@ -65,7 +44,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(firstNames)) {
 			throw new MissingParameterException("Please enter a valid first name(s).");
 		}
-		return studentService.getStudentsBySurnameAndFirstNames(surname, firstNames);
+		return getNextDecorator().getStudentsBySurnameAndFirstNames(surname, firstNames);
 	}
 
 	@Override
@@ -79,7 +58,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (dateOfBirth == null) {
 			throw new MissingParameterException("Please enter a valid date of birth.");
 		}
-		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDate(surname, firstNames, dateOfBirth);
+		return getNextDecorator().getStudentsBySurnameAndFirstNamesAndBirthDate(surname, firstNames, dateOfBirth);
 	}
 
 	@Override
@@ -87,7 +66,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(identityNumber)) {
 			throw new MissingParameterException("Please enter a valid Identity Number.");
 		}
-		return studentService.getStudentsByIdNumber(identityNumber);
+		return getNextDecorator().getStudentsByIdNumber(identityNumber);
 	}
 
 	@Override
@@ -104,7 +83,8 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(identityNumber)) {
 			throw new MissingParameterException("Please enter a valid Identity Number.");
 		}
-		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(surname, firstNames, dateOfBirth, identityNumber);
+		return getNextDecorator().getStudentsBySurnameAndFirstNamesAndBirthDateAndIdNumber(surname, firstNames,
+				dateOfBirth, identityNumber);
 	}
 
 	@Override
@@ -112,7 +92,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(passportNumber)) {
 			throw new OperationFailedException("Please enter a valid Passport Number.");
 		}
-		return studentService.getStudentsByPassportNumber(passportNumber);
+		return getNextDecorator().getStudentsByPassportNumber(passportNumber);
 	}
 
 	@Override
@@ -129,6 +109,7 @@ public class StudentServiceComplianceDecorator implements StudentService {
 		if (!StringUtils.hasText(passportNumber)) {
 			throw new MissingParameterException("Please enter a valid Passport Number.");
 		}
-		return studentService.getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstNames, dateOfBirth, passportNumber);
+		return getNextDecorator().getStudentsBySurnameAndFirstNamesAndBirthDateAndPassportNumber(surname, firstNames,
+				dateOfBirth, passportNumber);
 	}
 }

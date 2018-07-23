@@ -20,6 +20,8 @@
 	<modules>
 		<module>myadmin-exam-services-webapp</module>
 		<module>myadmin-student-services-webapp</module>
+		<module>myadmin-payment-services-webapp</module>
+		<module>myadmin-tracking-services-webapp</module>
 	</modules>
 
 	<dependencies>
@@ -35,13 +37,6 @@
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
 	      	</exclusions>
-		</dependency>
-		
-		<!-- Provides solutions to automatically pick up changes without a complete server restart. -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>
