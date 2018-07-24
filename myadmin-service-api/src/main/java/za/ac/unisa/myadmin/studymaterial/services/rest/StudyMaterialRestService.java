@@ -13,7 +13,7 @@ import java.util.List;
 public interface StudyMaterialRestService {
 
 	@GET
-	@Path("/viewmaterial")
+	@Path("/studymaterial/viewmaterial")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(@QueryParam("moduleCode") String moduleCode,
@@ -22,7 +22,7 @@ public interface StudyMaterialRestService {
 																 @Context UriInfo uriInfo) throws Exception;
 
 	@POST
-	@Path("/download")
+	@Path("/studymaterial/download")
 	@Produces("application/pdf")
 	@Consumes("application/json")
 	public Response generateActivatedMaterialsPDFReport(StudyMaterialDetailInfo materialInfo)

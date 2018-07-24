@@ -131,10 +131,10 @@ public class StudyMaterialWebServiceimpl {
 				studymaterialDetails.setDescription(itemDisplayName);
 
 				studymaterialDetails.setImplementationDate(getDBDateFormat(toDate(resourceDTO.getDateAvailable())));
+				studymaterialDetails.setPath(resourceDTO.getPath());
 				StudyMaterialCodesConverter codesConverter = new StudyMaterialCodesConverter();
-				String filename = StudyMaterialLocation.getfileName(resourceDTO.getShortDescription());
 				//long fizeSize = getFileSize(filename,studymaterialDetails.getCourseCode(),resourceDTO.getDocumentType());
-
+				studyMaterialDTOList.add(studymaterialDetails);
 			}
 
 		}
