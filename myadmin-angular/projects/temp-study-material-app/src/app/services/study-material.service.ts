@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {StudentModuleEnrolmentInfo, StudyMaterialDetailInfo} from "./../info-objects/";
+import {StudentModuleEnrolmentInfo, StudyMaterialDetailInfo} from "../info-objects";
 import {StudentInfo} from "myadmin-lib";
 
 @Injectable()
@@ -22,9 +22,5 @@ export class StudyMaterialService {
         semesterCode: semesterCode
       }
     });
-  }
-
-  downloadMaterial(moduleMaterial:StudyMaterialDetailInfo):Observable<any> {
-    return this.http.post('/myadmin-student-services/services/rest/studymaterialservice/studymaterial/download', moduleMaterial, {responseType: 'arraybuffer'});
   }
 }

@@ -35,8 +35,6 @@ import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 import za.ac.unisa.myadmin.student.services.jpa.models.ModuleEnrolmentEntity;
 import za.ac.unisa.myadmin.student.services.jpa.models.ModuleEnrolmentEntityId;
 import za.ac.unisa.myadmin.student.services.repositories.ModuleEnrolmentRepository;
-import za.ac.unisa.myadmin.studymaterial.integration.services.StudyMaterialWebServiceimpl;
-import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
 
 /**
  * Created by Adrian on 2018-06-26.
@@ -84,7 +82,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumber(studentNumber)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -98,7 +96,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYear(studentNumber, academicYear)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -112,7 +110,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYearAndSemesterPeriodInAndStatusCodeIn(studentNumber, year, semesterList, statusCodesList)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
