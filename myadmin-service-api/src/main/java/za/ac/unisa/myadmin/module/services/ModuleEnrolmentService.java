@@ -31,7 +31,5 @@ public interface ModuleEnrolmentService {
 
 	public List<ModuleEnrolmentInfo> requestStudentModuleEnrolments(StudentInfo student) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
-	// Module study material
 
-	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(String moduleCode, Integer academicYear, String semesterCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 }

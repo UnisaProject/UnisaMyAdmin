@@ -69,10 +69,4 @@ public class ModuleEnrolmentServiceDecorator implements ModuleEnrolmentService {
 		return getNextDecorator().requestStudentModuleEnrolments(student);
 	}
 
-	@Override
-	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(String moduleCode, Integer academicYear, String semesterCode)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException{
-		return getNextDecorator().getModuleStudyMaterials(moduleCode, academicYear, semesterCode);
-	}
-
 }

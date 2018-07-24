@@ -51,11 +51,6 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 	private ModuleEnrolmentRepository moduleEnrolmentRepository;
 	private RegistrationPeriodService registrationPeriodService;
 	private StudentAnnualService studentAnnualService;
-	private StudyMaterialWebServiceimpl studyMaterialWebService;
-
-	public void setStudyMaterialWebService(StudyMaterialWebServiceimpl studyMaterialWebService) {
-		this.studyMaterialWebService = studyMaterialWebService;
-	}
 
 	public void setModuleEnrolmentRepository(ModuleEnrolmentRepository moduleEnrolmentRepository) {
 		this.moduleEnrolmentRepository = moduleEnrolmentRepository;
@@ -67,12 +62,6 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 
 	public void setStudentAnnualService(StudentAnnualService studentAnnualService) {
 		this.studentAnnualService = studentAnnualService;
-	}
-
-	@Override
-	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(String moduleCode, Integer academicYear, String semesterCode)
-		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return studyMaterialWebService.getStudyMaterialList(moduleCode, academicYear, semesterCode);
 	}
 
 	@Override
