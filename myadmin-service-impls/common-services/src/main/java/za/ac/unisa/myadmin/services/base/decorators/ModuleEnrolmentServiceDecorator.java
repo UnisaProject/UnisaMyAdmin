@@ -9,6 +9,7 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.module.services.ModuleEnrolmentService;
 import za.ac.unisa.myadmin.module.services.dto.ModuleEnrolmentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
+import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
 
 public class ModuleEnrolmentServiceDecorator implements ModuleEnrolmentService {
 
@@ -66,6 +67,12 @@ public class ModuleEnrolmentServiceDecorator implements ModuleEnrolmentService {
 			throws MissingParameterException, InvalidParameterException, OperationFailedException,
 			DoesNotExistException {
 		return getNextDecorator().requestStudentModuleEnrolments(student);
+	}
+
+	@Override
+	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(String moduleCode, Integer academicYear, String semesterCode)
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException{
+		return getNextDecorator().getModuleStudyMaterials(moduleCode, academicYear, semesterCode);
 	}
 
 }

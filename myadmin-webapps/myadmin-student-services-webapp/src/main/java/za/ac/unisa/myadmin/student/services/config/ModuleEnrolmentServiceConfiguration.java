@@ -10,7 +10,7 @@ import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfigurati
 import za.ac.unisa.myadmin.student.services.StudentAnnualService;
 import za.ac.unisa.myadmin.student.services.impls.ModuleEnrolmentServiceImpl;
 import za.ac.unisa.myadmin.student.services.repositories.ModuleEnrolmentRepository;
-import za.ac.unisa.myadmin.student.services.rest.impls.StudyMaterialRestServiceImpl;
+import za.ac.unisa.myadmin.student.services.rest.impls.ModuleEnrolmentRestServiceImpl;
 import za.ac.unisa.myadmin.studymaterial.integration.services.StudyMaterialWebServiceimpl;
 
 @Configuration
@@ -22,6 +22,7 @@ public class ModuleEnrolmentServiceConfiguration extends AbstractServiceConfigur
 		service.setModuleEnrolmentRepository(getBean(ModuleEnrolmentRepository.class));
 		service.setRegistrationPeriodService(getBean(RegistrationPeriodService.class));
 		service.setStudentAnnualService(getBean(StudentAnnualService.class));
+		service.setStudyMaterialWebService(new StudyMaterialWebServiceimpl());
 
 		return service;
 	}
@@ -33,9 +34,10 @@ public class ModuleEnrolmentServiceConfiguration extends AbstractServiceConfigur
 
 	@Bean(name = "studyMaterialServiceImplRestEndPoint")
 	public Server studyMaterialServiceImplRestEndPoint() {
-		StudyMaterialRestServiceImpl restServiceImpl = new StudyMaterialRestServiceImpl();
+		ModuleEnrolmentRestServiceImpl restServiceImpl = new ModuleEnrolmentRestServiceImpl();
+
+		// TODO wire in filter decorator
 		restServiceImpl.setNextDecorator(getModuleEnrolmentServiceImpl());
-		restServiceImpl.setScmClientService(getBean(StudyMaterialWebServiceimpl.class));
 
 		return createRestEndpoint(restServiceImpl, "/rest/studymaterialservice");
 	}

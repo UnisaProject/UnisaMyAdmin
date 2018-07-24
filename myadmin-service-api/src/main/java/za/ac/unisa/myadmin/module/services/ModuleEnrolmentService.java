@@ -6,6 +6,7 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.module.services.dto.ModuleEnrolmentInfo;
 import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
+import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
 
 import java.util.List;
 
@@ -29,4 +30,8 @@ public interface ModuleEnrolmentService {
 	public List<ModuleEnrolmentInfo> getStudentModuleEnrolments(StudentInfo student) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	public List<ModuleEnrolmentInfo> requestStudentModuleEnrolments(StudentInfo student) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+
+	// Module study material
+
+	public List<StudyMaterialDetailInfo> getModuleStudyMaterials(String moduleCode, Integer academicYear, String semesterCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 }
