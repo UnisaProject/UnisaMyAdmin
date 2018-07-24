@@ -69,7 +69,7 @@
 
 					<!-- Build library -->
 					<execution>
-						<id>yarn build myadmin-lib</id>
+						<id>yarn build-prod myadmin-lib</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
@@ -81,7 +81,7 @@
 
 					<!-- Build exam timetable app -->
 					<execution>
-						<id>yarn build exam-timetable-app</id>
+						<id>yarn build-prod exam-timetable-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
@@ -93,7 +93,7 @@
 
 					<!-- Build exam study quotation app -->
 					<execution>
-						<id>yarn build study-quotation-app</id>
+						<id>yarn build-prod study-quotation-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
@@ -105,37 +105,37 @@
 
 					<!-- Build parcel tracking app -->
 					<execution>
-						<id>yarn build parcel-tracking-app</id>
+						<id>yarn build-prod parcel-tracking-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build parcel-tracking-app</arguments>
+							<arguments>build-prod parcel-tracking-app</arguments>
 						</configuration>
 					</execution>
 
 					<!-- Build credit card payment app -->
 					<execution>
-						<id>yarn build creditcard-payment-app</id>
+						<id>yarn build-prod creditcard-payment-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build creditcard-payment-app</arguments>
+							<arguments>build-prod creditcard-payment-app</arguments>
 						</configuration>
 					</execution>
 
 					<!-- Build temporary study material app -->
 					<execution>
-						<id>yarn build temp-study-material-app</id>
+						<id>yarn build-prod temp-study-material-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build temp-study-material-app</arguments>
+							<arguments>build-prod temp-study-material-app</arguments>
 						</configuration>
 					</execution>
 
@@ -147,7 +147,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build forgot-studentnumber-app</arguments>
+							<arguments>build-prod forgot-studentnumber-app</arguments>
 						</configuration>
 					</execution>
 				</executions>
