@@ -141,13 +141,37 @@
 
 					<!-- Build forgot studentnumber app -->
 					<execution>
-						<id>yarn build forgot-studentnumber-app</id>
+						<id>yarn build-prod forgot-studentnumber-app</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
 							<arguments>build-prod forgot-studentnumber-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build official study material app -->
+					<execution>
+						<id>yarn build-prod official-study-material-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod official-study-material-app</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build previous exam papers app -->
+					<execution>
+						<id>yarn build-prod previous-exam-papers-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod previous-exam-papers-app</arguments>
 						</configuration>
 					</execution>
 				</executions>

@@ -743,6 +743,244 @@
           }
         }
       }
+    },
+    "official-study-material-app": {
+      "root": "projects/official-study-material-app/",
+      "sourceRoot": "projects/official-study-material-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/official-study-material-app",
+            "index": "projects/official-study-material-app/src/index.html",
+            "main": "projects/official-study-material-app/src/main.ts",
+            "polyfills": "projects/official-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/official-study-material-app/tsconfig.app.json",
+            "assets": [
+              "projects/official-study-material-app/src/favicon.ico",
+              "projects/official-study-material-app/src/assets"
+            ],
+            "styles": [
+              "projects/official-study-material-app/src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/official-study-material-app/src/environments/environment.ts",
+                  "with": "projects/official-study-material-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "baseHref": "/official-study-material-app/"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "official-study-material-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "official-study-material-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "official-study-material-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/official-study-material-app/src/test.ts",
+            "polyfills": "projects/official-study-material-app/src/polyfills.ts",
+            "tsConfig": "projects/official-study-material-app/tsconfig.spec.json",
+            "karmaConfig": "projects/official-study-material-app/karma.conf.js",
+            "styles": [
+              "projects/official-study-material-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/official-study-material-app/src/favicon.ico",
+              "projects/official-study-material-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/official-study-material-app/tsconfig.app.json",
+              "projects/official-study-material-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "previous-exam-papers-app": {
+      "root": "projects/previous-exam-papers-app/",
+      "sourceRoot": "projects/previous-exam-papers-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/previous-exam-papers-app",
+            "index": "projects/previous-exam-papers-app/src/index.html",
+            "main": "projects/previous-exam-papers-app/src/main.ts",
+            "polyfills": "projects/previous-exam-papers-app/src/polyfills.ts",
+            "tsConfig": "projects/previous-exam-papers-app/tsconfig.app.json",
+            "assets": [
+              "projects/previous-exam-papers-app/src/favicon.ico",
+              "projects/previous-exam-papers-app/src/assets"
+            ],
+            "styles": [
+              "projects/previous-exam-papers-app/src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/previous-exam-papers-app/src/environments/environment.ts",
+                  "with": "projects/previous-exam-papers-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "baseHref": "/previous-exam-papers-app/"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "previous-exam-papers-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "previous-exam-papers-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "previous-exam-papers-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/previous-exam-papers-app/src/test.ts",
+            "polyfills": "projects/previous-exam-papers-app/src/polyfills.ts",
+            "tsConfig": "projects/previous-exam-papers-app/tsconfig.spec.json",
+            "karmaConfig": "projects/previous-exam-papers-app/karma.conf.js",
+            "styles": [
+              "projects/previous-exam-papers-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/previous-exam-papers-app/src/favicon.ico",
+              "projects/previous-exam-papers-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/previous-exam-papers-app/tsconfig.app.json",
+              "projects/previous-exam-papers-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "myadmin-lib"
