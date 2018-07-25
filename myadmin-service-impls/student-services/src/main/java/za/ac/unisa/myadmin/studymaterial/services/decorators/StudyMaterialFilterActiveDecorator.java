@@ -24,7 +24,7 @@ public class StudyMaterialFilterActiveDecorator extends StudyMaterialServiceDeco
 		return list.stream()
 			.filter(studyMaterialDetailInfo ->
 				!studyMaterialDetailInfo.getFilesize().equalsIgnoreCase("unavailable") &&
-					Instant.parse(studyMaterialDetailInfo.getImplementationDate()).isAfter(Instant.now()))
+					studyMaterialDetailInfo.getImplementationDate().toInstant().isAfter(Instant.now()))
 			.collect(Collectors.toList());
 	}
 }
