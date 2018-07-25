@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.ModuleInfoRequest;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.StudyMaterialResponse;
-import za.ac.unisa.myadmin.studymaterial.integration.services.utils.StudyMaterialCodesConverter;
 import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
 
 import javax.net.ssl.SSLContext;
@@ -22,12 +21,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static za.ac.unisa.myadmin.studymaterial.integration.services.utils.StudyMaterialCodesConverter.convertCode;
 
 /**
  * Rest client for the study material XML Service
@@ -148,7 +148,7 @@ public class StudyMaterialWebServiceClient {
 				studymaterialDetails.setShortDescription(resourceDTO.getShortDescription());
 				studymaterialDetails.setFilesize(resourceDTO.getFileSize());
 				studymaterialDetails.setDescription(itemDisplayName);
-				studymaterialDetails.setImplementationDate(getDBDateFormat(toDate(resourceDTO.getDateAvailable())));
+				studymaterialDetails.setImplementationDate(toDate(resourceDTO.getDateAvailable()));
 				studymaterialDetails.setPath(resourceDTO.getPath());
 				return studymaterialDetails;
 			})
@@ -164,19 +164,12 @@ public class StudyMaterialWebServiceClient {
 		return calendar.toGregorianCalendar().getTime();
 	}
 
-	private String getDBDateFormat(Date date) {
-		return new SimpleDateFormat("yyyy-MM-dd").format(date);
-	}
-
 	private String setItemDisplayName(String documentType, String unitNumber, String language, String module) {
 
-		StudyMaterialCodesConverter codesConverter = new StudyMaterialCodesConverter();
-		return codesConverter.convertCode(documentType) + "  " + unitNumber + " (" +
-			codesConverter.convertCode(language) + ")" + " for " + module;
+		return convertCode(documentType) + "  " + unitNumber + " (" + convertCode(language) + ")" + " for " + module;
 	}
 
 	private String getlanguage(String itemShortDesdc) {
-
 		int lastIndexOff_ = itemShortDesdc.lastIndexOf("_") + 1;
 		return itemShortDesdc.substring(lastIndexOff_).trim().toUpperCase();
 	}

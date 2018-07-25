@@ -1,6 +1,7 @@
 package za.ac.unisa.myadmin.studymaterial.services.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class StudyMaterialDetailInfo implements Serializable {
 
@@ -14,7 +15,7 @@ public class StudyMaterialDetailInfo implements Serializable {
 
 	private String description;
 
-	private String implementationDate;
+	private Date implementationDate;
 
 	private String webId;
 
@@ -61,11 +62,11 @@ public class StudyMaterialDetailInfo implements Serializable {
 		this.description = description;
 	}
 
-	public String getImplementationDate() {
+	public Date getImplementationDate() {
 		return implementationDate;
 	}
 
-	public void setImplementationDate(String implementationDate) {
+	public void setImplementationDate(Date implementationDate) {
 		this.implementationDate = implementationDate;
 	}
 

@@ -4,46 +4,42 @@ import java.util.HashMap;
 
 public class StudyMaterialCodesConverter {
 
-	private HashMap<String, String> codesHashMap = new HashMap<String, String>();
+	private static final HashMap<String, String> CODES_MAP = new HashMap<>();
 
-	public StudyMaterialCodesConverter() {
-		setCodesHashMap();
+	static {
+		CODES_MAP.put("bb", "Business Calculations");
+		CODES_MAP.put("bl", "Booklet");
+		CODES_MAP.put("hl", "H Law Documents");
+		CODES_MAP.put("lb", "Logbook");
+		CODES_MAP.put("ma", "Florida Manual");
+		CODES_MAP.put("mg", "Mentor Guide");
+		CODES_MAP.put("mo", "Module");
+		CODES_MAP.put("qb", "Question Bank");
+		CODES_MAP.put("re", "Reader");
+		CODES_MAP.put("sg", "Study Guide");
+		CODES_MAP.put("sw", "Study Guide (MS Word)");
+		CODES_MAP.put("tl", "Tutorial Letter");
+		CODES_MAP.put("tw", "Tutorial Letter (MS Word)");
+		CODES_MAP.put("tp", "Tutorial Letter");
+		CODES_MAP.put("wb", "Workbook");
+		CODES_MAP.put("a", "Afr");
+		CODES_MAP.put("e", "Eng");
+		CODES_MAP.put("b", "Both");
+		CODES_MAP.put("qp", "Examination Question Paper");
+		CODES_MAP.put("dv", "DV");
+		CODES_MAP.put("cm", "CM");
+	}
+	private StudyMaterialCodesConverter(){
 	}
 
-	private void setCodesHashMap() {
-		codesHashMap = new HashMap<String, String>();
-		codesHashMap.put("bb", "Business Calculations");
-		codesHashMap.put("bl", "Booklet");
-		codesHashMap.put("hl", "H Law Documents");
-		codesHashMap.put("lb", "Logbook");
-		codesHashMap.put("ma", "Florida Manual");
-		codesHashMap.put("mg", "Mentor Guide");
-		codesHashMap.put("mo", "Module");
-		codesHashMap.put("qb", "Question Bank");
-		codesHashMap.put("re", "Reader");
-		codesHashMap.put("sg", "Study Guide");
-		codesHashMap.put("sw", "Study Guide (MS Word)");
-		codesHashMap.put("tl", "Tutorial Letter");
-		codesHashMap.put("tw", "Tutorial Letter (MS Word)");
-		codesHashMap.put("tp", "Tutorial Letter");
-		codesHashMap.put("wb", "Workbook");
-		codesHashMap.put("a", "Afr");
-		codesHashMap.put("e", "Eng");
-		codesHashMap.put("b", "Both");
-		codesHashMap.put("qp", "Examination Question Paper");
-		codesHashMap.put("dv", "DV");
-		codesHashMap.put("dv", "DV");
-		codesHashMap.put("cm", "CM");
-	}
+	public static String convertCode(String studyMaterialCode) {
+		if (studyMaterialCode != null){
+			if(studyMaterialCode.equalsIgnoreCase("GD")) {
+				studyMaterialCode = "sg";
+			}
+			studyMaterialCode = studyMaterialCode.toLowerCase();
+		}
 
-	public String convertCode(String studyMaterialCode) {
-		if (studyMaterialCode.equalsIgnoreCase("GD")) {
-			studyMaterialCode = "sg";
-		}
-		if ((studyMaterialCode != null) && codesHashMap.containsKey(studyMaterialCode.toLowerCase())) {
-			return codesHashMap.get(studyMaterialCode.toLowerCase());
-		} else {
-			return "Tutorial Letter";
-		}
+		return CODES_MAP.getOrDefault(studyMaterialCode, "Tutorial Letter");
 	}
 }
