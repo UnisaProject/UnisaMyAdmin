@@ -82,7 +82,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumber(studentNumber)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -96,7 +96,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYear(studentNumber, academicYear)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -110,7 +110,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 		try {
 			return moduleEnrolmentRepository.findByStudentNumberAndAcademicYearAndSemesterPeriodInAndStatusCodeIn(studentNumber, year, semesterList, statusCodesList)
 				.stream()
-				.map(entity -> entity.toDto())
+				.map(ModuleEnrolmentEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);

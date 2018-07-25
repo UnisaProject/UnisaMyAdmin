@@ -1,17 +1,18 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {StudyMaterialFormService, StudyMaterialService} from "../../services/";
 import {StudyMaterialDetailInfo} from "../../info-objects/";
 import {ActivatedRoute, Router} from "@angular/router";
 import "rxjs/add/operator/map";
 import {StudentInfo} from "myadmin-lib";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'unisa-view-course-material',
   templateUrl: './view-course-material.component.html',
   styleUrls: ['./view-course-material.component.scss']
 })
-export class ViewCourseMaterialComponent implements OnInit {
+export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
 
   @BlockUI()
   private blockUI:NgBlockUI;
@@ -22,7 +23,7 @@ export class ViewCourseMaterialComponent implements OnInit {
   academicYear:number;
   moduleCode:string;
   semesterCode:string;
-  private sub:any;
+  private routeParamsSubscription:Subscription;
 
   constructor(private route:ActivatedRoute,
               private router:Router,
@@ -31,7 +32,7 @@ export class ViewCourseMaterialComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.academicYear = +params['academicYear']; // (+) converts string 'id' to a number
       this.moduleCode = params['moduleCode'];
       this.semesterCode = params['semesterCode'];
@@ -55,33 +56,9 @@ export class ViewCourseMaterialComponent implements OnInit {
       );
   }
 
-  downloadMaterial(moduleMaterial:StudyMaterialDetailInfo) {
-    this.blockUI.start("Downloading study material...");
-    this.studyMaterialService.downloadMaterial(moduleMaterial)
-      .subscribe(
-        (data) => {
-          var type = 'application/pdf';
-          const blob = new Blob([data], { type });
-          const url = window.URL.createObjectURL(blob);
-          // create hidden dom element (so it works in all browsers)
-          const a = document.createElement('a');
-          a.setAttribute('style', 'display:none;');
-          document.body.appendChild(a);
-          // create file, attach to hidden element and open hidden element
-          a.href = url;
-          a.download = moduleMaterial.shortDescription+'.pdf';
-          a.click();
-          this.blockUI.stop();
-          return url;
-        },
-        () => {
-          this.blockUI.stop();
-        }
-      );
-  }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
   }
 
   back() {

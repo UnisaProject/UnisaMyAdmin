@@ -29,6 +29,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
 import org.springframework.web.client.RestClientException;
 
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.ModuleInfoRequest;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.ResourceDTO;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.StudyMaterialResponse;
@@ -52,7 +53,7 @@ public class StudyMaterialWebServiceimpl {
 
 //private EmailService emailService;
 
-	public List<StudyMaterialDetailInfo> getStudyMaterialList(String course, Integer academicYear, String semester) throws Exception {
+	public List<StudyMaterialDetailInfo> getStudyMaterialList(String course, Integer academicYear, String semester) throws OperationFailedException {
 
 		if (semester.equals("S1")) {
 			semester = "1";
@@ -130,25 +131,10 @@ public class StudyMaterialWebServiceimpl {
 				studymaterialDetails.setDescription(itemDisplayName);
 
 				studymaterialDetails.setImplementationDate(getDBDateFormat(toDate(resourceDTO.getDateAvailable())));
+				studymaterialDetails.setPath(resourceDTO.getPath());
 				StudyMaterialCodesConverter codesConverter = new StudyMaterialCodesConverter();
-				String filename = StudyMaterialLocation.getfileName(resourceDTO.getShortDescription());
-
-
 				//long fizeSize = getFileSize(filename,studymaterialDetails.getCourseCode(),resourceDTO.getDocumentType());
-
-
-				if (resourceDTO.getFileSize().equalsIgnoreCase("unavailable")) {
-					//send an email to fix the files
-
-					//sendEmailToFixFiles(course,academicYear,semester);
-					//sendEmailToFixFiles(resourceDTO.getDept(), course, resourceDTO.getShortDescription(), resourceDTO.getBarcode());
-
-				} else if (isDateBeforeSysDate(toDate(resourceDTO.getDateAvailable()))) {
-
-					studyMaterialDTOList.add(studymaterialDetails);
-				}
-
-
+				studyMaterialDTOList.add(studymaterialDetails);
 			}
 
 		}
