@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
-import {StudentInfo} from 'myadmin-lib';
-import {StudyMaterialFormService, StudyMaterialService} from '../../services';
-import {StudentModuleEnrolmentInfo} from '../../info-objects';
+import {StudyMaterialService, StudentModuleEnrolmentInfo} from 'myadmin-lib';
+import {StudyMaterialFormService} from "../../services";
 
 @Component({
   selector: 'unisa-material-student-input',
@@ -23,7 +22,7 @@ export class MaterialStudentInputComponent implements OnInit {
 
   constructor(private router:Router,
               private studyMaterialFormService:StudyMaterialFormService,
-              private studyMaterialService:StudyMaterialService,
+              private studyMaterialService: StudyMaterialService,
               private formBuilder: FormBuilder) {
     this.initForm();
   }

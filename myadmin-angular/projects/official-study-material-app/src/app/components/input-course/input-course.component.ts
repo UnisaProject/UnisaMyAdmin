@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {StudentModuleEnrolmentInfo} from "../../../../../temp-study-material-app/src/app/info-objects";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {Router} from "@angular/router";
 

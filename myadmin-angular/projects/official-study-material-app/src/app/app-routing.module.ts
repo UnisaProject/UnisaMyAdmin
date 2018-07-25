@@ -6,7 +6,7 @@ import {ViewCourseMaterialComponent} from "./components/view-course-material/vie
 const routes: Routes = [
   { path: '', redirectTo: '/inputCourse', pathMatch: 'full'},
   { path: 'inputCourse', component: InputCourseComponent},
-  { path: 'studyMaterial/:siteId', component: ViewCourseMaterialComponent},
+  { path: 'studyMaterial/:lmsCourseId', component: ViewCourseMaterialComponent},
 ];
 
 @NgModule({

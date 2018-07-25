@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {StudentModuleEnrolmentInfo, StudyMaterialDetailInfo} from "../info-objects";
-import {StudentInfo} from "myadmin-lib";
+import {StudentInfo} from "../info-objects/student-info";
+import {StudentModuleEnrolmentInfo} from "../info-objects/student-module-enrolment-info";
+import {StudyMaterialDetailInfo} from "../info-objects/study-material-detail-info";
 
 @Injectable()
 export class StudyMaterialService {
