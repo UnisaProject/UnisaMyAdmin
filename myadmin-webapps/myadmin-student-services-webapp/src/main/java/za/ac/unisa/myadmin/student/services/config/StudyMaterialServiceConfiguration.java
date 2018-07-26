@@ -23,6 +23,9 @@ public class StudyMaterialServiceConfiguration  extends AbstractServiceConfigura
 	@Value("${integration.studymaterial.serviceUrl}")
 	private String studyMaterialServiceUrl;
 
+	@Value("${integration.studymaterial.missingEmail}")
+	private String studyMaterialMissingEmail;
+
 	@Bean("studyMaterialServiceImpl")
 	public StudyMaterialService studyMaterialService(){
 		StudyMaterialWebServiceClient studyMaterialWebServiceClient = new StudyMaterialWebServiceClient();
@@ -37,6 +40,7 @@ public class StudyMaterialServiceConfiguration  extends AbstractServiceConfigura
 	@Bean(name = "studyMaterialServiceImplRestEndPoint")
 	public Server studyFeeQuotationServiceImplRestEndPoint() {
 		StudyMaterialFilterActiveDecorator studyMaterialFilterActiveDecorator = new StudyMaterialFilterActiveDecorator();
+		studyMaterialFilterActiveDecorator.setMissingContentEmail(studyMaterialMissingEmail);
 		studyMaterialFilterActiveDecorator.setNextDecorator(studyMaterialService());
 
 		StudyMaterialSemesterValidationDecorator studyMaterialSemesterValidationDecorator = new StudyMaterialSemesterValidationDecorator();
