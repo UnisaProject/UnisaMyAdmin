@@ -5,11 +5,7 @@ import java.beans.PropertyVetoException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,6 +32,8 @@ import za.ac.unisa.myadmin.student.services.jpa.models.ModuleEnrolmentEntity;
 import za.ac.unisa.myadmin.student.services.jpa.models.ModuleEnrolmentEntityId;
 import za.ac.unisa.myadmin.student.services.repositories.ModuleEnrolmentRepository;
 
+import static za.ac.unisa.myadmin.studymaterial.services.StudyMaterialServicesConstants.NO_STUDY_MATERIAL_ISSUED_STATUS;
+
 /**
  * Created by Adrian on 2018-06-26.
  */
@@ -43,8 +41,7 @@ public class ModuleEnrolmentServiceImpl implements ModuleEnrolmentService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ModuleEnrolmentServiceImpl.class);
 
-	public static final List<String> TEMP_STUDENT_STATUS_CODES = Stream.of("TN", "RG").collect(Collectors.toList());
-	public static final String NO_STUDY_MATERIAL_ISSUED_STATUS = "NOSTMISS";
+	public static final List<String> TEMP_STUDENT_STATUS_CODES = Arrays.asList("TN", "RG");
 
 	private ModuleEnrolmentRepository moduleEnrolmentRepository;
 	private RegistrationPeriodService registrationPeriodService;

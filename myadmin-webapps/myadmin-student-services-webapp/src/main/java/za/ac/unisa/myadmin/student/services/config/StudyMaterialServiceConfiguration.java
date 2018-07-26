@@ -4,11 +4,13 @@ import org.apache.cxf.endpoint.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import za.ac.unisa.myadmin.registration.services.RegistrationPeriodService;
 import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfiguration;
 import za.ac.unisa.myadmin.studymaterial.integration.services.StudyMaterialWebServiceClient;
 import za.ac.unisa.myadmin.studymaterial.services.StudyMaterialService;
 import za.ac.unisa.myadmin.studymaterial.services.StudyMaterialServicesConstants;
 import za.ac.unisa.myadmin.studymaterial.services.decorators.StudyMaterialFilterActiveDecorator;
+import za.ac.unisa.myadmin.studymaterial.services.decorators.StudyMaterialSemesterValidationDecorator;
 import za.ac.unisa.myadmin.studymaterial.services.impls.StudyMaterialServiceImpl;
 import za.ac.unisa.myadmin.studymaterial.services.rest.impls.StudyMaterialRestServiceImpl;
 
@@ -32,17 +34,17 @@ public class StudyMaterialServiceConfiguration  extends AbstractServiceConfigura
 		return studyMaterialService;
 	}
 
-	@Bean("studyMaterialFilterActiveDecorator")
-	public StudyMaterialService studyMaterialFilterActiveDecorator(){
-		StudyMaterialFilterActiveDecorator studyMaterialFilterActiveDecorator = new StudyMaterialFilterActiveDecorator();
-		studyMaterialFilterActiveDecorator.setNextDecorator(studyMaterialService());
-		return studyMaterialFilterActiveDecorator;
-	}
-
 	@Bean(name = "studyMaterialServiceImplRestEndPoint")
 	public Server studyFeeQuotationServiceImplRestEndPoint() {
+		StudyMaterialFilterActiveDecorator studyMaterialFilterActiveDecorator = new StudyMaterialFilterActiveDecorator();
+		studyMaterialFilterActiveDecorator.setNextDecorator(studyMaterialService());
+
+		StudyMaterialSemesterValidationDecorator studyMaterialSemesterValidationDecorator = new StudyMaterialSemesterValidationDecorator();
+		studyMaterialSemesterValidationDecorator.setRegistrationPeriodService(getBean(RegistrationPeriodService.class));
+		studyMaterialSemesterValidationDecorator.setNextDecorator(studyMaterialFilterActiveDecorator);
+
 		StudyMaterialRestServiceImpl restServiceImpl = new StudyMaterialRestServiceImpl();
-		restServiceImpl.setNextDecorator(studyMaterialFilterActiveDecorator());
+		restServiceImpl.setNextDecorator(studyMaterialSemesterValidationDecorator);
 
 		return createRestEndpoint(restServiceImpl, "/rest/" + StudyMaterialServicesConstants.STUDY_MATERIAL_SRVICE_NAME);
 	}
