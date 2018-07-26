@@ -20,11 +20,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
-      <td><a [href]="studyMaterial.path" target="_blank"><img src="assets/images/adobe-pdf-icon.png" height="22" width="22"> {{studyMaterial.description}}</a></td>
-      <td>{{studyMaterial.filesize}}</td>
-      <td>{{studyMaterial.implementationDate | date: 'yyyy-MM-dd' }}</td>
-    </tr>
+    <div *ngIf="moduleStudyMaterialList?.length > 0">
+      <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
+        <td><a [href]="studyMaterial.path" target="_blank"><img src="assets/images/adobe-pdf-icon.png" height="22" width="22"> {{studyMaterial.description}}</a></td>
+        <td>{{studyMaterial.filesize}}</td>
+        <td>{{studyMaterial.implementationDate | date: 'yyyy-MM-dd' }}</td>
+      </tr>
+    </div>
+    <div *ngIf="moduleStudyMaterialList?.length == 0">
+      <p>
+        There is no Study Materials Available.
+      </p>
+    </div>
     </tbody>
   </table>
   <div class="form-group">
