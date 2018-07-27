@@ -8,6 +8,9 @@ import za.ac.unisa.myadmin.module.services.ModuleServicesConstants;
 import za.ac.unisa.myadmin.registration.services.RegistrationPeriodService;
 import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfiguration;
 import za.ac.unisa.myadmin.student.services.StudentAnnualService;
+import za.ac.unisa.myadmin.student.services.StudentService;
+import za.ac.unisa.myadmin.student.services.decorators.ModuleEnrolmentServiceComplianceDecorator;
+import za.ac.unisa.myadmin.student.services.decorators.ModuleEnrolmentServiceValidationDecorator;
 import za.ac.unisa.myadmin.student.services.impls.ModuleEnrolmentServiceImpl;
 import za.ac.unisa.myadmin.student.services.repositories.ModuleEnrolmentRepository;
 import za.ac.unisa.myadmin.student.services.rest.impls.ModuleEnrolmentRestServiceImpl;
@@ -17,11 +20,20 @@ public class ModuleEnrolmentServiceConfiguration extends AbstractServiceConfigur
 
 	@Bean(name = "moduleEnrolmentServiceImpl")
 	public ModuleEnrolmentService getModuleEnrolmentServiceImpl() {
+
 		ModuleEnrolmentServiceImpl service = new ModuleEnrolmentServiceImpl();
 		service.setModuleEnrolmentRepository(getBean(ModuleEnrolmentRepository.class));
 		service.setRegistrationPeriodService(getBean(RegistrationPeriodService.class));
 		service.setStudentAnnualService(getBean(StudentAnnualService.class));
-		return service;
+
+		ModuleEnrolmentServiceValidationDecorator moduleEnrolmentServiceValidationDecorator = new ModuleEnrolmentServiceValidationDecorator();
+		moduleEnrolmentServiceValidationDecorator.setNextDecorator(service);
+		moduleEnrolmentServiceValidationDecorator.setStudentService(getBean(StudentService.class));
+
+		ModuleEnrolmentServiceComplianceDecorator moduleEnrolmentServiceComplianceDecorator = new ModuleEnrolmentServiceComplianceDecorator();
+		moduleEnrolmentServiceComplianceDecorator.setNextDecorator(moduleEnrolmentServiceValidationDecorator);
+
+		return moduleEnrolmentServiceComplianceDecorator;
 	}
 
 
