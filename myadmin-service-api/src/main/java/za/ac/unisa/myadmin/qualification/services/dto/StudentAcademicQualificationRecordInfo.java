@@ -8,6 +8,8 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 
 	private static final long serialVersionUID = 1263696536604710816L;
 
+	private Integer studentNumber;
+
 	private String qualificationCode;
 
 	private Date firstRegistrationDate;
@@ -23,6 +25,14 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 	private boolean auditFlag;
 
 	public StudentAcademicQualificationRecordInfo() {
+	}
+
+	public Integer getStudentNumber() {
+		return studentNumber;
+	}
+
+	public void setStudentNumber(Integer studentNumber) {
+		this.studentNumber = studentNumber;
 	}
 
 	public String getQualificationCode() {

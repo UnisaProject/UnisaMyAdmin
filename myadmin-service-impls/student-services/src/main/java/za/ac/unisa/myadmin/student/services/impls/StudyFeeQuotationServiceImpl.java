@@ -137,7 +137,7 @@ public class StudyFeeQuotationServiceImpl implements StudyFeeQuotationService {
 			responseQuotation.setMessage(message);
 		}
 
-		for (int i = 0; i < (studyFeeQuotationProxy.getOutGroupCount() - 1); i++) {
+		for (int i = 0; i <= (studyFeeQuotationProxy.getOutGroupCount() - 1); i++) {
 			StudyUnitInfo studyUnitInfo = new StudyUnitInfo();
 			studyUnitInfo.setCode(studyFeeQuotationProxy.getOutGInternetWsStudyUnitCode(i));
 			studyUnitInfo.setDescription(studyFeeQuotationProxy.getOutGInternetWsStudyUnitEngShortDescription(i));
