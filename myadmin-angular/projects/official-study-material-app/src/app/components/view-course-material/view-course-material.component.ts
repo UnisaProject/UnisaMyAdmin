@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {StudyMaterialDetailInfo, StudyMaterialService} from "myadmin-lib";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'unisa-view-course-material',
@@ -13,13 +14,15 @@ export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
   academicYear:number;
   moduleCode:string;
   semesterCode:string;
+  listDate = '';
 
   private routeParamsSubscription:Subscription;
 
   public moduleStudyMaterialList:StudyMaterialDetailInfo[] = [];
 
   constructor(private route:ActivatedRoute,
-              private studyMaterialService: StudyMaterialService) {
+              private studyMaterialService: StudyMaterialService,
+              private datePipe: DatePipe) {
 
   }
 
@@ -45,6 +48,8 @@ export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.listDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
     this.routeParamsSubscription = this.route.params.subscribe((params) =>{
       const lmsSiteId = params['lmsCourseId'];
       this.splitLmsCourseId(lmsSiteId);

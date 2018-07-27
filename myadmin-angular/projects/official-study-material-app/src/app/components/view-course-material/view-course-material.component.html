@@ -10,7 +10,15 @@
     </div>
   </div>
 
-  <table class="table table-sm table-striped table-hover">
+
+  <div class="mb-3">
+    <b>List Date:&nbsp;</b><span>{{listDate}}</span>
+  </div>
+  <div class="alert alert-danger" *ngIf="moduleStudyMaterialList.length === 0">
+    No study material for this module is listed here. Other options for study material include the Learning Units
+    or Additional Resources tools.
+  </div>
+  <table class="table table-sm table-striped table-hover" *ngIf="moduleStudyMaterialList.length > 0">>
     <thead>
     <tr>
       <th scope="col">Description</th>

@@ -71,18 +71,15 @@ public class StudyMaterialWebServiceClient {
 		}
 		this.serviceTrustAllSsl = serviceTrustAllSsl;
 	}
-
-	//private EmailService emailService;
-
 	private static int convertSemesterStringToId(String semester){
 		if (semester.equals("S1")) {
-			semester = "1";
+			return 1;
 		} else if (semester.equals("S2")) {
-			semester = "2";
+			return 2;
 		} else if (semester.equals("Y1")) {
-			semester = "0";
+			return 0;
 		} else if (semester.equals("Y2")) {
-			semester = "6";
+			return 6;
 		}
 		return Integer.parseInt(semester);
 	}
