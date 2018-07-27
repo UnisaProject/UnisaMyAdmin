@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface GenericCodeRepository extends JpaRepository<GenericCodeEntity, GenericCodeEntityId> {
 
+	public List<GenericCodeEntity> findByGenericCategoryCode(Integer genericCategoryCode);
+
 	public List<GenericCodeEntity> findByGenericCategoryCodeOrderByInUse(Integer genericCategoryCode);
 
 	public List<GenericCodeEntity> findByGenericCategoryCodeOrderByCode(Integer genericCategoryCode);

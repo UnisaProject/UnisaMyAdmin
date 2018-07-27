@@ -1,5 +1,6 @@
 package za.ac.unisa.myadmin.student.services.jpa.models;
 
+import za.ac.unisa.myadmin.generic.dto.GenericCodeInfo;
 import za.ac.unisa.myadmin.services.utilities.YesOrNoBooleanConverter;
 
 import javax.persistence.Column;
@@ -40,6 +41,17 @@ public class GenericCodeEntity implements Serializable {
 	private String info;
 
 	public GenericCodeEntity() {
+	}
+
+	public GenericCodeInfo toDto() {
+		GenericCodeInfo info = new GenericCodeInfo();
+		info.setCode(this.code);
+		info.setGenericCategoryCode(this.genericCategoryCode);
+		info.setEnglishDescription(this.englishDescription);
+		info.setAfrikaansDescription(this.afrikaansDescription);
+		info.setInUse(this.inUse);
+		info.setInfo(this.info);
+		return info;
 	}
 
 	public GenericCodeEntityId getGenericCodeEntityId() {

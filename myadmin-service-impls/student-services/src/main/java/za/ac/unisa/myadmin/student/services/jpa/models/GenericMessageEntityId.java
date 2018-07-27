@@ -18,6 +18,11 @@ public class GenericMessageEntityId implements Serializable {
 	public GenericMessageEntityId() {
 	}
 
+	public GenericMessageEntityId(String messageCode, String program) {
+		this.messageCode = messageCode;
+		this.program = program;
+	}
+
 	public String getMessageCode() {
 		return this.messageCode;
 	}
