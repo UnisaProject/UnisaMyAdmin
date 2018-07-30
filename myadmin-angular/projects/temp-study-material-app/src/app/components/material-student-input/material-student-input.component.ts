@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
-import {StudentInfo} from 'myadmin-lib';
 import {StudyMaterialFormService, StudyMaterialService} from '../../services';
-import {StudentModuleEnrolmentInfo} from '../../info-objects';
+import {ModuleEnrolmentInfo} from '../../info-objects';
 
 @Component({
   selector: 'unisa-material-student-input',
@@ -51,7 +50,7 @@ export class MaterialStudentInputComponent implements OnInit {
   onSubmit() {
     this.studyMaterialFormService.studentInfo = {...this.studentInputForm.value};
     this.blockUI.start("Loading courses...");
-    this.studyMaterialService.requestStudentModuleEnrolments(this.studyMaterialFormService.studentInfo).subscribe((moduleEnrolments:StudentModuleEnrolmentInfo[])=>{
+    this.studyMaterialService.requestStudentModuleEnrolments(this.studyMaterialFormService.studentInfo).subscribe((moduleEnrolments:ModuleEnrolmentInfo[])=>{
       // Copy the data to the service
      this.studyMaterialFormService.studentModuleEnrolmentList = [...moduleEnrolments];
      this.router.navigateByUrl('/courses');

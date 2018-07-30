@@ -1,15 +1,15 @@
 import {Injectable} from "@angular/core";
 import {StudentInfo} from "myadmin-lib";
-import {StudentModuleEnrolmentInfo, StudyMaterialDetailInfo} from "./../info-objects/";
+import {ModuleEnrolmentInfo, StudyMaterialDetailInfo} from "./../info-objects/";
 
 @Injectable()
 export class StudyMaterialFormService {
 
   studentInfo:StudentInfo = null;
 
-  studentModuleEnrolmentList:StudentModuleEnrolmentInfo[] = null;
+  studentModuleEnrolmentList:ModuleEnrolmentInfo[] = null;
 
-  selectedModule:StudentModuleEnrolmentInfo = null;
+  selectedModule:ModuleEnrolmentInfo = null;
 
   studentModuleMaterialList:StudyMaterialDetailInfo[] = null;
 

@@ -1,2 +1,2 @@
-export * from './student-module-enrolment-info';
+export * from './module-enrolment-info';
 export * from './study-material-detail-info';
