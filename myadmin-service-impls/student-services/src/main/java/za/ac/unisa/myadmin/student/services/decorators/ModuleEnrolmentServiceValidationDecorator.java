@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import Srcds01h.Abean.Srcds01sMntStudContactDetail;
-import org.springframework.util.StringUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -64,13 +64,13 @@ public class ModuleEnrolmentServiceValidationDecorator extends ModuleEnrolmentSe
 		studentContactDetailProxy.execute();
 		String errorMsg = studentContactDetailProxy.getOutCsfStringsString500();
 
-		if (StringUtils.hasText(errorMsg)) {
+		if (StringUtils.isNotEmpty(errorMsg)) {
 			throw new OperationFailedException(errorMsg);
 		}
 
 		//Trim leading and trailing whitespace
-		proxyStudent.setSurname(StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentSurname()));
-		proxyStudent.setFirstNames(StringUtils.trimWhitespace(studentContactDetailProxy.getOutWsStudentFirstNames()));
+		proxyStudent.setSurname(StringUtils.trim(studentContactDetailProxy.getOutWsStudentSurname()));
+		proxyStudent.setFirstNames(StringUtils.trim(studentContactDetailProxy.getOutWsStudentFirstNames()));
 		try {
 			proxyStudent.setDateOfBirth(studentContactDetailProxy.getOutWsStudentBirthDate().getTime());
 		} catch (NullPointerException e) {
