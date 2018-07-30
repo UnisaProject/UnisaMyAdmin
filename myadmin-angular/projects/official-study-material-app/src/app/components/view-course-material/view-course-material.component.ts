@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {StudyMaterialDetailInfo, StudyMaterialService} from "myadmin-lib";
 import {DatePipe} from "@angular/common";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'unisa-view-course-material',
@@ -10,6 +11,12 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./view-course-material.component.scss']
 })
 export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
+
+  /**
+   * Reference to blockUI
+   */
+  @BlockUI()
+  private blockUI: NgBlockUI;
 
   academicYear:number;
   moduleCode:string;
@@ -31,8 +38,11 @@ export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
       this.moduleCode,
       this.academicYear,
       this.semesterCode)
-      .subscribe((studyMaterial) =>{
+      .subscribe((studyMaterial) => {
         this.moduleStudyMaterialList = studyMaterial;
+        this.blockUI.stop();
+      }, () => {
+        this.blockUI.stop();
       });
   }
 
@@ -48,6 +58,7 @@ export class ViewCourseMaterialComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.blockUI.start("Loading study material...");
     this.listDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
     this.routeParamsSubscription = this.route.params.subscribe((params) =>{

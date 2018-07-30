@@ -1,7 +1,5 @@
 import {Injectable} from "@angular/core";
-import {StudentInfo} from "myadmin-lib";
-import {ModuleEnrolmentInfo, StudyMaterialDetailInfo} from "myadmin-lib";
-
+import {StudentInfo, StudyMaterialDetailInfo, ModuleEnrolmentInfo} from "myadmin-lib";
 @Injectable()
 export class StudyMaterialFormService {
 
