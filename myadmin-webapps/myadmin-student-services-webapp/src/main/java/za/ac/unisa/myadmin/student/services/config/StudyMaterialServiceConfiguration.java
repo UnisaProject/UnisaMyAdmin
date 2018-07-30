@@ -40,7 +40,7 @@ public class StudyMaterialServiceConfiguration  extends AbstractServiceConfigura
 	}
 
 	@Bean(name = "studyMaterialServiceImplRestEndPoint")
-	public Server studyFeeQuotationServiceImplRestEndPoint() {
+	public Server studyMaterialServiceImplRestEndPoint() {
 		StudyMaterialRestServiceImpl restServiceImpl = new StudyMaterialRestServiceImpl();
 		restServiceImpl.setNextDecorator(studyMaterialFilterActiveDecorator());
 
