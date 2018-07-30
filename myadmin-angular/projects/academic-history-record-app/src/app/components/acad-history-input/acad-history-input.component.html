@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5>Academic Record</h5>
+
+    </div>
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="studentInputForm">
+    <div class="row">
+      <div class="col">
+        <p>Please enter a valid UNISA student number</p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentNumber" class="col-sm-2 col-form-label font-weight-bold">Student Number</label>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          class="form-control"
+          id="studentNumber"
+          name="studentNumber"
+          formControlName="studentNumber"
+          required >
+      </div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <button type="submit" class="btn btn-icon btn-primary" [disabled]="studentInputForm.invalid">Display</button>
+    </div>
+  </form>
+</div>

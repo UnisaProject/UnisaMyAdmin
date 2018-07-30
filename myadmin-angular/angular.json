@@ -981,6 +981,126 @@
           }
         }
       }
+    },
+    "academic-history-record-app": {
+      "root": "projects/academic-history-record-app/",
+      "sourceRoot": "projects/academic-history-record-app/src",
+      "projectType": "application",
+      "prefix": "unisa",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/academic-history-record-app",
+            "index": "projects/academic-history-record-app/src/index.html",
+            "main": "projects/academic-history-record-app/src/main.ts",
+            "polyfills": "projects/academic-history-record-app/src/polyfills.ts",
+            "tsConfig": "projects/academic-history-record-app/tsconfig.app.json",
+            "assets": [
+              "projects/academic-history-record-app/src/favicon.ico",
+              "projects/academic-history-record-app/src/assets"
+            ],
+            "styles": [
+              "projects/academic-history-record-app/src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-toaster/toaster.css",
+              "node_modules/@clr/icons/clr-icons.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/academic-history-record-app/src/environments/environment.ts",
+                  "with": "projects/academic-history-record-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "baseHref": "/academic-record-app/"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "academic-history-record-app:build",
+            "baseHref": "/academic-record-app/"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "academic-history-record-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "academic-history-record-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/academic-history-record-app/src/test.ts",
+            "polyfills": "projects/academic-history-record-app/src/polyfills.ts",
+            "tsConfig": "projects/academic-history-record-app/tsconfig.spec.json",
+            "karmaConfig": "projects/academic-history-record-app/karma.conf.js",
+            "styles": [
+              "projects/academic-history-record-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/academic-history-record-app/src/favicon.ico",
+              "projects/academic-history-record-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/academic-history-record-app/tsconfig.app.json",
+              "projects/academic-history-record-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "myadmin-lib"
