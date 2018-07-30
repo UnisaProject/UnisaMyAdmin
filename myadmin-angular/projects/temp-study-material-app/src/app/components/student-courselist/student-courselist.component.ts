@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {Router} from "@angular/router";
-import {StudyMaterialFormService, StudyMaterialService} from '../../services';
-import {StudentInfo} from 'myadmin-lib';
-import {ModuleEnrolmentInfo} from '../../info-objects';
+import {StudyMaterialFormService} from '../../services';
+import {StudentInfo, StudyMaterialService, ModuleEnrolmentInfo} from 'myadmin-lib';
 
 @Component({
   selector: 'unisa-student-courselist',

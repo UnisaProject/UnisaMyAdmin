@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5>Study Materials for {{moduleCode}}-{{academicYear}}-{{semesterCode}}</h5>
+      <br/>
+      <p>To download a study material file to your PC, click on the description to open the document in your browser.
+        Once the file has opened in a new window, use the Save a Copy option of your Adobe Reader to save the file to
+        your PC.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="mb-3">
+    <b>List Date:&nbsp;</b><span>{{listDate}}</span>
+  </div>
+  <div class="alert alert-danger" *ngIf="moduleStudyMaterialList.length === 0">
+    No study material for this module is listed here. Other options for study material include the Learning Units
+    or Additional Resources tools.
+  </div>
+  <table class="table table-sm table-striped table-hover" *ngIf="moduleStudyMaterialList.length > 0">>
+    <thead>
+    <tr>
+      <th scope="col">Description</th>
+      <th scope="col">File Size</th>
+      <th scope="col">Available Since</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let studyMaterial of moduleStudyMaterialList">
+      <td><a [href]="studyMaterial.path" target="_blank"><img src="assets/images/adobe-pdf-icon.png" height="22" width="22"> {{studyMaterial.description}}</a></td>
+      <td>{{studyMaterial.filesize}}</td>
+      <td>{{studyMaterial.implementationDate | date: 'yyyy-MM-dd' }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

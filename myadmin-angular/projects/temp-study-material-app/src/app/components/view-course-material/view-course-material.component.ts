@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {StudyMaterialFormService, StudyMaterialService} from "../../services/";
-import {StudyMaterialDetailInfo} from "../../info-objects/";
+import {StudyMaterialFormService} from "../../services/";
 import {ActivatedRoute, Router} from "@angular/router";
 import "rxjs/add/operator/map";
-import {StudentInfo} from "myadmin-lib";
+import {StudentInfo, StudyMaterialService, StudyMaterialDetailInfo} from "myadmin-lib";
 import {Subscription} from "rxjs";
 
 @Component({

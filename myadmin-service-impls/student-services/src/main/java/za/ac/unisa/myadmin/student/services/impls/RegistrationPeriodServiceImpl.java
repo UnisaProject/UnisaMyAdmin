@@ -9,6 +9,7 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.registration.services.RegistrationPeriodService;
 import za.ac.unisa.myadmin.registration.services.dto.RegistrationPeriodInfo;
+import za.ac.unisa.myadmin.student.services.jpa.models.RegistrationPeriodEntity;
 import za.ac.unisa.myadmin.student.services.repositories.RegistrationPeriodRepository;
 
 public class RegistrationPeriodServiceImpl implements RegistrationPeriodService {
@@ -25,7 +26,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByAcademicYear(year)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -38,7 +39,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findBySemesterPeriod(semester)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -51,7 +52,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByType(type)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -64,7 +65,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByAcademicYearAndSemesterPeriod(year, semester)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -77,7 +78,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByAcademicYearAndType(year, type)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -90,7 +91,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findBySemesterPeriodAndType(semester, type)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -103,7 +104,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByAcademicYearAndSemesterPeriodAndType(year, semester, type)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -117,7 +118,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 			return registrationPeriodRepository
 					.findByAcademicYearAndEffectiveDateAfterAndExpirationDateBefore(year, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -131,7 +132,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 			return registrationPeriodRepository
 					.findBySemesterPeriodAndEffectiveDateAfterAndExpirationDateBefore(semester, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -144,7 +145,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository.findByTypeAndEffectiveDateAfterAndExpirationDateBefore(type, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -160,7 +161,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 					.findByAcademicYearAndSemesterPeriodAndEffectiveDateAfterAndExpirationDateBefore(year, semester,
 							date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -174,7 +175,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 			return registrationPeriodRepository
 					.findByAcademicYearAndTypeAndEffectiveDateAfterAndExpirationDateBefore(year, type, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -189,7 +190,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 			return registrationPeriodRepository
 					.findBySemesterPeriodAndTypeAndEffectiveDateAfterAndExpirationDateBefore(semester, type, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -205,7 +206,7 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 					.findByAcademicYearAndSemesterPeriodAndTypeAndEffectiveDateAfterAndExpirationDateBefore(year,
 							semester, type, date, date)
 					.stream()
-					.map(entity -> entity.toDto())
+					.map(RegistrationPeriodEntity::toDto)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
@@ -219,7 +220,9 @@ public class RegistrationPeriodServiceImpl implements RegistrationPeriodService 
 		try {
 			return registrationPeriodRepository
 					.findByAcademicYearAndSemesterPeriodAndTypeAndExpirationDateBefore(year, semester, type, date)
-					.stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+					.stream()
+					.map(RegistrationPeriodEntity::toDto)
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new OperationFailedException(e);
 		}
