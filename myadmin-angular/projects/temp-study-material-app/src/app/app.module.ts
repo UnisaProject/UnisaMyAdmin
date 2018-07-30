@@ -11,8 +11,8 @@ import {AppComponent} from "./app.component";
 import {MaterialStudentInputComponent} from "./components/material-student-input/material-student-input.component";
 import {StudentCourselistComponent} from "./components/student-courselist/student-courselist.component";
 import {ViewCourseMaterialComponent} from "./components/view-course-material/view-course-material.component";
-import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
-import {StudyMaterialFormService, StudyMaterialService} from "./services";
+import {MyadminLibModule, HttpErrorInterceptor, StudyMaterialService} from "myadmin-lib";
+import {StudyMaterialFormService } from "./services";
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}

@@ -10,7 +10,7 @@ export {StudyMaterialService} from './lib/services/study-material.service';
 export {ErrorInfo} from './lib/info-objects/error-info';
 export {DescriptionInfo} from './lib/info-objects/description-info';
 export {StudentInfo} from './lib/info-objects/student-info';
-export {StudentModuleEnrolmentInfo} from './lib/info-objects/student-module-enrolment-info';
+export {ModuleEnrolmentInfo} from './lib/info-objects/module-enrolment-info';
 export {StudyMaterialDetailInfo} from './lib/info-objects/study-material-detail-info';
 
 // Pipes

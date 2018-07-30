@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
-import {StudyMaterialFormService, StudyMaterialService} from 'myadmin-lib';
-import {ModuleEnrolmentInfo} from '../../info-objects';
+import {StudyMaterialService, ModuleEnrolmentInfo} from 'myadmin-lib';
+import {StudyMaterialFormService} from "../../services";
 
 @Component({
   selector: 'unisa-material-student-input',
