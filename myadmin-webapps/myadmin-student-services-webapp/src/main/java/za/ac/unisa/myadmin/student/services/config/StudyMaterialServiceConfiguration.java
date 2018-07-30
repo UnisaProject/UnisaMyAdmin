@@ -38,7 +38,7 @@ public class StudyMaterialServiceConfiguration  extends AbstractServiceConfigura
 	}
 
 	@Bean(name = "studyMaterialServiceImplRestEndPoint")
-	public Server studyFeeQuotationServiceImplRestEndPoint() {
+	public Server studyMaterialServiceImplRestEndPoint() {
 		StudyMaterialFilterActiveDecorator studyMaterialFilterActiveDecorator = new StudyMaterialFilterActiveDecorator();
 		studyMaterialFilterActiveDecorator.setMissingContentEmail(studyMaterialMissingEmail);
 		studyMaterialFilterActiveDecorator.setNextDecorator(studyMaterialService());

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {Router} from "@angular/router";
 import {StudyMaterialFormService} from '../../services';
-import {StudentInfo, StudyMaterialService, StudentModuleEnrolmentInfo} from 'myadmin-lib';
+import {StudentInfo, StudyMaterialService, ModuleEnrolmentInfo} from 'myadmin-lib';
 
 @Component({
   selector: 'unisa-student-courselist',
@@ -17,7 +17,7 @@ export class StudentCourselistComponent implements OnInit {
 
   public studentInfo: StudentInfo;
 
-  public studentModules: StudentModuleEnrolmentInfo[] = [];
+  public studentModules: ModuleEnrolmentInfo[] = [];
 
   @BlockUI()
   private blockUI: NgBlockUI;
@@ -39,7 +39,7 @@ export class StudentCourselistComponent implements OnInit {
 
   }
 
-  viewMaterial(studentModule: StudentModuleEnrolmentInfo) {
+  viewMaterial(studentModule: ModuleEnrolmentInfo) {
     this.router.navigate(['/viewCourse', studentModule.studyUnitCode, studentModule.academicYear, studentModule.semesterPeriod]);
   }
 

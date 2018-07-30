@@ -1,4 +1,4 @@
-export interface StudentModuleEnrolmentInfo {
+export interface ModuleEnrolmentInfo {
 
   studentNumber : number;
 

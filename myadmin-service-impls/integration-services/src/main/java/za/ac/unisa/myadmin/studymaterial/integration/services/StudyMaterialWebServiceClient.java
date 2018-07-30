@@ -111,7 +111,7 @@ public class StudyMaterialWebServiceClient {
 			LOG.warn("Exception while trying to execute request", e);
 			if (response != null && response.getStatus() != 200) {
 				LOG.error("Failed : HTTP error code : " + response.getStatus());
-				throw new RuntimeException("Please note that UNISA study materials are not currently available for viewing. Access to the materials should be restored within an hour. UNISA apologizes for any inconvenience caused.");
+				throw new OperationFailedException("Please note that UNISA study materials are not currently available for viewing. Access to the materials should be restored within an hour. UNISA apologizes for any inconvenience caused.");
 			}
 		} finally {
 			if (response != null) {
