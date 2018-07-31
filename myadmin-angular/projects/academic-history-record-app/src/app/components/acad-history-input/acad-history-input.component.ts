@@ -46,11 +46,12 @@ export class AcadHistoryInputComponent implements OnInit {
 
   onSubmit(){
     this.blockUI.start("Loading information...");
-    this.academicRecordService.processStudentInput(this.studentInputForm.value.studentNumber).subscribe((academicRecordInfo:any)=>{
-        this.router.navigateByUrl('/academicRecord')
-    }, (error)=>{
-      this.blockUI.stop();
-    });
+    this.router.navigateByUrl('/academicRecord');
+    // this.academicRecordService.processStudentInput(this.studentInputForm.value.studentNumber).subscribe((academicRecordInfo:any)=>{
+    //     this.router.navigateByUrl('/academicRecord')
+    // }, (error)=>{
+    //   this.blockUI.stop();
+    // });
   }
 
 }
