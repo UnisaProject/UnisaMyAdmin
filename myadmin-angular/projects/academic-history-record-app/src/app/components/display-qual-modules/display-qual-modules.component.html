@@ -1,3 +1,78 @@
-<p>
-  display-qual-modules works!
-</p>
+<div class="container">
+  <div *ngIf="!studentExists()">
+    <p>An unexpected error has occurred.Please logout, close the browser and log in again</p>
+  </div>
+  <div *ngIf="studentExists()">
+    <div class="row">
+      <div class="col">
+        <h5>Academic Record</h5>
+        <div *ngIf="creditsOnly == 'Y'">
+          <h5>Credits Only for {{qualLongDescription}}</h5>
+        </div>
+        <div *ngIf="creditsOnly == 'N'">
+          <h5>All Results for {{qualLongDescription}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>This is not an official statement of your results.<br>
+        Apply to UNISA Contact centre for an official academic record.</p>
+      </div>
+    </div>
+    <div *ngIf="!isStudent">
+      <br>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Student Number</p>
+        </div>
+        <div class="col-sm-6">{{ studentInfo.studentNumber }}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="font-weight-bold">Name</p>
+        </div>
+        <div class="col-sm-6">{{ studentInfo?.name }}</div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="form-group row  ml-2">
+      <label for="creditOnly" class="col-sm-2 col-form-label font-weight-bold">View</label>
+      <div class="col-sm-3">
+        <select
+          class="form-control"
+          id="creditOnly"
+          name="creditOnly"
+          formControlName="creditOnly"
+          [compareWith]="creditOnly">
+          <option value="N">Display all study units</option>
+          <option value="Y">Display credits only</option>
+        </select>
+      </div>
+    </div>
+    <table class="table table-sm table-striped table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Exam Date</th>
+        <th scope="col">Study Unit</th>
+        <th scope="col">Description</th>
+        <th scope="col">Mark</th>
+        <th scope="col">Result</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let moduleRecord of academicModuleRecords">
+        <td>{{ moduleRecord.examDate | date: 'dd-mm-yyyy' }}</td>
+        <td>{{ moduleRecord.studyUnitCode }}</td>
+        <td>{{ moduleRecord.studyUnitDescription }}</td>
+        <td>{{ moduleRecord.mark }}</td>
+        <td>{{ moduleRecord.resultTypeDescription }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-icon btn-primary" (click)="cancel()"> Cancel</button>
+  </div>
+</div>
