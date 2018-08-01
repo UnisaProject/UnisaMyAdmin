@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
-import {StudentInfo}from 'myadmin-lib';
+import {Router} from "@angular/router";
+import {StudentInfo, StudentService}from 'myadmin-lib';
 import {AcademicModuleResultInfo,AcademicQualResultInfo} from '../../info-objects';
 
 @Component({
@@ -23,13 +24,24 @@ export class DisplayQualModulesComponent implements OnInit {
   @BlockUI()
   private blockUI: NgBlockUI;
 
-  constructor() { }
+  constructor(private router :Router ) { }
 
   ngOnInit() {
     this.blockUI.stop();
   }
 
   studentExists():boolean {
-    return this.studentInfo ==null;
+    return this.studentInfo == null;
+  }
+
+  canEmailResults(){
+    return true;
+  }
+
+  emailResults(sendMarks :boolean){
+    return true;
+  }
+  cancel(){
+    this.router.navigateByUrl('/acadHistoryInput');
   }
 }

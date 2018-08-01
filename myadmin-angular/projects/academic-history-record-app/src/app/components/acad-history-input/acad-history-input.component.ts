@@ -22,8 +22,8 @@ export class AcadHistoryInputComponent implements OnInit {
 
   constructor(private router:Router,
               private formBuilder: FormBuilder,
-              private academicRecordService: AcademicRecordService,
-              private academicRecordModuleService : AcademicRecordModuleService) {
+              private academicRecordService: AcademicRecordService
+             ) {
     this.initForm();
   }
 
@@ -47,7 +47,7 @@ export class AcadHistoryInputComponent implements OnInit {
   onSubmit(){
     this.blockUI.start("Loading information...");
     this.router.navigateByUrl('/academicRecord');
-    // this.academicRecordService.processStudentInput(this.studentInputForm.value.studentNumber).subscribe((academicRecordInfo:any)=>{
+    // this.academicRecordService.getStudentAcademicQualificationResults(this.studentInputForm.value.studentNumber).subscribe((academicRecordInfo:any)=>{
     //     this.router.navigateByUrl('/academicRecord')
     // }, (error)=>{
     //   this.blockUI.stop();

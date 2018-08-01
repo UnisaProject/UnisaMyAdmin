@@ -5,6 +5,7 @@ import {OrderByPipe} from "./pipes/orderby.pipe";
 import {ShortDescriptionPipe} from "./pipes/short-description.pipe";
 import {DescriptionPipe} from "./pipes/description.pipe";
 import {StudyMaterialService} from "./services/study-material.service";
+import {StudentService} from "./services/student.service";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {StudyMaterialService} from "./services/study-material.service";
   providers:[
     ToasterService,
     ToasterNotificationService,
-    StudyMaterialService
+    StudyMaterialService,
+    StudentService
   ]
 })
 export class MyadminLibModule { }

@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
-import {ToasterNotificationService, StudentInfo} from "myadmin-lib";
-import {SearchCriteriaService, StudentService} from "../../services";
+import {ToasterNotificationService, StudentInfo, StudentService} from "myadmin-lib";
+import {SearchCriteriaService} from "../../services/search-criteria.service";
 
 @Component({
   selector: 'unisa-forgot-student-search',

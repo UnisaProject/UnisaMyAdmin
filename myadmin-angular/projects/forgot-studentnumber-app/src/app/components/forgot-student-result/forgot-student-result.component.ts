@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchCriteriaService } from '../../services';
+import {SearchCriteriaService} from "../../services/search-criteria.service";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {Router} from "@angular/router";
 import {StudentInfo} from "myadmin-lib";

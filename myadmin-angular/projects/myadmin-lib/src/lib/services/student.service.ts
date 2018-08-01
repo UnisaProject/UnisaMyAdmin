@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {StudentInfo} from "myadmin-lib";
+import {StudentInfo} from "../info-objects";
 
 @Injectable()
 export class StudentService {
-//This service may eventually move up to the myadmin-lib package.
+
   constructor(private http:HttpClient) {
   }
 
