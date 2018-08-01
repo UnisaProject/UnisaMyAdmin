@@ -5,6 +5,7 @@
 import {StudyMaterialService} from "./lib/services/study-material.service";
 export {ToasterNotificationService} from './lib/services/toaster-notification.service';
 export {StudyMaterialService} from './lib/services/study-material.service';
+export {StudentService} from './lib/services/student.service';
 
 // Info objects
 export {ErrorInfo} from './lib/info-objects/error-info';

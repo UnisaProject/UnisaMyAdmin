@@ -14,13 +14,14 @@ import { DisplayQualModulesComponent } from './components/display-qual-modules/d
 
 import {AcademicRecordService} from "./services/academic-record.service";
 import {AcademicRecordModuleService} from "./services/academic-record-module.service";
+import {SearchCriteriaService} from "./services/search-criteria.service";
 
 import '@webcomponents/custom-elements';
 import '@clr/icons';
 import '@clr/icons/shapes/all-shapes';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {MyadminLibModule, HttpErrorInterceptor} from "myadmin-lib";
+import {MyadminLibModule, HttpErrorInterceptor, StudentService} from "myadmin-lib";
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -43,7 +44,13 @@ export const HttpInterceptorProviders = [
     ReactiveFormsModule,
     BlockUIModule.forRoot()
   ],
-  providers: [AcademicRecordService, AcademicRecordModuleService, HttpInterceptorProviders],
+  providers: [
+    SearchCriteriaService,
+    AcademicRecordService,
+    AcademicRecordModuleService,
+    StudentService,
+    HttpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

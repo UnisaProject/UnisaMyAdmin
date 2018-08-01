@@ -1,4 +1,14 @@
 <div class="container">
+  <div *ngIf="canEmailResults()">
+    <div class="form-group">
+      <button type="button" class="btn btn-icon btn-secondary" (click)="emailResults(true)">Email Academic Record (with marks)</button>
+      <button type="button" class="btn btn-icon btn-secondary ml-2" (click)="emailResults(false)">Email Academic Record (without marks)</button>
+    </div>
+  </div>
+  <div *ngIf="!canEmailResults()">
+    <p>The Academic Record request via email is temporary unavailable.</p>
+  </div>
+
   <div *ngIf="!studentExists()">
     <p>An unexpected error has occurred.Please logout, close the browser and log in again</p>
   </div>
@@ -26,7 +36,7 @@
         <div class="col-sm-2">
           <p class="font-weight-bold">Student Number</p>
         </div>
-        <div class="col-sm-6">{{ studentInfo.studentNumber }}</div>
+        <div class="col-sm-6">{{ studentInfo?.studentNumber }}</div>
       </div>
       <div class="row">
         <div class="col-sm-2">
@@ -43,9 +53,9 @@
         <select
           class="form-control"
           id="creditOnly"
-          name="creditOnly"
-          formControlName="creditOnly"
-          [compareWith]="creditOnly">
+          name="creditOnly">
+          <!--formControlName="creditOnly"-->
+          <!--[compareWith]="creditOnly">-->
           <option value="N">Display all study units</option>
           <option value="Y">Display credits only</option>
         </select>
