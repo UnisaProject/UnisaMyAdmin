@@ -147,7 +147,7 @@ public class AcademicModuleRecordServiceImpl implements AcademicModuleRecordServ
 			} else {
 				studyUnitRecord.setMark(Short.toString(opList.getOutGAcademicRecordStudyUnitFinalMark(i)));
 			}
-			studyUnitRecord.setResultTypeDescr(opList.getOutGStudyUnitResultTypeEngDescription(i));
+			studyUnitRecord.setResultTypeDescription(opList.getOutGStudyUnitResultTypeEngDescription(i));
 			records.add(studyUnitRecord);
 		}
 	}

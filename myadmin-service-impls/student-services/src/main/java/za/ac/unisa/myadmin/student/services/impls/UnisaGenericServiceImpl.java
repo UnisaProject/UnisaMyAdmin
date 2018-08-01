@@ -1,6 +1,8 @@
 package za.ac.unisa.myadmin.student.services.impls;
 
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
+import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
+import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.generic.dto.GenericCodeInfo;
 import za.ac.unisa.myadmin.generic.dto.GenericMessageInfo;
@@ -33,7 +35,7 @@ public class UnisaGenericServiceImpl implements UnisaGenericService {
 	}
 
 	@Override
-	public List<GenericCodeInfo> getGenericCodesByCategoryOrdered(Integer genericCategoryCode, String orderBy) throws OperationFailedException {
+	public List<GenericCodeInfo> getGenericCodesByCategoryOrdered(Integer genericCategoryCode, String orderBy) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		List<GenericCodeEntity> entity;
 		try {
 			switch (orderBy) {
@@ -62,7 +64,7 @@ public class UnisaGenericServiceImpl implements UnisaGenericService {
 	}
 
 	@Override
-	public GenericMessageInfo getGenericMessageById(String messageCode, String program) throws DoesNotExistException {
+	public GenericMessageInfo getGenericMessageById(String messageCode, String program) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		GenericMessageEntityId entityId = new GenericMessageEntityId(messageCode, program);
 		Optional<GenericMessageEntity> entity = genericMessageRepository.findById(entityId);
 		if (entity.isPresent()) {

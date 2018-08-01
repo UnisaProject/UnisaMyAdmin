@@ -2,6 +2,8 @@ package za.ac.unisa.myadmin.student.services.jpa.models;
 
 import za.ac.unisa.myadmin.services.utilities.YesOrNoBooleanConverter;
 
+import za.ac.unisa.myadmin.contact.services.dto.ContactInfo;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.EmbeddedId;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 
 /**
  * The persistent class for the ADRPH database table.
+ * Which is just phone and email.
  */
 @Entity
 @Table(name = "ADRPH")
@@ -54,6 +57,20 @@ public class ContactEntity implements Serializable {
 	private String workNumber;
 
 	public ContactEntity() {
+	}
+
+	public ContactInfo toDto() {
+		ContactInfo info = new ContactInfo();
+		info.setReferenceNumber(this.referenceNumber);
+		info.setAddressCategoryCode(this.addressCategoryCode);
+		info.setCellNumber(this.cellNumber);
+		info.setCellPhoneVerified(this.cellPhoneVerified);
+		info.setCourierContactNo(this.courierContactNo);
+		info.setEmailAddress(this.emailAddress);
+		info.setEmailVerified(this.emailVerified);
+		info.setFaxNumber(this.faxNumber);
+		info.setWorkNumber(this.workNumber);
+		return info;
 	}
 
 	public ContactEntityId getContactEntityId() {

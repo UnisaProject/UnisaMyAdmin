@@ -20,7 +20,7 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 
 	private Integer lastRegistrationYear;
 
-	private String graduationCeremonyDate;
+	private Date graduationCeremonyDate;
 
 	private boolean auditFlag;
 
@@ -75,11 +75,11 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 		this.lastRegistrationYear = lastRegistrationYear;
 	}
 
-	public String getGraduationCeremonyDate() {
+	public Date getGraduationCeremonyDate() {
 		return graduationCeremonyDate;
 	}
 
-	public void setGraduationCeremonyDate(String graduationCeremonyDate) {
+	public void setGraduationCeremonyDate(Date graduationCeremonyDate) {
 		this.graduationCeremonyDate = graduationCeremonyDate;
 	}
 

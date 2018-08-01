@@ -17,4 +17,8 @@ public class StudentAcademicRecordRestServiceImpl extends StudentAcademicRecordS
 		return getNextDecorator().requestStudentAcademicQualificationResults(studentNumber);
 	}
 
+	@Override
+	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		return getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
+	}
 }

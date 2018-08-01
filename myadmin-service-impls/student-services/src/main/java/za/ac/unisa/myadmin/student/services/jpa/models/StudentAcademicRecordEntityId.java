@@ -11,16 +11,21 @@ public class StudentAcademicRecordEntityId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "MK_STUDENT_NR")
-	private BigDecimal studentNr;
+	private Integer studentNr;
 
 	@Column(name = "MK_QUALIFICATION_C")
 	private String qualificationCode;
 
-	public BigDecimal getStudentNr() {
+	public StudentAcademicRecordEntityId(Integer studentNr, String qualificationCode) {
+		this.studentNr = studentNr;
+		this.qualificationCode = qualificationCode;
+	}
+
+	public Integer getStudentNr() {
 		return studentNr;
 	}
 
-	public void setStudentNr(BigDecimal studentNr) {
+	public void setStudentNr(Integer studentNr) {
 		this.studentNr = studentNr;
 	}
 

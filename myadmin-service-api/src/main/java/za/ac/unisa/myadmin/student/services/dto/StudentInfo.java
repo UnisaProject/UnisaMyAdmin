@@ -37,6 +37,10 @@ public class StudentInfo implements Serializable {
 
 	private Integer disciplinaryIncident;
 
+	private Integer nsfasContractBlock;
+
+	private boolean numberRestricted;
+
 	public StudentInfo() {
 	}
 
@@ -150,6 +154,22 @@ public class StudentInfo implements Serializable {
 
 	public void setDisciplinaryIncident(Integer disciplinaryIncident) {
 		this.disciplinaryIncident = disciplinaryIncident;
+	}
+
+	public Integer getNsfasContractBlock() {
+		return nsfasContractBlock;
+	}
+
+	public void setNsfasContractBlock(Integer nsfasContractBlock) {
+		this.nsfasContractBlock = nsfasContractBlock;
+	}
+
+	public boolean isNumberRestricted() {
+		return numberRestricted;
+	}
+
+	public void setNumberRestricted(boolean numberRestricted) {
+		this.numberRestricted = numberRestricted;
 	}
 
 	@Override

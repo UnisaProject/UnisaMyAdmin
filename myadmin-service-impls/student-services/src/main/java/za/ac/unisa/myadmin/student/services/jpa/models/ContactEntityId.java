@@ -15,6 +15,11 @@ public class ContactEntityId implements Serializable {
 	@Column(name = "FK_ADRCATCODE")
 	private Integer addressCategoryCode;
 
+	public ContactEntityId(Integer referenceNumber, Integer addressTypeCode) {
+		this.referenceNumber = referenceNumber;
+		this.addressCategoryCode = addressTypeCode;
+	}
+
 	public Integer getAddressCategoryCode() {
 		return addressCategoryCode;
 	}

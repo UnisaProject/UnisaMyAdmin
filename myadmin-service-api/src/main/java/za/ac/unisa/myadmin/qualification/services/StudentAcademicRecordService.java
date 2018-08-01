@@ -10,7 +10,13 @@ import java.util.List;
 
 public interface StudentAcademicRecordService {
 
-	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+	List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
+	List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks)
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+
+	List<StudentAcademicQualificationRecordInfo> getQualificationResultsByStudentNumber(Integer studentNumber)throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+
+	StudentAcademicQualificationRecordInfo getQualificationResultByStudentNumberAndQualCode(Integer studentNumber, String qualCode)throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 }

@@ -1,5 +1,6 @@
 package za.ac.unisa.myadmin.student.services.decorators;
 
+import org.apache.commons.lang3.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -23,5 +24,14 @@ public class StudentAcademicRecordServiceComplianceDecorator extends StudentAcad
 		return getNextDecorator().requestStudentAcademicQualificationResults(studentNumber);
 	}
 
-
+	@Override
+	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		if (studentNumber == null) {
+			throw new MissingParameterException("Please enter a valid student number.");
+		}
+		if(StringUtils.isBlank(academicQualificationCode)){
+			throw new OperationFailedException("Qualification is required.");
+		}
+		return getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
+	}
 }

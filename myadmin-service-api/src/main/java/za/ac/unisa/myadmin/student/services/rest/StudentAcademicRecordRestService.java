@@ -18,10 +18,17 @@ import java.util.List;
 public interface StudentAcademicRecordRestService {
 
 	@GET
-	@Path("/studentacademicqualifications")
+	@Path("/academicrecord/qualifications")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(@QueryParam("studentNumber") Integer studentNumber)
+		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+
+	@GET
+	@Path("/academicrecord/email")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(@QueryParam("studentNumber")Integer studentNumber,@QueryParam("acadQualCode") String academicQualificationCode, @QueryParam("isAttachMarks")boolean isAttachMarks)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 }

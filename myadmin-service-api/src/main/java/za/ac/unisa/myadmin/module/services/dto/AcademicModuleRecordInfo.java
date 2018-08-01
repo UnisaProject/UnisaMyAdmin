@@ -15,7 +15,7 @@ public class AcademicModuleRecordInfo implements Serializable {
 
 	private Integer academicPeriod;
 
-	private String resultTypeDescr;
+	private String resultTypeDescription;
 
 	private String mark;
 
@@ -60,12 +60,12 @@ public class AcademicModuleRecordInfo implements Serializable {
 		this.qualificationCode = qualificationCode;
 	}
 
-	public String getResultTypeDescr() {
-		return resultTypeDescr;
+	public String getResultTypeDescription() {
+		return resultTypeDescription;
 	}
 
-	public void setResultTypeDescr(String resultTypeDescr) {
-		this.resultTypeDescr = resultTypeDescr;
+	public void setResultTypeDescription(String resultTypeDescription) {
+		this.resultTypeDescription = resultTypeDescription;
 	}
 
 	public String getStudyUnitCode() {

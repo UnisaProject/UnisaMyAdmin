@@ -1,16 +1,19 @@
 package za.ac.unisa.myadmin.student.services.jpa.models;
 
+import za.ac.unisa.myadmin.qualification.services.dto.StudentAcademicQualificationRecordInfo;
 import za.ac.unisa.myadmin.services.utilities.YesOrNoBooleanConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -26,13 +29,17 @@ public class StudentAcademicRecordEntity implements Serializable {
 	private StudentAcademicRecordEntityId studentAcademicRecordEntityId;
 
 	@Column(name = "MK_STUDENT_NR", insertable = false, updatable = false)
-	private BigDecimal studentNumber;
+	private Integer studentNumber;
 
 	@Column(name = "MK_QUALIFICATION_C", insertable = false, updatable = false)
 	private String qualificationCode;
 
+	@ManyToOne
+	@JoinColumn(name = "MK_QUALIFICATION_C", insertable = false, updatable = false)
+	QualificationEntity qualificationEntity;
+
 	@Column(name = "MK_GRADUATION_CERE")
-	private BigDecimal graduationCeremony;
+	private Integer graduationCeremony;
 
 	@Column(name = "FK_QUAL_CODE")
 	private String fkQualificationCode;
@@ -147,6 +154,29 @@ public class StudentAcademicRecordEntity implements Serializable {
 	public StudentAcademicRecordEntity() {
 	}
 
+	public StudentAcademicQualificationRecordInfo toDto() {
+		StudentAcademicQualificationRecordInfo info = new StudentAcademicQualificationRecordInfo();
+		info.setStudentNumber(this.studentNumber);
+		info.setQualificationCode(this.qualificationCode);
+		if (this.qualificationEntity != null) {
+			info.setQualShortDescription(this.qualificationEntity.getShortDescription());
+		}
+		if (this.firstRegistration != null) {
+			info.setFirstRegistrationDate(new Date(this.firstRegistration.getTime()));
+		}
+		if (this.lastRegistrationDate != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(this.lastRegistrationDate);
+			info.setLastRegistrationYear(cal.get(Calendar.YEAR));
+		}
+		info.setAuditFlag(this.audit);
+		info.setStatus(this.statusCode);
+		if (this.getGraduationCeremonyDate() != null) {
+			info.setGraduationCeremonyDate(new Date(this.getGraduationCeremonyDate().getTime()));
+		}
+		return info;
+	}
+
 	public StudentAcademicRecordEntityId getStudentAcademicRecordEntityId() {
 		return studentAcademicRecordEntityId;
 	}
@@ -155,11 +185,11 @@ public class StudentAcademicRecordEntity implements Serializable {
 		this.studentAcademicRecordEntityId = studentAcademicRecordEntityId;
 	}
 
-	public BigDecimal getStudentNumber() {
+	public Integer getStudentNumber() {
 		return studentNumber;
 	}
 
-	public void setStudentNumber(BigDecimal studentNumber) {
+	public void setStudentNumber(Integer studentNumber) {
 		this.studentNumber = studentNumber;
 	}
 
@@ -171,11 +201,19 @@ public class StudentAcademicRecordEntity implements Serializable {
 		this.qualificationCode = qualificationCode;
 	}
 
-	public BigDecimal getGraduationCeremony() {
+	public QualificationEntity getQualificationEntity() {
+		return qualificationEntity;
+	}
+
+	public void setQualificationEntity(QualificationEntity qualificationEntity) {
+		this.qualificationEntity = qualificationEntity;
+	}
+
+	public Integer getGraduationCeremony() {
 		return graduationCeremony;
 	}
 
-	public void setGraduationCeremony(BigDecimal graduationCeremony) {
+	public void setGraduationCeremony(Integer graduationCeremony) {
 		this.graduationCeremony = graduationCeremony;
 	}
 
