@@ -5,10 +5,6 @@ import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricFilter;
 
-/**
- *
- * @author nwright
- */
 public class NonZeroMetricFilter implements MetricFilter {
 
     @Override
