@@ -2,12 +2,16 @@ package za.ac.unisa.myadmin.spring.boot.configurations;
 
 import java.util.Arrays;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletContextListener;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -65,6 +69,16 @@ public abstract class AbstractServiceConfiguration {
 	@Bean
 	public DateConverterProvider dateConverterProvider() {
 		return new DateConverterProvider();
+	}
+
+	@Bean
+	public ServletContextListener defaultMetricsServletContextListener() {
+		return new DefaultMetricsServletContextListener();
+	}
+
+	@Bean
+	public ServletRegistrationBean<Servlet> defaultConsoleReporterMetricsServlet() {
+		return new ServletRegistrationBean<>(new DefaultConsoleReporterMetricsServlet(), "/metrics-console/*");
 	}
 
 	// This method will publish the rest endpoint at the given HTTP address

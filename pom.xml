@@ -36,6 +36,7 @@
 		<jackson.jaxrs.json.provider>2.9.6</jackson.jaxrs.json.provider>
 		<jboss.spec.javaee.version>1.0.3.Final</jboss.spec.javaee.version>
 		<junit.version>4.12</junit.version>
+		<metrics.version>3.2.6</metrics.version>
 		<resteasy.jaxrs.version>3.0.24.Final</resteasy.jaxrs.version>
 
 		<!-- Plugin version -->
@@ -243,6 +244,17 @@
 				<artifactId>resteasy-jaxrs</artifactId>
 				<version>${resteasy.jaxrs.version}</version>
 			</dependency>
+			
+			<dependency>
+		        <groupId>io.dropwizard.metrics</groupId>
+		        <artifactId>metrics-core</artifactId>
+		        <version>${metrics.version}</version>
+		    </dependency>
+		    <dependency>
+		        <groupId>io.dropwizard.metrics</groupId>
+		        <artifactId>metrics-servlets</artifactId>
+		        <version>${metrics.version}</version>
+		    </dependency>
 		</dependencies>
 
 	</dependencyManagement>

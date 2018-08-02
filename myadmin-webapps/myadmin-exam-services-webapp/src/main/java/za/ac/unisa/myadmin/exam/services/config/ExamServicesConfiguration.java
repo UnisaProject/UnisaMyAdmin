@@ -26,6 +26,7 @@ import za.ac.unisa.myadmin.exam.services.rest.impls.ExamAdmissionRestServiceImpl
 import za.ac.unisa.myadmin.exam.services.rest.impls.ExamPaperRestServiceImpl;
 import za.ac.unisa.myadmin.exam.services.rest.impls.ExamPeriodRestServiceImpl;
 import za.ac.unisa.myadmin.exam.services.rest.impls.ExaminationRestServiceImpl;
+import za.ac.unisa.myadmin.services.metrics.decorators.ExamPeriodServiceMetricsDecorator;
 import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfiguration;
 
 @Configuration
@@ -100,7 +101,10 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		ExamPeriodServiceExclusionDecorator exclusionDecorator = new ExamPeriodServiceExclusionDecorator();
 		exclusionDecorator.setNextDecorator(virtualDecorator);
 
-		return exclusionDecorator;
+		ExamPeriodServiceMetricsDecorator metricsDecorator = new ExamPeriodServiceMetricsDecorator();
+		metricsDecorator.setNextDecorator(exclusionDecorator);
+
+		return metricsDecorator;
 	}
 
 	@Bean(name = "examPeriodServiceImplRestEndPoint")
