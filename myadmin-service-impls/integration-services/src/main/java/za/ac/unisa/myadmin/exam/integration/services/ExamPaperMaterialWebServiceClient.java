@@ -5,10 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPaperMaterialInfo;
 
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Response;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**

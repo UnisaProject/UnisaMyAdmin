@@ -45,7 +45,10 @@
 			<version>${project.parent.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
-		</dependency>
+		</dependency><dependency>
+		<groupId>za.ac.unisa.myadmin.services</groupId>
+		<artifactId>integration-services</artifactId>
+	</dependency>
 	</dependencies>
 
 </project>
