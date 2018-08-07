@@ -15,7 +15,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 
 
 	@BeforeClass
-	public void beforeClass() {
+	public static void beforeClass() {
 		decorator = new ExamAdmissionServiceYearCalculationDecorator();
 		decorator.setNextDecorator(Mockito.mock(ExamAdmissionService.class));
 	}

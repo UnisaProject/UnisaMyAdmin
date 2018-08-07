@@ -96,7 +96,7 @@ public class ExamPeriodServiceImplTest {
 	public void testGetExamPeriods() throws Exception {
 		//when
 		List<ExamPeriodInfo> foundList = examPeriodService.getExamPeriods();
-		//then
+		//thenExamAdmissionServiceYearCalculationDecoratorTest
 		assertNotNull(foundList);
 		assertThat(foundList.size()).isEqualTo(3);
 	}
