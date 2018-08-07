@@ -1,66 +1,37 @@
 package za.ac.unisa.myadmin.exam.services.impls;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExamPeriodEntity;
+import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import za.ac.unisa.myadmin.TestApplication;
-import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
-import za.ac.unisa.myadmin.exam.services.impls.ExamPeriodServiceImpl;
-import za.ac.unisa.myadmin.exam.services.jpa.models.ExamPeriodEntity;
-import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * ExamPeriodServiceImpl Tester.
  *
  */
-@RunWith(SpringRunner.class)
-@Import(TestApplication.class)
-@DirtiesContext
 public class ExamPeriodServiceImplTest {
 
-	private List<Integer> codes;
+	private static final List<Integer> codes = Arrays.asList(1, 13, 14);
 
-	private List<ExamPeriodEntity> list;
+	private static ExamPeriodServiceImpl examPeriodService;
 
-	private List<ExamPeriodEntity> list2;
+	private static final List<ExamPeriodEntity> list = new ArrayList<>();
+	private static final List<ExamPeriodEntity> list2 = new ArrayList<>();
 
-	@Autowired
-	private ExamPeriodService examPeriodService;
+	private static ExamPeriodRepository createExamPeriodRepository(){
+		ExamPeriodRepository examPeriodRepository = mock(ExamPeriodRepository.class);
 
-	@MockBean
-	private ExamPeriodRepository examPeriodRepository;
-
-	@TestConfiguration
-	static class ExamPeriodServiceImplTestContextConfiguration {
-		@Bean
-		public ExamPeriodService examPeriodService() {
-			return new ExamPeriodServiceImpl();
-		}
-	}
-
-	@Before
-	public void before() throws Exception {
-		//given
-		list = new ArrayList<>();
-		list2 = new ArrayList<>();
 		ExamPeriodEntity examPeriodEntity = new ExamPeriodEntity();
 		examPeriodEntity.setCode(1);
 		examPeriodEntity.setAfrDescription("Toets 1");
@@ -91,19 +62,19 @@ public class ExamPeriodServiceImplTest {
 		examPeriodEntityFour.setEngDescription("Test 4");
 		examPeriodEntityFour.setEngShortDescription("T4");
 		list2.add(examPeriodEntityFour);
-		codes = new ArrayList<Integer>();
-		codes.add(1);
-		codes.add(13);
-		codes.add(14);
+
 		//Mock Repo calls
 		Optional<ExamPeriodEntity> optional = Optional.of(examPeriodEntity);
 		when(examPeriodRepository.findById(1)).thenReturn(optional);
 		when(examPeriodRepository.findAll()).thenReturn(list);
 		when(examPeriodRepository.findAllById(codes)).thenReturn(list2);
+		return examPeriodRepository;
 	}
 
-	@After
-	public void after() throws Exception {
+	@BeforeClass
+	public static void beforeClass() {
+		examPeriodService = new ExamPeriodServiceImpl();
+		examPeriodService.setExamPeriodRepository(createExamPeriodRepository());
 	}
 
 	/**
@@ -143,4 +114,4 @@ public class ExamPeriodServiceImplTest {
 		assertThat(foundList.size()).isEqualTo(3);
 		assertThat(foundList.get(0).getCode()).isEqualTo(list2.get(0).getCode());
 	}
-} 
+}
