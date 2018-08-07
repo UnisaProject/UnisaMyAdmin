@@ -1,19 +1,16 @@
 package za.ac.unisa.myadmin.exam.services.dto;
 
-import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
+import za.ac.unisa.myadmin.studymaterial.services.dto.AbstractMaterialDetailInfo;
 
 import java.io.Serializable;
 
 /**
  * An object that represents the material of a previously presented exam paper
  */
-public class ExamPaperMaterialInfo extends StudyMaterialDetailInfo implements Serializable {
+public class ExamPaperMaterialInfo extends AbstractMaterialDetailInfo implements Serializable {
 
 	private String periodDesc;
 
-	private String fileSizeInBytes;
-
-	private boolean fileExist;
 
 
 	/**
@@ -34,39 +31,4 @@ public class ExamPaperMaterialInfo extends StudyMaterialDetailInfo implements Se
 		this.periodDesc = periodDesc;
 	}
 
-	/**
-	 * Getter for property 'fileSizeInBytes'.
-	 *
-	 * @return Value for property 'fileSizeInBytes'.
-	 */
-	public String getFileSizeInBytes() {
-		return fileSizeInBytes;
-	}
-
-	/**
-	 * Setter for property 'fileSizeInBytes'.
-	 *
-	 * @param fileSizeInBytes Value to set for property 'fileSizeInBytes'.
-	 */
-	public void setFileSizeInBytes(String fileSizeInBytes) {
-		this.fileSizeInBytes = fileSizeInBytes;
-	}
-
-	/**
-	 * Getter for property 'fileExist'.
-	 *
-	 * @return Value for property 'fileExist'.
-	 */
-	public boolean isFileExist() {
-		return fileExist;
-	}
-
-	/**
-	 * Setter for property 'fileExist'.
-	 *
-	 * @param fileExist Value to set for property 'fileExist'.
-	 */
-	public void setFileExist(boolean fileExist) {
-		this.fileExist = fileExist;
-	}
 }

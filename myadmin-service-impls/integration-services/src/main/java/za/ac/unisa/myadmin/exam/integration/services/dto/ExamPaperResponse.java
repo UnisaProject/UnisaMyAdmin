@@ -4,7 +4,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *     <exampapers>
@@ -26,7 +28,7 @@ import java.util.List;
 public class ExamPaperResponse {
 
 	@XmlElement(name = "exampaper")
-	private List<ExamPaperDto> examPapers;
+	private final List<ExamPaperDto> examPapers = new ArrayList<>();
 
 	/**
 	 * Getter for property 'examPapers'.
@@ -43,6 +45,9 @@ public class ExamPaperResponse {
 	 * @param examPapers Value to set for property 'examPapers'.
 	 */
 	public void setExamPapers(List<ExamPaperDto> examPapers) {
-		this.examPapers = examPapers;
+		this.examPapers.clear();
+		if(Objects.nonNull(examPapers)){
+			this.examPapers.addAll(examPapers);
+		}
 	}
 }
