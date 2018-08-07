@@ -1,7 +1,12 @@
 package za.ac.unisa.myadmin.exam.services.impls;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
+import za.ac.unisa.myadmin.exam.services.jpa.models.ExaminationEntity;
+import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -9,61 +14,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import za.ac.unisa.myadmin.TestApplication;
-import za.ac.unisa.myadmin.exam.services.ExaminationService;
-import za.ac.unisa.myadmin.exam.services.dto.ExaminationInfo;
-import za.ac.unisa.myadmin.exam.services.impls.ExaminationServiceImpl;
-import za.ac.unisa.myadmin.exam.services.jpa.models.ExaminationEntity;
-import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * ExamPeriodDateServiceImpl Tester.
  *
  */
-@RunWith(SpringRunner.class)
-@Import(TestApplication.class)
 public class ExaminationServiceImplTest {
 
-	private List<ExaminationEntity> examinationEntities;
-	private List<String> courseCodes;
-	private int examYear = 2018;
-	@Autowired
-	private ExaminationService examinationService;
+	private static final List<ExaminationEntity> examinationEntities = new ArrayList<>();
+	private static final List<String> courseCodes = new ArrayList<>();
+	private static final int examYear = 2018;
+	private static ExaminationServiceImpl examinationService;
 
-	@MockBean
-	private ExaminationRepository examinationRepository;
 
-	@TestConfiguration
-	static class ExaminationServiceImplTestContextConfiguration {
-		@Bean
-		public ExaminationService examinationService() {
-			return new ExaminationServiceImpl();
-		}
-	}
-
-	@Before
-	public void before() throws Exception {
-		examinationEntities = new ArrayList<>();
-		ExaminationEntity entity = new ExaminationEntity();
-		entity.setExamPeriodCode(1);
-		entity.setYear(2018);
-		entity.setCourseCode("ABC123");
-		entity.setExamDate(Date.from(LocalDate.ofYearDay(2018, 300).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-		examinationEntities.add(entity);
-		//
-		courseCodes = new ArrayList<>();
-		//
+	private static ExaminationRepository createExaminationRepository(){
+		ExaminationRepository examinationRepository = mock(ExaminationRepository.class);
 		when(examinationRepository.findByYear(examYear)).thenReturn(examinationEntities);
 		when(examinationRepository.findByExamPeriodCode(1)).thenReturn(examinationEntities);
 		when(examinationRepository.findByCourseCodeIn(courseCodes)).thenReturn(examinationEntities);
@@ -71,6 +39,31 @@ public class ExaminationServiceImplTest {
 		when(examinationRepository.findByYearAndCourseCodeIn(examYear, courseCodes)).thenReturn(examinationEntities);
 		when(examinationRepository.findByExamPeriodCodeAndCourseCodeIn(1, courseCodes)).thenReturn(examinationEntities);
 		when(examinationRepository.findByYearAndExamPeriodCodeAndCourseCodeIn(examYear, 1, courseCodes)).thenReturn(examinationEntities);
+		return examinationRepository;
+	}
+
+
+	@BeforeClass
+	public static void beforeClass() {
+		examinationEntities.add(new ExaminationEntity(){{
+			setExamPeriodCode(1);
+			setYear(2018);
+			setCourseCode("ABC123");
+			setExamDate(Date.from(LocalDate.ofYearDay(2018, 300).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		}});
+
+
+
+		examinationService = new ExaminationServiceImpl();
+		examinationService.setExaminationRepository(createExaminationRepository());
+
+	}
+
+	@Before
+	public void before() throws Exception {
+		//
+		//
+
 	}
 
 	@After
@@ -162,4 +155,4 @@ public class ExaminationServiceImplTest {
 	}
 
 
-} 
+}
