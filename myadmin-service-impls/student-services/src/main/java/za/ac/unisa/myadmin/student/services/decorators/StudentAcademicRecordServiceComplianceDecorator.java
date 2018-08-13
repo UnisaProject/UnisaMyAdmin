@@ -25,7 +25,7 @@ public class StudentAcademicRecordServiceComplianceDecorator extends StudentAcad
 	}
 
 	@Override
-	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public String requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (studentNumber == null) {
 			throw new MissingParameterException("Please enter a valid student number.");
 		}

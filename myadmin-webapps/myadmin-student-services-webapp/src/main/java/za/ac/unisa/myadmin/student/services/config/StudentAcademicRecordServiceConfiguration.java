@@ -1,6 +1,7 @@
 package za.ac.unisa.myadmin.student.services.config;
 
 import org.apache.cxf.endpoint.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import za.ac.unisa.myadmin.contact.services.ContactService;
@@ -31,6 +32,12 @@ import za.ac.unisa.myadmin.student.services.rest.impls.StudentAcademicRecordRest
 @Configuration
 public class StudentAcademicRecordServiceConfiguration extends AbstractServiceConfiguration {
 
+	@Value("${studentservice.test.email.flag}")
+	private boolean testEmailFlag;
+
+	@Value("${studentservice.test.emailAddress}")
+	private String testEmailAddress;
+
 	@Bean(name = "genericServiceImpl")
 	public UnisaGenericService getUnisaGenericServiceImpl() {
 		UnisaGenericServiceImpl service = new UnisaGenericServiceImpl();
@@ -57,8 +64,9 @@ public class StudentAcademicRecordServiceConfiguration extends AbstractServiceCo
 	@Bean(name = "studentAcademicRecordService")
 	public StudentAcademicRecordService getStudentAcademicRecordServiceImpl() {
 		StudentAcademicRecordServiceImpl service = new StudentAcademicRecordServiceImpl();
+		service.setTestEmailFlag(testEmailFlag);
+		service.setTestEmailAddress(testEmailAddress);
 		service.setGenericService(getUnisaGenericServiceImpl());
-		service.setEmailLogService(getEmailLogServiceImpl());
 		service.setContactService(getContactServiceImpl());
 		service.setAcademicRecordRepository(getBean(StudentAcademicRecordRepository.class));
 		return service;
@@ -85,7 +93,9 @@ public class StudentAcademicRecordServiceConfiguration extends AbstractServiceCo
 	public StudentAcademicRecordService studentAcademicRecordServiceValidationDecorator() {
 		StudentAcademicRecordServiceValidationDecorator validationDecorator = new StudentAcademicRecordServiceValidationDecorator();
 		validationDecorator.setStudentService(getBean(StudentService.class));
+		validationDecorator.setEmailLogService(getEmailLogServiceImpl());
 		validationDecorator.setGenericService(getUnisaGenericServiceImpl());
+
 		validationDecorator.setNextDecorator(getStudentAcademicRecordServiceImpl());
 
 		StudentAcademicRecordServiceComplianceDecorator complianceDecorator = new StudentAcademicRecordServiceComplianceDecorator();

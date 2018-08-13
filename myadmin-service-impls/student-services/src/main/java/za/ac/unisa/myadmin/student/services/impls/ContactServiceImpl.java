@@ -32,7 +32,7 @@ public class ContactServiceImpl implements ContactService {
 		if (entity.isPresent()) {
 			return entity.get().toDto();
 		} else {
-			throw new DoesNotExistException(referenceNumber.toString());
+			return null;
 		}
 	}
 

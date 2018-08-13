@@ -195,7 +195,7 @@ public class QualificationEntity implements Serializable {
 	@Column(name = "MK_ACAD_DEPT_CODE")
 	private Integer academicDepartmentCode;
 
-	@Column(name = "MK_ACADEMIC_YEAR")
+	@Column(name = "MK_ACADEMIC_YR")
 	private Integer academicYear;
 
 	@Column(name = "MK_CESM_CATEGORY")

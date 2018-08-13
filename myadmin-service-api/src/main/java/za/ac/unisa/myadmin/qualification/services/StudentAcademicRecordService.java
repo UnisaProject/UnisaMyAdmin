@@ -12,7 +12,7 @@ public interface StudentAcademicRecordService {
 
 	List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
-	List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks)
+	String requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	List<StudentAcademicQualificationRecordInfo> getQualificationResultsByStudentNumber(Integer studentNumber)throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;

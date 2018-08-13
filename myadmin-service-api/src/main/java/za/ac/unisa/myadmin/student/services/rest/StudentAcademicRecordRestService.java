@@ -26,9 +26,8 @@ public interface StudentAcademicRecordRestService {
 
 	@GET
 	@Path("/academicrecord/email")
-	@Produces("application/json")
 	@Consumes("application/json")
-	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicRecordEmail(@QueryParam("studentNumber")Integer studentNumber,@QueryParam("acadQualCode") String academicQualificationCode, @QueryParam("isAttachMarks")boolean isAttachMarks)
+	public String requestStudentAcademicRecordEmail(@QueryParam("studentNumber")Integer studentNumber,@QueryParam("acadQualCode") String academicQualificationCode, @QueryParam("isAttachMarks")boolean isAttachMarks)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 }
