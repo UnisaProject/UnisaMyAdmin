@@ -1,5 +1,6 @@
 package za.ac.unisa.myadmin.qualification.services;
 
+import za.ac.unisa.myadmin.common.dto.ErrorInfo;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -12,7 +13,7 @@ public interface StudentAcademicRecordService {
 
 	List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
-	String requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks)
+	ErrorInfo requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 	List<StudentAcademicQualificationRecordInfo> getQualificationResultsByStudentNumber(Integer studentNumber)throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;

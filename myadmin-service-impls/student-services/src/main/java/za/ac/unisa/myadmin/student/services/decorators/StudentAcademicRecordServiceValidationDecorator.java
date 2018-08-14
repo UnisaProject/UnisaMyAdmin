@@ -1,6 +1,7 @@
 package za.ac.unisa.myadmin.student.services.decorators;
 
 import org.apache.commons.lang3.StringUtils;
+import za.ac.unisa.myadmin.common.dto.ErrorInfo;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -8,11 +9,13 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.generic.dto.EmailLogInfo;
 import za.ac.unisa.myadmin.generic.dto.GenericMessageInfo;
 import za.ac.unisa.myadmin.generic.services.EmailLogService;
-import za.ac.unisa.myadmin.generic.services.UnisaGenericService;
+import za.ac.unisa.myadmin.generic.services.GenericServicesConstants;
+import za.ac.unisa.myadmin.generic.services.GenericService;
 import za.ac.unisa.myadmin.qualification.services.StudentAcademicRecordService;
 import za.ac.unisa.myadmin.qualification.services.dto.StudentAcademicQualificationRecordInfo;
 import za.ac.unisa.myadmin.services.base.decorators.StudentAcademicRecordServiceDecorator;
 import za.ac.unisa.myadmin.student.services.StudentService;
+import za.ac.unisa.myadmin.student.services.StudentServicesConstants;
 import za.ac.unisa.myadmin.student.services.dto.StudentInfo;
 
 import java.time.Instant;
@@ -29,7 +32,7 @@ public class StudentAcademicRecordServiceValidationDecorator extends StudentAcad
 
 	private EmailLogService emailLogService;
 
-	private UnisaGenericService genericService;
+	private GenericService genericService;
 
 	private StudentService studentService;
 
@@ -37,7 +40,7 @@ public class StudentAcademicRecordServiceValidationDecorator extends StudentAcad
 		this.emailLogService = emailLogService;
 	}
 
-	public void setGenericService(UnisaGenericService genericService) {
+	public void setGenericService(GenericService genericService) {
 		this.genericService = genericService;
 	}
 
@@ -59,21 +62,21 @@ public class StudentAcademicRecordServiceValidationDecorator extends StudentAcad
 			StudentInfo student = studentService.getStudentByNumber(studentNumber);
 			GenericMessageInfo genMessageEnt;
 			if (student.isExamFeesDebt() || student.isFinancialBlock()) {
-				genMessageEnt = genericService.getGenericMessageById("FEEBLOCK", "UNISA_ACADHISTORY");
+				genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_FEE_BLOCK, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 				if (genMessageEnt != null) {
 					throw new InvalidParameterException(genMessageEnt.getMessage());
 				}
 			}
 
 			if (student.getLibraryBlackList() > 0) {
-				genMessageEnt = genericService.getGenericMessageById("LIBRARY", "UNISA_ACADHISTORY");
+				genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_LIBRARY, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 				if (genMessageEnt != null) {
 					throw new InvalidParameterException(genMessageEnt.getMessage());
 				}
 			}
 
 			if (student.getDisciplinaryIncident() > 0) {
-				genMessageEnt = genericService.getGenericMessageById("STUDISPL", "UNISA_ACADHISTORY");
+				genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_STUD_DISPL, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 				if (genMessageEnt != null) {
 					throw new InvalidParameterException(genMessageEnt.getMessage());
 				}
@@ -87,7 +90,7 @@ public class StudentAcademicRecordServiceValidationDecorator extends StudentAcad
 	}
 
 	@Override
-	public String requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public ErrorInfo requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (String.valueOf(studentNumber).length() < 7) {
 			throw new OperationFailedException("Student Number can not be less than 7 characters");
 		}
@@ -95,69 +98,77 @@ public class StudentAcademicRecordServiceValidationDecorator extends StudentAcad
 			throw new OperationFailedException("Student Number can not be greater than 8 characters");
 		}
 		StudentInfo student = studentService.getStudentByNumber(studentNumber);
-		//StudentInfo student = this.get(studentNumber);
 		StudentAcademicQualificationRecordInfo academicQualificationRecordInfo = this.getQualificationResultByStudentNumberAndQualCode(studentNumber, academicQualificationCode);
 		GenericMessageInfo genMessageEnt;
 		if (student.getNsfasContractBlock() > 0) {
-			genMessageEnt = genericService.getGenericMessageById("NSFASBLOCK", "UNISA_ACADHISTORY");
+			genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_NSFAS_BLOCK, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 			if (genMessageEnt != null) {
 				throw new InvalidParameterException(genMessageEnt.getMessage());
 			}
 		}
 
 		if (!student.isNumberRestricted()) {
-			genMessageEnt = genericService.getGenericMessageById("AUDITED", "UNISA_ACADHISTORY");
+			genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_AUDITED, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 			if (genMessageEnt != null) {
 				throw new InvalidParameterException(genMessageEnt.getMessage());
 			}
 		}
 		if (!academicQualificationRecordInfo.isAuditFlag()) {
-			genMessageEnt = genericService.getGenericMessageById("AUDITED", "UNISA_ACADHISTORY");
+			genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_AUDITED, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 			if (genMessageEnt != null) {
 				throw new InvalidParameterException(genMessageEnt.getMessage());
 			}
 		}
 
 		if (!academicQualificationRecordInfo.getStatus().equalsIgnoreCase("CO") && academicQualificationRecordInfo.getGraduationCeremonyDate() == null) {
-			genMessageEnt = genericService.getGenericMessageById("GENMAILERR", "UNISA_ACADHISTORY");
+			genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_GENMAILERROR, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 			if (genMessageEnt != null) {
 				throw new InvalidParameterException(genMessageEnt.getMessage());
 			}
 
 		}
-		//Validate Email log within the hour.
 		validateEmailLog(studentNumber, academicQualificationCode, isAttachMarks);
 
-		String message = getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
-		if (StringUtils.isNotBlank(message)) {
-			if (message.contains("Report completed successfully")) {
-				genMessageEnt = genericService.getGenericMessageById("MAILOK", "UNISA_ACADHISTORY");
+		ErrorInfo messageInfo = getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
+		if (messageInfo!=null && StringUtils.isNotBlank(messageInfo.getMessage())) {
+			if (messageInfo.getMessage().contains("Report completed successfully")) {
+				genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_MAILOK, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 				if (genMessageEnt != null) {
-					message = genMessageEnt.getMessage();
+					messageInfo.setMessage(genMessageEnt.getMessage());
 				}
 			} else {
-				genMessageEnt = genericService.getGenericMessageById("GENMAILERR", "UNISA_ACADHISTORY");
+				genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_GENMAILERROR, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 				if (genMessageEnt != null) {
 					throw new InvalidParameterException(genMessageEnt.getMessage());
 				}
 			}
 		}
-		return message;
+		return messageInfo;
 	}
 
+	/**
+	 * Validate email log table, Allowed hourly emails.
+	 * @param studentNumber
+	 * @param academicQualificationCode
+	 * @param isAttachMarks
+	 * @throws MissingParameterException
+	 * @throws InvalidParameterException
+	 * @throws OperationFailedException
+	 * @throws DoesNotExistException
+	 */
 	private void validateEmailLog(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		String recipient, program, reqSystem, regProgram, emailBody, emailType;
+		String recipient, program, reqSystem, reqProgram, emailBody, emailType;
 		recipient = String.valueOf(studentNumber);
-		program = "SRSRJ11H";
-		reqSystem = "MYUNISA";
-		regProgram = "ACADEMIC RECORD";
+		program = StudentServicesConstants.ACADEMIC_RECORD_EMAIL_LOG_DEFAULT_PROGRAM;
+		reqSystem = StudentServicesConstants.ACADEMIC_RECORD_EMAIL_LOG_REQUIRED_SYSTEM;
+		reqProgram = StudentServicesConstants.ACADEMIC_RECORD_EMAIL_LOG_REQUIRED_PROGRAM;
 		emailBody = academicQualificationCode;
 		//
-		emailType = "SUBJDECLNM";
+		emailType = StudentServicesConstants.ACADEMIC_RECORD_EMAIL_LOG_DECLARE_NO_MARKS;
 		if (isAttachMarks) {
-			emailType = "SUBJDECLWM";
+			emailType = StudentServicesConstants.ACADEMIC_RECORD_EMAIL_LOG_DECLARE_WITH_MARKS;
 		}
-		EmailLogInfo emailLogInfo = emailLogService.getLastestEmailRequestForAcademicRecord(recipient, program, emailType, reqSystem, regProgram, emailBody);
+		EmailLogInfo emailLogInfo = emailLogService.getLastestEmailRequestForAcademicRecord(recipient, program, emailType, reqSystem, reqProgram, emailBody);
 		if (emailLogInfo != null) {
 			//Allowed to email per hour. Check some business rules around time.
 			if (!emailLogInfo.getDateSent().toInstant().isBefore(Instant.now().minus(1, ChronoUnit.HOURS))) {

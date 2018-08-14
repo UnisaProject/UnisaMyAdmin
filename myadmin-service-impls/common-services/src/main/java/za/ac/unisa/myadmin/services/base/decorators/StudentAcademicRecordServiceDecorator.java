@@ -1,5 +1,6 @@
 package za.ac.unisa.myadmin.services.base.decorators;
 
+import za.ac.unisa.myadmin.common.dto.ErrorInfo;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -30,7 +31,7 @@ public class StudentAcademicRecordServiceDecorator implements StudentAcademicRec
 	}
 
 	@Override
-	public String requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public ErrorInfo requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		return getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
 	}
 

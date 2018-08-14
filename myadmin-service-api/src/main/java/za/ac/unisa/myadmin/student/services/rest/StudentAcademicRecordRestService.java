@@ -1,5 +1,6 @@
 package za.ac.unisa.myadmin.student.services.rest;
 
+import za.ac.unisa.myadmin.common.dto.ErrorInfo;
 import za.ac.unisa.myadmin.common.exceptions.DoesNotExistException;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
@@ -26,8 +27,9 @@ public interface StudentAcademicRecordRestService {
 
 	@GET
 	@Path("/academicrecord/email")
+	@Produces("application/json")
 	@Consumes("application/json")
-	public String requestStudentAcademicRecordEmail(@QueryParam("studentNumber")Integer studentNumber,@QueryParam("acadQualCode") String academicQualificationCode, @QueryParam("isAttachMarks")boolean isAttachMarks)
+	public ErrorInfo requestStudentAcademicRecordEmail(@QueryParam("studentNumber")Integer studentNumber, @QueryParam("acadQualCode") String academicQualificationCode, @QueryParam("isAttachMarks")boolean isAttachMarks)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 }

@@ -5,7 +5,9 @@ import org.springframework.util.StringUtils;
 import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.common.services.CommonServicesConstants;
 import za.ac.unisa.myadmin.module.services.AcademicModuleRecordService;
+import za.ac.unisa.myadmin.module.services.ModuleServicesConstants;
 import za.ac.unisa.myadmin.module.services.dto.AcademicModuleRecordInfo;
 
 import java.awt.event.ActionListener;
@@ -22,44 +24,34 @@ public class AcademicModuleRecordServiceImpl implements AcademicModuleRecordServ
 	@Override
 	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		try {
+			final Srasa01sLstAcademicRecordSun academicRecordModuleProxy = constructAcademicRecordModuleProxy(studentNumber, selectedQualificationCode, ModuleServicesConstants.ACADEMIC_MODULE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_ACTION, isCreditsOnly ? "Y" : "N");
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();
 			final ActionListener exceptionListener = e -> exceptionReference
 				.set(new OperationFailedException(e.getActionCommand()));
-			final Srasa01sLstAcademicRecordSun academicStudyUnitRecordProxy = new Srasa01sLstAcademicRecordSun();
-			academicStudyUnitRecordProxy.addExceptionListener(exceptionListener);
-			academicStudyUnitRecordProxy.clear();
-			academicStudyUnitRecordProxy.setInWsWorkstationCode("internet");
-			academicStudyUnitRecordProxy.setInWsFunctionNumber(135);
-			academicStudyUnitRecordProxy.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-			academicStudyUnitRecordProxy.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-			academicStudyUnitRecordProxy.setInCsfClientServerCommunicationsAction("D");
-			academicStudyUnitRecordProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-			academicStudyUnitRecordProxy.setInCreditsOnlyIefSuppliedFlag(isCreditsOnly ? "Y" : "N");
-			academicStudyUnitRecordProxy.setInStudentAcademicRecordMkQualificationCode(selectedQualificationCode);
-			academicStudyUnitRecordProxy.setInStudentAcademicRecordMkStudentNr(studentNumber);
-			academicStudyUnitRecordProxy.execute();
+			academicRecordModuleProxy.addExceptionListener(exceptionListener);
+			academicRecordModuleProxy.execute();
 			if (exceptionReference.get() != null) {
 				throw exceptionReference.get();
 			}
-			if (academicStudyUnitRecordProxy.getExitStateType() < 3) {
-				throw new OperationFailedException(academicStudyUnitRecordProxy.getExitStateMsg());
+			if (academicRecordModuleProxy.getExitStateType() < 3) {
+				throw new OperationFailedException(academicRecordModuleProxy.getExitStateMsg());
 			}
 			/*
 			 * Add error messages from proxy
 	         */
-			String errorMsg = academicStudyUnitRecordProxy.getOutCsfStringsString500();
+			String errorMsg = academicRecordModuleProxy.getOutCsfStringsString500();
 			if (StringUtils.hasText(errorMsg)) {
 				throw new OperationFailedException(errorMsg);
 			}
 
 			List<AcademicModuleRecordInfo> records = new ArrayList<>();
 
-			buildModules(records, academicStudyUnitRecordProxy);
+			buildModules(records, academicRecordModuleProxy);
 
 	       /*
 		   * If page down = Y read proxy again until list is completed
 	       */
-			String pageDown = academicStudyUnitRecordProxy.getOutCsfClientServerCommunicationsRgvScrollDownFlag();
+			String pageDown = academicRecordModuleProxy.getOutCsfClientServerCommunicationsRgvScrollDownFlag();
 			while ("Y".equalsIgnoreCase(pageDown)) {
 				// put this code in because for some reason the program executes too quickly
 				// and coolgen doesn't return the correct data
@@ -68,21 +60,11 @@ public class AcademicModuleRecordServiceImpl implements AcademicModuleRecordServ
 				} catch (Exception e) {
 
 				}
-				final Srasa01sLstAcademicRecordSun proxyLoop = new Srasa01sLstAcademicRecordSun();
+				final Srasa01sLstAcademicRecordSun proxyLoop = constructAcademicRecordModuleProxy(studentNumber, selectedQualificationCode, ModuleServicesConstants.ACADEMIC_MODULE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_ACTION_PAGEDOWN, isCreditsOnly ? "Y" : "N");
 				final AtomicReference<OperationFailedException> exceptionReferenceLoop = new AtomicReference<>();
 				final ActionListener exceptionListenerLoop = e -> exceptionReferenceLoop
 					.set(new OperationFailedException(e.getActionCommand()));
 				proxyLoop.addExceptionListener(exceptionListenerLoop);
-				proxyLoop.clear();
-				proxyLoop.setInWsWorkstationCode("internet");
-				proxyLoop.setInWsFunctionNumber(135);
-				proxyLoop.setInCsfClientServerCommunicationsClientVersionNumber((short) 3);
-				proxyLoop.setInCsfClientServerCommunicationsClientRevisionNumber((short) 1);
-				proxyLoop.setInCsfClientServerCommunicationsAction("PD");
-				proxyLoop.setInCsfClientServerCommunicationsClientDevelopmentPhase("C");
-				proxyLoop.setInCreditsOnlyIefSuppliedFlag(isCreditsOnly ? "Y" : "N");
-				proxyLoop.setInStudentAcademicRecordMkQualificationCode(selectedQualificationCode);
-				proxyLoop.setInStudentAcademicRecordMkStudentNr(studentNumber);
 				proxyLoop.execute();
 
 				if (exceptionReferenceLoop.get() != null) {
@@ -104,29 +86,24 @@ public class AcademicModuleRecordServiceImpl implements AcademicModuleRecordServ
 			}
 			//TODO This system logged events in sakai.
 			return records;
-		/* Write event log: Get user details, if not empty write event log with usagesession */
-//			String currentUserID = "";
-//			sessionManager = (SessionManager) ComponentManager.get(SessionManager.class);
-//			userDirectoryService = (UserDirectoryService) ComponentManager.get(UserDirectoryService.class);
-//			Session currentSession = sessionManager.getCurrentSession();
-//			String userID = currentSession.getUserId();
-//			eventTrackingService = (EventTrackingService) ComponentManager.get(EventTrackingService.class);
-//			toolManager = (ToolManager) ComponentManager.get(ToolManager.class);
-//			if (userID != null) {
-//				currentUserID = currentSession.getUserEid();
-//				usageSessionService = (UsageSessionService) ComponentManager.get(UsageSessionService.class);
-//				UsageSession usageSession = usageSessionService.getSession();
-//				//UsageSessionService.startSession(currentUserID,request.getRemoteAddr(),request.getHeader("user-agent"));
-//				eventTrackingService.post(
-//					eventTrackingService.newEvent(EventTrackingTypes.EVENT_ACADHISTORY_VIEW, toolManager.getCurrentPlacement().getContext(), false), usageSession);
-//			} else {
-//				eventTrackingService.post(
-//					eventTrackingService.newEvent(EventTrackingTypes.EVENT_ACADHISTORY_VIEW, toolManager.getCurrentPlacement().getContext(), false));
-//
-//			}
 		} catch (PropertyVetoException ex) {
 			throw new OperationFailedException("A technical error has happened,Please enter your details again.If this problem persists please log off myUnisa and Log On again");
 		}
+	}
+
+	private Srasa01sLstAcademicRecordSun constructAcademicRecordModuleProxy(Integer studentNumber, String selectedQualificationCode, String communicationAction, String isCreditsOnlyFlag) throws PropertyVetoException {
+		Srasa01sLstAcademicRecordSun academicRecordModuleProxy = new Srasa01sLstAcademicRecordSun();
+		academicRecordModuleProxy.clear();
+		academicRecordModuleProxy.setInWsWorkstationCode(CommonServicesConstants.PROXY_WORKSTATION_CODE);
+		academicRecordModuleProxy.setInWsFunctionNumber(ModuleServicesConstants.ACADEMIC_MODULE_PROXY_IN_FUNCTION_NUMBER);
+		academicRecordModuleProxy.setInCsfClientServerCommunicationsClientVersionNumber(CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_VERSION);
+		academicRecordModuleProxy.setInCsfClientServerCommunicationsClientRevisionNumber(CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_REVISION);
+		academicRecordModuleProxy.setInCsfClientServerCommunicationsAction(communicationAction);
+		academicRecordModuleProxy.setInCsfClientServerCommunicationsClientDevelopmentPhase(CommonServicesConstants.PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_DEVELOPMENT_PHASE);
+		academicRecordModuleProxy.setInCreditsOnlyIefSuppliedFlag(isCreditsOnlyFlag);
+		academicRecordModuleProxy.setInStudentAcademicRecordMkQualificationCode(selectedQualificationCode);
+		academicRecordModuleProxy.setInStudentAcademicRecordMkStudentNr(studentNumber);
+		return academicRecordModuleProxy;
 	}
 
 	private void buildModules(List<AcademicModuleRecordInfo> records, Srasa01sLstAcademicRecordSun opList) {

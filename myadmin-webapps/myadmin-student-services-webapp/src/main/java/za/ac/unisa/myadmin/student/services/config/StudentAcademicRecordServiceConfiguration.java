@@ -6,8 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import za.ac.unisa.myadmin.contact.services.ContactService;
 import za.ac.unisa.myadmin.generic.services.EmailLogService;
-import za.ac.unisa.myadmin.generic.services.UnisaGenericService;
+import za.ac.unisa.myadmin.generic.services.GenericService;
 import za.ac.unisa.myadmin.module.services.AcademicModuleRecordService;
+import za.ac.unisa.myadmin.module.services.ModuleServicesConstants;
 import za.ac.unisa.myadmin.qualification.services.StudentAcademicRecordService;
 import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfiguration;
 import za.ac.unisa.myadmin.student.services.StudentService;
@@ -20,7 +21,7 @@ import za.ac.unisa.myadmin.student.services.impls.AcademicModuleRecordServiceImp
 import za.ac.unisa.myadmin.student.services.impls.ContactServiceImpl;
 import za.ac.unisa.myadmin.student.services.impls.EmailLogServiceImpl;
 import za.ac.unisa.myadmin.student.services.impls.StudentAcademicRecordServiceImpl;
-import za.ac.unisa.myadmin.student.services.impls.UnisaGenericServiceImpl;
+import za.ac.unisa.myadmin.student.services.impls.GenericServiceImpl;
 import za.ac.unisa.myadmin.student.services.repositories.ContactRepository;
 import za.ac.unisa.myadmin.student.services.repositories.EmailLogRepository;
 import za.ac.unisa.myadmin.student.services.repositories.GenericCodeRepository;
@@ -39,8 +40,8 @@ public class StudentAcademicRecordServiceConfiguration extends AbstractServiceCo
 	private String testEmailAddress;
 
 	@Bean(name = "genericServiceImpl")
-	public UnisaGenericService getUnisaGenericServiceImpl() {
-		UnisaGenericServiceImpl service = new UnisaGenericServiceImpl();
+	public GenericService getUnisaGenericServiceImpl() {
+		GenericServiceImpl service = new GenericServiceImpl();
 		service.setGenericMessageRepository(getBean(GenericMessageRepository.class));
 		service.setGenericCodeRepository(getBean(GenericCodeRepository.class));
 		return service;
@@ -117,6 +118,6 @@ public class StudentAcademicRecordServiceConfiguration extends AbstractServiceCo
 		AcademicModuleRecordRestServiceImpl restServiceImpl = new AcademicModuleRecordRestServiceImpl();
 		restServiceImpl.setNextDecorator(getAcademicModuleRecordServiceDecorators());
 
-		return createRestEndpoint(restServiceImpl, "/rest/" + StudentServicesConstants.STUDENT_ACADEMIC_MODULE_RECORD_SERVICE_NAME);
+		return createRestEndpoint(restServiceImpl, "/rest/" + ModuleServicesConstants.STUDENT_ACADEMIC_MODULE_RECORD_SERVICE_NAME);
 	}
 }

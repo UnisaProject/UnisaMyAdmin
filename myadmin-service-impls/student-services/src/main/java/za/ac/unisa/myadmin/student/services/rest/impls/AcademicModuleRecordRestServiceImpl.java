@@ -17,5 +17,4 @@ public class AcademicModuleRecordRestServiceImpl extends AcademicModuleRecordSer
 		return getNextDecorator().requestStudentAcademicModuleResults(studentNumber, isCreditsOnly, selectedQualificationCode);
 	}
 
-
 }

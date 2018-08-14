@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Adrian on 2018-07-27.
  */
-public interface UnisaGenericService {
+public interface GenericService {
 
 	List<GenericCodeInfo> getGenericCodesByCategoryOrdered(Integer genericCategoryCode, String orderBy) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 

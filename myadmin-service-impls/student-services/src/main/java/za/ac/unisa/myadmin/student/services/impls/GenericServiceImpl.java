@@ -6,7 +6,8 @@ import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.generic.dto.GenericCodeInfo;
 import za.ac.unisa.myadmin.generic.dto.GenericMessageInfo;
-import za.ac.unisa.myadmin.generic.services.UnisaGenericService;
+import za.ac.unisa.myadmin.generic.services.GenericServicesConstants;
+import za.ac.unisa.myadmin.generic.services.GenericService;
 import za.ac.unisa.myadmin.student.services.jpa.models.GenericCodeEntity;
 import za.ac.unisa.myadmin.student.services.jpa.models.GenericMessageEntity;
 import za.ac.unisa.myadmin.student.services.jpa.models.GenericMessageEntityId;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Adrian on 2018-07-27.
  */
-public class UnisaGenericServiceImpl implements UnisaGenericService {
+public class GenericServiceImpl implements GenericService {
 
 	private GenericCodeRepository genericCodeRepository;
 
@@ -36,26 +37,26 @@ public class UnisaGenericServiceImpl implements UnisaGenericService {
 
 	@Override
 	public List<GenericCodeInfo> getGenericCodesByCategoryOrdered(Integer genericCategoryCode, String orderBy) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		List<GenericCodeEntity> entity;
+		List<GenericCodeEntity> entities;
 		try {
 			switch (orderBy) {
-				case "code":
-					entity = genericCodeRepository.findByGenericCategoryCodeOrderByCode(genericCategoryCode);
+				case GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_CODE:
+					entities = genericCodeRepository.findByGenericCategoryCodeOrderByCode(genericCategoryCode);
 					break;
-				case "english":
-					entity = genericCodeRepository.findByGenericCategoryCodeOrderByEnglishDescription(genericCategoryCode);
+				case GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_ENG:
+					entities = genericCodeRepository.findByGenericCategoryCodeOrderByEnglishDescription(genericCategoryCode);
 					break;
-				case "afrikaans":
-					entity = genericCodeRepository.findByGenericCategoryCodeOrderByAfrikaansDescription(genericCategoryCode);
+				case GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_AFR:
+					entities = genericCodeRepository.findByGenericCategoryCodeOrderByAfrikaansDescription(genericCategoryCode);
 					break;
-				case "inuse":
-					entity = genericCodeRepository.findByGenericCategoryCodeOrderByInUse(genericCategoryCode);
+				case GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_INUSE:
+					entities = genericCodeRepository.findByGenericCategoryCodeOrderByInUse(genericCategoryCode);
 					break;
 				default:
-					entity = genericCodeRepository.findByGenericCategoryCode(genericCategoryCode);
+					entities = genericCodeRepository.findByGenericCategoryCode(genericCategoryCode);
 			}
 
-			return entity.stream()
+			return entities.stream()
 				.map(GenericCodeEntity::toDto)
 				.collect(Collectors.toList());
 		} catch (Exception e) {

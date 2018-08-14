@@ -23,9 +23,9 @@ public class EmailLogServiceImpl implements EmailLogService {
 	}
 
 	@Override
-	public EmailLogInfo getLastestEmailRequestForAcademicRecord(String recipient, String program, String emailType, String reqSystem, String regProgram, String emailBody) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public EmailLogInfo getLastestEmailRequestForAcademicRecord(String recipient, String program, String emailType, String reqSystem, String reqProgram, String emailBody) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		try {
-			return emailLogRepository.findByRecipientAndProgramAndEmailTypeAndReqSystemAndReqProgramAndBodyAllIgnoreCase(recipient, program, emailType, reqSystem, regProgram, emailBody)
+			return emailLogRepository.findByRecipientAndProgramAndEmailTypeAndReqSystemAndReqProgramAndBodyAllIgnoreCase(recipient, program, emailType, reqSystem, reqProgram, emailBody)
 				.stream()
 				.map(EmailLogEntity::toDto)
 				.max(Comparator.comparing(EmailLogInfo::getDateSent))

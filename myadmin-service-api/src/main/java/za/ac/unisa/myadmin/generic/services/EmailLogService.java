@@ -17,7 +17,7 @@ public interface EmailLogService {
 	 * @param program
 	 * @param emailType
 	 * @param reqSystem
-	 * @param regProgram
+	 * @param reqProgram
 	 * @param emailBody
 	 * @return
 	 * @throws MissingParameterException
@@ -25,5 +25,5 @@ public interface EmailLogService {
 	 * @throws OperationFailedException
 	 * @throws DoesNotExistException
 	 */
-	EmailLogInfo getLastestEmailRequestForAcademicRecord(String recipient, String program, String emailType, String reqSystem, String regProgram, String emailBody) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+	EmailLogInfo getLastestEmailRequestForAcademicRecord(String recipient, String program, String emailType, String reqSystem, String reqProgram, String emailBody) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 }
