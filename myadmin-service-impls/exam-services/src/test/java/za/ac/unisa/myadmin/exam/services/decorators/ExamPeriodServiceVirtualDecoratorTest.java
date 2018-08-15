@@ -1,64 +1,55 @@
 package za.ac.unisa.myadmin.exam.services.decorators;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
+import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
+import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
+import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
+import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
+import za.ac.unisa.myadmin.exam.services.dto.ExamAdmissionInfo;
+import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import za.ac.unisa.myadmin.TestApplication;
-import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamPeriodServiceVirtualDecorator;
-import za.ac.unisa.myadmin.exam.services.dto.ExamPeriodInfo;
-import za.ac.unisa.myadmin.exam.services.jpa.models.ExamAdmissionEntity;
-import za.ac.unisa.myadmin.exam.services.jpa.models.ExamPeriodEntity;
-import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
-import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * ExamPeriodServiceVirtualDecorator Tester.
  *
  */
-@RunWith(SpringRunner.class)
-@Import(TestApplication.class)
 public class ExamPeriodServiceVirtualDecoratorTest {
 
-	private List<Integer> codes;
+	private static final List<Integer> CODES = Arrays.asList(1, 13, 14);
 
-	@Autowired
-	@Qualifier("ExamPeriodServiceVirtualDecorator")
-	private ExamPeriodService examPeriodService;
+	private static ExamPeriodServiceVirtualDecorator decorator;
 
-	@MockBean
-	private ExamAdmissionRepository examAdmissionRepository;
 
-	@MockBean
-	private ExamPeriodRepository examPeriodRepository;
+	private static ExamPeriodService createMockExamPeriodService() throws OperationFailedException, InvalidParameterException, MissingParameterException {
+		ExamPeriodService service = mock(ExamPeriodService.class);
 
-	@TestConfiguration
-	static class ExamPeriodServiceImplTestContextConfiguration {
-		@Bean
-		public ExamPeriodService examPeriodService() {
-			return new ExamPeriodServiceVirtualDecorator();
-		}
+		List<ExamPeriodInfo> examPeriodInfos = new ArrayList<>();
+		examPeriodInfos.add(new ExamPeriodInfo(){{
+			setCode(1);
+			setExamType("T1");
+		}});
+
+		when(service.getExamPeriods()).thenReturn(examPeriodInfos);
+		when(service.getExamPeriodsByCodes(CODES)).thenReturn(examPeriodInfos);
+		return service;
 	}
-	@Before
-	public void before() throws Exception {
-		List<ExamAdmissionEntity> list = new ArrayList<>();
-		List<ExamAdmissionEntity> list2 = new ArrayList<>();
-		ExamAdmissionEntity entity = new ExamAdmissionEntity();
-		ExamAdmissionEntity entity2 = new ExamAdmissionEntity();
+
+	private static ExamAdmissionService createMockExamAdmissionService() throws Exception {
+		ExamAdmissionService service = mock(ExamAdmissionService.class);
+		List<ExamAdmissionInfo> list = new ArrayList<>();
+		List<ExamAdmissionInfo> list2 = new ArrayList<>();
+		ExamAdmissionInfo entity = new ExamAdmissionInfo();
+		ExamAdmissionInfo entity2 = new ExamAdmissionInfo();
 		entity.setYear(2018);
 		entity.setExamPeriodCode(1);
 		entity.setAdmissionDone(true);
@@ -69,31 +60,18 @@ public class ExamPeriodServiceVirtualDecoratorTest {
 		entity2.setAdmissionDone(true);
 		entity2.setExamType(1);
 		list2.add(entity2);
-		List<ExamPeriodEntity> examPeriodEntities = new ArrayList<>();
-		ExamPeriodEntity examPeriodEntity = new ExamPeriodEntity();
-		examPeriodEntity.setCode(1);
-		examPeriodEntity.setAfrDescription("Toets 1");
-		examPeriodEntity.setAfrShortDescription("T1");
-		examPeriodEntity.setEngDescription("Test 1");
-		examPeriodEntity.setEngShortDescription("T1");
-		examPeriodEntities.add(examPeriodEntity);
-		codes = new ArrayList<Integer>();
-		codes.add(1);
-		codes.add(13);
-		codes.add(14);
-		when(examAdmissionRepository.findByYearAndExamPeriodCode(2018, 1)).thenReturn(list);
-		when(examAdmissionRepository.findByYearAndExamPeriodCode(2018, 6)).thenReturn(list2);
-		when(examPeriodRepository.findAll()).thenReturn(examPeriodEntities);
-		when(examPeriodRepository.findAllById(codes)).thenReturn(examPeriodEntities);
+
+		when(service.getExamAdmissionsByYearAndExamPeriodCode(2018, 1)).thenReturn(list);
+		when(service.getExamAdmissionsByYearAndExamPeriodCode(2018, 6)).thenReturn(list2);
+		return service;
 	}
 
-	/**
-	 * Method: getExamPeriod(Integer code)
-	 */
-//	@Test
-//	public void testGetExamPeriod() throws Exception {
-////TODO: Test goes here...
-//	}
+	@BeforeClass
+	public static void beforeClass() throws Exception {
+		decorator = new ExamPeriodServiceVirtualDecorator();
+		decorator.setExamAdmissionService(createMockExamAdmissionService());
+		decorator.setNextDecorator(createMockExamPeriodService());
+	}
 
 	/**
 	 * Method: getExamPeriods()
@@ -104,7 +82,7 @@ public class ExamPeriodServiceVirtualDecoratorTest {
 		// Periods:{1,8,13}
 		// Years:{2017,2018,2018}
 		//when
-		List<ExamPeriodInfo> foundList = examPeriodService.getExamPeriods();
+		List<ExamPeriodInfo> foundList = decorator.getExamPeriods();
 		//then
 		assertThat(foundList.size()).isEqualTo(3);
 	}
@@ -118,7 +96,7 @@ public class ExamPeriodServiceVirtualDecoratorTest {
 		// Codes:{1,13,14}
 		// Years:{2017,2018,2019}
 		//when
-		List<ExamPeriodInfo> foundList = examPeriodService.getExamPeriodsByCodes(codes);
+		List<ExamPeriodInfo> foundList = decorator.getExamPeriodsByCodes(CODES);
 		//then
 		assertThat(foundList.size()).isEqualTo(3);
 	}
@@ -142,4 +120,4 @@ public class ExamPeriodServiceVirtualDecoratorTest {
 
 	}
 
-} 
+}

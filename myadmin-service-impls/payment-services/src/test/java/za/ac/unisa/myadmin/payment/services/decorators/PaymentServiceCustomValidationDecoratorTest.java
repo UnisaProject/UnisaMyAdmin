@@ -36,9 +36,8 @@ public class PaymentServiceCustomValidationDecoratorTest {
 		// CASE 3: test with zero value and zero test disabled
 		try {
 			testService.validateAmount(paymentInfo.getStudyFeeAmount(), "Study fee", false);
-			fail("Should have thrown an error.");
 		} catch (NullPointerException | InvalidParameterException e) {
-			// Error expected.
+			fail("Should not have thrown an error.");
 		}
 
 		// CASE 4: test with zero value and zero test enabled

@@ -1,46 +1,23 @@
 package za.ac.unisa.myadmin.exam.services.decorators;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import za.ac.unisa.myadmin.TestApplication;
+import org.mockito.Mockito;
 import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamAdmissionServiceYearCalculationDecorator;
 
 /**
  * ExamAdmissionServiceYearCalculationDecorator Tester.
  *
  */
-@RunWith(SpringRunner.class)
-@Import(TestApplication.class)
 public class ExamAdmissionServiceYearCalculationDecoratorTest {
 
-	@Autowired
-	@Qualifier("ExamAdmissionServiceYearCalculationDecorator")
-	private ExamAdmissionService examAdmissionService;
+	private static ExamAdmissionServiceYearCalculationDecorator decorator;
 
-	@TestConfiguration
-	static class ExamAdmissionServiceImplTestContextConfiguration {
-		@Bean
-		public ExamAdmissionService examAdmissionService() {
-			return new ExamAdmissionServiceYearCalculationDecorator();
-		}
-	}
 
-	@Before
-	public void before() throws Exception {
-	}
-
-	@After
-	public void after() throws Exception {
+	@BeforeClass
+	public static void beforeClass() {
+		decorator = new ExamAdmissionServiceYearCalculationDecorator();
+		decorator.setNextDecorator(Mockito.mock(ExamAdmissionService.class));
 	}
 
 	/**
@@ -48,7 +25,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissions() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -56,7 +33,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByYear() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -64,7 +41,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByExamPeriodCode() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -72,7 +49,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByExamType() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -80,7 +57,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByYearAndExamPeriodCode() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -88,7 +65,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByYearAndExamType() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -96,7 +73,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByExamPeriodCodeAndExamType() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 	/**
@@ -104,7 +81,7 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 	 */
 	@Test
 	public void testGetExamAdmissionsByYearAndExamPeriodCodeAndExamType() throws Exception {
-//TODO: Test goes here... 
+//TODO: Test goes here...
 	}
 
 
@@ -116,4 +93,4 @@ public class ExamAdmissionServiceYearCalculationDecoratorTest {
 //TODO: Test goes here...
 	}
 
-} 
+}
