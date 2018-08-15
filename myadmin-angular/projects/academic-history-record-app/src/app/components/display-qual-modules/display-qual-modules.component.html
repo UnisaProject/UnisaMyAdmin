@@ -17,10 +17,10 @@
       <div class="col">
         <h5>Academic Record</h5>
         <div *ngIf="creditsOnly == 'Y'">
-          <h5>Credits Only for {{qualLongDescription}}</h5>
+          <h5>Credits Only for {{selectedAcademicQualification?.qualDisplayDescription}}</h5>
         </div>
         <div *ngIf="creditsOnly == 'N'">
-          <h5>All Results for {{qualLongDescription}}</h5>
+          <h5>All Results for {{selectedAcademicQualification?.qualDisplayDescription}}</h5>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
         <div class="col-sm-2">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-sm-6">{{ studentInfo?.name }}</div>
+        <div class="col-sm-6">{{ studentInfo?.surname }}  {{ studentInfo?.initials }}  {{ studentInfo?.title }}</div>
       </div>
     </div>
     <br>
@@ -54,8 +54,6 @@
           class="form-control"
           id="creditOnly"
           name="creditOnly">
-          <!--formControlName="creditOnly"-->
-          <!--[compareWith]="creditOnly">-->
           <option value="N">Display all study units</option>
           <option value="Y">Display credits only</option>
         </select>
@@ -83,6 +81,6 @@
     </table>
   </div>
   <div class="form-group">
-    <button type="button" class="btn btn-icon btn-primary" (click)="cancel()"> Cancel</button>
+    <button type="button" class="btn btn-icon btn-primary" (click)="back()"> Back</button>
   </div>
 </div>

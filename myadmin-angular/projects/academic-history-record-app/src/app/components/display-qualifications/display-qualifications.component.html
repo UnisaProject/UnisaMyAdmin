@@ -32,8 +32,8 @@
           <button type="submit" class="btn btn-icon btn-primary" [disabled]="studentInputForm.invalid">Display</button>
         </div>
       </form>
-      <hr/>
       <br>
+      <hr/>
       <div class="row">
         <div class="col-sm-2">
           <p class="font-weight-bold">Student Number</p>
@@ -44,7 +44,7 @@
         <div class="col-sm-2">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-sm-6">{{ studentInfo?.name }}</div>
+        <div class="col-sm-6">{{ studentInfo?.surname }}  {{ studentInfo?.initials }}  {{ studentInfo?.title }}</div>
       </div>
     </div>
     <div *ngIf="isStudent">
@@ -68,8 +68,7 @@
       <tbody>
       <tr *ngFor="let qualRecord of academicQualificationRecords">
         <td><a [routerLink]="" (click)="viewModuleResults(qualRecord)">{{ qualRecord.qualificationCode }}</a></td>
-        <!--<td>{{ qualRecord.qualificationCode }}</td>-->
-        <td>{{ qualRecord.qualDescription }}</td>
+        <td>{{ qualRecord.qualShortDescription }}</td>
         <td>{{ qualRecord.firstRegistrationDate | date: 'yyyy' }}</td>
         <td>{{ qualRecord.lastRegistrationYear }}</td>
         <td>{{ qualRecord.status }}</td>

@@ -1,3 +1,3 @@
-export * from './academic-module-result-info';
-export * from './academic-qual-result-info';
+export * from './academic-module-record-info';
+export * from './student-academic-qualification-record-info';
 
