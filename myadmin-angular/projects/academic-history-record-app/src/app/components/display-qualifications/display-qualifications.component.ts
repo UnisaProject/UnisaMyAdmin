@@ -3,8 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {Router} from "@angular/router";
 import {StudentInfo, StudentService}from 'myadmin-lib';
-import {AcademicQualResultInfo} from '../../info-objects';
-import {AcademicRecordModuleService} from '../../services/academic-record-module.service';
+import {StudentAcademicQualificationRecordInfo} from '../../info-objects';
+import {AcademicRecordService} from '../../services/academic-record.service';
+import {SearchCriteriaService} from '../../services/search-criteria.service';
 
 @Component({
   selector: 'unisa-display-qualifications',
@@ -13,13 +14,11 @@ import {AcademicRecordModuleService} from '../../services/academic-record-module
 })
 export class DisplayQualificationsComponent implements OnInit {
 
-  public today: Date;
-
   isStudent :boolean=false;
 
   public studentInfo: StudentInfo;
 
-  public academicQualificationRecords: AcademicQualResultInfo[] = [];
+  public academicQualificationRecords: StudentAcademicQualificationRecordInfo[] = [];
 
   studentInputForm: FormGroup;
 
@@ -28,18 +27,9 @@ export class DisplayQualificationsComponent implements OnInit {
 
   constructor(private router :Router,
               private formBuilder: FormBuilder,
-              private academicRecordModuleService : AcademicRecordModuleService) {
-    this.today = new Date();
-    const academicQualificationRecord: AcademicQualResultInfo = {
-      studentNumber: 12345,
-      firstRegistration : this.today,
-      status : "Qualification Completed",
-      qualDescription : "PGCE(SPFET)",
-      lastRegistrationYear : 2016,
-      gradCeremonyDate:'',
-      auditFlag:true,
-      qualificationCode : "03980"};
-    this.academicQualificationRecords.push(academicQualificationRecord);
+              private academicRecordService : AcademicRecordService,
+              private searchCriteriaService : SearchCriteriaService,
+              private studentService : StudentService) {
     this.initForm();
   }
 
@@ -59,15 +49,42 @@ export class DisplayQualificationsComponent implements OnInit {
 
   ngOnInit() {
     this.blockUI.stop();
+    // If there is no search criteria navigate back to the search screen
+    if(this.searchCriteriaService.studentInfo === null || this.searchCriteriaService.academicQualResults === null){
+      this.router.navigate(["acadHistoryInput"]);
+      return;
+    }
+    this.studentInfo = this.searchCriteriaService.studentInfo;
+    this.academicQualificationRecords = [...this.searchCriteriaService.academicQualResults];
   }
 
-  viewModuleResults(studentQual: AcademicQualResultInfo) {
+  viewModuleResults(selectedQual: StudentAcademicQualificationRecordInfo) {
+    this.searchCriteriaService.selectedQualification = {...selectedQual};
     this.router.navigateByUrl('/academicRecordModules');
-   // this.router.navigate(['/viewCourse', studentQual.studentNumber, studentQual.qualificationCode]);
   }
 
   studentExists():boolean {
     return true; //this.studentInfo == null;
+  }
+
+  onSubmit() {
+    this.blockUI.start("Loading qualifications...");
+    this.studentService.getStudentByStudentNumber(this.studentInputForm.value.studentNumber).subscribe((studentInfo:StudentInfo)=> {
+      // Copy the data to the service
+      this.searchCriteriaService.studentInfo = {...studentInfo};
+      this.studentInfo = {...studentInfo};
+
+      this.academicRecordService.getStudentAcademicQualificationResults(studentInfo.studentNumber).subscribe((studentAcadQualInfos:StudentAcademicQualificationRecordInfo[])=> {
+        this.searchCriteriaService.academicQualResults = [...studentAcadQualInfos];
+        this.academicQualificationRecords = [...studentAcadQualInfos];
+        this.blockUI.stop();
+      }, (error)=> {
+        this.blockUI.stop();
+      });
+    }, (error)=> {
+      this.blockUI.stop();
+    });
+
   }
 
 }

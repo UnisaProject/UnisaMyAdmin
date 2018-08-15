@@ -1,4 +1,4 @@
-export interface AcademicQualResultInfo {
+export interface StudentAcademicQualificationRecordInfo {
 
   studentNumber:number;
 
@@ -6,13 +6,17 @@ export interface AcademicQualResultInfo {
 
   firstRegistration:Date;
 
-  qualDescription:string;
+  qualShortDescription:string;
+
+  qualDisplayDescription:string;
+
+  qualLongDescription:string;
 
   status:string;
 
   lastRegistrationYear:number;
 
   gradCeremonyDate:string;
-  
+
   auditFlag:boolean;
 }

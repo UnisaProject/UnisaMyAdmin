@@ -9,6 +9,10 @@ export class StudentService {
   constructor(private http:HttpClient) {
   }
 
+  getStudentByStudentNumber(studentNumber:number):Observable<StudentInfo> {
+    return this.http.get<StudentInfo>(`/myadmin-student-services/services/rest/studentservice/students/${studentNumber}`);
+  }
+
   getStudentsBySurname(surname:string):Observable<StudentInfo[]> {
     const params = new HttpParams().set('surname', <string><any>surname);
 
