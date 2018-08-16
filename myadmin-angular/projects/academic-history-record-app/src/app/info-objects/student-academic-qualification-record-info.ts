@@ -19,4 +19,6 @@ export interface StudentAcademicQualificationRecordInfo {
   gradCeremonyDate:string;
 
   auditFlag:boolean;
+
+  academicRequestEmailFlag:string;
 }

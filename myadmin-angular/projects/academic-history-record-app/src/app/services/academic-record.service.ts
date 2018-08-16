@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ErrorInfo}from 'myadmin-lib';
-import {StudentAcademicQualificationRecordInfo} from './../info-objects';
+import {AcademicRecordEmailRequestInfo, StudentAcademicQualificationRecordInfo} from './../info-objects';
 
 @Injectable()
 export class AcademicRecordService {
@@ -17,13 +17,7 @@ export class AcademicRecordService {
     });
   }
 
-  sendStudentAcademicQualificationEmail(studentNumber: number, academicQualCode: string, isAttachMarks: boolean): Observable<ErrorInfo> {
-    return this.http.get<ErrorInfo>('/myadmin-student-services/services/rest/studentacademicrecordservice/academicrecord/email',{
-      params : {
-        studentNumber: <string><any>studentNumber,
-        academicQualCode: <string><any>academicQualCode,
-        isAttachMarks: <string><any>isAttachMarks
-      }
-    });
+  sendStudentAcademicQualificationEmail(emailRequestInfo :AcademicRecordEmailRequestInfo): Observable<ErrorInfo> {
+    return this.http.post<ErrorInfo>('/myadmin-student-services/services/rest/studentacademicrecordservice/academicrecord/email',emailRequestInfo);
   }
 }

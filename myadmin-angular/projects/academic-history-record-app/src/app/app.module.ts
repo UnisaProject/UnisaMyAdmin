@@ -22,6 +22,7 @@ import '@clr/icons/shapes/all-shapes';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MyadminLibModule, HttpErrorInterceptor, StudentService} from "myadmin-lib";
+import { MarkfilterPipe } from './pipes/markfilter.pipe';
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
@@ -31,7 +32,8 @@ export const HttpInterceptorProviders = [
     AppComponent,
     AcadHistoryInputComponent,
     DisplayQualificationsComponent,
-    DisplayQualModulesComponent
+    DisplayQualModulesComponent,
+    MarkfilterPipe
   ],
   imports: [
     AppRoutingModule,
