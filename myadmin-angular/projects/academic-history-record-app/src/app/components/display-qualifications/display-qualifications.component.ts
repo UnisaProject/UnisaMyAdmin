@@ -64,17 +64,18 @@ export class DisplayQualificationsComponent implements OnInit {
   }
 
   studentExists():boolean {
+    // TODO replace with role check from CAS etc
     return true; //this.studentInfo == null;
   }
 
   onSubmit() {
     this.blockUI.start("Loading qualifications...");
     this.studentService.getStudentByStudentNumber(this.studentInputForm.value.studentNumber).subscribe((studentInfo:StudentInfo)=> {
-      // Copy the data to the service
-      this.searchCriteriaService.studentInfo = {...studentInfo};
-      this.studentInfo = {...studentInfo};
 
       this.academicRecordService.getStudentAcademicQualificationResults(studentInfo.studentNumber).subscribe((studentAcadQualInfos:StudentAcademicQualificationRecordInfo[])=> {
+        // Copy the data to the service
+        this.searchCriteriaService.studentInfo = {...studentInfo};
+        this.studentInfo = {...studentInfo};
         this.searchCriteriaService.academicQualResults = [...studentAcadQualInfos];
         this.academicQualificationRecords = [...studentAcadQualInfos];
         this.blockUI.stop();

@@ -1,22 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {Router} from "@angular/router";
 import {ErrorInfo, StudentInfo, ToasterNotificationService}from 'myadmin-lib';
-import {AcademicModuleRecordInfo,StudentAcademicQualificationRecordInfo} from '../../info-objects';
+import {AcademicRecordEmailRequestInfo, AcademicModuleRecordInfo,StudentAcademicQualificationRecordInfo} from '../../info-objects';
 import {AcademicRecordService} from '../../services/academic-record.service';
 import {AcademicRecordModuleService} from '../../services/academic-record-module.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
+import {MarkfilterPipe} from '../../pipes/markfilter.pipe';
 
 @Component({
   selector: 'unisa-display-qual-modules',
   templateUrl: './display-qual-modules.component.html',
-  styleUrls: ['./display-qual-modules.component.scss']
+  styleUrls: ['./display-qual-modules.component.scss'],
+  providers : [MarkfilterPipe]
 })
 export class DisplayQualModulesComponent implements OnInit {
 
-  creditsOnly:string='N';
+  academicModulesForm: FormGroup;
 
   isStudent :boolean=false;
+
+  emailRequestInfo :AcademicRecordEmailRequestInfo;
 
   public studentInfo: StudentInfo;
 
@@ -27,11 +32,18 @@ export class DisplayQualModulesComponent implements OnInit {
   @BlockUI()
   private blockUI: NgBlockUI;
 
-  constructor(private router :Router,
+  constructor(private formBuilder: FormBuilder,
+              private router :Router,
               private academicRecordModuleService : AcademicRecordModuleService,
               private academicRecordService : AcademicRecordService,
               private searchCriteriaService : SearchCriteriaService,
-              private toaster : ToasterNotificationService) {
+              private toaster : ToasterNotificationService,
+              private markfilterPipe: MarkfilterPipe) {
+    this.studentInfo = {...this.searchCriteriaService.studentInfo};
+    this.selectedAcademicQualification = {...this.searchCriteriaService.selectedQualification};
+    this.academicModulesForm = this.formBuilder.group({
+      creditsOnly : ["N"]
+    });
   }
 
   ngOnInit() {
@@ -40,8 +52,8 @@ export class DisplayQualModulesComponent implements OnInit {
       this.router.navigate(["academicRecord"]);
       return;
     }
-    this.studentInfo = {...this.searchCriteriaService.studentInfo};
-    this.selectedAcademicQualification = {...this.searchCriteriaService.selectedQualification};
+   // this.studentInfo = {...this.searchCriteriaService.studentInfo};
+    //this.selectedAcademicQualification = {...this.searchCriteriaService.selectedQualification};
     this.getAcademicRecordModuleList();
   }
 
@@ -50,7 +62,8 @@ export class DisplayQualModulesComponent implements OnInit {
     this.academicRecordModuleService.getStudentAcademicModuleResults(this.studentInfo.studentNumber, this.selectedAcademicQualification.qualificationCode, false)
       .subscribe(
         (modules:AcademicModuleRecordInfo[]) => {
-          this.academicModuleRecords = modules;
+          this.searchCriteriaService.qualModuleResults = [...modules];
+          this.academicModuleRecords = [...modules];
           this.blockUI.stop();
         },
         () => {
@@ -60,17 +73,35 @@ export class DisplayQualModulesComponent implements OnInit {
   }
 
   studentExists():boolean {
-    // return this.studentInfo == null;
+    // TODO replace with role check from CAS etc
     return true;
   }
 
   canEmailResults(){
-    return true;
+    if(this.selectedAcademicQualification) {
+      return this.selectedAcademicQualification.academicRequestEmailFlag === 'E';
+    }
+    return false;
+  }
+
+  /**
+   * Update list according view selector 
+   * @param event
+   */
+  filterMarks(event) :void{
+    if(event.target.value && event.target.value === 'Y'){
+      this.academicModuleRecords = this.markfilterPipe.transform(this.academicModuleRecords, 50);
+    }else{
+      this.academicModuleRecords = [...this.searchCriteriaService.qualModuleResults];
+    }
   }
 
   emailResults(sendMarks :boolean){
     this.blockUI.start("Sending email...");
-    this.academicRecordService.sendStudentAcademicQualificationEmail(this.studentInfo.studentNumber, this.selectedAcademicQualification.qualificationCode, sendMarks)
+    this.emailRequestInfo.studentNumber = this.studentInfo.studentNumber;
+    this.emailRequestInfo.academicQualificationCode = this.selectedAcademicQualification.qualificationCode;
+    this.emailRequestInfo.isAttachMarks = sendMarks;
+    this.academicRecordService.sendStudentAcademicQualificationEmail(this.emailRequestInfo)
       .subscribe(
         (emailMessage:ErrorInfo) => {
           if(emailMessage){
