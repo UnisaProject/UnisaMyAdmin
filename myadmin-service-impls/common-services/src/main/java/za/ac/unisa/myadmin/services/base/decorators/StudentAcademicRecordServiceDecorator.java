@@ -6,6 +6,7 @@ import za.ac.unisa.myadmin.common.exceptions.InvalidParameterException;
 import za.ac.unisa.myadmin.common.exceptions.MissingParameterException;
 import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.qualification.services.StudentAcademicRecordService;
+import za.ac.unisa.myadmin.qualification.services.dto.AcademicRecordEmailRequestInfo;
 import za.ac.unisa.myadmin.qualification.services.dto.StudentAcademicQualificationRecordInfo;
 
 import java.util.List;
@@ -26,13 +27,13 @@ public class StudentAcademicRecordServiceDecorator implements StudentAcademicRec
 	}
 
 	@Override
-	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return getNextDecorator().requestStudentAcademicQualificationResults(studentNumber);
+	public List<StudentAcademicQualificationRecordInfo> getStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		return getNextDecorator().getStudentAcademicQualificationResults(studentNumber);
 	}
 
 	@Override
-	public ErrorInfo requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return getNextDecorator().requestStudentAcademicRecordEmail(studentNumber, academicQualificationCode, isAttachMarks);
+	public ErrorInfo sendStudentAcademicRecordEmail(AcademicRecordEmailRequestInfo emailRequestInfo) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		return getNextDecorator().sendStudentAcademicRecordEmail(emailRequestInfo);
 	}
 
 	@Override

@@ -16,13 +16,13 @@ import java.util.List;
 public class AcademicModuleRecordServiceValidationDecorator extends AcademicModuleRecordServiceDecorator implements AcademicModuleRecordService {
 
 	@Override
-	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public List<AcademicModuleRecordInfo> getAcademicModules(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (String.valueOf(studentNumber).length() < 7) {
 			throw new OperationFailedException("Student Number can not be less than 7 characters");
 		}
 		if (String.valueOf(studentNumber).length() > 8) {
 			throw new OperationFailedException("Student Number can not be greater than 8 characters");
 		}
-		return getNextDecorator().requestStudentAcademicModuleResults(studentNumber, isCreditsOnly, selectedQualificationCode);
+		return getNextDecorator().getAcademicModules(studentNumber, isCreditsOnly, selectedQualificationCode);
 	}
 }

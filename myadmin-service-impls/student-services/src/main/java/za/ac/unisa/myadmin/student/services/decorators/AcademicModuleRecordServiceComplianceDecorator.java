@@ -17,13 +17,13 @@ import java.util.List;
 public class AcademicModuleRecordServiceComplianceDecorator extends AcademicModuleRecordServiceDecorator implements AcademicModuleRecordService {
 
 	@Override
-	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public List<AcademicModuleRecordInfo> getAcademicModules(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		if (studentNumber == null) {
 			throw new MissingParameterException("Please enter a valid student number.");
 		}
 		if (!StringUtils.hasText(selectedQualificationCode)) {
 			throw new MissingParameterException("Please enter a valid qualification code.");
 		}
-		return getNextDecorator().requestStudentAcademicModuleResults(studentNumber, isCreditsOnly, selectedQualificationCode);
+		return getNextDecorator().getAcademicModules(studentNumber, isCreditsOnly, selectedQualificationCode);
 	}
 }

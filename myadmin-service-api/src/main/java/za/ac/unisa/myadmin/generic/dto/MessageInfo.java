@@ -3,9 +3,11 @@ package za.ac.unisa.myadmin.generic.dto;
 import java.io.Serializable;
 
 /**
+ * This DTO represents the GenericMessageEntity class
+ * Displays messages stored on a table.
  * Created by Adrian on 2018-07-27.
  */
-public class GenericMessageInfo implements Serializable{
+public class MessageInfo implements Serializable{
 
 	private String messageCode;
 

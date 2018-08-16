@@ -38,7 +38,7 @@ public class ContactEntity implements Serializable {
 	private boolean cellPhoneVerified;
 
 	@Column(name = "COURIER_CONTACT_NO")
-	private String courierContactNo;
+	private String courierContactNumber;
 
 	@Column(name = "EMAIL_ADDRESS")
 	private String emailAddress;
@@ -65,7 +65,7 @@ public class ContactEntity implements Serializable {
 		info.setAddressCategoryCode(this.addressCategoryCode);
 		info.setCellNumber(this.cellNumber);
 		info.setCellPhoneVerified(this.cellPhoneVerified);
-		info.setCourierContactNo(this.courierContactNo);
+		info.setCourierContactNumber(this.courierContactNumber);
 		info.setEmailAddress(this.emailAddress);
 		info.setEmailVerified(this.emailVerified);
 		info.setFaxNumber(this.faxNumber);
@@ -113,12 +113,12 @@ public class ContactEntity implements Serializable {
 		this.cellPhoneVerified = cellPhoneVerified;
 	}
 
-	public String getCourierContactNo() {
-		return courierContactNo;
+	public String getCourierContactNumber() {
+		return courierContactNumber;
 	}
 
-	public void setCourierContactNo(String courierContactNo) {
-		this.courierContactNo = courierContactNo;
+	public void setCourierContactNumber(String courierContactNumber) {
+		this.courierContactNumber = courierContactNumber;
 	}
 
 	public String getEmailAddress() {

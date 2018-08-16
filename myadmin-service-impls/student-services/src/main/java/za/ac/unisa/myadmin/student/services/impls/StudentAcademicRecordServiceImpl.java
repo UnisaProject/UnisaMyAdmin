@@ -11,11 +11,13 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.common.services.CommonServicesConstants;
 import za.ac.unisa.myadmin.contact.services.ContactService;
 import za.ac.unisa.myadmin.contact.services.dto.ContactInfo;
-import za.ac.unisa.myadmin.generic.dto.GenericCodeInfo;
-import za.ac.unisa.myadmin.generic.dto.GenericMessageInfo;
+import za.ac.unisa.myadmin.generic.dto.CodeInfo;
+import za.ac.unisa.myadmin.generic.dto.MessageInfo;
+import za.ac.unisa.myadmin.generic.services.CodeService;
 import za.ac.unisa.myadmin.generic.services.GenericServicesConstants;
-import za.ac.unisa.myadmin.generic.services.GenericService;
+import za.ac.unisa.myadmin.generic.services.MessageService;
 import za.ac.unisa.myadmin.qualification.services.StudentAcademicRecordService;
+import za.ac.unisa.myadmin.qualification.services.dto.AcademicRecordEmailRequestInfo;
 import za.ac.unisa.myadmin.qualification.services.dto.StudentAcademicQualificationRecordInfo;
 import za.ac.unisa.myadmin.student.services.StudentServicesConstants;
 import za.ac.unisa.myadmin.student.services.jpa.models.StudentAcademicRecordEntity;
@@ -39,7 +41,9 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 
 	private String testEmailAddress;
 
-	private GenericService genericService;
+	private CodeService codeService;
+
+	private MessageService messageService;
 
 	private ContactService contactService;
 
@@ -53,8 +57,12 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 		this.testEmailAddress = testEmailAddress;
 	}
 
-	public void setGenericService(GenericService genericService) {
-		this.genericService = genericService;
+	public void setCodeService(CodeService codeService) {
+		this.codeService = codeService;
+	}
+
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
 	}
 
 	public void setContactService(ContactService contactService) {
@@ -66,7 +74,7 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 	}
 
 	@Override
-	public List<StudentAcademicQualificationRecordInfo> requestStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public List<StudentAcademicQualificationRecordInfo> getStudentAcademicQualificationResults(Integer studentNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		try {
 			List<StudentAcademicQualificationRecordInfo> returnResults = new ArrayList<>();
 			// Get result type list from general code table
@@ -96,10 +104,11 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 			if (StringUtils.isNotBlank(errorMsg)) {
 				throw new OperationFailedException(errorMsg);
 			}
-			List<GenericCodeInfo> genericCodeList = genericService.getGenericCodesByCategoryOrdered(GenericServicesConstants.UNISA_GENERIC_CODE_QUALIFICATION_STATUS, GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_CODE);
+			List<CodeInfo> genericCodeList = codeService.getCodesByCategoryOrdered(GenericServicesConstants.UNISA_GENERIC_CODE_QUALIFICATION_STATUS, GenericServicesConstants.UNISA_GENERIC_CODE_ORDERBY_CODE);
+			CodeInfo displayEmailCode = codeService.getCodeByCodeAndCategory("ARMYUNISA", 291);
 			// Place codes in map
 			codeMap = genericCodeList.stream().collect(
-				Collectors.toMap(GenericCodeInfo::getCode, GenericCodeInfo::getEnglishDescription));
+				Collectors.toMap(CodeInfo::getCode, CodeInfo::getEnglishDescription));
 
 			for (int i = 0; i < count; i++) {
 				StudentAcademicQualificationRecordInfo qualRecord = new StudentAcademicQualificationRecordInfo();
@@ -112,6 +121,15 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 				}
 				qualRecord.setLastRegistrationYear(Integer.valueOf(studentAcademicRecordProxy.getOutGStudentAcademicRecordLastAcademicRegistrationYear(i)));
 				qualRecord.setStatus(codeMap.get(studentAcademicRecordProxy.getOutGStudentAcademicRecordStatusCode(i)).toString());
+				//The proxy does not provide these fields.
+				StudentAcademicQualificationRecordInfo academicQualificationRecordInfo = this.getQualificationResultByStudentNumberAndQualCode(studentNumber, qualRecord.getQualificationCode());
+				qualRecord.setQualDisplayDescription(academicQualificationRecordInfo.getQualDisplayDescription());
+				qualRecord.setQualLongDescription(academicQualificationRecordInfo.getQualLongDescription());
+				//This probably doesn't belong here shortcut to test.
+				qualRecord.setAcademicRequestEmailFlag("E"); //Enable
+				if(displayEmailCode != null && displayEmailCode.getAfrikaansDescription()!=null && displayEmailCode.getAfrikaansDescription().trim().equalsIgnoreCase("N")){
+					qualRecord.setAcademicRequestEmailFlag("T"); //Temporarily disable
+				}
 				returnResults.add(qualRecord);
 			}
 			//TODO This system logged events in sakai.
@@ -122,13 +140,13 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 	}
 
 	@Override
-	public ErrorInfo requestStudentAcademicRecordEmail(Integer studentNumber, String academicQualificationCode, boolean isAttachMarks) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public ErrorInfo sendStudentAcademicRecordEmail(AcademicRecordEmailRequestInfo emailRequestInfo) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		String proxyEmailAddress;
 		String functionType;
 		//Get student email address
-		ContactInfo studentContactInfo = contactService.getContactInfoForReferenceAndType(studentNumber, StudentServicesConstants.ACADEMIC_RECORD_ADDRESS_CAT_UNISA_STUDENT);
+		ContactInfo studentContactInfo = contactService.getContactByReferenceAndType(emailRequestInfo.getStudentNumber(), StudentServicesConstants.ACADEMIC_RECORD_ADDRESS_CAT_UNISA_STUDENT);
 		if (studentContactInfo == null || StringUtils.isBlank(studentContactInfo.getEmailAddress()) || !studentContactInfo.getEmailAddress().toLowerCase().contains("mylife.unisa.ac.za")) {
-			GenericMessageInfo genMessageEnt = genericService.getGenericMessageById(GenericServicesConstants.UNISA_MESSAGECODE_EMAIL_NOMYLIFE, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
+			MessageInfo genMessageEnt = messageService.getMessageById(GenericServicesConstants.UNISA_MESSAGECODE_EMAIL_NOMYLIFE, GenericServicesConstants.UNISA_PROGRAM_ACADEMIC_HISTORY);
 			if (genMessageEnt != null) {
 				throw new InvalidParameterException(genMessageEnt.getMessage());
 			}
@@ -141,7 +159,7 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 			}
 			proxyEmailAddress = testEmailAddress;
 		}
-		StudentAcademicQualificationRecordInfo academicQualificationRecordInfo = this.getQualificationResultByStudentNumberAndQualCode(studentNumber, academicQualificationCode);
+		StudentAcademicQualificationRecordInfo academicQualificationRecordInfo = this.getQualificationResultByStudentNumberAndQualCode(emailRequestInfo.getStudentNumber(), emailRequestInfo.getAcademicQualificationCode());
 		if (academicQualificationRecordInfo.getGraduationCeremonyDate().toInstant().isBefore(Instant.now())) {
 			//ceremony Date is in the passed use F140
 			functionType = StudentServicesConstants.ACADEMIC_RECORD_FUNCTION_TYPE_NORMAL;
@@ -151,7 +169,7 @@ public class StudentAcademicRecordServiceImpl implements StudentAcademicRecordSe
 		}
 		//Call java email proxy to send results
 		try {
-			return executeEmailAcademicRecordProxy(studentNumber, proxyEmailAddress, academicQualificationCode, isAttachMarks, functionType);
+			return executeEmailAcademicRecordProxy(emailRequestInfo.getStudentNumber(), proxyEmailAddress, emailRequestInfo.getAcademicQualificationCode(), emailRequestInfo.isAttachMarks(), functionType);
 		} catch (PropertyVetoException e) {
 			throw new OperationFailedException(e);
 		}

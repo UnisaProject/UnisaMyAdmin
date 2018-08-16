@@ -16,6 +16,10 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 
 	private String qualShortDescription;
 
+	private String qualDisplayDescription;
+
+	private String qualLongDescription;
+
 	private String status;
 
 	private Integer lastRegistrationYear;
@@ -23,6 +27,13 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 	private Date graduationCeremonyDate;
 
 	private boolean auditFlag;
+
+	/*academicRequestEmailFlag values
+	 * E - enable button
+	 * D - disable button
+	 * T - temporary disabled
+	 * Enable Academic email buttons*/
+	private String academicRequestEmailFlag;
 
 	public StudentAcademicQualificationRecordInfo() {
 	}
@@ -59,6 +70,22 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 		this.qualShortDescription = qualShortDescription;
 	}
 
+	public String getQualDisplayDescription() {
+		return qualDisplayDescription;
+	}
+
+	public void setQualDisplayDescription(String qualDisplayDescription) {
+		this.qualDisplayDescription = qualDisplayDescription;
+	}
+
+	public String getQualLongDescription() {
+		return qualLongDescription;
+	}
+
+	public void setQualLongDescription(String qualLongDescription) {
+		this.qualLongDescription = qualLongDescription;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -89,6 +116,14 @@ public class StudentAcademicQualificationRecordInfo implements Serializable {
 
 	public void setAuditFlag(boolean auditFlag) {
 		this.auditFlag = auditFlag;
+	}
+
+	public String getAcademicRequestEmailFlag() {
+		return academicRequestEmailFlag;
+	}
+
+	public void setAcademicRequestEmailFlag(String academicRequestEmailFlag) {
+		this.academicRequestEmailFlag = academicRequestEmailFlag;
 	}
 }
 

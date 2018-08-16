@@ -17,7 +17,7 @@ public class ContactInfo implements Serializable{
 
 	private boolean cellPhoneVerified;
 
-	private String courierContactNo;
+	private String courierContactNumber;
 
 	private String emailAddress;
 
@@ -64,12 +64,12 @@ public class ContactInfo implements Serializable{
 		this.cellPhoneVerified = cellPhoneVerified;
 	}
 
-	public String getCourierContactNo() {
-		return courierContactNo;
+	public String getCourierContactNumber() {
+		return courierContactNumber;
 	}
 
-	public void setCourierContactNo(String courierContactNo) {
-		this.courierContactNo = courierContactNo;
+	public void setCourierContactNumber(String courierContactNumber) {
+		this.courierContactNumber = courierContactNumber;
 	}
 
 	public String getEmailAddress() {

@@ -18,5 +18,4 @@ public class GenericServicesConstants {
 	public static final String UNISA_GENERIC_CODE_ORDERBY_AFR = "afrikaans";
 	public static final String UNISA_GENERIC_CODE_ORDERBY_INUSE = "inuse";
 
-
 }

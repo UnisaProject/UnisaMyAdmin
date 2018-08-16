@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface ContactService {
 
-	ContactInfo getContactInfoForReferenceAndType(Integer referenceNumber, Integer addressTypeCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
+	ContactInfo getContactByReferenceAndType(Integer referenceNumber, Integer addressTypeCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
-	List<ContactInfo> getContactsByReferenceNumber(Integer referenceNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException;
+	List<ContactInfo> getContactsByReference(Integer referenceNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException;
 }

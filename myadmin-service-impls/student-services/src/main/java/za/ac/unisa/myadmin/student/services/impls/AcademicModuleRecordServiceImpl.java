@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AcademicModuleRecordServiceImpl implements AcademicModuleRecordService {
 
 	@Override
-	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+	public List<AcademicModuleRecordInfo> getAcademicModules(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		try {
 			final Srasa01sLstAcademicRecordSun academicRecordModuleProxy = constructAcademicRecordModuleProxy(studentNumber, selectedQualificationCode, ModuleServicesConstants.ACADEMIC_MODULE_PROXY_CLIENT_SERVER_COMMUNICATIONS_CLIENT_ACTION, isCreditsOnly ? "Y" : "N");
 			final AtomicReference<OperationFailedException> exceptionReference = new AtomicReference<>();

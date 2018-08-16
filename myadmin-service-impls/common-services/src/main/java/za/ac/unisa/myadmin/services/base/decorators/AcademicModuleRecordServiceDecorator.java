@@ -25,8 +25,8 @@ public class AcademicModuleRecordServiceDecorator implements AcademicModuleRecor
 	}
 
 	@Override
-	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return getNextDecorator().requestStudentAcademicModuleResults(studentNumber, isCreditsOnly, selectedQualificationCode);
+	public List<AcademicModuleRecordInfo> getAcademicModules(Integer studentNumber, boolean isCreditsOnly, String selectedQualificationCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		return getNextDecorator().getAcademicModules(studentNumber, isCreditsOnly, selectedQualificationCode);
 	}
 
 }

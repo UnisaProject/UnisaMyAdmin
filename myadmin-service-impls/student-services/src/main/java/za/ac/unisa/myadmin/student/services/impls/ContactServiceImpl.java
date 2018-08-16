@@ -27,7 +27,7 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public ContactInfo getContactInfoForReferenceAndType(Integer referenceNumber, Integer addressTypeCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+	public ContactInfo getContactByReferenceAndType(Integer referenceNumber, Integer addressTypeCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
 		Optional<ContactEntity> entity = contactRepository.findById(new ContactEntityId(referenceNumber, addressTypeCode));
 		if (entity.isPresent()) {
 			return entity.get().toDto();
@@ -37,7 +37,7 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public List<ContactInfo> getContactsByReferenceNumber(Integer referenceNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+	public List<ContactInfo> getContactsByReference(Integer referenceNumber) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		try {
 			return contactRepository.findByReferenceNumber(referenceNumber)
 				.stream()

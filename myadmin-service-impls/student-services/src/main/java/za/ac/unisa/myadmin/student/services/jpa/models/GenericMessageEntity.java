@@ -1,6 +1,6 @@
 package za.ac.unisa.myadmin.student.services.jpa.models;
 
-import za.ac.unisa.myadmin.generic.dto.GenericMessageInfo;
+import za.ac.unisa.myadmin.generic.dto.MessageInfo;
 import za.ac.unisa.myadmin.services.utilities.YesOrNoBooleanConverter;
 
 import javax.persistence.Column;
@@ -49,8 +49,8 @@ public class GenericMessageEntity implements Serializable {
 	public GenericMessageEntity() {
 	}
 
-	public GenericMessageInfo toDto() {
-		GenericMessageInfo info = new GenericMessageInfo();
+	public MessageInfo toDto() {
+		MessageInfo info = new MessageInfo();
 		info.setMessageCode(this.messageCode);
 		info.setProgram(this.program);
 		info.setDevNotes(this.devNotes);

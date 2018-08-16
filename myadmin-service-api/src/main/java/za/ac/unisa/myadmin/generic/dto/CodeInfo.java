@@ -3,13 +3,14 @@ package za.ac.unisa.myadmin.generic.dto;
 import java.io.Serializable;
 
 /**
+ * This DTO represents the GenericCodeEntity class
  * Created by Adrian on 2018-07-27.
  */
-public class GenericCodeInfo implements Serializable {
+public class CodeInfo implements Serializable {
 
 	private String code;
 
-	private Integer genericCategoryCode;
+	private Integer categoryCode;
 
 	private String englishDescription;
 
@@ -27,12 +28,12 @@ public class GenericCodeInfo implements Serializable {
 		this.code = code;
 	}
 
-	public Integer getGenericCategoryCode() {
-		return genericCategoryCode;
+	public Integer getCategoryCode() {
+		return categoryCode;
 	}
 
-	public void setGenericCategoryCode(Integer genericCategoryCode) {
-		this.genericCategoryCode = genericCategoryCode;
+	public void setCategoryCode(Integer categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 
 	public String getEnglishDescription() {

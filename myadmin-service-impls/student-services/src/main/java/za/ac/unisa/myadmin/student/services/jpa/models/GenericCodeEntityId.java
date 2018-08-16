@@ -14,6 +14,14 @@ public class GenericCodeEntityId implements Serializable {
 	@Column(name = "FK_GENCATCODE")
 	private Integer genericCategoryCode;
 
+	public GenericCodeEntityId() {
+	}
+
+	public GenericCodeEntityId(String code, Integer genericCategoryCode) {
+		this.code = code;
+		this.genericCategoryCode = genericCategoryCode;
+	}
+
 	public String getCode() {
 		return code;
 	}

@@ -24,20 +24,15 @@ import java.util.Date;
 @Table(name = "STUACA")
 public class StudentAcademicRecordEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@EmbeddedId
-	private StudentAcademicRecordEntityId studentAcademicRecordEntityId;
-
-	@Column(name = "MK_STUDENT_NR", insertable = false, updatable = false)
-	private Integer studentNumber;
-
-	@Column(name = "MK_QUALIFICATION_C", insertable = false, updatable = false)
-	private String qualificationCode;
-
 	@ManyToOne
 	@JoinColumn(name = "MK_QUALIFICATION_C", insertable = false, updatable = false)
 	QualificationEntity qualificationEntity;
-
+	@EmbeddedId
+	private StudentAcademicRecordEntityId studentAcademicRecordEntityId;
+	@Column(name = "MK_STUDENT_NR", insertable = false, updatable = false)
+	private Integer studentNumber;
+	@Column(name = "MK_QUALIFICATION_C", insertable = false, updatable = false)
+	private String qualificationCode;
 	@Column(name = "MK_GRADUATION_CERE")
 	private Integer graduationCeremony;
 
@@ -160,6 +155,8 @@ public class StudentAcademicRecordEntity implements Serializable {
 		info.setQualificationCode(this.qualificationCode);
 		if (this.qualificationEntity != null) {
 			info.setQualShortDescription(this.qualificationEntity.getShortDescription());
+			info.setQualDisplayDescription(this.qualificationEntity.getEngDescription());
+			info.setQualLongDescription(this.qualificationEntity.getLongEngDescription());
 		}
 		if (this.firstRegistration != null) {
 			info.setFirstRegistrationDate(new Date(this.firstRegistration.getTime()));

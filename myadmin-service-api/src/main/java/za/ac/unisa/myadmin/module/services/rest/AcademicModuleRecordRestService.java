@@ -19,10 +19,10 @@ import java.util.List;
 public interface AcademicModuleRecordRestService {
 
 	@GET
-	@Path("/studentacademicqualification/modules")
+	@Path("/academicmodules")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public List<AcademicModuleRecordInfo> requestStudentAcademicModuleResults(@QueryParam("studentNumber") Integer studentNumber, @QueryParam("isCreditsOnly") boolean isCreditsOnly, @QueryParam("selectedQualificationCode") String selectedQualificationCode)
+	public List<AcademicModuleRecordInfo> getAcademicModules(@QueryParam("studentNumber") Integer studentNumber, @QueryParam("isCreditsOnly") boolean isCreditsOnly, @QueryParam("selectedQualificationCode") String selectedQualificationCode)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException;
 
 
