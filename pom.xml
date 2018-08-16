@@ -47,7 +47,7 @@
 	<modules>
 		<module>myadmin-service-api</module>
 		<module>myadmin-service-impls</module>
-		<!--<module>myadmin-angular</module>-->
+		<module>myadmin-angular</module>
 		<module>myadmin-webapps</module>
 	</modules>
 
