@@ -29,6 +29,18 @@ public class StudentInfo implements Serializable {
 
 	private String passportNumber;
 
+	private boolean examFeesDebt;
+
+	private boolean financialBlock;
+
+	private Integer libraryBlackList;
+
+	private Integer disciplinaryIncident;
+
+	private Integer nsfasContractBlock;
+
+	private boolean numberRestricted;
+
 	public StudentInfo() {
 	}
 
@@ -110,6 +122,54 @@ public class StudentInfo implements Serializable {
 
 	public void setPassportNumber(String passportNumber) {
 		this.passportNumber = passportNumber;
+	}
+
+	public boolean isExamFeesDebt() {
+		return examFeesDebt;
+	}
+
+	public void setExamFeesDebt(boolean examFeesDebt) {
+		this.examFeesDebt = examFeesDebt;
+	}
+
+	public boolean isFinancialBlock() {
+		return financialBlock;
+	}
+
+	public void setFinancialBlock(boolean financialBlock) {
+		this.financialBlock = financialBlock;
+	}
+
+	public Integer getLibraryBlackList() {
+		return libraryBlackList;
+	}
+
+	public void setLibraryBlackList(Integer libraryBlackList) {
+		this.libraryBlackList = libraryBlackList;
+	}
+
+	public Integer getDisciplinaryIncident() {
+		return disciplinaryIncident;
+	}
+
+	public void setDisciplinaryIncident(Integer disciplinaryIncident) {
+		this.disciplinaryIncident = disciplinaryIncident;
+	}
+
+	public Integer getNsfasContractBlock() {
+		return nsfasContractBlock;
+	}
+
+	public void setNsfasContractBlock(Integer nsfasContractBlock) {
+		this.nsfasContractBlock = nsfasContractBlock;
+	}
+
+	public boolean isNumberRestricted() {
+		return numberRestricted;
+	}
+
+	public void setNumberRestricted(boolean numberRestricted) {
+		this.numberRestricted = numberRestricted;
 	}
 
 	@Override

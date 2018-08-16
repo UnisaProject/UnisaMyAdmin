@@ -253,6 +253,12 @@ public class StudentEntity implements Serializable {
 		}
 		info.setIdentityNumber(this.identityNumber);
 		info.setPassportNumber(this.passportNumber);
+		info.setExamFeesDebt(this.examFeesDebt);
+		info.setFinancialBlock(this.financialBlock);
+		info.setLibraryBlackList(this.libraryBlackList);
+		info.setDisciplinaryIncident(this.disciplinaryIncidentId);
+		info.setNsfasContractBlock(this.nsfasContractBlock);
+		info.setNumberRestricted(this.numberRestricted);
 		//No email address in table
 		//info.setEmailAddress(this.email);
 		return info;
