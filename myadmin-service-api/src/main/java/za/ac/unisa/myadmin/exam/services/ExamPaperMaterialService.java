@@ -14,10 +14,10 @@ public interface ExamPaperMaterialService {
 
 
 	/**
-	 * Get available exam paper material for the specified course code.
-	 * @param courseCode
+	 * Get available exam paper material for the specified module code.
+	 * @param moduleCode
 	 * @return
 	 */
-	List<ExamPaperMaterialInfo> getExamPapersByCourseCode(String courseCode)
+	List<ExamPaperMaterialInfo> getExamPapersByModuleCode(String moduleCode)
 		throws MissingParameterException, InvalidParameterException, OperationFailedException;
 }

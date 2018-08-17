@@ -22,7 +22,7 @@ public class ExamPaperMaterialWebServiceClientTest {
 		ExamPaperMaterialWebServiceClient client = new ExamPaperMaterialWebServiceClient();
 		client.setServiceTrustAllSsl(true);
 		client.setServiceUrl(SERVICE_URL);
-		List<ExamPaperMaterialInfo> list = client.getPreviousExamPapers(COURSE_CODE);
+		List<ExamPaperMaterialInfo> list = client.getExamPapersByModuleCode(COURSE_CODE);
 		LOG.debug("Got response");
 	}
 }

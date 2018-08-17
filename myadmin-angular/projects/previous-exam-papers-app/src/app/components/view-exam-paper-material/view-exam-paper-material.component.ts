@@ -7,11 +7,11 @@ import {ExamPaperMaterialInfo} from "myadmin-lib";
 import {ExamPaperMaterialService} from "../../services/exam-paper-material.service";
 
 @Component({
-  selector: 'unisa-view-exam-material',
-  templateUrl: './view-exam-material.component.html',
-  styleUrls: ['./view-exam-material.component.scss']
+  selector: 'unisa-view-exam-paper-material',
+  templateUrl: './view-exam-paper-material.component.html',
+  styleUrls: ['./view-exam-paper-material.component.scss']
 })
-export class ViewExamMaterialComponent implements OnInit, OnDestroy {
+export class ViewExamPaperMaterialComponent implements OnInit, OnDestroy {
 
   /**
    * Reference to blockUI
@@ -33,7 +33,7 @@ export class ViewExamMaterialComponent implements OnInit, OnDestroy {
   }
 
   private getCourseMaterial(){
-    this.examPaperMaterialService.getExamPapers(
+    this.examPaperMaterialService.getExamPaperMaterial(
       this.moduleCode)
       .subscribe((examPaperMaterials) => {
         this.examPaperMaterials = examPaperMaterials;
@@ -47,7 +47,7 @@ export class ViewExamMaterialComponent implements OnInit, OnDestroy {
     this.blockUI.start("Loading study material...");
     this.listDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.routeParamsSubscription = this.route.params.subscribe((params) =>{
-      this.moduleCode = params['courseCode'];
+      this.moduleCode = params['moduleCode'];
       this.getCourseMaterial();
     })
   }

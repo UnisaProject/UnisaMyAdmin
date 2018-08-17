@@ -12,10 +12,10 @@ import java.util.List;
 public class ExamPaperMaterialServiceValidationDecorator extends ExamPaperMaterialServiceDecorator {
 
 	@Override
-	public List<ExamPaperMaterialInfo> getExamPapersByCourseCode(String courseCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+	public List<ExamPaperMaterialInfo> getExamPapersByModuleCode(String courseCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
 		if(StringUtils.isEmpty(courseCode)){
 			throw new MissingParameterException("A course code must be provided");
 		}
-		return getNextDecorator().getExamPapersByCourseCode(courseCode);
+		return getNextDecorator().getExamPapersByModuleCode(courseCode);
 	}
 }

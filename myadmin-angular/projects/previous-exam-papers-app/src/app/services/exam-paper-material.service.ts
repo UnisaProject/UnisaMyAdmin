@@ -11,8 +11,8 @@ export class ExamPaperMaterialService {
   constructor(private http: HttpClient) {
   }
 
-  getExamPapers(courseCode: string): Observable<ExamPaperMaterialInfo[]> {
-    let params = new HttpParams().set('courseCode', courseCode);
+  getExamPaperMaterial(moduleCode: string): Observable<ExamPaperMaterialInfo[]> {
+    let params = new HttpParams().set('moduleCode', moduleCode);
     return this.http.get<ExamPaperMaterialInfo[]>('/myadmin-exam-services/services/rest/exampapermaterialservice/exampapermaterial', { params });
   }
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {InputCourseComponent} from "./components/input-course/input-course.component";
-import {ViewExamMaterialComponent} from "./components/view-exam-material/view-exam-material.component";
+import {InputModuleComponent} from "./components/input-module/input-module.component";
+import {ViewExamPaperMaterialComponent} from "./components/view-exam-paper-material/view-exam-paper-material.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/inputCourse', pathMatch: 'full'},
-  { path: 'inputCourse', component: InputCourseComponent},
-  { path: 'examPapers/:courseCode', component: ViewExamMaterialComponent},
+  { path: '', redirectTo: '/inputModule', pathMatch: 'full'},
+  { path: 'inputModule', component: InputModuleComponent},
+  { path: 'examPapers/:moduleCode', component: ViewExamPaperMaterialComponent},
 ];
 
 @NgModule({

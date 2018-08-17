@@ -5,8 +5,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpErrorInterceptor, MyadminLibModule} from "myadmin-lib";
 import {AppComponent} from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
-import { ViewExamMaterialComponent } from './components/view-exam-material/view-exam-material.component';
-import { InputCourseComponent } from './components/input-course/input-course.component';
+import { ViewExamPaperMaterialComponent } from './components/view-exam-paper-material/view-exam-paper-material.component';
+import { InputModuleComponent } from './components/input-module/input-module.component';
 import {BlockUIModule} from "ng-block-ui";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ClarityModule} from "@clr/angular";
@@ -24,8 +24,8 @@ export const HttpInterceptorProviders = [
 @NgModule({
   declarations: [
     AppComponent,
-    ViewExamMaterialComponent,
-    InputCourseComponent
+    ViewExamPaperMaterialComponent,
+    InputModuleComponent
   ],
   imports: [
     BrowserModule,

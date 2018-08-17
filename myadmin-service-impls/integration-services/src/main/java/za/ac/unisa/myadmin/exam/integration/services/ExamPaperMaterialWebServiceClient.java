@@ -61,7 +61,7 @@ public class ExamPaperMaterialWebServiceClient {
 		this.serviceTrustAllSsl = serviceTrustAllSsl;
 	}
 
-	public List<ExamPaperMaterialInfo> getPreviousExamPapers(String courseCode) throws OperationFailedException {
+	public List<ExamPaperMaterialInfo> getExamPapersByModuleCode(String moduleCode) throws OperationFailedException {
 		WebTarget target;
 		try{
 			target = WebClientUtil.getWebClient(serviceTrustAllSsl, serviceUrl + SERVICE_PATH);
@@ -69,7 +69,7 @@ public class ExamPaperMaterialWebServiceClient {
 			LOG.warn("Exception while trying to create web target", e);
 			throw new OperationFailedException(e);
 		}
-		ExamPaperResponse examPaperResponse = target.queryParam("coursecode", courseCode)
+		ExamPaperResponse examPaperResponse = target.queryParam("coursecode", moduleCode)
 			.request()
 			.get(ExamPaperResponse.class);
 

@@ -4,11 +4,11 @@ import {BlockUI, NgBlockUI} from "ng-block-ui";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'unisa-input-course',
-  templateUrl: './input-course.component.html',
-  styleUrls: ['./input-course.component.scss']
+  selector: 'unisa-input-module',
+  templateUrl: './input-module.component.html',
+  styleUrls: ['./input-module.component.scss']
 })
-export class InputCourseComponent implements OnInit {
+export class InputModuleComponent implements OnInit {
 
   inputForm: FormGroup;
 
@@ -26,7 +26,7 @@ export class InputCourseComponent implements OnInit {
 
   private initForm(): void{
     this.inputForm = this.formBuilder.group({
-      lmsCourseCode : [null, Validators.required]
+      moduleCode : [null, Validators.required]
     });
   }
 
@@ -34,8 +34,8 @@ export class InputCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    const lmsCourseCode = this.inputForm.value.lmsCourseCode;
+    const moduleCode = this.inputForm.value.moduleCode;
     this.blockUI.start("Loading exam papers...");
-    this.router.navigate(['examPapers', lmsCourseCode]);
+    this.router.navigate(['examPapers', moduleCode]);
   }
 }

@@ -25,7 +25,7 @@ public class ExamPaperMaterialServiceDecorator implements ExamPaperMaterialServi
 
 
 	@Override
-	public List<ExamPaperMaterialInfo> getExamPapersByCourseCode(String courseCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
-		return getNextDecorator().getExamPapersByCourseCode(courseCode);
+	public List<ExamPaperMaterialInfo> getExamPapersByModuleCode(String moduleCode) throws MissingParameterException, InvalidParameterException, OperationFailedException {
+		return getNextDecorator().getExamPapersByModuleCode(moduleCode);
 	}
 }

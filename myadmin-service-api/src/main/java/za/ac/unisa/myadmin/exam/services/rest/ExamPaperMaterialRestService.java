@@ -17,7 +17,7 @@ public interface ExamPaperMaterialRestService {
 	@Path("/exampapermaterial")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<ExamPaperMaterialInfo> getExamPapers(@QueryParam("courseCode") String courseCode)
+	public List<ExamPaperMaterialInfo> getExamPaperMaterial(@QueryParam("moduleCode") String moduleCode)
 			throws MissingParameterException, InvalidParameterException, OperationFailedException,
 			DoesNotExistException;
 }

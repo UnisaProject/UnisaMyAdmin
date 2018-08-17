@@ -13,7 +13,7 @@ import java.util.List;
 public class ExamPaperMaterialRestServiceImpl extends ExamPaperMaterialServiceDecorator implements ExamPaperMaterialRestService {
 
 	@Override
-	public List<ExamPaperMaterialInfo> getExamPapers(String courseCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
-		return getNextDecorator().getExamPapersByCourseCode(courseCode);
+	public List<ExamPaperMaterialInfo> getExamPaperMaterial(String moduleCode) throws MissingParameterException, InvalidParameterException, OperationFailedException, DoesNotExistException {
+		return getNextDecorator().getExamPapersByModuleCode(moduleCode);
 	}
 }
