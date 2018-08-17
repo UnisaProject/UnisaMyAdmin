@@ -173,6 +173,7 @@ public class StudyMaterialWebServiceClient {
 		StudyMaterialDetailInfo studymaterialDetails = new StudyMaterialDetailInfo();
 		studymaterialDetails.setCourseCode(resource.getModule());
 		studymaterialDetails.setAcademicYear(resource.getYear());
+		studymaterialDetails.setPeriod(resource.getPeriod());
 		studymaterialDetails.setSemester(resource.getPeriod());
 		studymaterialDetails.setShortDescription(resource.getShortDescription());
 		studymaterialDetails.setFilesize(resource.getFileSize());

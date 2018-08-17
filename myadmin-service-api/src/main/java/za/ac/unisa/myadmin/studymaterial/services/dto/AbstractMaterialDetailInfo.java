@@ -10,6 +10,27 @@ public abstract class AbstractMaterialDetailInfo {
 
 	private String filesize;
 
+	private String period;
+
+
+	/**
+	 * Getter for property 'period'.
+	 *
+	 * @return Value for property 'period'.
+	 */
+	public String getPeriod() {
+		return period;
+	}
+
+	/**
+	 * Setter for property 'period'.
+	 *
+	 * @param period Value to set for property 'period'.
+	 */
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
 	/**
 	 * Getter for property 'courseCode'.
 	 *

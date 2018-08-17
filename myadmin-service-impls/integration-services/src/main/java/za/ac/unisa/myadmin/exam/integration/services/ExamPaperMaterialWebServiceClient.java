@@ -7,6 +7,7 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.exam.integration.services.dto.ExamPaperDto;
 import za.ac.unisa.myadmin.exam.integration.services.dto.ExamPaperResponse;
 import za.ac.unisa.myadmin.exam.services.dto.ExamPaperMaterialInfo;
+import za.ac.unisa.myadmin.studymaterial.integration.services.utils.PeriodCodesConverter;
 import za.ac.unisa.myadmin.studymaterial.integration.services.utils.WebClientUtil;
 
 import javax.ws.rs.client.WebTarget;
@@ -81,9 +82,11 @@ public class ExamPaperMaterialWebServiceClient {
 
 	private ExamPaperMaterialInfo toDto(ExamPaperDto examPaperDto){
 		ExamPaperMaterialInfo examPaperMaterialInfo = new ExamPaperMaterialInfo();
-		// examPaperMaterialInfo.setPeriodDesc(examPaperDto.); TODO could not find how this is set
+		examPaperMaterialInfo.setPeriod(examPaperDto.getPeriod());
+		examPaperMaterialInfo.setPeriodDesc(PeriodCodesConverter.convert(examPaperDto.getPeriod()));
 		examPaperMaterialInfo.setAcademicYear(examPaperDto.getExamYear());
 		examPaperMaterialInfo.setCourseCode(examPaperDto.getCourseCode());
+		examPaperMaterialInfo.setLanguage("E".equalsIgnoreCase(examPaperDto.getLanguage()) ? "English" : "Afrikaans");
 		examPaperMaterialInfo.setFilesize(FileUtils.byteCountToDisplaySize(examPaperDto.getFileSize()));
 		examPaperMaterialInfo.setPath(stripAnchor(examPaperDto.getLink()));
 		return examPaperMaterialInfo;

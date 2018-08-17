@@ -16,7 +16,7 @@ public class ExamPaperDto {
 	private String examYear;
 
 	@XmlElement(name = "period")
-	private int period;
+	private String period;
 
 	@XmlElement(name = "language")
 	private String language;
@@ -71,7 +71,7 @@ public class ExamPaperDto {
 	 *
 	 * @return Value for property 'period'.
 	 */
-	public int getPeriod() {
+	public String getPeriod() {
 		return period;
 	}
 
@@ -80,7 +80,7 @@ public class ExamPaperDto {
 	 *
 	 * @param period Value to set for property 'period'.
 	 */
-	public void setPeriod(int period) {
+	public void setPeriod(String period) {
 		this.period = period;
 	}
 

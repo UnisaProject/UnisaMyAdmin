@@ -11,6 +11,10 @@ public class ExamPaperMaterialInfo extends AbstractMaterialDetailInfo implements
 
 	private String periodDesc;
 
+	/**
+	 * The language in which this paper is.
+	 */
+	private String language;
 
 
 	/**
@@ -31,4 +35,21 @@ public class ExamPaperMaterialInfo extends AbstractMaterialDetailInfo implements
 		this.periodDesc = periodDesc;
 	}
 
+	/**
+	 * Getter for property 'language'.
+	 *
+	 * @return Value for property 'language'.
+	 */
+	public String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * Setter for property 'language'.
+	 *
+	 * @param language Value to set for property 'language'.
+	 */
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 }
