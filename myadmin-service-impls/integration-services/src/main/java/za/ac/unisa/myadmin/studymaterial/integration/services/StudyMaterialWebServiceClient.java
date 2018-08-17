@@ -180,6 +180,7 @@ public class StudyMaterialWebServiceClient {
 		studymaterialDetails.setDescription(itemDisplayName);
 		studymaterialDetails.setImplementationDate(toDate(resource.getDateAvailable()));
 		studymaterialDetails.setPath(resource.getPath());
+		studymaterialDetails.setUnitNumber(resource.getUnitNumber());
 		return studymaterialDetails;
 	}
 

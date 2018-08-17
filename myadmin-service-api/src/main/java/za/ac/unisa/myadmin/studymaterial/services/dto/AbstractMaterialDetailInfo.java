@@ -12,6 +12,8 @@ public abstract class AbstractMaterialDetailInfo {
 
 	private String period;
 
+	private String unitNumber;
+
 
 	/**
 	 * Getter for property 'period'.
@@ -101,5 +103,23 @@ public abstract class AbstractMaterialDetailInfo {
 	 */
 	public void setFilesize(String filesize) {
 		this.filesize = filesize;
+	}
+
+	/**
+	 * Getter for property 'unitNumber'.
+	 *
+	 * @return Value for property 'unitNumber'.
+	 */
+	public String getUnitNumber() {
+		return unitNumber;
+	}
+
+	/**
+	 * Setter for property 'unitNumber'.
+	 *
+	 * @param unitNumber Value to set for property 'unitNumber'.
+	 */
+	public void setUnitNumber(String unitNumber) {
+		this.unitNumber = unitNumber;
 	}
 }

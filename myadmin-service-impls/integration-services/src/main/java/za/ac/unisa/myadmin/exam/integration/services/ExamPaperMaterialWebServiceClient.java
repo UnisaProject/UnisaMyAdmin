@@ -87,6 +87,7 @@ public class ExamPaperMaterialWebServiceClient {
 		examPaperMaterialInfo.setAcademicYear(examPaperDto.getExamYear());
 		examPaperMaterialInfo.setCourseCode(examPaperDto.getCourseCode());
 		examPaperMaterialInfo.setLanguage("E".equalsIgnoreCase(examPaperDto.getLanguage()) ? "English" : "Afrikaans");
+		examPaperMaterialInfo.setUnitNumber(examPaperDto.getPaperNumber());
 		examPaperMaterialInfo.setFilesize(FileUtils.byteCountToDisplaySize(examPaperDto.getFileSize()));
 		examPaperMaterialInfo.setPath(stripAnchor(examPaperDto.getLink()));
 		return examPaperMaterialInfo;

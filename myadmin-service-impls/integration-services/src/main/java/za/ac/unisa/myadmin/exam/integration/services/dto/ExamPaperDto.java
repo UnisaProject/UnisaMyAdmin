@@ -22,7 +22,7 @@ public class ExamPaperDto {
 	private String language;
 
 	@XmlElement(name = "papernumber")
-	private int paperNumber;
+	private String paperNumber;
 
 	@XmlElement(name = "filesize")
 	private long fileSize;
@@ -107,7 +107,7 @@ public class ExamPaperDto {
 	 *
 	 * @return Value for property 'paperNumber'.
 	 */
-	public int getPaperNumber() {
+	public String getPaperNumber() {
 		return paperNumber;
 	}
 
@@ -116,7 +116,7 @@ public class ExamPaperDto {
 	 *
 	 * @param paperNumber Value to set for property 'paperNumber'.
 	 */
-	public void setPaperNumber(int paperNumber) {
+	public void setPaperNumber(String paperNumber) {
 		this.paperNumber = paperNumber;
 	}
 
