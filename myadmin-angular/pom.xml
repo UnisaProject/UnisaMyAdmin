@@ -174,6 +174,18 @@
 							<arguments>build-prod previous-exam-papers-app</arguments>
 						</configuration>
 					</execution>
+
+					<!-- Build previous exam papers app -->
+					<execution>
+						<id>yarn build-prod academic-history-record-app</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build-prod academic-history-record-app</arguments>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>
