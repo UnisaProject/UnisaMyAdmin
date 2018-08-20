@@ -1,13 +1,10 @@
-export interface StudyMaterialDetailInfo {
+import {AbstractMaterialDetailInfo} from "./abstract-material-detail-info";
 
-  courseCode : string;
-  academicYear : string;
+export interface StudyMaterialDetailInfo extends AbstractMaterialDetailInfo{
   semester : string;
   description : string;
   implementationDate : string;
   webId : string;
-  path : string;
-  filesize : string;
   blockedStatus : boolean;
   shortDescription : string;
 }

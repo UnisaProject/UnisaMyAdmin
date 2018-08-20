@@ -13,6 +13,7 @@ export {DescriptionInfo} from './lib/info-objects/description-info';
 export {StudentInfo} from './lib/info-objects/student-info';
 export {ModuleEnrolmentInfo} from './lib/info-objects/module-enrolment-info';
 export {StudyMaterialDetailInfo} from './lib/info-objects/study-material-detail-info';
+export {ExamPaperMaterialInfo} from './lib/info-objects/exam-paper-material-info';
 
 // Pipes
 export {DescriptionPipe} from './lib/pipes/description.pipe';

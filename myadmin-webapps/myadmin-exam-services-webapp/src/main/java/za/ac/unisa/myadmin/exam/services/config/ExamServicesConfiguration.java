@@ -1,35 +1,30 @@
 package za.ac.unisa.myadmin.exam.services.config;
 
 import org.apache.cxf.endpoint.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import za.ac.unisa.myadmin.exam.services.ExamAdmissionService;
-import za.ac.unisa.myadmin.exam.services.ExamPaperService;
-import za.ac.unisa.myadmin.exam.services.ExamPeriodService;
-import za.ac.unisa.myadmin.exam.services.ExamServicesConstants;
-import za.ac.unisa.myadmin.exam.services.ExaminationService;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamAdmissionServiceYearCalculationDecorator;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamPaperServiceComplianceDecorator;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamPeriodServiceExclusionDecorator;
-import za.ac.unisa.myadmin.exam.services.decorators.ExamPeriodServiceVirtualDecorator;
-import za.ac.unisa.myadmin.exam.services.decorators.ExaminationServiceComplianceDecorator;
-import za.ac.unisa.myadmin.exam.services.impls.ExamAdmissionServiceImpl;
-import za.ac.unisa.myadmin.exam.services.impls.ExamPaperServiceImpl;
-import za.ac.unisa.myadmin.exam.services.impls.ExamPeriodServiceImpl;
-import za.ac.unisa.myadmin.exam.services.impls.ExaminationServiceImpl;
+import za.ac.unisa.myadmin.exam.integration.services.ExamPaperMaterialWebServiceClient;
+import za.ac.unisa.myadmin.exam.services.*;
+import za.ac.unisa.myadmin.exam.services.decorators.*;
+import za.ac.unisa.myadmin.exam.services.impls.*;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamAdmissionRepository;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamPaperRepository;
 import za.ac.unisa.myadmin.exam.services.repositories.ExamPeriodRepository;
 import za.ac.unisa.myadmin.exam.services.repositories.ExaminationRepository;
-import za.ac.unisa.myadmin.exam.services.rest.impls.ExamAdmissionRestServiceImpl;
-import za.ac.unisa.myadmin.exam.services.rest.impls.ExamPaperRestServiceImpl;
-import za.ac.unisa.myadmin.exam.services.rest.impls.ExamPeriodRestServiceImpl;
-import za.ac.unisa.myadmin.exam.services.rest.impls.ExaminationRestServiceImpl;
+import za.ac.unisa.myadmin.exam.services.rest.impls.*;
 import za.ac.unisa.myadmin.spring.boot.configurations.AbstractServiceConfiguration;
 
 @Configuration
 public class ExamServicesConfiguration extends AbstractServiceConfiguration {
+
+	@Value("${integration.exampapermaterial.trustAllSsl}")
+	private boolean examPaperMaterialServiceTrustAllSsl;
+
+	@Value("${integration.exampapermaterial.serviceUrl}")
+	private String examPaperMaterialServiceUrl;
+
 
 	@Bean(name = "examAdmissionServiceImpl")
 	public ExamAdmissionService getExamAdmissionServiceImpl() {
@@ -111,4 +106,28 @@ public class ExamServicesConfiguration extends AbstractServiceConfiguration {
 		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAM_PERIOD_SERVICE_NAME);
 	}
 
+	@Bean(name = "examPaperMaterialService")
+	public ExamPaperMaterialService examPaperMaterialService(){
+		ExamPaperMaterialWebServiceClient webServiceClient = new ExamPaperMaterialWebServiceClient();
+		webServiceClient.setServiceUrl(examPaperMaterialServiceUrl);
+		webServiceClient.setServiceTrustAllSsl(examPaperMaterialServiceTrustAllSsl);
+
+		ExamPaperMaterialServiceImpl examPaperMaterialService = new ExamPaperMaterialServiceImpl();
+		examPaperMaterialService.setWebServiceClient(webServiceClient);
+
+
+		ExamPaperMaterialServiceValidationDecorator validationDecorator = new ExamPaperMaterialServiceValidationDecorator();
+		validationDecorator.setNextDecorator(examPaperMaterialService);
+
+		return validationDecorator;
+	}
+
+
+	@Bean(name = "examPaperMaterialServiceRestEndPoint")
+	public Server examPaperMaterialServiceRestEndPoint() {
+		ExamPaperMaterialRestServiceImpl restServiceImpl = new ExamPaperMaterialRestServiceImpl();
+		restServiceImpl.setNextDecorator(examPaperMaterialService());
+
+		return createRestEndpoint(restServiceImpl, "/rest/" + ExamServicesConstants.EXAM_PAPERMATERIAL_SERVICE_NAME);
+	}
 }

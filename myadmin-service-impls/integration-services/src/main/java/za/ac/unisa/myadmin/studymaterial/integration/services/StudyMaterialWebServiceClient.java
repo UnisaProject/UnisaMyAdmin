@@ -7,13 +7,10 @@ import za.ac.unisa.myadmin.common.exceptions.OperationFailedException;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.ModuleInfoRequest;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.ResourceDTO;
 import za.ac.unisa.myadmin.studymaterial.integration.services.dto.StudyMaterialResponse;
+import za.ac.unisa.myadmin.studymaterial.integration.services.utils.WebClientUtil;
 import za.ac.unisa.myadmin.studymaterial.services.dto.StudyMaterialDetailInfo;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
@@ -21,9 +18,6 @@ import javax.ws.rs.core.Response;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -157,14 +151,7 @@ public class StudyMaterialWebServiceClient {
 	 * @throws KeyManagementException
 	 */
 	private Invocation.Builder getStudyMaterialWebClient() throws NoSuchAlgorithmException, KeyManagementException {
-		ClientBuilder webClientBuilder = ClientBuilder.newBuilder();
-		if(serviceTrustAllSsl){
-			webClientBuilder.hostnameVerifier((s, sslSession) -> true);
-			webClientBuilder.sslContext(trustAllContext());
-		}
-		return webClientBuilder.build()
-			.target(serviceUrl)
-			.request();
+		return WebClientUtil.getWebClient(serviceTrustAllSsl, serviceUrl).request();
 	}
 
 	/**
@@ -186,12 +173,14 @@ public class StudyMaterialWebServiceClient {
 		StudyMaterialDetailInfo studymaterialDetails = new StudyMaterialDetailInfo();
 		studymaterialDetails.setCourseCode(resource.getModule());
 		studymaterialDetails.setAcademicYear(resource.getYear());
+		studymaterialDetails.setPeriod(resource.getPeriod());
 		studymaterialDetails.setSemester(resource.getPeriod());
 		studymaterialDetails.setShortDescription(resource.getShortDescription());
 		studymaterialDetails.setFilesize(resource.getFileSize());
 		studymaterialDetails.setDescription(itemDisplayName);
 		studymaterialDetails.setImplementationDate(toDate(resource.getDateAvailable()));
 		studymaterialDetails.setPath(resource.getPath());
+		studymaterialDetails.setUnitNumber(resource.getUnitNumber());
 		return studymaterialDetails;
 	}
 
@@ -229,26 +218,5 @@ public class StudyMaterialWebServiceClient {
 		return itemShortDesdc.substring(lastIndexOff_).trim().toUpperCase();
 	}
 
-	/**
-	 * Creates a SSL Context that allows ALL SSL Certificates, even invalid ones to be accepted.
-	 * @return
-	 * @throws KeyManagementException
-	 * @throws NoSuchAlgorithmException
-	 */
-	private static SSLContext trustAllContext() throws KeyManagementException, NoSuchAlgorithmException {
-		SSLContext ctx = SSLContext.getInstance("SSL");
-		TrustManager[] certs = new TrustManager[]{ new X509TrustManager() {
-			@Override
-			public X509Certificate[] getAcceptedIssuers() { return null; }
 
-			@Override
-			public void checkServerTrusted(X509Certificate[] chain, String authType)throws CertificateException {}
-
-			@Override
-			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
-		}
-		};
-		ctx.init(null, certs, new SecureRandom());
-		return ctx;
-	}
 }
